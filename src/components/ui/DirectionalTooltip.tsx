@@ -168,7 +168,7 @@ export const DirectionalTooltip: React.FC<DirectionalTooltipProps> = ({
             }}
             transition={motionTransitions.springSnappy}
             className={cn(
-              'absolute z-50 max-w-xs rounded-md border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] shadow-[var(--shadow-elevated)] px-2.5 py-1.5 text-xs leading-relaxed',
+              'absolute z-50 max-w-xs whitespace-nowrap rounded-md border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] shadow-[var(--shadow-elevated)] px-2.5 py-1.5 text-xs leading-relaxed',
               sideStyles[side],
               alignStyles[align][side],
               className

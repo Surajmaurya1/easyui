@@ -9,10 +9,10 @@ export interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigateComponents, onNavigateDocs }) => {
   return (
-    <footer className="bg-background pt-16 sm:pt-20 pb-10 sm:pb-12 text-text-muted border-t border-border-subtle">
+    <footer className="bg-background pt-10 sm:pt-12 pb-8 sm:pb-10 text-text-muted border-t border-border-subtle">
       <Container size="xl">
         {/* Top row: wordmark on the left, simple link row on the right */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 sm:gap-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-6">
           <div className="flex items-center gap-2.5">
             <img
               src="/logo.png"
@@ -51,8 +51,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateComponents, onNavigate
           </nav>
         </div>
 
-        {/* Bottom row: copyright + signature, separated by generous space (no border) */}
-        <div className="mt-16 sm:mt-20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[12px]">
+        {/* Bottom row: copyright + signature — tight gap, no border line */}
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[12px]">
           <div>
             © {new Date().getFullYear()} EasyUI. Built by{' '}
             <a
