@@ -162,10 +162,10 @@ export const BranchingSubmenu: React.FC<BranchingSubmenuProps> = ({
         <motion.div
           layout={!reducedMotion}
           transition={motionTransitions.springGentle}
-          className="relative min-h-[172px] overflow-hidden rounded-xl border border-[#171717] bg-[#050505] p-3.5"
+          className="relative overflow-hidden rounded-xl border border-[#171717] bg-[#050505] p-3.5"
         >
           <div className="absolute left-0 top-8 h-px w-6 bg-[#1F1F1F]" aria-hidden="true" />
-          
+
           <AnimatePresence mode="wait" initial={false}>
             {open && active && (
               <motion.div
