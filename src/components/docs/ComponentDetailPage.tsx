@@ -115,6 +115,7 @@ import { DirectionalTooltip } from '../ui/DirectionalTooltip';
 import { OriginDropdown } from '../ui/OriginDropdown';
 import { UnfoldAccordion } from '../ui/UnfoldAccordion';
 import { SlidePagination } from '../ui/SlidePagination';
+import { Pricing } from '../ui/Pricing';
 
 export type MainTab = 'preview' | 'usage' | 'code' | 'props' | 'accessibility';
 export type PkgManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
@@ -1891,10 +1892,10 @@ const completion = await client.completions.create({
       case 'press-button':
         return (
           <div className="py-12 flex flex-col items-center justify-center gap-3">
-            <PressButton variant="primary" size="md" onClick={() => {}}>
+            <PressButton variant="primary" size="md" onClick={() => { }}>
               Save changes
             </PressButton>
-            <PressButton variant="outline" size="md" onClick={() => {}}>
+            <PressButton variant="outline" size="md" onClick={() => { }}>
               Cancel
             </PressButton>
           </div>
@@ -1921,8 +1922,11 @@ const completion = await client.completions.create({
         );
       case 'draw-checkbox':
         return (
-          <div className="py-12 flex flex-col items-center justify-center gap-4">
-            <div className="flex items-center gap-3">
+          <div className="py-12 px-4 sm:px-0 flex flex-col items-center justify-center gap-4 w-full max-w-2xl mx-auto">
+            {/* Stack vertically on mobile so the three checkbox + label
+                groups fit within the viewport; go horizontal on sm+ when
+                there is room. */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">
               <DrawCheckbox defaultChecked label="Product updates" />
               <DrawCheckbox label="Newsletter" />
               <DrawCheckbox indeterminate label="Beta features" />
@@ -2010,6 +2014,40 @@ const completion = await client.completions.create({
         return (
           <div className="py-12 flex flex-col items-center justify-center">
             <SlidePaginationDemo />
+          </div>
+        );
+      case 'pricing':
+        return (
+          <div className="py-3 sm:py-6 w-full max-w-5xl mx-auto min-w-0">
+            <Pricing
+              key={demoKey}
+              freeTier={{
+                name: 'Free',
+                tagline: 'For personal & open-source projects',
+                price: '$0',
+                cadence: 'Forever',
+                features: [
+                  'All components',
+                  'Copy & paste',
+                  'React + Tailwind',
+                  'MIT licensed',
+                ],
+                ctaLabel: 'Get started',
+              }}
+              proTier={{
+                name: 'Pro',
+                tagline: 'For production teams',
+                price: '$29',
+                cadence: 'One-time payment',
+                features: [
+                  'Everything in Free',
+                  'Premium components',
+                  'Advanced animations',
+                  'Future updates',
+                ],
+                ctaLabel: 'Get Pro',
+              }}
+            />
           </div>
         );
       default:
@@ -2671,9 +2709,14 @@ const completion = await client.completions.create({
             </div>
 
             {/* Canvas Body — backdrop follows the page theme. Components that are
-                not yet light/dark aware keep their original styling. */}
-            <div className="flex-1 flex items-center justify-center p-6 sm:p-12 overflow-y-auto overflow-x-hidden">
-              <div className="w-full max-w-4xl mx-auto flex items-center justify-center">
+                not yet light/dark aware keep their original styling.
+
+                Note: `items-start` (not `items-center`) so that when a component
+                is taller than the viewport, the user can scroll the *top* of the
+                content into view.  Centering on overflow causes the top of tall
+                components to be clipped above the visible area on mobile. */}
+            <div className="flex-1 flex items-start sm:items-center justify-center p-3 sm:p-12 overflow-y-auto overflow-x-hidden">
+              <div className="w-full max-w-4xl mx-auto flex items-center justify-center min-w-0 my-auto">
                 {renderInteractiveDemo()}
               </div>
             </div>

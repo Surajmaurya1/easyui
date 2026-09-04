@@ -278,4 +278,7 @@ export type {
 export { SlidePagination } from './SlidePagination';
 export type { SlidePaginationProps } from './SlidePagination';
 
+export { Pricing } from './Pricing';
+export type { PricingProps, PricingTier, PricingFeature } from './Pricing';
+
 

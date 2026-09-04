@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Search, Menu, X } from 'lucide-react';
+import { Search, Menu, X, Sun, Moon } from 'lucide-react';
 import { GithubIcon } from '../icons/GithubIcon';
 import { GITHUB_URL } from '../../lib/constants';
 import { ThemeToggle } from './ThemeToggle';
 import { useTheme } from '../../lib/theme/useTheme';
+import { motionTransitions } from '../../lib/motion-tokens';
 
 export interface NavbarProps {
   onOpenSearch: () => void;
@@ -24,7 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     if (latest > 15 && !isScrolled) {
@@ -167,126 +168,44 @@ export const Navbar: React.FC<NavbarProps> = ({
           <ThemeToggle />
         </motion.div>
 
-        {/* Mobile-only: perfectly circular menu trigger pill */}
-        <motion.button
-          type="button"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-nav"
-          aria-label="Toggle navigation menu"
-          initial={false}
-          animate={{
-            y: isScrolled ? 14 : 0,
-            width: isScrolled ? 44 : 48,
-            height: isScrolled ? 44 : 48,
-            borderRadius: 9999,
-            backgroundColor: isScrolled ? cssVar('--pill-bg-scrolled') : cssVar('--pill-bg-idle'),
-            borderColor: isScrolled ? cssVar('--pill-border-scrolled') : cssVar('--pill-border-idle'),
-            boxShadow: isScrolled ? cssVar('--pill-shadow-scrolled') : cssVar('--pill-shadow-idle'),
-          }}
-          transition={{
-            type: 'spring' as const,
-            stiffness: 220,
-            damping: 28,
-            mass: 0.8,
-          }}
-          className="md:hidden flex items-center justify-center border backdrop-blur-xl pointer-events-auto focus-ring text-text-secondary hover:text-text-primary hover:bg-surface-hover/40 transition-colors"
-        >
-          <motion.div
-            initial={false}
-            animate={{ rotate: mobileOpen ? 90 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            {mobileOpen ? <X className="w-3.5 h-3.5" /> : <Menu className="w-3.5 h-3.5" />}
-          </motion.div>
-        </motion.button>
       </div>
 
-      {/* Floating Mobile Dropdown Menu (when scrolled) */}
+      {/* Mobile Backdrop to close menu when tapping outside */}
       <AnimatePresence>
-        {mobileOpen && isScrolled && (
+        {mobileOpen && (
           <motion.div
-            id="mobile-nav"
-            initial={{ opacity: 0, y: 0, scale: 0.96 }}
-            animate={{ opacity: 1, y: 16, scale: 1 }}
-            exit={{ opacity: 0, y: 0, scale: 0.96 }}
-            transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-            className="md:hidden w-[calc(100%-24px)] max-w-[860px] mx-auto rounded-2xl border border-border bg-surface/95 backdrop-blur-2xl shadow-elevated overflow-hidden pointer-events-auto p-2"
-          >
-            <nav className="space-y-1" aria-label="Mobile Navigation">
-              <a
-                href="/"
-                onClick={(e) => handleLinkClick(e, onNavigateHome || onNavigateComponents)}
-                className={`block w-full text-left px-3 py-2 text-xs rounded-lg transition-colors cursor-pointer ${
-                  activeView === 'showcase'
-                    ? 'bg-surface-hover text-text-primary font-medium'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
-                }`}
-              >
-                Home
-              </a>
-              <a
-                href="/components"
-                onClick={(e) => handleLinkClick(e, onNavigateComponents)}
-                className={`block w-full text-left px-3 py-2 text-xs rounded-lg transition-colors cursor-pointer ${
-                  activeView === 'components'
-                    ? 'bg-surface-hover text-text-primary font-medium'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
-                }`}
-              >
-                Components
-              </a>
-              <a
-                href="/docs/introduction"
-                onClick={(e) => handleLinkClick(e, onNavigateDocs)}
-                className={`block w-full text-left px-3 py-2 text-xs rounded-lg transition-colors cursor-pointer ${
-                  activeView === 'docs'
-                    ? 'bg-surface-hover text-text-primary font-medium'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
-                }`}
-              >
-                Docs
-              </a>
-              <a
-                href={GITHUB_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full text-left px-3 py-2 text-xs text-text-secondary hover:text-text-primary hover:bg-surface-hover rounded-lg transition-colors"
-              >
-                GitHub
-              </a>
-              {/* Mobile theme toggle — full width, easy to tap */}
-              <div className="pt-1 border-t border-border-subtle mt-1">
-                <ThemeToggle
-                  className="w-full justify-start px-3 py-2 text-xs"
-                  label="Toggle theme"
-                />
-              </div>
-            </nav>
-          </motion.div>
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            onClick={() => setMobileOpen(false)}
+            className="md:hidden fixed inset-0 bg-background/50 backdrop-blur-xs z-30"
+          />
         )}
       </AnimatePresence>
 
-      {/* Top Unscrolled Mobile Overlay Dropdown */}
-      <AnimatePresence>
-        {mobileOpen && !isScrolled && (
-          <motion.div
-            id="mobile-nav"
-            initial={{ opacity: 0, y: -8, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: 'auto' }}
-            exit={{ opacity: 0, y: -8, height: 0 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden absolute top-full left-0 right-0 border-b border-border bg-background/95 backdrop-blur-xl shadow-elevated overflow-hidden pointer-events-auto"
-          >
-            <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-              <nav className="py-3 space-y-1" aria-label="Mobile Navigation">
+      {/* Mobile Bottom Dock & Popup Menu that opens on top */}
+      <div className="md:hidden fixed bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-auto">
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              id="mobile-nav"
+              role="dialog"
+              aria-label="Mobile Navigation Menu"
+              initial={{ opacity: 0, y: 12, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.95 }}
+              transition={motionTransitions.springSmooth}
+              className="w-[calc(100vw-32px)] max-w-[280px] mb-2.5 rounded-2xl border border-border bg-surface/95 backdrop-blur-2xl shadow-elevated overflow-hidden p-1.5"
+            >
+              <nav className="space-y-0.5" aria-label="Mobile Navigation">
                 <a
                   href="/"
                   onClick={(e) => handleLinkClick(e, onNavigateHome || onNavigateComponents)}
-                  className={`block w-full text-left px-3 py-2.5 text-xs rounded-lg transition-colors cursor-pointer ${
+                  className={`block w-full text-left px-3.5 py-2.5 text-xs rounded-xl transition-colors cursor-pointer ${
                     activeView === 'showcase'
                       ? 'bg-surface-hover text-text-primary font-medium'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover/70'
                   }`}
                 >
                   Home
@@ -294,10 +213,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <a
                   href="/components"
                   onClick={(e) => handleLinkClick(e, onNavigateComponents)}
-                  className={`block w-full text-left px-3 py-2.5 text-xs rounded-lg transition-colors cursor-pointer ${
-                    activeView === 'components'
+                  className={`block w-full text-left px-3.5 py-2.5 text-xs rounded-xl transition-colors cursor-pointer ${
+                    activeView === 'components' || activeView === 'component-detail'
                       ? 'bg-surface-hover text-text-primary font-medium'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover/70'
                   }`}
                 >
                   Components
@@ -305,10 +224,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <a
                   href="/docs/introduction"
                   onClick={(e) => handleLinkClick(e, onNavigateDocs)}
-                  className={`block w-full text-left px-3 py-2.5 text-xs rounded-lg transition-colors cursor-pointer ${
+                  className={`block w-full text-left px-3.5 py-2.5 text-xs rounded-xl transition-colors cursor-pointer ${
                     activeView === 'docs'
                       ? 'bg-surface-hover text-text-primary font-medium'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover/70'
                   }`}
                 >
                   Docs
@@ -317,21 +236,69 @@ export const Navbar: React.FC<NavbarProps> = ({
                   href={GITHUB_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-left px-3 py-2.5 text-xs text-text-secondary hover:text-text-primary hover:bg-surface-hover rounded-lg transition-colors"
+                  className="block w-full text-left px-3.5 py-2.5 text-xs text-text-secondary hover:text-text-primary hover:bg-surface-hover/70 rounded-xl transition-colors"
                 >
                   GitHub
                 </a>
-                <div className="pt-1 border-t border-border-subtle mt-1">
-                  <ThemeToggle
-                    className="w-full justify-start px-3 py-2.5 text-xs"
-                    label="Toggle theme"
-                  />
-                </div>
               </nav>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Mobile Bottom Dock Pill: Search -> Theme -> Menu */}
+        <motion.aside
+          aria-label="Mobile quick actions dock"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={motionTransitions.springSmooth}
+          className="flex items-center gap-1.5 p-1 rounded-full border border-border bg-surface/90 backdrop-blur-xl shadow-elevated"
+        >
+          <button
+            type="button"
+            onClick={() => {
+              setMobileOpen(false);
+              onOpenSearch();
+            }}
+            aria-label="Search components (Cmd+K)"
+            title="Search components"
+            className="flex items-center justify-center w-10 h-10 rounded-full text-text-secondary hover:text-text-primary hover:bg-surface-hover active:scale-95 transition-all focus-ring cursor-pointer"
+          >
+            <Search className="w-4 h-4" />
+          </button>
+          <span className="w-[1px] h-4 bg-border-subtle" />
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+            title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+            className="flex items-center justify-center w-10 h-10 rounded-full text-text-secondary hover:text-text-primary hover:bg-surface-hover active:scale-95 transition-all focus-ring cursor-pointer"
+          >
+            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+          <span className="w-[1px] h-4 bg-border-subtle" />
+          <button
+            type="button"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
+            aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            title={mobileOpen ? 'Close menu' : 'Open menu'}
+            className={`flex items-center justify-center w-10 h-10 rounded-full transition-all focus-ring cursor-pointer active:scale-95 ${
+              mobileOpen
+                ? 'bg-surface-hover text-text-primary'
+                : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+            }`}
+          >
+            <motion.div
+              initial={false}
+              animate={{ rotate: mobileOpen ? 90 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </motion.div>
+          </button>
+        </motion.aside>
+      </div>
     </header>
   );
 };

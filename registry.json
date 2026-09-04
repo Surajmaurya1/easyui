@@ -1409,6 +1409,33 @@
       ]
     },
     {
+      "name": "pricing",
+      "type": "registry:ui",
+      "title": "Pricing",
+      "description": "A minimal two-tier pricing component for EasyUI. Native to the existing design system, fully theme-aware, with a quiet Free tier and a slightly more attractive Pro tier — without resorting to SaaS marketing tropes.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Pricing.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/pricing.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        },
+        {
+          "path": "src/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
       "name": "profile-card",
       "type": "registry:ui",
       "title": "Profile Card",
