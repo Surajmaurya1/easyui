@@ -67,36 +67,36 @@
 /* Dark palette — applied when an ancestor (typically <html> or a preview
    wrapper) has the `.dark` class. */
 .dark {
-  --bg: #050505;
-  --surface: #0E0E0E;
-  --surface-hover: #262626;
-  --surface-raised: #141414;
+  --bg: #111113;
+  --surface: #1C1C1F;
+  --surface-hover: #202023;
+  --surface-raised: #18181A;
 
-  --border: #1F1F1F;
-  --border-hover: #2A2A2A;
-  --border-subtle: #171717;
+  --border: #29292C;
+  --border-hover: #343438;
+  --border-subtle: #18181A;
 
-  --text-primary: #FAFAFA;
-  --text-secondary: #A1A1A1;
-  --text-muted: #6B6B6B;
-  --text-subtle: #525252;
+  --text-primary: #F2F2F3;
+  --text-secondary: #A1A1A6;
+  --text-muted: #6F6F75;
+  --text-subtle: #4D4D52;
 
-  --accent: #FAFAFA;
-  --accent-subtle: rgba(255, 255, 255, 0.06);
-  --accent-glow: rgba(255, 255, 255, 0.08);
-  --accent-ring: rgba(255, 255, 255, 0.2);
+  --accent: #F2F2F3;
+  --accent-subtle: rgba(242, 242, 243, 0.06);
+  --accent-glow: rgba(242, 242, 243, 0.08);
+  --accent-ring: rgba(242, 242, 243, 0.20);
   --indicator-active: #3B82F6;
 
-  --pill-bg-scrolled: rgba(14, 14, 14, 0.85);
-  --pill-bg-idle: rgba(14, 14, 14, 0);
-  --pill-border-scrolled: rgba(31, 31, 31, 1);
-  --pill-border-idle: rgba(31, 31, 31, 0);
-  --pill-shadow-scrolled: 0 12px 28px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --pill-bg-scrolled: rgba(17, 17, 19, 0.85);
+  --pill-bg-idle: rgba(17, 17, 19, 0);
+  --pill-border-scrolled: rgba(41, 41, 44, 1);
+  --pill-border-idle: rgba(41, 41, 44, 0);
+  --pill-shadow-scrolled: 0 12px 28px -8px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(242, 242, 243, 0.04);
   --pill-shadow-idle: 0 0 0 0 rgba(0, 0, 0, 0);
 
-  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.02);
-  --shadow-elevated: 0 10px 25px -8px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --shadow-glow: 0 0 15px -3px rgba(255, 255, 255, 0.08);
+  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(242, 242, 243, 0.02);
+  --shadow-elevated: 0 10px 25px -8px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(242, 242, 243, 0.04);
+  --shadow-glow: 0 0 15px -3px rgba(242, 242, 243, 0.08);
 }
 
 /* -----------------------------------------------------------------------------
