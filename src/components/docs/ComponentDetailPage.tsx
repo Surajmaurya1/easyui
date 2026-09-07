@@ -2221,27 +2221,45 @@ const completion = await client.completions.create({
                 <h4 className="text-[11px] font-bold text-text-muted uppercase tracking-widest px-2.5 mb-1.5">
                   Guides
                 </h4>
-                <button
-                  onClick={() => onNavigateDocs('quick-start')}
+                <a
+                  href="/docs/quick-start"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      onNavigateDocs('quick-start');
+                    }
+                  }}
                   className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-text-secondary hover:text-text-primary hover:bg-surface transition-colors text-left cursor-pointer"
                 >
                   <Terminal className="w-3.5 h-3.5 text-text-subtle" />
                   <span>Quick Start</span>
-                </button>
-                <button
-                  onClick={() => onNavigateDocs('motion')}
+                </a>
+                <a
+                  href="/docs/motion-system"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      onNavigateDocs('motion');
+                    }
+                  }}
                   className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-text-secondary hover:text-text-primary hover:bg-surface transition-colors text-left cursor-pointer"
                 >
                   <Sliders className="w-3.5 h-3.5 text-text-subtle" />
                   <span>Motion Tokens</span>
-                </button>
-                <button
-                  onClick={() => onNavigateDocs('architecture')}
+                </a>
+                <a
+                  href="/docs/architecture"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      onNavigateDocs('architecture');
+                    }
+                  }}
                   className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-text-secondary hover:text-text-primary hover:bg-surface transition-colors text-left cursor-pointer"
                 >
                   <Cpu className="w-3.5 h-3.5 text-text-subtle" />
                   <span>Architecture</span>
-                </button>
+                </a>
               </div>
 
               {/* COMPONENTS Section */}
@@ -2254,9 +2272,15 @@ const completion = await client.completions.create({
                     const isActive = item.id === component.id;
                     const isNew = isComponentNew(item);
                     return (
-                      <button
+                      <a
                         key={item.id}
-                        onClick={() => onSelectComponent(item.id)}
+                        href={`/components/${item.id}`}
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                            e.preventDefault();
+                            onSelectComponent(item.id);
+                          }
+                        }}
                         className={cn(
                           'w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all text-left group cursor-pointer',
                           isActive
@@ -2271,7 +2295,7 @@ const completion = await client.completions.create({
                             <span className="w-1.5 h-1.5 rounded-full bg-text-primary shrink-0" />
                           )}
                         </div>
-                      </button>
+                      </a>
                     );
                   })}
                 </div>
@@ -2287,15 +2311,31 @@ const completion = await client.completions.create({
             <div id="overview-section" className="space-y-3 pt-1">
               {/* Breadcrumb */}
               <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-text-muted">
-                <button
-                  type="button"
-                  onClick={handleBackToComponents}
+                <a
+                  href="/components"
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      handleBackToComponents();
+                    }
+                  }}
                   className="hover:text-text-primary transition-colors cursor-pointer"
                 >
                   Components
-                </button>
+                </a>
                 <ChevronRight className="w-3 h-3 text-text-muted" />
-                <span className="text-text-secondary">{component.category || 'UI'}</span>
+                <a
+                  href={`/components?category=${encodeURIComponent(component.category)}`}
+                  onClick={(e) => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      onNavigateComponents();
+                    }
+                  }}
+                  className="text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
+                >
+                  {component.category || 'UI'}
+                </a>
                 <ChevronRight className="w-3 h-3 text-text-muted" />
                 <span className="text-text-primary font-medium">{component.name}</span>
               </nav>
@@ -2311,6 +2351,24 @@ const completion = await client.completions.create({
               <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-3xl pt-1">
                 {component.description || component.tagline}
               </p>
+
+              {/* Framework & Tech Badges */}
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <span className="px-2.5 py-0.5 rounded-md border border-border bg-surface text-[11px] font-mono text-text-secondary">
+                  React 18 / 19
+                </span>
+                <span className="px-2.5 py-0.5 rounded-md border border-border bg-surface text-[11px] font-mono text-text-secondary">
+                  Tailwind CSS
+                </span>
+                <span className="px-2.5 py-0.5 rounded-md border border-border bg-surface text-[11px] font-mono text-text-secondary">
+                  Framer Motion
+                </span>
+                {component.badges && component.badges.map((b) => (
+                  <span key={b} className="px-2 py-0.5 rounded-md bg-surface-raised text-[11px] font-mono text-text-muted">
+                    {b}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {/* ========================================================================= */}
@@ -2626,6 +2684,86 @@ const completion = await client.completions.create({
             </section>
 
             {/* ========================================================================= */}
+            {/* SECTION: FEATURES & INTERACTIONS                                          */}
+            {/* ========================================================================= */}
+            {component.features && component.features.length > 0 && (
+              <section id="features-section" className="space-y-4 pt-4 border-t border-border">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-text-primary" />
+                  <h2 className="text-lg font-semibold text-text-primary tracking-tight">
+                    Key Features & Interactions
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {component.features.map((feat, i) => (
+                    <div
+                      key={i}
+                      className="p-3.5 rounded-xl border border-border bg-surface flex items-start gap-2.5 text-xs text-text-secondary leading-relaxed"
+                    >
+                      <Check className="w-3.5 h-3.5 text-text-primary shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ========================================================================= */}
+            {/* SECTION: ACCESSIBILITY                                                    */}
+            {/* ========================================================================= */}
+            {component.accessibility && component.accessibility.length > 0 && (
+              <section id="accessibility-section" className="space-y-4 pt-4 border-t border-border">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-text-primary" />
+                  <h2 className="text-lg font-semibold text-text-primary tracking-tight">
+                    Accessibility & Standards
+                  </h2>
+                </div>
+                <div className="p-4 rounded-xl border border-border bg-surface space-y-2">
+                  <ul className="space-y-2 text-xs text-text-secondary">
+                    {component.accessibility.map((a11y, i) => (
+                      <li key={i} className="flex items-start gap-2 leading-relaxed">
+                        <span className="w-1.5 h-1.5 rounded-full bg-text-primary shrink-0 mt-1.5" />
+                        <span>{a11y}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+            )}
+
+            {/* ========================================================================= */}
+            {/* SECTION: TECH STACK & REQUIREMENTS                                        */}
+            {/* ========================================================================= */}
+            <section id="tech-stack-section" className="space-y-3 pt-4 border-t border-border">
+              <div className="flex items-center gap-2">
+                <Cpu className="w-4 h-4 text-text-primary" />
+                <h2 className="text-lg font-semibold text-text-primary tracking-tight">
+                  Tech Stack & Compatibility
+                </h2>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 text-xs">
+                <span className="px-2.5 py-1 rounded-lg border border-border bg-surface font-mono text-text-primary">
+                  React &gt;= 18.0 (React 19 Ready)
+                </span>
+                <span className="px-2.5 py-1 rounded-lg border border-border bg-surface font-mono text-text-primary">
+                  Tailwind CSS (v4 / v3)
+                </span>
+                <span className="px-2.5 py-1 rounded-lg border border-border bg-surface font-mono text-text-primary">
+                  Framer Motion
+                </span>
+                {component.dependencies && component.dependencies.map((dep) => (
+                  <span
+                    key={dep}
+                    className="px-2.5 py-1 rounded-lg border border-border bg-surface font-mono text-text-secondary"
+                  >
+                    {dep}
+                  </span>
+                ))}
+              </div>
+            </section>
+
+            {/* ========================================================================= */}
             {/* SECTION: RELATED COMPONENTS                                               */}
             {/* ========================================================================= */}
             {relatedComponents.length > 0 && (
@@ -2633,10 +2771,16 @@ const completion = await client.completions.create({
                 <h2 className="text-lg font-semibold text-text-primary tracking-tight">Related Components</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {relatedComponents.map((rel) => (
-                    <button
+                    <a
                       key={rel.id}
-                      onClick={() => onSelectComponent(rel.id)}
-                      className="p-4 rounded-xl border border-border bg-surface hover:border-border-hover hover:bg-surface-hover transition-all text-left group cursor-pointer"
+                      href={`/components/${rel.id}`}
+                      onClick={(e) => {
+                        if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                          e.preventDefault();
+                          onSelectComponent(rel.id);
+                        }
+                      }}
+                      className="p-4 rounded-xl border border-border bg-surface hover:border-border-hover hover:bg-surface-hover transition-all text-left group cursor-pointer block"
                     >
                       <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block mb-1">
                         {rel.category}
@@ -2647,7 +2791,7 @@ const completion = await client.completions.create({
                       <p className="text-[11px] text-text-secondary line-clamp-2 leading-relaxed">
                         {rel.tagline || rel.description}
                       </p>
-                    </button>
+                    </a>
                   ))}
                 </div>
               </section>

@@ -59,8 +59,14 @@ export const DevExperience: React.FC<DevExperienceProps> = ({ onExploreDocs }) =
           </div>
 
           {onExploreDocs && (
-            <button
-              onClick={onExploreDocs}
+            <a
+              href="/docs/introduction"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                  e.preventDefault();
+                  onExploreDocs();
+                }
+              }}
               className="self-start md:self-auto group inline-flex items-center gap-2 text-[13px] font-medium text-text-secondary hover:text-text-primary transition-colors focus-ring rounded cursor-pointer"
             >
               <span className="relative">
@@ -68,7 +74,7 @@ export const DevExperience: React.FC<DevExperienceProps> = ({ onExploreDocs }) =
                 <span className="absolute left-0 -bottom-0.5 h-px w-full origin-left scale-x-0 group-hover:scale-x-100 bg-text-secondary transition-transform duration-300" />
               </span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
-            </button>
+            </a>
           )}
         </div>
 

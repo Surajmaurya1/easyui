@@ -23,6 +23,9 @@ export const SEO_CONFIG = {
   themeColor: '#050505',
   keywords: [
     'React components',
+    'animated React components',
+    'React micro-interactions',
+    'copy-paste React components',
     'UI library',
     'Framer Motion',
     'Tailwind CSS',
@@ -49,6 +52,7 @@ export const SEO_CONFIG = {
     docsQuickStart: '/docs/quick-start',
     docsArchitecture: '/docs/architecture',
     docsMotion: '/docs/motion-system',
+    docsComparison: '/docs/comparison',
     docsCollaboration: '/docs/collaboration',
     docsSEO: '/docs/seo',
   }

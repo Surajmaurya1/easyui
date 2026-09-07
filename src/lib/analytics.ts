@@ -128,6 +128,55 @@ export function trackEvent(eventName: string, eventParams?: Record<string, any>)
 }
 
 /**
+ * Known AI assistant & search referral sources.
+ */
+const AI_REFERRAL_PATTERNS: Array<{ engine: string; regex: RegExp }> = [
+  { engine: 'ChatGPT', regex: /(chatgpt\.com|chat\.openai\.com)/i },
+  { engine: 'Claude', regex: /claude\.ai/i },
+  { engine: 'Perplexity', regex: /perplexity\.ai/i },
+  { engine: 'Gemini', regex: /(gemini\.google\.com|bard\.google\.com)/i },
+  { engine: 'Copilot', regex: /(copilot\.microsoft\.com|edgeservices\.bing\.com)/i },
+  { engine: 'Phind', regex: /phind\.com/i },
+  { engine: 'Poe', regex: /poe\.com/i },
+  { engine: 'Mistral', regex: /(chat\.mistral\.ai|mistral\.ai)/i },
+  { engine: 'Grok', regex: /(grok\.com|x\.ai)/i },
+];
+
+let hasTrackedAiReferral = false;
+
+/**
+ * Checks document.referrer and URL query parameters to detect incoming traffic
+ * from AI assistants, LLM tools, or AI-powered search engines.
+ */
+export function detectAiReferrer(): { engine: string; source: string } | null {
+  if (typeof window === 'undefined') return null;
+
+  const referrer = document.referrer || '';
+  for (const { engine, regex } of AI_REFERRAL_PATTERNS) {
+    if (regex.test(referrer)) {
+      return { engine, source: 'referrer' };
+    }
+  }
+
+  // Check URL parameters for explicit AI UTM or ref tags (e.g. ?utm_source=chatgpt or ?ref=perplexity)
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const utmSource = params.get('utm_source') || params.get('ref') || '';
+    if (utmSource) {
+      for (const { engine, regex } of AI_REFERRAL_PATTERNS) {
+        if (regex.test(utmSource)) {
+          return { engine, source: 'utm_param' };
+        }
+      }
+    }
+  } catch {
+    /* no-op */
+  }
+
+  return null;
+}
+
+/**
  * Custom React hook for tracking route and view changes across the EasyUI application.
  * Automatically initializes GA and captures page views on mount and URL/view updates.
  */
@@ -139,6 +188,20 @@ export function useAnalyticsTracker(state?: {
   // Initialize GA once on mount
   useEffect(() => {
     initGA();
+  }, []);
+
+  // Detect and attribute AI assistant referrals on mount
+  useEffect(() => {
+    if (hasTrackedAiReferral) return;
+    const aiRef = detectAiReferrer();
+    if (aiRef) {
+      hasTrackedAiReferral = true;
+      trackEvent('ai_referral', {
+        ai_engine: aiRef.engine,
+        ai_source: aiRef.source,
+        landing_page: window.location.pathname + (window.location.search || ''),
+      });
+    }
   }, []);
 
   // Track page view whenever view state or route changes

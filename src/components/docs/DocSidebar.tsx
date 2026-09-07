@@ -6,6 +6,7 @@ import {
   GitPullRequest,
   Sliders,
   Search,
+  Scale,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -42,6 +43,7 @@ export const DocSidebar: React.FC<DocSidebarProps> = ({
       group: 'Architecture & Engine',
       items: [
         { id: 'architecture', label: 'Registry Architecture', icon: Cpu },
+        { id: 'comparison', label: 'Library Comparison', icon: Scale },
         { id: 'seo', label: 'Automated SEO System', icon: Search },
         { id: 'collaboration', label: 'Contributing Guide', icon: GitPullRequest },
       ],

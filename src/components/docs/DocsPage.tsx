@@ -9,6 +9,7 @@ import { DocArchitecture } from './sections/DocArchitecture';
 import { DocCollaboration } from './sections/DocCollaboration';
 import { DocMotionSystem } from './sections/DocMotionSystem';
 import { DocSEO } from './sections/DocSEO';
+import { DocComparison } from './sections/DocComparison';
 
 export interface DocsPageProps {
   activeTopic: string;
@@ -34,6 +35,8 @@ export const DocsPage: React.FC<DocsPageProps> = ({
         return 'Quick Start';
       case 'motion':
         return 'Motion Tokens';
+      case 'comparison':
+        return 'Library Comparison';
       case 'architecture':
         return 'Registry Architecture';
       case 'seo':
@@ -172,6 +175,10 @@ export const DocsPage: React.FC<DocsPageProps> = ({
               <DocMotionSystem onNavigateSection={handleSelectTopicWithMobileClose} />
             )}
 
+            {activeTopic === 'comparison' && (
+              <DocComparison onNavigateSection={handleSelectTopicWithMobileClose} />
+            )}
+
             {activeTopic === 'architecture' && (
               <DocArchitecture onNavigateSection={handleSelectTopicWithMobileClose} />
             )}
@@ -185,7 +192,7 @@ export const DocsPage: React.FC<DocsPageProps> = ({
             )}
 
             {/* Fallback to Introduction for unknown or root doc topic */}
-            {!['introduction', 'quick-start', 'motion', 'architecture', 'seo', 'collaboration'].includes(activeTopic) && (
+            {!['introduction', 'quick-start', 'motion', 'comparison', 'architecture', 'seo', 'collaboration'].includes(activeTopic) && (
               <DocIntroduction onNavigateSection={handleSelectTopicWithMobileClose} />
             )}
           </main>

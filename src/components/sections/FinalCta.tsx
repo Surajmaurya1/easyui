@@ -26,8 +26,14 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ onBrowse }) => {
           </p>
 
           <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            <button
-              onClick={onBrowse}
+            <a
+              href="/components"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                  e.preventDefault();
+                  onBrowse();
+                }
+              }}
               className="group inline-flex items-center gap-2 text-[14px] font-medium text-text-primary transition-colors focus-ring rounded cursor-pointer"
             >
               <span className="relative">
@@ -35,7 +41,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ onBrowse }) => {
                 <span className="absolute left-0 -bottom-0.5 h-px w-full origin-left scale-x-0 group-hover:scale-x-100 bg-text-primary transition-transform duration-300" />
               </span>
               <ArrowRight className="w-4 h-4 text-text-secondary group-hover:text-text-primary group-hover:translate-x-0.5 transition-all duration-300" />
-            </button>
+            </a>
 
             <a
               href={GITHUB_URL}
