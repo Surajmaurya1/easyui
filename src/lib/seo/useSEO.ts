@@ -18,7 +18,7 @@ import type { EasyComponentMeta } from '../../types/component';
 import { EASY_COMPONENTS } from '../../components/registry/components-data';
 
 interface UseSEOProps {
-  activeView: 'showcase' | 'components' | 'docs' | 'component-detail' | 'component-not-found';
+  activeView: 'showcase' | 'components' | 'docs' | 'component-detail';
   componentPage?: number;
   activeDocTopic?: string;
   selectedModalComponent?: EasyComponentMeta | null;
@@ -37,19 +37,6 @@ export function useSEO({
   selectedComponent,
 }: UseSEOProps): void {
   useEffect(() => {
-    // 0. Handle 404 Component Not Found state (prevent soft 404 indexing)
-    if (activeView === 'component-not-found') {
-      const pathname = typeof window !== 'undefined' ? window.location.pathname : '/404';
-      const canonical = getCanonicalUrl(pathname);
-      updatePageMetadata({
-        title: 'Component Not Found — EasyUI',
-        description: 'The requested EasyUI React component could not be found or has been moved.',
-        canonical,
-        noindex: true,
-      });
-      return;
-    }
-
     const activeComponent = selectedComponent || selectedModalComponent;
     // 1. If viewing dedicated component page or component detail, apply component-specific SEO
     if (activeComponent) {
@@ -81,26 +68,15 @@ export function useSEO({
 
     // 3. Components Directory View
     if (activeView === 'components') {
-      let category = '';
-      if (typeof window !== 'undefined') {
-        const params = new URLSearchParams(window.location.search);
-        const cat = params.get('category');
-        if (cat && cat !== 'All') category = cat;
-      }
-
-      let pageTitle = 'All React Components — EasyUI';
-      if (category) {
-        pageTitle = `${category} React Components — EasyUI`;
-      } else if (componentPage > 1) {
-        pageTitle = `All React Components (Page ${componentPage}) — EasyUI`;
-      }
-
+      const pageTitle =
+        componentPage > 1
+          ? `All React Components (Page ${componentPage}) — EasyUI`
+          : 'All React Components — EasyUI';
       const canonical = getCanonicalUrl(
         componentPage > 1 ? `components?page=${componentPage}` : 'components'
       );
-      const description = category
-        ? `Explore curated ${category.toLowerCase()} React components in EasyUI, built with Tailwind CSS and Framer Motion spring animations.`
-        : 'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.';
+      const description =
+        'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.';
 
       const structuredData = generateComponentCatalogSchema(EASY_COMPONENTS, componentPage);
 

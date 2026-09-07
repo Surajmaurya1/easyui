@@ -3,7 +3,6 @@ import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import type { EasyUIComponentMeta } from '../src/types/component';
 import { generateSitemap } from './generate-sitemap';
-import { generateLlmsTxt } from './generate-llms-txt';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -408,9 +407,8 @@ async function main() {
     generateRegistryJson(components);
     generateComponentsData(components);
 
-    // Automatically synchronize sitemap.xml and llms.txt with newly discovered components
+    // Automatically synchronize sitemap.xml with newly discovered components
     generateSitemap();
-    generateLlmsTxt();
 
     console.log('----------------------------------------');
     console.log('✨ Generation complete successfully!');

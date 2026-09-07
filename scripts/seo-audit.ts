@@ -10,7 +10,6 @@ const SITE_URL = 'https://easyui.site';
 const REGISTRY_PATH = path.join(ROOT_DIR, 'registry.json');
 const SITEMAP_PATH = path.join(ROOT_DIR, 'public', 'sitemap.xml');
 const ROBOTS_PATH = path.join(ROOT_DIR, 'public', 'robots.txt');
-const LLMS_PATH = path.join(ROOT_DIR, 'public', 'llms.txt');
 const MANIFEST_PATH = path.join(ROOT_DIR, 'public', 'site.webmanifest');
 const INDEX_HTML_PATH = path.join(ROOT_DIR, 'index.html');
 const LOGO_PATH = path.join(ROOT_DIR, 'public', 'logo.png');
@@ -83,8 +82,6 @@ export function runSEOAudit(): AuditReport {
   if (robotsExists) {
     const robots = fs.readFileSync(ROBOTS_PATH, 'utf-8');
     check('Technical SEO', robots.includes('Allow: /'), 'CRITICAL', 'robots.txt allows public crawling', 'robots.txt missing Allow: / directive', 'public/robots.txt');
-    check('Technical SEO', robots.includes('GPTBot'), 'WARNING', 'robots.txt explicitly defines AI assistant crawler permissions (GPTBot, ClaudeBot, PerplexityBot)', 'robots.txt missing AI agent permissions', 'public/robots.txt');
-    check('Technical SEO', robots.includes('llms.txt'), 'WARNING', 'robots.txt references llms.txt discoverability manifest', 'robots.txt missing llms.txt reference', 'public/robots.txt');
     check('Technical SEO', robots.includes('Sitemap:'), 'WARNING', 'robots.txt references production sitemap URL', 'robots.txt missing Sitemap reference', 'public/robots.txt');
     check('Technical SEO', robots.includes('Disallow: /admin/'), 'INFO', 'robots.txt disallows private/administrative paths', 'robots.txt does not block admin/internal paths', 'public/robots.txt');
   }
@@ -98,15 +95,6 @@ export function runSEOAudit(): AuditReport {
     check('Technical SEO', sitemap.includes(`${SITE_URL}/`), 'CRITICAL', 'sitemap.xml contains homepage URL', 'sitemap.xml missing homepage URL', 'public/sitemap.xml');
     check('Technical SEO', sitemap.includes(`${SITE_URL}/components`), 'CRITICAL', 'sitemap.xml contains components catalog URL', 'sitemap.xml missing components catalog URL', 'public/sitemap.xml');
     check('Technical SEO', sitemap.includes(`${SITE_URL}/docs/introduction`), 'WARNING', 'sitemap.xml contains documentation topic URLs', 'sitemap.xml missing documentation URLs', 'public/sitemap.xml');
-    check('Technical SEO', sitemap.includes(`${SITE_URL}/docs/comparison`), 'WARNING', 'sitemap.xml contains library comparison documentation URL', 'sitemap.xml missing comparison doc URL', 'public/sitemap.xml');
-  }
-
-  const llmsExists = fs.existsSync(LLMS_PATH);
-  check('Technical SEO', llmsExists, 'CRITICAL', 'llms.txt exists in public directory for AI agents', 'llms.txt is missing from public directory', 'public/llms.txt');
-
-  if (llmsExists) {
-    const llmsContent = fs.readFileSync(LLMS_PATH, 'utf-8');
-    check('Technical SEO', llmsContent.includes('# EasyUI') && llmsContent.includes('Component Categories'), 'WARNING', 'llms.txt contains structured markdown with component catalog', 'llms.txt content is malformed or incomplete', 'public/llms.txt');
   }
 
   const manifestExists = fs.existsSync(MANIFEST_PATH);

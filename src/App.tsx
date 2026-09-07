@@ -57,7 +57,7 @@ export function App() {
 
   // Dynamic SEO metadata & JSON-LD management
   useSEO({
-    activeView,
+    activeView: activeView === 'component-not-found' ? 'showcase' : activeView,
     componentPage,
     activeDocTopic,
     selectedComponent,
@@ -137,8 +137,6 @@ export function App() {
           setActiveDocTopic('motion');
         } else if (rawTopic === 'contributing') {
           setActiveDocTopic('collaboration');
-        } else if (rawTopic === 'compare' || rawTopic === 'alternatives') {
-          setActiveDocTopic('comparison');
         } else {
           setActiveDocTopic(rawTopic);
         }

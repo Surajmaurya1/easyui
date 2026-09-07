@@ -1548,7 +1548,6 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
           strokeWidth={2}
         />
       </div>
-      <p className="sr-only">{component.description || component.tagline}</p>
     </a>
   );
 };

@@ -61,12 +61,6 @@ export function generateSitemap(): void {
       priority: '0.80',
     },
     {
-      loc: `${SITE_URL}/docs/comparison`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: '0.85',
-    },
-    {
       loc: `${SITE_URL}/docs/collaboration`,
       lastmod: today,
       changefreq: 'weekly',

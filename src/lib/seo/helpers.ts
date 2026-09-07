@@ -84,11 +84,6 @@ export const DOC_TOPICS_SEO: Record<string, { title: string; description: string
     description: 'Learn how to build, test, document, and contribute new components to EasyUI using automated registry generation and design tokens.',
     keywords: ['Contribute to EasyUI', 'Component creation', 'Registry generator', 'UI development workflow'],
   },
-  comparison: {
-    title: 'React UI Libraries Comparison & Alternatives — EasyUI',
-    description: 'A factual, objective comparison of EasyUI vs shadcn/ui, MUI, Aceternity, and Framer Motion primitives. Learn bundle sizes, motion systems, and architectural tradeoffs.',
-    keywords: ['EasyUI vs shadcn', 'React UI library comparison', 'Framer Motion vs MUI', 'React animated components alternatives', 'shadcn alternatives'],
-  },
   seo: {
     title: 'Automated SEO & Audit System — EasyUI',
     description: 'Explore EasyUI automated SEO engine: single source of truth metadata, dynamic sitemaps, canonicals, schema.org JSON-LD, and 44-point CLI health audit.',
@@ -123,12 +118,11 @@ export function getDocTopicSEO(topicId = 'introduction'): PageSEOMeta {
  * Generates SEO metadata for any EasyUI component.
  */
 export function getComponentSEO(component: EasyComponentMeta): PageSEOMeta {
-  const compTitle = `${component.name} — React UI Component | EasyUI`;
+  const compTitle = `${component.name} Component for React — EasyUI`;
   const canonical = getCanonicalUrl(`components/${component.id}`);
   const description =
     component.description ||
-    component.tagline ||
-    `A polished, copy-paste React ${component.name.toLowerCase()} component built with Tailwind CSS and Framer Motion spring physics.`;
+    `A responsive, accessible React ${component.name.toLowerCase()} component from EasyUI with customizable styles, states, and spring physics animations.`;
 
   const keywords = Array.from(
     new Set([
