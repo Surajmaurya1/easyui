@@ -207,6 +207,32 @@
       ]
     },
     {
+      "name": "car-smoke-page-transition",
+      "type": "registry:ui",
+      "title": "Car Smoke Page Transition",
+      "description": "A cinematic page transition where a speeding car crosses the screen, leaving a smoke trail before transitioning to the next page.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/CarSmokePageTransition.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/car-smoke-page-transition.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        },
+        {
+          "path": "src/lib/theme/useTheme.tsx",
+          "type": "registry:lib",
+          "target": "lib/theme/useTheme.tsx"
+        }
+      ]
+    },
+    {
       "name": "circular-orbit",
       "type": "registry:ui",
       "title": "Circular Orbit",
