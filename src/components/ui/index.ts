@@ -217,6 +217,9 @@ export type { WalletCardProps } from './WalletCard';
 export { CircularOrbit } from './CircularOrbit';
 export type { CircularOrbitProps, OrbitItem } from './CircularOrbit';
 
+export { CarSmokePageTransition } from './CarSmokePageTransition';
+export type { CarSmokePageTransitionProps } from './CarSmokePageTransition';
+
 export { ProfileCard } from './ProfileCard';
 export type { ProfileCardProps } from './ProfileCard';
 
