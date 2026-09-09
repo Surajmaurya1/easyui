@@ -318,6 +318,27 @@
       ]
     },
     {
+      "name": "cursor-follower",
+      "type": "registry:ui",
+      "title": "Cursor Follower",
+      "description": "A smooth spring-based cursor follower with customizable physics, velocity scaling, and custom child icons or badges.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/CursorFollower.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/cursor-follower.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "density-lens",
       "type": "registry:ui",
       "title": "Density Lens",
@@ -1054,6 +1075,27 @@
       ]
     },
     {
+      "name": "morphing-blob",
+      "type": "registry:ui",
+      "title": "Morphing Blob",
+      "description": "An ambient, accessible SVG blob background that continuously morphs with spring physics and subtly follows the cursor for a fluid, interactive visual effect.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/MorphingBlob.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/morphing-blob.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "morphing-button",
       "type": "registry:ui",
       "title": "Morphing Button",
@@ -1271,6 +1313,27 @@
           "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib",
           "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "otp-input",
+      "type": "registry:ui",
+      "title": "OTP Input",
+      "description": "An accessible one-time-passcode input made of auto-advancing digit boxes, each with a spring-driven pop animation on entry, built with Framer Motion and Tailwind CSS.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/OtpInput.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/otp-input.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
         }
       ]
     },

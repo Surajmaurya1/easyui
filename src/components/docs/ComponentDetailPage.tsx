@@ -29,6 +29,7 @@ import { useTheme } from '../../lib/theme/useTheme';
 // UI components for live interactive demonstrations
 import { MagneticButton } from '../ui/MagneticButton';
 import { SpotlightCard } from '../ui/SpotlightCard';
+import { CursorFollower } from '../ui/CursorFollower';
 import { ExpandableSearch } from '../ui/ExpandableSearch';
 import { AnimatedTabs } from '../ui/AnimatedTabs';
 import { FloatingActionDock } from '../ui/FloatingActionDock';
@@ -117,6 +118,9 @@ import { UnfoldAccordion } from '../ui/UnfoldAccordion';
 import { SlidePagination } from '../ui/SlidePagination';
 import { Pricing } from '../ui/Pricing';
 import { CarSmokePageTransition } from '../ui/CarSmokePageTransition';
+import { MorphingBlob } from '../ui/MorphingBlob';
+import { OTPInput } from '../ui/OtpInput';
+
 
 export type MainTab = 'preview' | 'usage' | 'code' | 'props' | 'accessibility';
 export type PkgManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
@@ -1165,6 +1169,37 @@ const completion = await client.completions.create({
             </SpotlightCard>
           </div>
         );
+      case 'cursor-follower':
+        return (
+          <div className="py-12 flex flex-col items-center justify-center gap-6">
+            <CursorFollower />
+            <div className="max-w-md w-full p-8 rounded-2xl bg-surface border border-border text-center space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-raised border border-border text-xs text-text-secondary font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Spring Tracked (stiffness: 450, damping: 32)</span>
+              </div>
+              <h3 className="text-xl font-semibold text-text-primary">Interactive Follower Stage</h3>
+              <p className="text-xs text-text-muted leading-relaxed">
+                Move your pointer across this page to experience fluid spring-damped momentum and velocity scaling.
+              </p>
+            </div>
+          </div>
+        );
+      case 'morphing-blob':
+        return (
+          <div className="flex items-center justify-center h-[400px] w-full">
+            <MorphingBlob speed={10} baseRadius={180} points={18} />
+          </div>
+        );
+      case 'otp-input':
+        return (
+          <div className="flex items-center justify-center h-[400px] w-full">
+            <OTPInput length={6} autoFocus onComplete={(value) =>{
+              alert(value)
+            }}/>
+          </div>
+        );
+
       case 'expandable-search':
         return (
           <div className="py-12 flex flex-col items-center justify-center gap-4">

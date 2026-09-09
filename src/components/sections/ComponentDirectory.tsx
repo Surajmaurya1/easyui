@@ -137,6 +137,7 @@ export const ComponentDirectory: React.FC<ComponentDirectoryProps> = ({
         </div>
 
         {/* Components Grid — larger gap, larger breathing room */}
+        
         {filteredComponents.length === 0 ? (
           <div className="py-24 text-center rounded-xl border border-border bg-surface px-4">
             {selectedCategory === 'Recent' ? (
