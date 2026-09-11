@@ -39,6 +39,7 @@ import { copyToClipboard, cn } from '../../lib/utils';
 import { CursorFollower } from '../ui/CursorFollower';
 import { MorphingBlob } from '../ui/MorphingBlob';
 import { OTPInput } from '../ui/OtpInput';
+import { ThinkingOrb } from '../ui/ThinkingOrb';
 
 export interface ComponentCardProps {
   component: EasyComponentMeta;
@@ -1505,6 +1506,21 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
             <OTPInput length={6} autoFocus onComplete={(value) => {
               alert(value)
             }} />
+          </div>
+        );
+
+      case 'thinking-orb':
+        return (
+          <div className="h-52 flex flex-col items-center justify-center p-4 gap-3 pointer-events-none">
+            <ThinkingOrb
+              state={hovered ? 'solving' : 'working'}
+              size={hovered ? 76 : 68}
+              speed={hovered ? 1.3 : 1}
+              dark={true}
+            />
+            <span className="text-[10px] font-mono text-[#A1A1A1] tracking-wider uppercase bg-[#141414]/90 px-2.5 py-1 rounded-md border border-[#222222]">
+              {hovered ? 'state: solving' : 'state: working'}
+            </span>
           </div>
         );
 

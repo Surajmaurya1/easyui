@@ -284,4 +284,7 @@ export type { SlidePaginationProps } from './SlidePagination';
 export { Pricing } from './Pricing';
 export type { PricingProps, PricingTier, PricingFeature } from './Pricing';
 
+export { ThinkingOrb } from './ThinkingOrb';
+export type { ThinkingOrbProps, ThinkingOrbState } from './ThinkingOrb';
+
 

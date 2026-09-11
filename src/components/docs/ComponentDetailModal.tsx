@@ -71,6 +71,7 @@ import { PillNavigation } from '../ui/PillNavigation';
 import { TextScrambleDecoder } from '../ui/TextScrambleDecoder';
 import { MacOSFolderCards } from '../ui/MacOSFolderCards';
 import { IntroLoader } from '../ui/IntroLoader';
+import { ThinkingOrb } from '../ui/ThinkingOrb';
 
 export interface ComponentDetailModalProps {
   component: EasyComponentMeta | null;
@@ -1314,6 +1315,15 @@ func main() {
         return (
           <div className="py-8 w-full max-w-xl mx-auto flex items-center justify-center">
             <IntroLoader fullScreen={false} />
+          </div>
+        );
+      case 'thinking-orb':
+        return (
+          <div className="py-8 w-full max-w-md mx-auto flex flex-col items-center justify-center gap-6">
+            <ThinkingOrb size={84} speed={1} dark={true} state="working" />
+            <span className="text-[11px] font-mono text-[#A1A1A1] bg-[#141414] px-3 py-1 rounded-lg border border-[#222222]">
+              state: working • 84px • canvas 60fps
+            </span>
           </div>
         );
       default:
