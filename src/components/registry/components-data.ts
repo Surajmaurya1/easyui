@@ -1049,6 +1049,110 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "cursor-follower",
+    "name": "Cursor Follower",
+    "tagline": "Spring-damped pointer follower with custom icon content",
+    "description": "A smooth spring-based cursor follower with customizable physics, velocity scaling, and custom child icons or badges.",
+    "category": "Motion",
+    "badges": [
+      "Framer Motion",
+      "Spring Physics",
+      "Interactive",
+      "Micro-Animation"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/cursor-follower",
+    "features": [
+      "Configurable spring dynamics (stiffness, damping, and mass)",
+      "Dynamic velocity scaling when pointer is in motion",
+      "Automatic viewport departure detection and graceful exit",
+      "Reduced motion support with instant 1:1 hardware coordinate mapping",
+      "Supports any custom React icon, text pill, or visual indicator"
+    ],
+    "props": [
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "default": "undefined",
+        "description": "Custom icon, text badge, or React element displayed inside the cursor follower."
+      },
+      {
+        "name": "size",
+        "type": "number",
+        "default": "40",
+        "description": "Width and height of the cursor follower in pixels."
+      },
+      {
+        "name": "offsetX",
+        "type": "number",
+        "default": "0",
+        "description": "Horizontal offset from the cursor coordinates."
+      },
+      {
+        "name": "offsetY",
+        "type": "number",
+        "default": "0",
+        "description": "Vertical offset from the cursor coordinates."
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "450",
+        "description": "Spring stiffness controlling how rapidly the follower catches up to the cursor."
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "32",
+        "description": "Spring damping controlling the smoothness and friction of deceleration."
+      },
+      {
+        "name": "mass",
+        "type": "number",
+        "default": "0.5",
+        "description": "Spring mass controlling inertia and physical weight."
+      },
+      {
+        "name": "scaleOnMove",
+        "type": "boolean",
+        "default": "true",
+        "description": "Scales the cursor follower slightly while the pointer is in active motion."
+      },
+      {
+        "name": "hideOnLeave",
+        "type": "boolean",
+        "default": "true",
+        "description": "Hides the cursor follower when the pointer leaves the browser window or viewport."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional custom Tailwind CSS utility classes."
+      }
+    ],
+    "accessibility": [
+      "Includes aria-hidden=\"true\" and pointer-events-none so it never intercepts underlying click or keyboard interactions",
+      "Bypasses spring oscillation under prefers-reduced-motion for zero visual vestibular strain"
+    ],
+    "createdAt": "2026-09-09",
+    "usageCode": "import { CursorFollower } from \"@/components/ui/cursor-follower\";\nimport { ArrowUpRight } from \"lucide-react\";\n\nexport function Demo() {\n  return (\n    <CursorFollower size={44}>\n      <div className=\"flex h-full w-full items-center justify-center rounded-full bg-white text-black shadow-lg\">\n        <ArrowUpRight className=\"h-4 w-4\" />\n      </div>\n    </CursorFollower>\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/CursorFollower.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/cursor-follower.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
     "id": "density-lens",
     "name": "Density Lens",
     "tagline": "Cursor-tracking magnification & detail inspection lens",
@@ -3459,6 +3563,132 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "morphing-blob",
+    "name": "Morphing Blob",
+    "tagline": "Fluid spring-physics blob with cursor interaction",
+    "description": "An ambient, accessible SVG blob background that continuously morphs with spring physics and subtly follows the cursor for a fluid, interactive visual effect.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "SVG",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/morphing-blob",
+    "features": [
+      "Spring-physics anchor points with Catmull-Rom smoothing for a fluid, organic shape",
+      "Smooth cursor-follow interaction with configurable strength and responsiveness",
+      "Imperative per-frame path updates for smooth animation without unnecessary React re-renders",
+      "Independently configurable SVG width and height",
+      "Customizable point count, radius, variance, speed, stiffness, and damping",
+      "Configurable gradient start and end colors",
+      "Automatically respects the prefers-reduced-motion accessibility preference",
+      "Pointer-events disabled by default so the decorative blob never blocks foreground interactions"
+    ],
+    "props": [
+      {
+        "name": "width",
+        "type": "number",
+        "default": "400",
+        "description": "Width of the SVG viewport in pixels"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "400",
+        "description": "Height of the SVG viewport in pixels"
+      },
+      {
+        "name": "points",
+        "type": "number",
+        "default": "8",
+        "description": "Number of anchor points used to construct the blob shape"
+      },
+      {
+        "name": "baseRadius",
+        "type": "number",
+        "default": "120",
+        "description": "Resting radius of the blob in pixels"
+      },
+      {
+        "name": "variance",
+        "type": "number",
+        "default": "28",
+        "description": "Maximum radius variation applied to each anchor point during morphing"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": "0.7",
+        "description": "Controls how frequently new random morph targets are generated"
+      },
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": "45",
+        "description": "Spring stiffness controlling how strongly anchor points move toward their targets"
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": "9",
+        "description": "Spring damping controlling the resistance and smoothness of the blob motion"
+      },
+      {
+        "name": "cursorFollow",
+        "type": "boolean",
+        "default": "true",
+        "description": "Enables or disables cursor-follow interaction"
+      },
+      {
+        "name": "cursorStrength",
+        "type": "number",
+        "default": "0.35",
+        "description": "Controls how strongly the blob moves toward the cursor position"
+      },
+      {
+        "name": "cursorSmoothness",
+        "type": "number",
+        "default": "0.08",
+        "description": "Controls how smoothly the blob catches up to the cursor; lower values create more fluid trailing motion"
+      },
+      {
+        "name": "colors",
+        "type": "[string, string]",
+        "default": "['#7C3AED', '#06B6D4']",
+        "description": "Two colors used for the blob gradient, from start to end"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Additional CSS classes for positioning, sizing, opacity, layering, and other styling"
+      }
+    ],
+    "accessibility": [
+      "Respects the prefers-reduced-motion media query by freezing the blob in its static resting shape",
+      "Uses aria-hidden=\"true\" because the blob is purely decorative",
+      "Uses role=\"presentation\" to communicate that the SVG has no meaningful semantic content",
+      "Uses pointer-events-none so the decorative element never intercepts clicks, hover, or other pointer interactions"
+    ],
+    "createdAt": "2026-09-09T12:15:29.957Z",
+    "usageCode": "import { MorphingBlob } from \"@/components/ui/morphing-blob\";\n\nexport function Demo() {\n  return (\n    <div className=\"relative h-96 w-full overflow-hidden rounded-2xl bg-[#0E0E0E]\">\n      <MorphingBlob\n        width={600}\n        height={400}\n        cursorFollow\n        cursorStrength={0.35}\n        cursorSmoothness={0.08}\n        colors={['#7C3AED', '#06B6D4']}\n        className=\"absolute -top-20 -left-20 opacity-70\"\n      />\n\n      <div className=\"relative z-10 p-8 text-white\">\n        Content sits above the blob.\n      </div>\n    </div>\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/MorphingBlob.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/morphing-blob.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
     "id": "morphing-button",
     "name": "Morphing Button",
     "tagline": "Dimension-preserving state morphing button with fluid icon transitions",
@@ -4137,6 +4367,99 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/motion-tokens.ts",
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
+    "id": "otp-input",
+    "name": "OTP Input",
+    "tagline": "Auto-advancing digit boxes with pop feedback",
+    "description": "An accessible one-time-passcode input made of auto-advancing digit boxes, each with a spring-driven pop animation on entry, built with Framer Motion and Tailwind CSS.",
+    "category": "Forms",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Forms"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/otp-input",
+    "features": [
+      "Auto-advances focus to the next box as each digit is entered",
+      "Backspace clears the current digit or steps back into the previous box",
+      "Full-code paste support, distributing pasted digits across all boxes",
+      "Per-digit spring pop animation on entry for tactile feedback",
+      "Works as a controlled or uncontrolled component"
+    ],
+    "props": [
+      {
+        "name": "length",
+        "type": "number",
+        "default": "6",
+        "description": "Number of digit boxes to render"
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "default": "undefined",
+        "description": "Controlled value; omit to let the component manage its own state"
+      },
+      {
+        "name": "onChange",
+        "type": "(value: string) => void",
+        "default": "undefined",
+        "description": "Called with the joined code whenever any digit changes"
+      },
+      {
+        "name": "onComplete",
+        "type": "(value: string) => void",
+        "default": "undefined",
+        "description": "Called once with the full code when every box is filled"
+      },
+      {
+        "name": "autoFocus",
+        "type": "boolean",
+        "default": "false",
+        "description": "Focuses the first box on mount"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "default": "false",
+        "description": "Disables all digit boxes"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Classes applied to the wrapping group element"
+      },
+      {
+        "name": "boxClassName",
+        "type": "string",
+        "default": "undefined",
+        "description": "Classes applied to each individual digit box"
+      }
+    ],
+    "accessibility": [
+      "Wrapping element uses role=\"group\" with an aria-label describing the field",
+      "Each digit box has its own aria-label (e.g. \"Digit 3 of 6\") for screen readers",
+      "Full keyboard support: typing advances focus, Backspace clears/steps back, Left/Right arrows move between boxes",
+      "autoComplete=\"one-time-code\" on the first box enables SMS autofill on supporting platforms"
+    ],
+    "createdAt": "2026-09-09T12:15:29.957Z",
+    "usageCode": "import { OTPInput } from \"@/components/ui/otp-input\";\n\nexport function Demo() {\n  return (\n    <OTPInput\n      length={6}\n      autoFocus\n      onComplete={(code) => console.log(\"Submitted code:\", code)}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/OtpInput.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/otp-input.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
       }
     ]
   },

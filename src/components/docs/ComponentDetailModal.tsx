@@ -17,6 +17,7 @@ import { useComponentSource } from '../../lib/source-loader';
 import { useFocusTrap } from '../../lib/hooks/useFocusTrap';
 import { MagneticButton } from '../ui/MagneticButton';
 import { SpotlightCard } from '../ui/SpotlightCard';
+import { CursorFollower } from '../ui/CursorFollower';
 import { ExpandableSearch } from '../ui/ExpandableSearch';
 import { AnimatedTabs } from '../ui/AnimatedTabs';
 import { FloatingActionDock } from '../ui/FloatingActionDock';
@@ -807,6 +808,17 @@ func main() {
                 Coordinates: Hardware Accelerated
               </div>
             </SpotlightCard>
+          </div>
+        );
+      case 'cursor-follower':
+        return (
+          <div className="py-8 flex flex-col items-center justify-center gap-4">
+            <CursorFollower size={44}>
+            </CursorFollower>
+            <div className="p-6 rounded-xl bg-surface border border-border text-center max-w-sm">
+              <h4 className="text-sm font-semibold text-text-primary mb-1">Cursor Follower Active</h4>
+              <p className="text-xs text-text-muted">Move your mouse across the modal to test spring tracking.</p>
+            </div>
           </div>
         );
       case 'expandable-search':

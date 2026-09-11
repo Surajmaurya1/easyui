@@ -36,6 +36,9 @@ import { Pricing } from '../ui/Pricing';
 import { NewBadge } from './NewBadge';
 import { isComponentNew } from '../../lib/components';
 import { copyToClipboard, cn } from '../../lib/utils';
+import { CursorFollower } from '../ui/CursorFollower';
+import { MorphingBlob } from '../ui/MorphingBlob';
+import { OTPInput } from '../ui/OtpInput';
 
 export interface ComponentCardProps {
   component: EasyComponentMeta;
@@ -219,6 +222,15 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
               </div>
               <p className="text-[11px] text-[#6B6B6B]">Hover pointer to track dynamic beam.</p>
             </SpotlightCard>
+          </div>
+        );
+      case 'cursor-follower':
+        return (
+          <div className="h-52 flex flex-col items-center justify-center p-4 relative">
+            <div className="w-10 h-10 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.25)] animate-pulse">
+              <Sparkles className="w-4 h-4 text-cyan-300" />
+            </div>
+            <p className="text-[11px] text-text-muted mt-3">Fluid spring momentum</p>
           </div>
         );
       case 'expandable-search':
@@ -1474,6 +1486,28 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
             </div>
           </div>
         );
+
+      case 'cursor-follower':
+        return (
+          <div className="py-12 flex flex-col items-center justify-center gap-6">
+            <CursorFollower />
+          </div>
+        );
+      case 'morphing-blob':
+        return (
+          <div className="flex items-center justify-center  w-full">
+            <MorphingBlob speed={10} baseRadius={40} points={10} height={60} width={60} />
+          </div>
+        );
+      case 'otp-input':
+        return (
+          <div className="flex items-center justify-center  w-full">
+            <OTPInput length={6} autoFocus onComplete={(value) => {
+              alert(value)
+            }} />
+          </div>
+        );
+
 
       case 'car-smoke-page-transition':
         return (
