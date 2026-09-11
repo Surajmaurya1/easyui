@@ -36,7 +36,6 @@ import { Pricing } from '../ui/Pricing';
 import { NewBadge } from './NewBadge';
 import { isComponentNew } from '../../lib/components';
 import { copyToClipboard, cn } from '../../lib/utils';
-import { CursorFollower } from '../ui/CursorFollower';
 import { MorphingBlob } from '../ui/MorphingBlob';
 import { OTPInput } from '../ui/OtpInput';
 import { ThinkingOrb } from '../ui/ThinkingOrb';
