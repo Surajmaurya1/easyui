@@ -2,6 +2,7 @@ import {
   type CSSProperties,
   useEffect,
   useRef,
+  useState,
 } from "react";
 
 /* =========================================================
@@ -21,13 +22,13 @@ export type ThinkingOrbState =
 
 export interface ThinkingOrbProps {
   /**
-   * Animation cognitive state preset
+   * Animation cognitive state preset (default: "working")
    */
   state?: ThinkingOrbState;
 
   /**
    * Diameter in pixels (default: 64)
-   * e.g., 24 for inline AI badges, 64-96 for assistants/avatars, 128+ for hero surfaces
+   * e.g., 20-24 for inline AI badges, 64-96 for assistants/avatars, 120+ for hero surfaces
    */
   size?: number;
 
@@ -37,7 +38,8 @@ export interface ThinkingOrbProps {
   speed?: number;
 
   /**
-   * Monochrome mode: true = luminous white on dark, false = obsidian/graphite on light
+   * Monochrome theme mode: true = luminous white on dark, false = obsidian/graphite on light.
+   * If omitted, automatically detects and syncs with `document.documentElement` class list ('dark').
    */
   dark?: boolean;
 
@@ -212,7 +214,7 @@ export function ThinkingOrb({
   state = "working",
   size = 64,
   speed = 1,
-  dark = true,
+  dark,
   paused = false,
   className,
   style,
@@ -224,6 +226,34 @@ export function ThinkingOrb({
   const timeRef = useRef(0);
   const lastTimeRef = useRef(0);
   const reducedMotionRef = useRef(false);
+
+  // Auto-detect theme from HTML root when `dark` prop is not explicitly passed
+  const [detectedDark, setDetectedDark] = useState<boolean>(() => {
+    if (typeof document !== "undefined") {
+      return document.documentElement.classList.contains("dark");
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    if (dark !== undefined || typeof document === "undefined") return;
+
+    const checkTheme = () => {
+      setDetectedDark(document.documentElement.classList.contains("dark"));
+    };
+
+    checkTheme();
+
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, [dark]);
+
+  const isDark = dark !== undefined ? dark : detectedDark;
 
   // Scaled particle density for crisp high-DPI balance
   const particleCount =
@@ -298,14 +328,15 @@ export function ThinkingOrb({
         baseRadius * 1.55
       );
 
-      if (dark) {
+      if (isDark) {
         halo.addColorStop(0, "rgba(255, 255, 255, 0.06)");
         halo.addColorStop(0.35, "rgba(255, 255, 255, 0.02)");
         halo.addColorStop(0.7, "rgba(255, 255, 255, 0.005)");
         halo.addColorStop(1, "rgba(0, 0, 0, 0)");
       } else {
-        halo.addColorStop(0, "rgba(0, 0, 0, 0.04)");
-        halo.addColorStop(0.4, "rgba(0, 0, 0, 0.01)");
+        halo.addColorStop(0, "rgba(0, 0, 0, 0.05)");
+        halo.addColorStop(0.4, "rgba(0, 0, 0, 0.015)");
+        halo.addColorStop(0.8, "rgba(0, 0, 0, 0.003)");
         halo.addColorStop(1, "rgba(255, 255, 255, 0)");
       }
 
@@ -415,12 +446,12 @@ export function ThinkingOrb({
             screenY
           );
 
-          if (dark) {
+          if (isDark) {
             trail.addColorStop(0, "rgba(255, 255, 255, 0)");
             trail.addColorStop(1, `rgba(255, 255, 255, ${alpha * 0.18})`);
           } else {
-            trail.addColorStop(0, "rgba(15, 15, 20, 0)");
-            trail.addColorStop(1, `rgba(15, 15, 20, ${alpha * 0.18})`);
+            trail.addColorStop(0, "rgba(20, 20, 26, 0)");
+            trail.addColorStop(1, `rgba(20, 20, 26, ${alpha * 0.22})`);
           }
 
           ctx.strokeStyle = trail;
@@ -434,9 +465,9 @@ export function ThinkingOrb({
         // Particle Soft Ambient Glow
         if (size >= 40 && depth > 0.4) {
           ctx.shadowBlur = pSize * 4.5;
-          ctx.shadowColor = dark
+          ctx.shadowColor = isDark
             ? `rgba(255, 255, 255, ${alpha * 0.35})`
-            : `rgba(0, 0, 0, ${alpha * 0.15})`;
+            : `rgba(0, 0, 0, ${alpha * 0.2})`;
         } else {
           ctx.shadowBlur = 0;
         }
@@ -451,9 +482,9 @@ export function ThinkingOrb({
           Math.PI * 2
         );
 
-        ctx.fillStyle = dark
+        ctx.fillStyle = isDark
           ? `rgba(255, 255, 255, ${alpha})`
-          : `rgba(15, 15, 20, ${alpha})`;
+          : `rgba(20, 20, 28, ${alpha})`;
         ctx.fill();
         ctx.shadowBlur = 0;
 
@@ -463,9 +494,9 @@ export function ThinkingOrb({
         );
         if (sparkle > 0.99 && depth > 0.7 && size >= 48) {
           const sSize = pSize * 2.0;
-          ctx.strokeStyle = dark
+          ctx.strokeStyle = isDark
             ? `rgba(255, 255, 255, ${alpha * 0.7})`
-            : `rgba(15, 15, 20, ${alpha * 0.7})`;
+            : `rgba(20, 20, 28, ${alpha * 0.75})`;
           ctx.lineWidth = 0.4;
 
           ctx.beginPath();
@@ -493,23 +524,24 @@ export function ThinkingOrb({
         coreRadius * 4.2
       );
 
-      if (dark) {
+      if (isDark) {
         coreBloom.addColorStop(0, "rgba(255, 255, 255, 0.92)");
         coreBloom.addColorStop(0.18, "rgba(255, 255, 255, 0.55)");
         coreBloom.addColorStop(0.4, "rgba(240, 240, 248, 0.18)");
         coreBloom.addColorStop(0.7, "rgba(220, 220, 235, 0.04)");
         coreBloom.addColorStop(1, "rgba(0, 0, 0, 0)");
       } else {
-        coreBloom.addColorStop(0, "rgba(15, 15, 20, 0.92)");
-        coreBloom.addColorStop(0.2, "rgba(30, 30, 40, 0.45)");
-        coreBloom.addColorStop(0.45, "rgba(60, 60, 75, 0.12)");
+        coreBloom.addColorStop(0, "rgba(18, 18, 24, 0.92)");
+        coreBloom.addColorStop(0.2, "rgba(35, 35, 45, 0.5)");
+        coreBloom.addColorStop(0.45, "rgba(70, 70, 85, 0.16)");
+        coreBloom.addColorStop(0.75, "rgba(100, 100, 120, 0.03)");
         coreBloom.addColorStop(1, "rgba(255, 255, 255, 0)");
       }
 
       ctx.shadowBlur = size * 0.14;
-      ctx.shadowColor = dark
+      ctx.shadowColor = isDark
         ? "rgba(255, 255, 255, 0.25)"
-        : "rgba(0, 0, 0, 0.12)";
+        : "rgba(0, 0, 0, 0.15)";
 
       ctx.beginPath();
       ctx.arc(center, center, coreRadius * 4.2, 0, Math.PI * 2);
@@ -529,7 +561,7 @@ export function ThinkingOrb({
         coreRadius * 0.95
       );
 
-      if (dark) {
+      if (isDark) {
         hotCenter.addColorStop(0, "rgba(255, 255, 255, 0.98)");
         hotCenter.addColorStop(0.45, "rgba(255, 255, 255, 0.45)");
         hotCenter.addColorStop(1, "rgba(255, 255, 255, 0)");
@@ -556,7 +588,7 @@ export function ThinkingOrb({
       animationRef.current = null;
       lastTimeRef.current = 0;
     };
-  }, [size, speed, dark, paused, state, particleCount]);
+  }, [size, speed, isDark, paused, state, particleCount]);
 
   return (
     <span

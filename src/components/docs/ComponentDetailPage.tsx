@@ -751,11 +751,16 @@ const CarSmokePageTransitionShowcase: React.FC = () => {
 };
 
 const ThinkingOrbDemo: React.FC = () => {
+  const { theme } = useTheme();
   const [orbState, setOrbState] = useState<ThinkingOrbState>('working');
   const [orbSize, setOrbSize] = useState<number>(80);
   const [orbSpeed, setOrbSpeed] = useState<number>(1);
   const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [isDark, setIsDark] = useState<boolean>(true);
+  const [isDark, setIsDark] = useState<boolean>(theme === 'dark');
+
+  useEffect(() => {
+    setIsDark(theme === 'dark');
+  }, [theme]);
 
   const states: ThinkingOrbState[] = [
     'working',

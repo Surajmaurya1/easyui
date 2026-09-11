@@ -36,7 +36,6 @@ import { Pricing } from '../ui/Pricing';
 import { NewBadge } from './NewBadge';
 import { isComponentNew } from '../../lib/components';
 import { copyToClipboard, cn } from '../../lib/utils';
-import { CursorFollower } from '../ui/CursorFollower';
 import { MorphingBlob } from '../ui/MorphingBlob';
 import { OTPInput } from '../ui/OtpInput';
 import { ThinkingOrb } from '../ui/ThinkingOrb';
@@ -67,6 +66,68 @@ const AnimatedNumberPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered = 
       <div className="flex items-center gap-2 text-[10px] font-mono text-emerald-400">
         <span>{isHovered ? '+48.2%' : '+24.5%'}</span>
         <span className="text-[#666666]">rolling digits</span>
+      </div>
+    </div>
+  );
+};
+
+const CursorFollowerCardPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered = false }) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [active, setActive] = useState(false);
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setPos({
+      x: e.clientX - rect.left - rect.width / 2,
+      y: e.clientY - rect.top - rect.height / 2,
+    });
+    setActive(true);
+  };
+
+  const handlePointerLeave = () => {
+    setActive(false);
+    setPos({ x: 0, y: 0 });
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      className="h-52 w-full flex flex-col items-center justify-center p-4 relative overflow-hidden select-none cursor-crosshair"
+    >
+      {/* Target Tracker Point */}
+      <motion.div
+        animate={{
+          x: active ? pos.x : 0,
+          y: active ? pos.y : 0,
+          scale: isHovered || active ? 1.15 : 1,
+        }}
+        transition={{
+          type: 'spring',
+          stiffness: 450,
+          damping: 30,
+          mass: 0.5,
+        }}
+        className="relative flex items-center justify-center pointer-events-none"
+      >
+        {/* Outer Spring Ring */}
+        <div className="w-10 h-10 rounded-full border border-text-primary/30 bg-text-primary/5 backdrop-blur-xs flex items-center justify-center shadow-xs" />
+        {/* Inner Solid Dot */}
+        <div className="absolute w-2 h-2 rounded-full bg-text-primary shadow-xs" />
+      </motion.div>
+
+      {/* Dynamic Telemetry Badge */}
+      <div className="absolute bottom-4 inset-x-0 flex justify-center pointer-events-none">
+        <span className="text-[10px] font-mono tracking-wider uppercase px-2.5 py-1 rounded-md border bg-surface-raised border-border text-text-secondary shadow-xs transition-colors">
+          {active
+            ? `x: ${Math.round(pos.x)} • y: ${Math.round(pos.y)}`
+            : isHovered
+            ? 'spring tracking active'
+            : 'hover to track pointer'}
+        </span>
       </div>
     </div>
   );
@@ -226,14 +287,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
           </div>
         );
       case 'cursor-follower':
-        return (
-          <div className="h-52 flex flex-col items-center justify-center p-4 relative">
-            <div className="w-10 h-10 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.25)] animate-pulse">
-              <Sparkles className="w-4 h-4 text-cyan-300" />
-            </div>
-            <p className="text-[11px] text-text-muted mt-3">Fluid spring momentum</p>
-          </div>
-        );
+        return <CursorFollowerCardPreview isHovered={hovered} />;
       case 'expandable-search':
         return (
           <div className="h-52 flex items-center justify-center p-4">
@@ -1488,12 +1542,6 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
           </div>
         );
 
-      case 'cursor-follower':
-        return (
-          <div className="py-12 flex flex-col items-center justify-center gap-6">
-            <CursorFollower />
-          </div>
-        );
       case 'morphing-blob':
         return (
           <div className="flex items-center justify-center  w-full">
@@ -1516,9 +1564,8 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
               state={hovered ? 'solving' : 'working'}
               size={hovered ? 76 : 68}
               speed={hovered ? 1.3 : 1}
-              dark={true}
             />
-            <span className="text-[10px] font-mono text-[#A1A1A1] tracking-wider uppercase bg-[#141414]/90 px-2.5 py-1 rounded-md border border-[#222222]">
+            <span className="text-[10px] font-mono tracking-wider uppercase px-2.5 py-1 rounded-md border bg-surface-raised border-border text-text-secondary shadow-xs transition-colors">
               {hovered ? 'state: solving' : 'state: working'}
             </span>
           </div>
