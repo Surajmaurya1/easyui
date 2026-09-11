@@ -1990,6 +1990,19 @@
       ]
     },
     {
+      "name": "thinking-orb",
+      "type": "registry:ui",
+      "title": "Thinking Orb",
+      "description": "Minimalist monochrome spherical particle vortex with orbital physics, pure black-and-white luminous styling, and 9 cognitive state deformations.",
+      "files": [
+        {
+          "path": "src/components/ui/ThinkingOrb.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/thinking-orb.tsx"
+        }
+      ]
+    },
+    {
       "name": "torque-dial",
       "type": "registry:ui",
       "title": "Torque Dial",
