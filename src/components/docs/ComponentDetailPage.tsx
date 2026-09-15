@@ -121,6 +121,8 @@ import { CarSmokePageTransition } from '../ui/CarSmokePageTransition';
 import { MorphingBlob } from '../ui/MorphingBlob';
 import { OTPInput } from '../ui/OtpInput';
 import { ThinkingOrb, type ThinkingOrbState } from '../ui/ThinkingOrb';
+import { StackedCards } from '../ui/StackedCards';
+import { StoryCards } from '../ui/StoryCard';
 
 
 export type MainTab = 'preview' | 'usage' | 'code' | 'props' | 'accessibility';
@@ -2368,6 +2370,22 @@ const completion = await client.completions.create({
         return (
           <div className="py-2 w-full">
             <ThinkingOrbDemo key={demoKey} />
+          </div>
+        );
+      case 'stacked-cards':
+      case 'stacked-card':
+      case 'stack-cards':
+      case 'stack-card':
+        return (
+          <div className="w-full max-w-5xl mx-auto">
+            <StackedCards key={demoKey} />
+          </div>
+        );
+      case 'story-card':
+      case 'story-cards':
+        return (
+          <div className="w-full max-w-5xl mx-auto">
+            <StoryCards key={demoKey} />
           </div>
         );
       default:

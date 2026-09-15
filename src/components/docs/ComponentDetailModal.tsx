@@ -72,6 +72,8 @@ import { TextScrambleDecoder } from '../ui/TextScrambleDecoder';
 import { MacOSFolderCards } from '../ui/MacOSFolderCards';
 import { IntroLoader } from '../ui/IntroLoader';
 import { ThinkingOrb } from '../ui/ThinkingOrb';
+import { StackedCards } from '../ui/StackedCards';
+import { StoryCards } from '../ui/StoryCard';
 
 export interface ComponentDetailModalProps {
   component: EasyComponentMeta | null;
@@ -1324,6 +1326,22 @@ func main() {
             <span className="text-[11px] font-mono text-[#A1A1A1] bg-[#141414] px-3 py-1 rounded-lg border border-[#222222]">
               state: working • 84px • canvas 60fps
             </span>
+          </div>
+        );
+      case 'stacked-cards':
+      case 'stacked-card':
+      case 'stack-cards':
+      case 'stack-card':
+        return (
+          <div className="w-full max-w-4xl mx-auto">
+            <StackedCards />
+          </div>
+        );
+      case 'story-card':
+      case 'story-cards':
+        return (
+          <div className="w-full max-w-4xl mx-auto">
+            <StoryCards />
           </div>
         );
       default:
