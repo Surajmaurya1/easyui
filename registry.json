@@ -1943,6 +1943,48 @@
       ]
     },
     {
+      "name": "stacked-cards",
+      "type": "registry:ui",
+      "title": "Stacked Cards",
+      "description": "A responsive, scroll-driven stacking cards component built with Tailwind CSS and Framer Motion. Cards start aligned in a column and stack gracefully on scroll without hijacking page scrolling.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/StackedCards.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/stacked-cards.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "story-card",
+      "type": "registry:ui",
+      "title": "Story Cards",
+      "description": "A responsive, accessible story cards carousel for React applications built with Tailwind CSS and Framer Motion.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/StoryCard.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/story-card.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "stretch-switch",
       "type": "registry:ui",
       "title": "StretchSwitch",
