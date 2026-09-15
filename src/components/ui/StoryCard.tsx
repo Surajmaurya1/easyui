@@ -20,7 +20,7 @@ export interface StoryCard {
 
 export interface StoryCardsProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  cards: StoryCard[];
+  cards?: StoryCard[];
   initialIndex?: number;
   autoPlay?: boolean;
   autoPlayInterval?: number;
@@ -32,6 +32,53 @@ export interface StoryCardsProps
   className?: string;
 }
 
+const defaultCards: StoryCard[] = [
+  {
+    id: 1,
+    title: 'Annual letter 2025',
+    description:
+      'We survived another year of meetings, deadlines, bugs, and pretending everything was part of the plan.',
+    image:
+      'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=85',
+    imageAlt: 'Modern office interior',
+    href: '/annual-letter',
+    ctaLabel: 'Read the damage',
+  },
+  {
+    id: 2,
+    title: 'Building for the future',
+    description:
+      'A deep dive into how we build things nobody asked for, then spend three weeks fixing them.',
+    image:
+      'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85',
+    imageAlt: 'Team collaborating in an office',
+    href: '/stories/future',
+    ctaLabel: 'See the chaos',
+  },
+  {
+    id: 3,
+    title: 'Inside the journey',
+    description:
+      "One person's inspiring journey from 'this should be easy' to 47 browser tabs and a Stack Overflow account.",
+    image:
+      'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85',
+    imageAlt: 'Person exploring a landscape',
+    href: '/stories/journey',
+    ctaLabel: 'Join the adventure',
+  },
+  {
+    id: 4,
+    title: 'The internet economy',
+    description:
+      'An extremely serious investigation into why everything costs money, including things that used to be free.',
+    image:
+      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=85',
+    imageAlt: 'Technology infrastructure',
+    href: '/stories/economy',
+    ctaLabel: 'Understand capitalism',
+  },
+];
+
 /**
  * Normalizes an integer index to a circular array index in [0, length - 1].
  */
@@ -41,7 +88,7 @@ const getWrappedIndex = (index: number, length: number) => {
 };
 
 export const StoryCards: React.FC<StoryCardsProps> = ({
-  cards,
+  cards = defaultCards,
   initialIndex = 0,
   autoPlay = false,
   autoPlayInterval = 5000,
@@ -99,9 +146,12 @@ export const StoryCards: React.FC<StoryCardsProps> = ({
   const goTo = useCallback(
     (targetVirtualIndex: number) => {
       if (!hasCards) return;
+      if (!loop) {
+        if (targetVirtualIndex < 0 || targetVirtualIndex >= cards.length) return;
+      }
       setVirtualIndex(targetVirtualIndex);
     },
-    [hasCards]
+    [hasCards, loop, cards.length]
   );
 
   /*
@@ -109,16 +159,22 @@ export const StoryCards: React.FC<StoryCardsProps> = ({
    */
   const next = useCallback(() => {
     if (!hasMultipleCards) return;
-    setVirtualIndex((current) => current + 1);
-  }, [hasMultipleCards]);
+    setVirtualIndex((current) => {
+      if (!loop && current >= cards.length - 1) return current;
+      return current + 1;
+    });
+  }, [hasMultipleCards, loop, cards.length]);
 
   /*
    * Step backward in the infinite loop.
    */
   const previous = useCallback(() => {
     if (!hasMultipleCards) return;
-    setVirtualIndex((current) => current - 1);
-  }, [hasMultipleCards]);
+    setVirtualIndex((current) => {
+      if (!loop && current <= 0) return current;
+      return current - 1;
+    });
+  }, [hasMultipleCards, loop]);
 
   /*
    * Mouse wheel / trackpad scroll navigation.
@@ -265,11 +321,24 @@ export const StoryCards: React.FC<StoryCardsProps> = ({
       {...props}
     >
       {/* Section Header */}
-      <div className="mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-end justify-end sm:justify-end sm:gap-6">
-
+      <div className="mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-end justify-between sm:gap-6">
+        {(title || subtitle) && (
+          <div className="flex-1 min-w-0">
+            {title && (
+              <h2 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl lg:text-3xl dark:text-white truncate">
+                {title}
+              </h2>
+            )}
+            {subtitle && (
+              <p className="mt-1 text-xs text-zinc-600 sm:text-sm dark:text-zinc-400 truncate">
+                {subtitle}
+              </p>
+            )}
+          </div>
+        )}
 
         {hasMultipleCards && (
-          <div className="flex items-center justify-end sm:justify-end gap-3 shrink-0">
+          <div className="flex items-center justify-end gap-3 shrink-0">
             {/* Navigation Buttons */}
             {showNavigation && (
               <div className="flex items-center gap-1.5">
