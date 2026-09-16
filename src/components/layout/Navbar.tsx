@@ -27,6 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { scrollY } = useScroll();
   const { theme, toggleTheme } = useTheme();
 
+
   useMotionValueEvent(scrollY, 'change', (latest) => {
     if (latest > 15 && !isScrolled) {
       setIsScrolled(true);

@@ -105,6 +105,27 @@
       ]
     },
     {
+      "name": "avatar-stack",
+      "type": "registry:ui",
+      "title": "Avatar Stack",
+      "description": "An interactive, stacked facepile of overlapping avatars that smoothly elevates and scales the hovered avatar to the front with spring physics, revealing the full image and name tooltip.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/AvatarStack.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/avatar-stack.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "batch-gesture-tray",
       "type": "registry:ui",
       "title": "Batch Gesture Tray",
@@ -719,6 +740,24 @@
       ]
     },
     {
+      "name": "glyph-matrix",
+      "type": "registry:ui",
+      "title": "Glyph Matrix",
+      "description": "A high-performance, canvas-driven Matrix digital rain background effect featuring streaming Katakana and numeric glyphs, glowing head highlights, decaying phosphor trails, and interactive cursor disturbances.",
+      "files": [
+        {
+          "path": "src/components/ui/GlyphMatrix.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/glyph-matrix.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "gooey-menu",
       "type": "registry:ui",
       "title": "Gooey Menu",
@@ -1146,6 +1185,27 @@
           "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib",
           "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "morphing-icon",
+      "type": "registry:ui",
+      "title": "Morphing Icon",
+      "description": "An animated micro-interaction wrapper that smoothly morphs between two icon states with coordinated rotation, scale, and cross-fade transitions.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/MorphingIcon.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/morphing-icon.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
         }
       ]
     },
@@ -1832,6 +1892,46 @@
           "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib",
           "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "speed-warp",
+      "type": "registry:ui",
+      "title": "Speed Warp",
+      "description": "A 3D perspective canvas starfield simulation that projects relativistic light streaks toward the viewer, creating an intense hyperspace or warp drive velocity effect.",
+      "files": [
+        {
+          "path": "src/components/ui/SpeedWarp.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/speed-warp.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "split-button",
+      "type": "registry:ui",
+      "title": "Split Button",
+      "description": "A primary action fused with a chevron trigger that reveals related actions in a spring-timed dropdown, sharing a single pill silhouette.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/SplitButton.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/split-button.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
         }
       ]
     },

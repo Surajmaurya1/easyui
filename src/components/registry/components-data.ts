@@ -369,6 +369,86 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "avatar-stack",
+    "name": "Avatar Stack",
+    "tagline": "Overlapping avatar pile with spring-animated hover elevation and tooltips.",
+    "description": "An interactive, stacked facepile of overlapping avatars that smoothly elevates and scales the hovered avatar to the front with spring physics, revealing the full image and name tooltip.",
+    "category": "Overlays",
+    "badges": [
+      "Framer Motion",
+      "Interactive",
+      "Micro-interactions"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/avatar-stack",
+    "features": [
+      "Dynamic z-index elevation on hover so the hovered avatar is 100% visible and unclipped",
+      "Spring-animated scale and lift transition powered by Framer Motion",
+      "Floating name tooltip with spring entrance and exit",
+      "Automatic initial extraction when images are unavailable or fail to load",
+      "Truncation badge (+N) with customizable maximum visible avatars"
+    ],
+    "props": [
+      {
+        "name": "avatars",
+        "type": "AvatarStackItem[]",
+        "default": "[]",
+        "description": "Array of avatar objects with id, src, alt, and fallback"
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "default": "5",
+        "description": "Maximum visible avatars before showing the +N counter"
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg' | 'xl'",
+        "default": "'lg'",
+        "description": "Dimension variant for each avatar circle"
+      },
+      {
+        "name": "overlap",
+        "type": "'sm' | 'md' | 'lg'",
+        "default": "'md'",
+        "description": "Negative margin overlap amount between adjacent avatars"
+      },
+      {
+        "name": "showCount",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether to show the +N counter badge for overflow items"
+      },
+      {
+        "name": "showTooltip",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether to show a floating tooltip label on hover"
+      }
+    ],
+    "accessibility": [
+      "Uses semantic role=\"group\" container with accessible aria labels for remaining count",
+      "Preserves image alt text and falls back to generated initials for screen readers",
+      "Hover tooltip uses pointer-events-none to prevent interfering with clicks"
+    ],
+    "createdAt": "2026-09-16",
+    "usageCode": "<AvatarStack\n  size=\"lg\"\n  overlap=\"lg\"\n  avatars={[\n    { id: 1, src: 'https://i.pravatar.cc/150?img=1', alt: 'John Doe' },\n    { id: 2, src: 'https://i.pravatar.cc/150?img=2', alt: 'Sarah Smith' },\n    { id: 3, src: 'https://i.pravatar.cc/150?img=3', alt: 'Mike Johnson' },\n    { id: 4, src: 'https://i.pravatar.cc/150?img=4', alt: 'Emily Davis' },\n    { id: 5, src: 'https://i.pravatar.cc/150?img=5', alt: 'Alex Wilson' },\n    { id: 6, src: 'https://i.pravatar.cc/150?img=6', alt: 'Chris Brown' },\n  ]}\n/>",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/AvatarStack.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/avatar-stack.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
     "id": "batch-gesture-tray",
     "name": "Batch Gesture Tray",
     "tagline": "Spring floating tray with multi-select batch actions",
@@ -2380,6 +2460,114 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "glyph-matrix",
+    "name": "Glyph Matrix",
+    "tagline": "Canvas-driven Matrix digital rain background with glowing phosphor trails.",
+    "description": "A high-performance, canvas-driven Matrix digital rain background effect featuring streaming Katakana and numeric glyphs, glowing head highlights, decaying phosphor trails, and interactive cursor disturbances.",
+    "category": "Motion",
+    "badges": [
+      "Canvas",
+      "Background Effect",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/glyph-matrix",
+    "features": [
+      "GPU-friendly HTML5 Canvas implementation running at silky 60fps",
+      "Phosphor decay trails rendered via progressive alpha blending",
+      "Authentic Katakana, matrix operators, and hexadecimal character set",
+      "Interactive pointer disturbance causing streams near the cursor to flare and accelerate",
+      "Supports both bounded containers and full-page fixed background backdrops"
+    ],
+    "props": [
+      {
+        "name": "fontSize",
+        "type": "number",
+        "default": "16",
+        "description": "Font size in pixels for the glyph grid"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "'#00FF66'",
+        "description": "Primary rain stream color"
+      },
+      {
+        "name": "headColor",
+        "type": "string",
+        "default": "'#FFFFFF'",
+        "description": "Color of the leading head glyph in each column"
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string",
+        "default": "'#050505'",
+        "description": "Background color used for trail fading"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": "1",
+        "description": "Fall speed multiplier"
+      },
+      {
+        "name": "fadeRate",
+        "type": "number",
+        "default": "0.06",
+        "description": "Decay rate per frame for phosphor trails"
+      },
+      {
+        "name": "interactive",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether mouse proximity disturbs and accelerates glyph streams"
+      },
+      {
+        "name": "paused",
+        "type": "boolean",
+        "default": "false",
+        "description": "Pauses stream animation"
+      },
+      {
+        "name": "fullPage",
+        "type": "boolean",
+        "default": "false",
+        "description": "Fixes canvas to fill the entire viewport as a full-page background"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "description": "Overall opacity of the matrix backdrop"
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "description": "Optional content layered over the matrix background"
+      }
+    ],
+    "accessibility": [
+      "Canvas is marked aria-hidden=\"true\" to keep screen readers focused on content",
+      "Falls back to a static ambient glyph array under prefers-reduced-motion",
+      "Pauses rendering automatically when scrolled out of viewport via IntersectionObserver",
+      "Children layered on top retain full keyboard access and standard browser focus"
+    ],
+    "createdAt": "2026-09-16",
+    "usageCode": "<GlyphMatrix\n  className=\"h-[500px] w-full rounded-2xl\"\n  color=\"#00FF66\"\n  headColor=\"#FFFFFF\"\n  speed={1.2}\n  interactive\n>\n  <div className=\"text-center\">\n    <h2 className=\"text-3xl font-bold text-white tracking-tight\">Wake up, Neo...</h2>\n    <p className=\"text-emerald-400/80 text-sm mt-2 font-mono\">The Matrix has you.</p>\n  </div>\n</GlyphMatrix>",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "src/components/ui/GlyphMatrix.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/glyph-matrix.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
     "id": "gooey-menu",
     "name": "Gooey Menu",
     "tagline": "Liquid gooey spring dropdown menu with SVG filter physics",
@@ -3836,6 +4024,84 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/motion-tokens.ts",
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
+    "id": "morphing-icon",
+    "name": "Morphing Icon",
+    "tagline": "Smooth cross-fade rotation morphing between two icons or states.",
+    "description": "An animated micro-interaction wrapper that smoothly morphs between two icon states with coordinated rotation, scale, and cross-fade transitions.",
+    "category": "Motion",
+    "badges": [
+      "Framer Motion",
+      "Micro-interactions",
+      "Icon Transition"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/morphing-icon",
+    "features": [
+      "Coordinated rotation, scaling, and opacity cross-fade for fluid icon transformations",
+      "Supports any icon component (Lucide, Radix, custom SVGs)",
+      "Zero layout shift with absolute positioning within a fixed-size container",
+      "Configurable duration and cubic-bezier easing curve"
+    ],
+    "props": [
+      {
+        "name": "from",
+        "type": "React.ReactNode",
+        "default": "undefined",
+        "description": "Default icon element shown when inactive"
+      },
+      {
+        "name": "to",
+        "type": "React.ReactNode",
+        "default": "undefined",
+        "description": "Target icon element shown when active"
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether the target icon state is currently active"
+      },
+      {
+        "name": "duration",
+        "type": "number",
+        "default": "0.3",
+        "description": "Duration of the morph transition in seconds"
+      },
+      {
+        "name": "size",
+        "type": "number",
+        "default": "20",
+        "description": "Width and height of the icon container in pixels"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional CSS class for styling the container"
+      }
+    ],
+    "accessibility": [
+      "Toggles aria-hidden on inactive states to prevent duplicate announcement by screen readers",
+      "Preserves static container dimensions during rotation to prevent surrounding layout shifts"
+    ],
+    "createdAt": "2026-09-16",
+    "usageCode": "<button\n  onClick={() => setIsBookmarked((prev) => !prev)}\n  className=\"p-2 rounded-xl bg-surface-raised border border-border hover:bg-surface-hover transition-colors\"\n  aria-label={isBookmarked ? \"Remove bookmark\" : \"Save bookmark\"}\n>\n  <MorphingIcon\n    active={isBookmarked}\n    from={<Bookmark className=\"w-5 h-5 text-text-secondary\" />}\n    to={<BookmarkCheck className=\"w-5 h-5 text-emerald-400\" />}\n    size={20}\n  />\n</button>",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/MorphingIcon.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/morphing-icon.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
       }
     ]
   },
@@ -6255,6 +6521,150 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/motion-tokens.ts",
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
+    "id": "speed-warp",
+    "name": "Speed Warp",
+    "tagline": "High-velocity 3D perspective starfield tunnel with canvas streaks.",
+    "description": "A 3D perspective canvas starfield simulation that projects relativistic light streaks toward the viewer, creating an intense hyperspace or warp drive velocity effect.",
+    "category": "Motion",
+    "badges": [
+      "Canvas",
+      "Background Effect",
+      "3D Perspective"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/speed-warp",
+    "features": [
+      "Real-time 3D perspective projection with focal length scaling",
+      "Dynamic depth-alpha fading and velocity-driven streak lines",
+      "Completely transparent canvas background for seamless layering over any dark UI or hero section",
+      "Automatic canvas resizing via ResizeObserver to match parent container dimensions"
+    ],
+    "props": [
+      {
+        "name": "speed",
+        "type": "number",
+        "default": "25",
+        "description": "Velocity multiplier of stars moving toward the camera"
+      },
+      {
+        "name": "starCount",
+        "type": "number",
+        "default": "600",
+        "description": "Total number of 3D stars rendered in the volume"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional custom CSS class name for styling"
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "description": "Optional overlay content rendered above the starfield"
+      }
+    ],
+    "accessibility": [
+      "Canvas is marked aria-hidden=\"true\" to prevent screen reader interference",
+      "Responsive viewport tracking via ResizeObserver without blocking the main UI thread",
+      "Transparent canvas overlay preserves keyboard access and focus management for interactive children"
+    ],
+    "createdAt": "2026-09-16",
+    "usageCode": "<div className=\"relative h-[480px] w-full overflow-hidden rounded-2xl bg-[#050505] border border-border\">\n  <SpeedWarp speed={30} starCount={700} />\n  <div className=\"relative z-10 flex h-full items-center justify-center\">\n    <h2 className=\"text-3xl font-bold tracking-tight text-white\">Engage Warp Drive</h2>\n  </div>\n</div>",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "src/components/ui/SpeedWarp.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/speed-warp.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
+    "id": "split-button",
+    "name": "Split Button",
+    "tagline": "A primary action with a chevron trigger for related actions.",
+    "description": "A primary action fused with a chevron trigger that reveals related actions in a spring-timed dropdown, sharing a single pill silhouette.",
+    "category": "Buttons",
+    "badges": [
+      "Framer Motion",
+      "Floating UI"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/split-button",
+    "features": [
+      "Primary action and chevron trigger share a single rounded pill silhouette",
+      "Chevron rotates with a snappy spring on open/close",
+      "Menu flips above the trigger when there is not enough room below",
+      "Supports primary and secondary visual variants",
+      "Closes on outside click and on Escape"
+    ],
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "description": "Label for the primary (left) action"
+      },
+      {
+        "name": "onClick",
+        "type": "() => void",
+        "description": "Called when the primary action is pressed"
+      },
+      {
+        "name": "options",
+        "type": "SplitButtonOption[]",
+        "description": "Dropdown options revealed by the chevron trigger"
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg'",
+        "default": "'md'",
+        "description": "Padding and text size"
+      },
+      {
+        "name": "variant",
+        "type": "'primary' | 'secondary'",
+        "default": "'primary'",
+        "description": "Visual style of both halves of the control"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "default": "false",
+        "description": "Disables the entire control"
+      }
+    ],
+    "accessibility": [
+      "Chevron trigger uses aria-haspopup=\"menu\" and aria-expanded to announce state",
+      "Dropdown uses role=\"menu\" with role=\"menuitem\" items",
+      "Arrow Up/Down, Home, and End move roving focus between enabled items",
+      "Enter/Space selects the active item, Escape closes and returns focus to the trigger",
+      "Tab closes the menu without trapping focus",
+      "Respects prefers-reduced-motion by collapsing spring transitions to instant"
+    ],
+    "createdAt": "2026-09-16",
+    "usageCode": "<SplitButton\n  label=\"Deploy\"\n  onClick={handleDeploy}\n  options={[\n    { value: 'preview', label: 'Deploy preview', onSelect: handlePreview },\n    { value: 'rollback', label: 'Rollback', onSelect: handleRollback },\n  ]}\n/>",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/SplitButton.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/split-button.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
       }
     ]
   },

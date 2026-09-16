@@ -32,6 +32,7 @@ export interface EasyUIComponentMeta {
 export interface EasyComponentMeta {
   id: string;
   name: string;
+  title: string;
   tagline: string;
   description: string;
   category: Exclude<ComponentCategory, 'All'>;
