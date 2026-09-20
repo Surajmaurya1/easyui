@@ -217,6 +217,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://easyui.site/components/dot-shader</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://easyui.site/components/drag-to-confirm</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
@@ -272,6 +278,12 @@
   </url>
   <url>
     <loc>https://easyui.site/components/glass-navbar</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://easyui.site/components/glitch-text</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -356,6 +368,12 @@
   </url>
   <url>
     <loc>https://easyui.site/components/magnetic-button</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://easyui.site/components/meteors</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -487,6 +505,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://easyui.site/components/rainbow-button</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://easyui.site/components/recovery-ledger</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
@@ -511,6 +535,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://easyui.site/components/scrollvelocitytext</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://easyui.site/components/selection-basket</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
@@ -518,6 +548,12 @@
   </url>
   <url>
     <loc>https://easyui.site/components/settle-modal</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://easyui.site/components/shooting-stars</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -548,6 +584,12 @@
   </url>
   <url>
     <loc>https://easyui.site/components/smooth-accordion</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://easyui.site/components/sparkles-core</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -590,6 +632,12 @@
   </url>
   <url>
     <loc>https://easyui.site/components/stacked-cards</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://easyui.site/components/sticky-pages</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
