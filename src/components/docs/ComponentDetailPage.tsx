@@ -17,6 +17,16 @@ import {
   Home,
   Grid,
   Menu,
+  Bookmark,
+  BookmarkCheck,
+  Volume2,
+  VolumeX,
+  Sun,
+  Moon,
+  Play,
+  Pause,
+  Lock,
+  Unlock,
 } from 'lucide-react';
 import type { EasyComponentMeta } from '../../types/component';
 import { EASY_COMPONENTS } from '../registry/components-data';
@@ -123,7 +133,11 @@ import { OTPInput } from '../ui/OtpInput';
 import { ThinkingOrb, type ThinkingOrbState } from '../ui/ThinkingOrb';
 import { StackedCards } from '../ui/StackedCards';
 import { StoryCards } from '../ui/StoryCard';
-
+import { AvatarStack } from '../ui/AvatarStack';
+import { GlyphMatrix } from '../ui/GlyphMatrix';
+import { MorphingIcon } from '../ui/MorphingIcon';
+import { SpeedWarp } from '../ui/SpeedWarp';
+import { SplitButton } from '../ui/SplitButton';
 
 export type MainTab = 'preview' | 'usage' | 'code' | 'props' | 'accessibility';
 export type PkgManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
@@ -135,6 +149,416 @@ export interface ComponentDetailPageProps {
   onNavigateComponents: () => void;
   onNavigateDocs: (topicId?: string) => void;
 }
+
+const AVATAR_STACK_DEMO_ITEMS = [
+  { id: 1, src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80', name: 'Elena Rostova', alt: 'Elena' },
+  { id: 2, src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80', name: 'Marcus Chen', alt: 'Marcus' },
+  { id: 3, src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80', name: 'Sarah Miller', alt: 'Sarah' },
+  { id: 4, src: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80', name: 'David Kim', alt: 'David' },
+  { id: 5, src: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80', name: 'Aria Taylor', alt: 'Aria' },
+  { id: 6, src: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80', name: 'James Wilson', alt: 'James' },
+];
+
+const AvatarStackShowcase: React.FC = () => {
+  const [size, setSize] = useState<'sm' | 'md' | 'lg' | 'xl'>('lg');
+  const [overlap, setOverlap] = useState<'sm' | 'md' | 'lg'>('md');
+  const [max, setMax] = useState<number>(5);
+
+  return (
+    <div className="py-10 flex flex-col items-center justify-center gap-8 w-full max-w-lg mx-auto">
+      <div className="p-8 rounded-2xl bg-surface-raised/60 border border-border flex items-center justify-center min-h-[140px] w-full shadow-inner">
+        <AvatarStack
+          avatars={AVATAR_STACK_DEMO_ITEMS}
+          size={size}
+          overlap={overlap}
+          max={max}
+          showTooltip={true}
+          showCount={true}
+        />
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-4 text-xs">
+        <div className="flex items-center gap-1.5 bg-surface-raised border border-border p-1 rounded-xl">
+          <span className="px-2 font-mono text-[10px] text-text-muted">Size:</span>
+          {(['sm', 'md', 'lg', 'xl'] as const).map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setSize(s)}
+              className={cn(
+                'px-2.5 py-1 rounded-lg font-medium transition-colors',
+                size === s ? 'bg-text-primary text-background' : 'text-text-secondary hover:text-text-primary'
+              )}
+            >
+              {s.toUpperCase()}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-1.5 bg-surface-raised border border-border p-1 rounded-xl">
+          <span className="px-2 font-mono text-[10px] text-text-muted">Overlap:</span>
+          {(['sm', 'md', 'lg'] as const).map((o) => (
+            <button
+              key={o}
+              type="button"
+              onClick={() => setOverlap(o)}
+              className={cn(
+                'px-2.5 py-1 rounded-lg font-medium transition-colors',
+                overlap === o ? 'bg-text-primary text-background' : 'text-text-secondary hover:text-text-primary'
+              )}
+            >
+              {o.toUpperCase()}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-1.5 bg-surface-raised border border-border p-1 rounded-xl">
+          <span className="px-2 font-mono text-[10px] text-text-muted">Max:</span>
+          {[3, 4, 5, 6].map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => setMax(m)}
+              className={cn(
+                'px-2.5 py-1 rounded-lg font-medium transition-colors',
+                max === m ? 'bg-text-primary text-background' : 'text-text-secondary hover:text-text-primary'
+              )}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const GlyphMatrixShowcase: React.FC = () => {
+  const [color, setColor] = useState('#00FF66');
+  const [speed, setSpeed] = useState(1.2);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const colors = [
+    { name: 'Matrix Green', value: '#00FF66' },
+    { name: 'Cyber Cyan', value: '#00E5FF' },
+    { name: 'Neon Pink', value: '#FF007F' },
+    { name: 'Amber Gold', value: '#FFB000' },
+  ];
+
+  return (
+    <div className="w-full max-w-3xl mx-auto flex flex-col gap-4">
+      <div className="relative h-[380px] sm:h-[440px] w-full overflow-hidden rounded-2xl border border-border bg-[#050505] shadow-2xl">
+        <GlyphMatrix
+          color={color}
+          headColor="#FFFFFF"
+          speed={speed}
+          paused={isPaused}
+          interactive={true}
+          className="absolute inset-0 h-full w-full"
+        >
+          <div className="relative z-10 flex h-full flex-col items-center justify-center text-center px-4 pointer-events-none">
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-mono drop-shadow-md">
+              Wake up, Neo...
+            </h3>
+            <p className="text-xs sm:text-sm mt-3 font-mono px-3 py-1 rounded-full bg-black/60 border border-white/10 backdrop-blur-xs text-white/80">
+              Interactive Canvas • Move cursor to scatter glyphs
+            </p>
+          </div>
+        </GlyphMatrix>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-surface-raised border border-border">
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-text-muted font-mono">Color:</span>
+          {colors.map((c) => (
+            <button
+              key={c.value}
+              type="button"
+              onClick={() => setColor(c.value)}
+              className={cn(
+                'w-6 h-6 rounded-full border-2 transition-transform',
+                color === c.value ? 'scale-110 border-white ring-2 ring-white/20' : 'border-transparent opacity-70 hover:opacity-100'
+              )}
+              style={{ backgroundColor: c.value }}
+              title={c.name}
+            />
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setIsPaused(!isPaused)}
+            className="px-3 py-1 rounded-lg bg-surface border border-border text-xs font-mono text-text-primary hover:bg-surface-hover transition-colors"
+          >
+            {isPaused ? '▶ Resume' : '⏸ Pause'}
+          </button>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-text-muted font-mono">Speed:</span>
+            {[0.8, 1.2, 2.0].map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setSpeed(s)}
+                className={cn(
+                  'px-2 py-0.5 rounded text-xs font-mono transition-colors',
+                  speed === s ? 'bg-text-primary text-background' : 'text-text-secondary hover:text-text-primary'
+                )}
+              >
+                {s}x
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const MorphingIconShowcase: React.FC = () => {
+  const [activeBookmark, setActiveBookmark] = useState(false);
+  const [activeAudio, setActiveAudio] = useState(false);
+  const [activeTheme, setActiveTheme] = useState(false);
+  const [activeMedia, setActiveMedia] = useState(false);
+  const [activeLock, setActiveLock] = useState(false);
+  const [isCtaActive, setIsCtaActive] = useState(false);
+
+  return (
+    <div className="py-12 flex flex-col items-center justify-center gap-7 w-full max-w-md mx-auto select-none">
+      {/* Primary Interactive Action Button */}
+      <button
+        type="button"
+        onClick={() => setIsCtaActive((prev) => !prev)}
+        className="px-5 py-2.5 rounded-full bg-surface-raised border border-border hover:border-border-hover flex items-center gap-2.5 text-xs font-medium text-text-primary transition-all duration-200 active:scale-95 shadow-xs cursor-pointer group"
+      >
+        <MorphingIcon
+          active={isCtaActive}
+          from={<Bookmark className="w-4 h-4 text-text-muted group-hover:text-text-primary transition-colors" />}
+          to={<BookmarkCheck className="w-4 h-4 text-emerald-400" />}
+          size={16}
+        />
+        <span>{isCtaActive ? 'Saved to Collection' : 'Save to Collection'}</span>
+      </button>
+
+      {/* Minimal Floating Action Strip */}
+      <div className="flex items-center gap-1.5 p-2 rounded-2xl bg-surface-raised/90 border border-border backdrop-blur-md shadow-lg">
+        {/* Bookmark */}
+        <button
+          type="button"
+          onClick={() => setActiveBookmark((prev) => !prev)}
+          className={cn(
+            'p-3 rounded-xl transition-all duration-200 active:scale-90 cursor-pointer',
+            activeBookmark
+              ? 'bg-surface-hover text-emerald-400 border border-border shadow-xs'
+              : 'text-text-muted hover:text-text-primary hover:bg-surface-hover/60 border border-transparent'
+          )}
+          title={activeBookmark ? 'Saved' : 'Bookmark'}
+          aria-label="Toggle Bookmark"
+        >
+          <MorphingIcon
+            active={activeBookmark}
+            from={<Bookmark className="w-5 h-5" />}
+            to={<BookmarkCheck className="w-5 h-5 text-emerald-400" />}
+            size={20}
+          />
+        </button>
+
+        {/* Audio */}
+        <button
+          type="button"
+          onClick={() => setActiveAudio((prev) => !prev)}
+          className={cn(
+            'p-3 rounded-xl transition-all duration-200 active:scale-90 cursor-pointer',
+            activeAudio
+              ? 'bg-surface-hover text-rose-400 border border-border shadow-xs'
+              : 'text-text-muted hover:text-text-primary hover:bg-surface-hover/60 border border-transparent'
+          )}
+          title={activeAudio ? 'Muted' : 'Sound On'}
+          aria-label="Toggle Audio"
+        >
+          <MorphingIcon
+            active={activeAudio}
+            from={<Volume2 className="w-5 h-5" />}
+            to={<VolumeX className="w-5 h-5 text-rose-400" />}
+            size={20}
+          />
+        </button>
+
+        {/* Theme */}
+        <button
+          type="button"
+          onClick={() => setActiveTheme((prev) => !prev)}
+          className={cn(
+            'p-3 rounded-xl transition-all duration-200 active:scale-90 cursor-pointer',
+            activeTheme
+              ? 'bg-surface-hover text-sky-400 border border-border shadow-xs'
+              : 'text-text-muted hover:text-text-primary hover:bg-surface-hover/60 border border-transparent'
+          )}
+          title={activeTheme ? 'Dark Mode' : 'Light Mode'}
+          aria-label="Toggle Theme"
+        >
+          <MorphingIcon
+            active={activeTheme}
+            from={<Sun className="w-5 h-5 text-amber-400" />}
+            to={<Moon className="w-5 h-5 text-sky-400" />}
+            size={20}
+          />
+        </button>
+
+        {/* Media */}
+        <button
+          type="button"
+          onClick={() => setActiveMedia((prev) => !prev)}
+          className={cn(
+            'p-3 rounded-xl transition-all duration-200 active:scale-90 cursor-pointer',
+            activeMedia
+              ? 'bg-surface-hover text-emerald-400 border border-border shadow-xs'
+              : 'text-text-muted hover:text-text-primary hover:bg-surface-hover/60 border border-transparent'
+          )}
+          title={activeMedia ? 'Playing' : 'Paused'}
+          aria-label="Toggle Playback"
+        >
+          <MorphingIcon
+            active={activeMedia}
+            from={<Play className="w-5 h-5" />}
+            to={<Pause className="w-5 h-5 text-emerald-400" />}
+            size={20}
+          />
+        </button>
+
+        {/* Lock */}
+        <button
+          type="button"
+          onClick={() => setActiveLock((prev) => !prev)}
+          className={cn(
+            'p-3 rounded-xl transition-all duration-200 active:scale-90 cursor-pointer',
+            activeLock
+              ? 'bg-surface-hover text-amber-400 border border-border shadow-xs'
+              : 'text-text-muted hover:text-text-primary hover:bg-surface-hover/60 border border-transparent'
+          )}
+          title={activeLock ? 'Unlocked' : 'Locked'}
+          aria-label="Toggle Lock"
+        >
+          <MorphingIcon
+            active={activeLock}
+            from={<Lock className="w-5 h-5" />}
+            to={<Unlock className="w-5 h-5 text-amber-400" />}
+            size={20}
+          />
+        </button>
+      </div>
+
+      {/* Minimal Status Hint */}
+      <span className="text-[11px] font-mono text-text-muted flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        Click any action to trigger spring rotation & morph
+      </span>
+    </div>
+  );
+};
+
+const SpeedWarpShowcase: React.FC = () => {
+  const [speed, setSpeed] = useState(28);
+  const [starCount, setStarCount] = useState(650);
+
+  return (
+    <div className="w-full max-w-3xl mx-auto flex flex-col gap-4">
+      <div className="relative h-[380px] sm:h-[440px] w-full overflow-hidden rounded-2xl border border-border bg-[#050505] shadow-2xl">
+        <SpeedWarp
+          speed={speed}
+          starCount={starCount}
+          className="absolute inset-0 h-full w-full"
+        />
+        <div className="relative z-10 flex h-full flex-col items-center justify-center text-center px-4 pointer-events-none">
+          <h3 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg">
+            Engage Warp Drive
+          </h3>
+          <p className="text-xs sm:text-sm mt-3 font-mono px-3 py-1 rounded-full bg-black/60 border border-white/10 backdrop-blur-xs text-white/80">
+            3D Perspective Hyperspace Simulation • {starCount} Stars
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-surface-raised border border-border">
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-text-muted font-mono">Warp Speed:</span>
+          {[12, 28, 48, 70].map((s, idx) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setSpeed(s)}
+              className={cn(
+                'px-2.5 py-1 rounded-lg text-xs font-mono transition-colors',
+                speed === s ? 'bg-text-primary text-background' : 'text-text-secondary hover:text-text-primary'
+              )}
+            >
+              Warp {idx + 1}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-text-muted font-mono">Star Density:</span>
+          {[300, 650, 1000].map((count) => (
+            <button
+              key={count}
+              type="button"
+              onClick={() => setStarCount(count)}
+              className={cn(
+                'px-2 py-0.5 rounded text-xs font-mono transition-colors',
+                starCount === count ? 'bg-text-primary text-background' : 'text-text-secondary hover:text-text-primary'
+              )}
+            >
+              {count}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SplitButtonShowcase: React.FC = () => {
+  return (
+    <div className="py-12 flex flex-wrap items-center justify-center gap-4 w-full max-w-xl mx-auto">
+      {/* Primary Split Button */}
+      <SplitButton
+        label="Deploy"
+        variant="primary"
+        size="md"
+        options={[
+          { value: 'preview', label: 'Deploy Preview' },
+          { value: 'staging', label: 'Deploy Staging' },
+          { value: 'rollback', label: 'Rollback Build' },
+        ]}
+      />
+
+      {/* Secondary Split Button */}
+      <SplitButton
+        label="Save Draft"
+        variant="secondary"
+        size="md"
+        options={[
+          { value: 'publish', label: 'Publish now' },
+          { value: 'schedule', label: 'Schedule post' },
+          { value: 'export', label: 'Export JSON' },
+        ]}
+      />
+
+      {/* Danger Split Button */}
+      <SplitButton
+        label="Delete"
+        variant="danger"
+        size="md"
+        options={[
+          { value: 'archive', label: 'Archive instead' },
+          { value: 'purge', label: 'Hard purge' },
+        ]}
+      />
+    </div>
+  );
+};
+
 
 const AnimatedNumberShowcase: React.FC = () => {
   const [revenue, setRevenue] = useState(12450);
@@ -2388,6 +2812,26 @@ const completion = await client.completions.create({
             <StoryCards key={demoKey} />
           </div>
         );
+      case 'avatar-stack':
+      case 'avatar-stacks':
+      case 'avatarstack':
+        return <AvatarStackShowcase key={demoKey} />;
+      case 'glyph-matrix':
+      case 'glyph-matrices':
+      case 'glyphmatrix':
+        return <GlyphMatrixShowcase key={demoKey} />;
+      case 'morphing-icon':
+      case 'morphing-icons':
+      case 'morphingicon':
+        return <MorphingIconShowcase key={demoKey} />;
+      case 'speed-warp':
+      case 'speed-warps':
+      case 'speedwarp':
+        return <SpeedWarpShowcase key={demoKey} />;
+      case 'split-button':
+      case 'split-buttons':
+      case 'splitbutton':
+        return <SplitButtonShowcase key={demoKey} />;
       default:
         return (
           <div className="py-12 text-center text-xs text-[#808080]">
