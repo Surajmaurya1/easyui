@@ -287,4 +287,22 @@ export type { PricingProps, PricingTier, PricingFeature } from './Pricing';
 export { ThinkingOrb } from './ThinkingOrb';
 export type { ThinkingOrbProps, ThinkingOrbState } from './ThinkingOrb';
 
+export { AvatarStack } from './AvatarStack';
+export type { AvatarStackProps, AvatarStackItem } from './AvatarStack';
 
+export { GlyphMatrix } from './GlyphMatrix';
+export type { GlyphMatrixProps, GlyphMatrixHandle } from './GlyphMatrix';
+
+export { MorphingIcon } from './MorphingIcon';
+export type { MorphingIconProps } from './MorphingIcon';
+
+export { SpeedWarp } from './SpeedWarp';
+export type { SpeedWarpProps } from './SpeedWarp';
+
+export { SplitButton } from './SplitButton';
+export type { SplitButtonProps, SplitButtonOption, SplitButtonSize } from './SplitButton';
+
+export { StackedCards } from './StackedCards';
+export type { StackedCardsProps } from './StackedCards';
+
+export { StoryCards } from './StoryCard';

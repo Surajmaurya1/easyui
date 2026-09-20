@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { EasyComponentMeta } from '../../types/component';
-import { Copy, Check, Sparkles, Code2, Terminal, Bell, Search, X, ArrowUpRight, ChevronDown } from 'lucide-react';
+import { Copy, Check, Sparkles, Code2, Terminal, Bell, Search, X, ArrowUpRight, ChevronDown, Bookmark, BookmarkCheck } from 'lucide-react';
 import { MagneticButton } from '../ui/MagneticButton';
 import { SpotlightCard } from '../ui/SpotlightCard';
 import { ExpandableSearch } from '../ui/ExpandableSearch';
@@ -39,6 +39,11 @@ import { copyToClipboard, cn } from '../../lib/utils';
 import { MorphingBlob } from '../ui/MorphingBlob';
 import { OTPInput } from '../ui/OtpInput';
 import { ThinkingOrb } from '../ui/ThinkingOrb';
+import { AvatarStack } from '../ui/AvatarStack';
+import { GlyphMatrix } from '../ui/GlyphMatrix';
+import { MorphingIcon } from '../ui/MorphingIcon';
+import { SpeedWarp } from '../ui/SpeedWarp';
+import { SplitButton } from '../ui/SplitButton';
 
 export interface ComponentCardProps {
   component: EasyComponentMeta;
@@ -251,6 +256,120 @@ const StoryCardsPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered = fals
           </motion.div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const AVATAR_STACK_ITEMS = [
+  { id: 1, src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80', name: 'Elena R.', alt: 'Elena' },
+  { id: 2, src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80', name: 'Marcus C.', alt: 'Marcus' },
+  { id: 3, src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80', name: 'Sarah M.', alt: 'Sarah' },
+  { id: 4, src: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80', name: 'David K.', alt: 'David' },
+  { id: 5, src: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80', name: 'Aria T.', alt: 'Aria' },
+];
+
+const AvatarStackPreview: React.FC<{ isHovered?: boolean }> = () => {
+  return (
+    <div className="h-52 flex flex-col items-center justify-center p-4">
+      <div className="pointer-events-auto">
+        <AvatarStack
+          avatars={AVATAR_STACK_ITEMS}
+          size="lg"
+          max={4}
+          overlap="md"
+          showTooltip={true}
+          showCount={true}
+        />
+      </div>
+      <span className="mt-3 text-[10px] font-mono text-text-muted">Spring hover elevation</span>
+    </div>
+  );
+};
+
+const GlyphMatrixCardPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered = false }) => {
+  return (
+    <div className="relative h-52 w-full overflow-hidden rounded-xl bg-[#050505]">
+      <GlyphMatrix
+        fontSize={13}
+        color={isHovered ? '#22c55e' : '#10b981'}
+        speed={isHovered ? 1.4 : 0.85}
+        interactive={false}
+        className="absolute inset-0 h-full w-full"
+      />
+      <div className="relative z-10 flex h-full flex-col items-center justify-center text-center p-2 pointer-events-none">
+        <span className="font-mono text-[11px] font-bold text-emerald-400 tracking-widest bg-black/70 px-2.5 py-1 rounded-md border border-emerald-500/30 backdrop-blur-xs">
+          GLYPH MATRIX
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const MorphingIconPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered = false }) => {
+  const [active, setActive] = useState(false);
+  const isEffectiveActive = isHovered || active;
+
+  return (
+    <div className="h-52 flex flex-col items-center justify-center p-4 gap-3 select-none">
+      <div
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setActive((prev) => !prev);
+        }}
+        className={cn(
+          "px-4 py-2 rounded-full border transition-all duration-200 cursor-pointer flex items-center gap-2 text-xs font-medium shadow-xs",
+          isEffectiveActive
+            ? "bg-surface-hover border-border text-emerald-400"
+            : "bg-surface-raised border-border text-text-secondary hover:text-text-primary hover:border-border-hover"
+        )}
+      >
+        <MorphingIcon
+          active={isEffectiveActive}
+          from={<Bookmark className="w-4 h-4 text-text-muted" />}
+          to={<BookmarkCheck className="w-4 h-4 text-emerald-400" />}
+          size={16}
+        />
+        <span>{isEffectiveActive ? "Saved" : "Save"}</span>
+      </div>
+      <span className="text-[10px] font-mono text-text-muted">Hover or tap to morph</span>
+    </div>
+  );
+};
+
+const SpeedWarpCardPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered = false }) => {
+  return (
+    <div className="relative h-52 w-full overflow-hidden rounded-xl bg-[#050505]">
+      <SpeedWarp
+        speed={isHovered ? 45 : 20}
+        starCount={300}
+        className="absolute inset-0 h-full w-full"
+      />
+      <div className="relative z-10 flex h-full flex-col items-center justify-center text-center p-2 pointer-events-none">
+        <span className="font-mono text-[11px] font-bold text-white tracking-widest bg-black/70 px-2.5 py-1 rounded-md border border-white/15 backdrop-blur-xs">
+          SPEED WARP
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const SplitButtonCardPreview: React.FC<{ isHovered?: boolean }> = () => {
+  return (
+    <div className="h-52 flex flex-col items-center justify-center p-4">
+      <div className="pointer-events-auto" onClick={(e) => e.stopPropagation()}>
+        <SplitButton
+          label="Deploy"
+          size="sm"
+          variant="primary"
+          options={[
+            { value: 'preview', label: 'Deploy preview' },
+            { value: 'staging', label: 'Deploy staging' },
+            { value: 'rollback', label: 'Rollback build' },
+          ]}
+        />
+      </div>
+      <span className="mt-3 text-[10px] font-mono text-text-muted">Split action + menu</span>
     </div>
   );
 };
@@ -1725,6 +1844,31 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
       case 'story-card':
       case 'story-cards':
         return <StoryCardsPreview isHovered={hovered} />;
+
+      case 'avatar-stack':
+      case 'avatar-stacks':
+      case 'avatarstack':
+        return <AvatarStackPreview isHovered={hovered} />;
+
+      case 'glyph-matrix':
+      case 'glyph-matrices':
+      case 'glyphmatrix':
+        return <GlyphMatrixCardPreview isHovered={hovered} />;
+
+      case 'morphing-icon':
+      case 'morphing-icons':
+      case 'morphingicon':
+        return <MorphingIconPreview isHovered={hovered} />;
+
+      case 'speed-warp':
+      case 'speed-warps':
+      case 'speedwarp':
+        return <SpeedWarpCardPreview isHovered={hovered} />;
+
+      case 'split-button':
+      case 'split-buttons':
+      case 'splitbutton':
+        return <SplitButtonCardPreview isHovered={hovered} />;
 
       default:
         return (
