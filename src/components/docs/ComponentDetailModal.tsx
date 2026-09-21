@@ -89,6 +89,12 @@ import { GlyphMatrix } from '../ui/GlyphMatrix';
 import { MorphingIcon } from '../ui/MorphingIcon';
 import { SpeedWarp } from '../ui/SpeedWarp';
 import { SplitButton } from '../ui/SplitButton';
+import {
+  AIResponseLiveShowcase,
+  AdvancedDataTableLiveShowcase,
+  ChatLiveShowcase,
+  AIAgentActivityLiveShowcase,
+} from './sections/NewComponentsShowcase';
 
 export interface ComponentDetailModalProps {
   component: EasyComponentMeta | null;
@@ -865,6 +871,14 @@ export const ComponentDetailModal: React.FC<ComponentDetailModalProps> = ({
 
   const renderInteractiveDemo = () => {
     switch (component.id) {
+      case 'ai-response':
+        return <AIResponseLiveShowcase />;
+      case 'advanced-data-table':
+        return <AdvancedDataTableLiveShowcase />;
+      case 'chat':
+        return <ChatLiveShowcase />;
+      case 'ai-agent-activity':
+        return <AIAgentActivityLiveShowcase />;
       case 'interactive-timeline':
         return (
           <div className="w-full">
@@ -1906,7 +1920,7 @@ func main() {
             {activeTab === 'preview' && (
               <div className="space-y-5">
                 {/* Preview Stage */}
-                <div className="relative rounded-xl border border-[#1F1F1F] bg-[#050505] min-h-[300px] sm:min-h-[360px] flex items-center justify-center p-4 sm:p-8 overflow-hidden">
+                <div className="relative rounded-xl border border-[#1F1F1F] bg-[#050505] min-h-[300px] sm:min-h-[360px] flex items-center justify-center p-2.5 sm:p-8 overflow-hidden">
                   {/* Fullscreen Button */}
                   <button
                     type="button"

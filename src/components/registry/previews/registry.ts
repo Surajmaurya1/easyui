@@ -1,6 +1,30 @@
 import type { ComponentPreviewDefinition } from './types';
 
 export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
+  'ai-response': {
+    id: 'ai-response',
+    componentId: 'ai-response',
+    load: () => import('./items/ai-response'),
+    metadata: { type: 'interactive' },
+  },
+  'advanced-data-table': {
+    id: 'advanced-data-table',
+    componentId: 'advanced-data-table',
+    load: () => import('./items/advanced-data-table'),
+    metadata: { type: 'interactive' },
+  },
+  'chat': {
+    id: 'chat',
+    componentId: 'chat',
+    load: () => import('./items/chat'),
+    metadata: { type: 'interactive' },
+  },
+  'ai-agent-activity': {
+    id: 'ai-agent-activity',
+    componentId: 'ai-agent-activity',
+    load: () => import('./items/ai-agent-activity'),
+    metadata: { type: 'interactive' },
+  },
   'interactive-timeline': {
     id: 'interactive-timeline',
     componentId: 'interactive-timeline',
