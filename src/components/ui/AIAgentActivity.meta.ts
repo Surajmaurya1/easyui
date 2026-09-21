@@ -6,7 +6,7 @@ const meta: EasyUIComponentMeta = {
   category: 'Feedback',
   tagline: 'Real-time AI agent tool call execution trace and reasoning timeline',
   badges: ['AI', 'Agent', 'Timeline', 'Interactive'],
-  createdAt: '2026-09-21T10:00:00.000Z',
+  createdAt: '2026-09-21',
   features: [
     'Real-time execution timeline supporting thinking, searching, reading, tool execution, API calls, and code running',
     'Interactive status indicators for pending, running (with active spinner), completed, error, and cancelled states',
