@@ -31,6 +31,72 @@
       ]
     },
     {
+      "name": "advanced-data-table",
+      "type": "registry:ui",
+      "title": "Advanced Data Table",
+      "description": "A powerful, accessible data table component with multi-column sorting, faceted filters, global search, row selection, bulk actions, expandable sub-rows, and pagination.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/AdvancedDataTable.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/advanced-data-table.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "ai-agent-activity",
+      "type": "registry:ui",
+      "title": "AI Agent Activity",
+      "description": "A timeline component for tracking AI agent reasoning, tool calls, API queries, database fetches, and execution states with inspectable parameters and results.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/AIAgentActivity.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ai-agent-activity.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "ai-response",
+      "type": "registry:ui",
+      "title": "AI Response",
+      "description": "A production-ready, accessible AI response component supporting streaming markdown, syntax-styled code blocks, citations, feedback actions, and tool execution status.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/AIResponse.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ai-response.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "animated-file-upload",
       "type": "registry:ui",
       "title": "Animated File Upload",
@@ -250,6 +316,28 @@
           "path": "src/lib/theme/useTheme.tsx",
           "type": "registry:lib",
           "target": "lib/theme/useTheme.tsx"
+        }
+      ]
+    },
+    {
+      "name": "chat",
+      "type": "registry:ui",
+      "title": "Chat",
+      "description": "A production-grade conversational chat component with thread history sidebar, rich message rendering, status indicators, file attachments, and auto-expanding composer.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Chat.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/chat.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
         }
       ]
     },

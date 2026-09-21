@@ -97,6 +97,303 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "advanced-data-table",
+    "name": "Advanced Data Table",
+    "tagline": "Enterprise-grade data table with sorting, filtering, selection, and expandable rows",
+    "description": "A powerful, accessible data table component with multi-column sorting, faceted filters, global search, row selection, bulk actions, expandable sub-rows, and pagination.",
+    "category": "Forms",
+    "badges": [
+      "Table",
+      "Interactive",
+      "Enterprise",
+      "Accessible"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/advanced-data-table",
+    "features": [
+      "Multi-state column sorting with clean directional indicator icons",
+      "Global live search with instant filtering across all data fields",
+      "Faceted filter chips with multi-selection and reset counters",
+      "Indeterminate select-all checkbox, row selection, and animated bulk actions drawer",
+      "Smooth Framer Motion expandable rows for nested data and telemetry inspection",
+      "Configurable pagination with page size dropdown and first/last page jump buttons",
+      "Dynamic column visibility toggle menu to hide or show columns on demand",
+      "Polished skeleton loading and informative empty state with clear filters trigger"
+    ],
+    "props": [
+      {
+        "name": "data",
+        "type": "T[]",
+        "default": "[]",
+        "description": "Array of data records to render in the table"
+      },
+      {
+        "name": "columns",
+        "type": "ColumnDef<T>[]",
+        "default": "[]",
+        "description": "Column configuration defining headers, accessors, sorting, filtering, and custom cell renderers"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional table title displayed in the toolbar"
+      },
+      {
+        "name": "searchPlaceholder",
+        "type": "string",
+        "default": "'Search records...'",
+        "description": "Placeholder text for the global search input"
+      },
+      {
+        "name": "defaultPageSize",
+        "type": "number",
+        "default": "10",
+        "description": "Initial number of records to show per page"
+      },
+      {
+        "name": "renderSubComponent",
+        "type": "(row: T) => ReactNode",
+        "default": "undefined",
+        "description": "Render prop function for expandable row sub-details"
+      },
+      {
+        "name": "onBulkDelete",
+        "type": "(selectedIds: string[]) => void",
+        "default": "undefined",
+        "description": "Callback fired when user executes bulk deletion"
+      },
+      {
+        "name": "onBulkExport",
+        "type": "(selectedIds: string[]) => void",
+        "default": "undefined",
+        "description": "Callback fired when user clicks bulk export"
+      },
+      {
+        "name": "isLoading",
+        "type": "boolean",
+        "default": "false",
+        "description": "Renders animated skeleton placeholders when true"
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "default": "null",
+        "description": "Renders an error state banner when present"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Custom Tailwind class names for styling overrides"
+      }
+    ],
+    "accessibility": [
+      "Uses semantic HTML <table>, <thead>, <tbody>, <th>, <tr>, <td> elements with appropriate ARIA attributes",
+      "Select-all checkbox supports aria-label and programmatic HTML indeterminate state",
+      "Expandable row triggers declare aria-expanded and descriptive screen-reader labels",
+      "Sortable header buttons announce current sort direction via text and icons",
+      "Full keyboard navigation support with visible focus rings on all interactive elements"
+    ],
+    "createdAt": "2026-09-21",
+    "usageCode": "import { AdvancedDataTable, type ColumnDef } from \"@/components/ui/advanced-data-table\";\n\ninterface UserRecord {\n  id: string;\n  name: string;\n  role: string;\n  status: 'active' | 'pending';\n}\n\nconst columns: ColumnDef<UserRecord>[] = [\n  { id: 'name', header: 'User', accessorKey: 'name', sortable: true },\n  { id: 'role', header: 'Role', accessorKey: 'role', sortable: true },\n  { id: 'status', header: 'Status', accessorKey: 'status', filterable: true },\n];\n\nexport function Demo() {\n  const data: UserRecord[] = [\n    { id: '1', name: 'Alex Chen', role: 'Engineer', status: 'active' },\n    { id: '2', name: 'Elena Rostova', role: 'Designer', status: 'pending' },\n  ];\n\n  return (\n    <AdvancedDataTable\n      title=\"Team Members\"\n      data={data}\n      columns={columns}\n      onBulkDelete={(ids) => console.log('Delete:', ids)}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/AdvancedDataTable.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/advanced-data-table.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
+    "id": "ai-agent-activity",
+    "name": "AI Agent Activity",
+    "tagline": "Real-time AI agent tool call execution trace and reasoning timeline",
+    "description": "A timeline component for tracking AI agent reasoning, tool calls, API queries, database fetches, and execution states with inspectable parameters and results.",
+    "category": "Feedback",
+    "badges": [
+      "AI",
+      "Agent",
+      "Timeline",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/ai-agent-activity",
+    "features": [
+      "Real-time execution timeline supporting thinking, searching, reading, tool execution, API calls, and code running",
+      "Interactive status indicators for pending, running (with active spinner), completed, error, and cancelled states",
+      "Expandable inspector drawer displaying structured inputs, outputs, JSON payloads, and executed code snippets",
+      "Step duration tracking and metadata telemetry badges for deep performance inspection",
+      "One-click global Expand All and Collapse All control buttons in the header",
+      "Smooth Framer Motion layout transitions tuned to physical spring tokens"
+    ],
+    "props": [
+      {
+        "name": "activities",
+        "type": "AgentActivityItemData[]",
+        "default": "[]",
+        "description": "Array of activity steps representing the agent execution plan and execution trace"
+      },
+      {
+        "name": "isRunning",
+        "type": "boolean",
+        "default": "false",
+        "description": "Indicates whether the agent is currently executing steps in the background"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'Activity'",
+        "description": "Title displayed in the activity header"
+      },
+      {
+        "name": "agentName",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional agent or pipeline name displayed beside the title"
+      },
+      {
+        "name": "defaultExpandedIds",
+        "type": "string[]",
+        "default": "[]",
+        "description": "IDs of activity items that should start in an expanded state"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Custom Tailwind class names for styling overrides"
+      }
+    ],
+    "accessibility": [
+      "Accessible timeline semantics with ARIA expanded states on expandable detail panels",
+      "Active running steps indicate animated progress with affirmative textual status badges for screen readers",
+      "Full keyboard navigation allowing users to tab through steps and expand/collapse details using Enter or Spacebar"
+    ],
+    "createdAt": "2026-09-21",
+    "usageCode": "import { AIAgentActivity, type AgentActivityItemData } from \"@/components/ui/ai-agent-activity\";\n\nexport function Demo() {\n  const activities: AgentActivityItemData[] = [\n    { id: '1', type: 'thinking', title: 'Analyze request', status: 'success', duration: '42ms' },\n    { id: '2', type: 'searching', title: 'Search tokens', status: 'success', duration: '94ms' },\n    { id: '3', type: 'code_execution', title: 'Generate scaffold', status: 'running' },\n  ];\n\n  return (\n    <AIAgentActivity\n      activities={activities}\n      isRunning={true}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/AIAgentActivity.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/ai-agent-activity.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
+    "id": "ai-response",
+    "name": "AI Response",
+    "tagline": "Production-ready streaming AI response with sources and actions",
+    "description": "A production-ready, accessible AI response component supporting streaming markdown, syntax-styled code blocks, citations, feedback actions, and tool execution status.",
+    "category": "Feedback",
+    "badges": [
+      "AI",
+      "Streaming",
+      "Markdown",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/ai-response",
+    "features": [
+      "Progressive streaming state with typing indicator and loading skeleton",
+      "Rich Markdown rendering with headings, lists, blockquotes, and tables",
+      "Syntax-highlighted code blocks with dedicated one-click copy buttons",
+      "Composable cited sources list with expandable link pills and previews",
+      "Built-in user feedback actions (Copy, Regenerate, Like, Dislike)",
+      "Seamless integration with Agent Activity and tool execution traces",
+      "Fully accessible keyboard navigation and ARIA live regions for streaming updates"
+    ],
+    "props": [
+      {
+        "name": "content",
+        "type": "string",
+        "default": "''",
+        "description": "Markdown or plain text response generated by the AI model"
+      },
+      {
+        "name": "status",
+        "type": "'idle' | 'generating' | 'streaming' | 'complete' | 'error' | 'cancelled'",
+        "default": "'complete'",
+        "description": "Current generation lifecycle state"
+      },
+      {
+        "name": "modelName",
+        "type": "string",
+        "default": "'EasyAI 2.0'",
+        "description": "Model identifier badge displayed in header"
+      },
+      {
+        "name": "sources",
+        "type": "AIResponseSource[]",
+        "default": "[]",
+        "description": "Array of citations or references referenced in the answer"
+      },
+      {
+        "name": "onRegenerate",
+        "type": "() => void",
+        "default": "undefined",
+        "description": "Optional callback fired when the user clicks the regenerate button"
+      },
+      {
+        "name": "onFeedback",
+        "type": "(type: 'like' | 'dislike') => void",
+        "default": "undefined",
+        "description": "Optional callback fired when the user provides quality feedback"
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "default": "undefined",
+        "description": "Optional custom composition using AIResponse compound subcomponents"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Custom Tailwind class names for styling overrides"
+      }
+    ],
+    "accessibility": [
+      "Uses semantic role=\"region\" with aria-live=\"polite\" for screen-reader streaming announcements",
+      "All interactive controls (Copy, Like, Dislike, Links) feature explicit focus-visible rings and ARIA labels",
+      "Code blocks feature keyboard-accessible copy triggers with affirmative screen-reader labels",
+      "Respects reduced motion preferences through soft, non-intrusive physics springs"
+    ],
+    "createdAt": "2026-09-21",
+    "usageCode": "import { AIResponse, AIResponseHeader, AIResponseContent, AIResponseSources, AIResponseActions } from \"@/components/ui/ai-response\";\n\nexport function Demo() {\n  return (\n    <AIResponse\n      status=\"complete\"\n      modelName=\"Claude 3.7 Sonnet\"\n      content=\"Here is a verified solution using **EasyUI** motion tokens:\\n\\n```typescript\\nimport { motionTransitions } from '@/lib/motion-tokens';\\n\\nexport const config = motionTransitions.springSnappy;\\n```\"\n      sources={[\n        { id: 1, title: \"EasyUI Motion Tokens\", url: \"https://easyui.pro/docs\" },\n        { id: 2, title: \"Framer Motion Spring Spec\", url: \"https://www.framer.com/motion/\" }\n      ]}\n      onRegenerate={() => console.log('Regenerating...')}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/AIResponse.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/ai-response.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
     "id": "animated-file-upload",
     "name": "Animated File Upload",
     "tagline": "Physical drag-and-drop file uploader with per-file progress morphing",
@@ -886,6 +1183,108 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/theme/useTheme.tsx",
         "type": "registry:lib",
         "target": "lib/theme/useTheme.tsx"
+      }
+    ]
+  },
+  {
+    "id": "chat",
+    "name": "Chat",
+    "tagline": "Production-ready conversation interface with history sidebar and composer",
+    "description": "A production-grade conversational chat component with thread history sidebar, rich message rendering, status indicators, file attachments, and auto-expanding composer.",
+    "category": "Feedback",
+    "badges": [
+      "Chat",
+      "AI",
+      "Messaging",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/chat",
+    "features": [
+      "Complete conversational layout with optional historical threads sidebar and responsive mobile drawer",
+      "Rich message components supporting user, assistant, and system roles with timestamps and avatars",
+      "Built-in file and image attachment upload system with chips, sizes, and removal actions",
+      "Auto-expanding multiline composer with Enter-to-send and Shift+Enter for newline shortcuts",
+      "Message delivery states: sending, sent, delivered, failed (with retry), and streaming",
+      "Accessible action triggers for copying message content and managing conversation state"
+    ],
+    "props": [
+      {
+        "name": "messages",
+        "type": "ChatMessageItem[]",
+        "default": "[]",
+        "description": "Array of chat message records including role, content, author, and attachments"
+      },
+      {
+        "name": "onSendMessage",
+        "type": "(content: string, attachments?: ChatAttachment[]) => void",
+        "default": "undefined",
+        "description": "Callback fired when the user submits a message via composer"
+      },
+      {
+        "name": "isGenerating",
+        "type": "boolean",
+        "default": "false",
+        "description": "Disables composer and shows loading status while the assistant is synthesizing an answer"
+      },
+      {
+        "name": "threads",
+        "type": "ChatConversationThread[]",
+        "default": "undefined",
+        "description": "Optional list of historical conversations displayed in the sidebar"
+      },
+      {
+        "name": "activeThreadId",
+        "type": "string",
+        "default": "undefined",
+        "description": "ID of the currently selected conversation thread"
+      },
+      {
+        "name": "onSelectThread",
+        "type": "(threadId: string) => void",
+        "default": "undefined",
+        "description": "Callback fired when a user selects a thread from the history sidebar"
+      },
+      {
+        "name": "onNewChat",
+        "type": "() => void",
+        "default": "undefined",
+        "description": "Callback fired when the user clicks the New Conversation button"
+      },
+      {
+        "name": "onClearChat",
+        "type": "() => void",
+        "default": "undefined",
+        "description": "Callback fired when the user clicks the clear chat history button"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Custom Tailwind class names for styling overrides"
+      }
+    ],
+    "accessibility": [
+      "Keyboard navigable message history and composer with standard Enter and Shift+Enter keybindings",
+      "Composer textarea provides clear accessible placeholders, labels, and aria-describedby hints",
+      "Mobile sidebar features focus isolation, escape key dismissal, and backdrop overlay click handlers",
+      "Action buttons include aria-label descriptors for screen reader compatibility"
+    ],
+    "createdAt": "2026-09-21",
+    "usageCode": "import { Chat, type ChatMessageItem } from \"@/components/ui/chat\";\n\nexport function Demo() {\n  const messages: ChatMessageItem[] = [\n    { id: '1', role: 'user', content: 'Can you show me how to style EasyUI tables?', timestamp: '10:40 AM' },\n    { id: '2', role: 'assistant', content: 'Certainly! EasyUI tables use the semantic --border and --surface tokens.', timestamp: '10:41 AM' },\n  ];\n\n  return (\n    <Chat\n      messages={messages}\n      onSendMessage={(text) => console.log('Send:', text)}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/Chat.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/chat.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
       }
     ]
   },

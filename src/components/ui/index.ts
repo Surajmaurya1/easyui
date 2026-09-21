@@ -306,3 +306,85 @@ export { StackedCards } from './StackedCards';
 export type { StackedCardsProps } from './StackedCards';
 
 export { StoryCards } from './StoryCard';
+
+export {
+  AIResponse,
+  AIResponseHeader,
+  AIResponseContent,
+  AIResponseSources,
+  AIResponseToolsSummary,
+  AIResponseActions,
+  CodeBlock,
+} from './AIResponse';
+export type {
+  AIResponseProps,
+  AIResponseHeaderProps,
+  AIResponseContentProps,
+  AIResponseSourcesProps,
+  AIResponseToolsSummaryProps,
+  AIResponseActionsProps,
+  AIResponseStatus,
+  AIResponseSource,
+  CodeBlockProps,
+} from './AIResponse';
+
+export {
+  DataTable,
+  AdvancedDataTable,
+  DataTableToolbar,
+  DataTableFilters,
+  DataTableContent,
+  DataTablePagination,
+  useDataTable,
+} from './AdvancedDataTable';
+export type {
+  DataTableProps,
+  AdvancedDataTableProps,
+  DataTableToolbarProps,
+  DataTableFiltersProps,
+  DataTableContentProps,
+  DataTablePaginationProps,
+  ColumnDef,
+  SortDirection,
+} from './AdvancedDataTable';
+
+export {
+  Chat,
+  ChatHeader,
+  ChatSidebar,
+  ChatMessage,
+  ChatMessages,
+  ChatComposer,
+  useChat,
+} from './Chat';
+export type {
+  ChatProps,
+  ChatHeaderProps,
+  ChatSidebarProps,
+  ChatMessageProps,
+  ChatMessagesProps,
+  ChatComposerProps,
+  ChatMessageItem,
+  ChatAttachment,
+  ChatConversationThread,
+  MessageRole,
+  MessageStatus,
+} from './Chat';
+
+export {
+  AIAgentActivity,
+  AgentActivityHeader,
+  AgentActivityTimeline,
+  AgentActivityItem,
+  useAgentActivity,
+  getActivityIcon,
+} from './AIAgentActivity';
+export type {
+  AIAgentActivityProps,
+  AgentActivityHeaderProps,
+  AgentActivityTimelineProps,
+  AgentActivityItemProps,
+  AgentActivityItemData,
+  ActivityType,
+  ActivityStatus,
+} from './AIAgentActivity';

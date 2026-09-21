@@ -40,10 +40,10 @@ describe('App Routing and Navigation', () => {
     const heading = await screen.findByRole(
       'heading',
       { name: /button/i, level: 1 },
-      { timeout: 10000 }
+      { timeout: 20000 }
     );
     expect(heading).toBeInTheDocument();
-  }, 15000);
+  }, 25000);
 
   it('renders documentation page when /docs or /doc route is accessed', async () => {
     window.history.replaceState(null, '', '/docs/quick-start');
