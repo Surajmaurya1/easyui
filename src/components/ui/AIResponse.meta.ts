@@ -6,7 +6,7 @@ const meta: EasyUIComponentMeta = {
   category: 'Feedback',
   tagline: 'Production-ready streaming AI response with sources and actions',
   badges: ['AI', 'Streaming', 'Markdown', 'Interactive'],
-  createdAt: '2026-09-21T10:00:00.000Z',
+  createdAt: '2026-09-21',
   features: [
     'Progressive streaming state with typing indicator and loading skeleton',
     'Rich Markdown rendering with headings, lists, blockquotes, and tables',

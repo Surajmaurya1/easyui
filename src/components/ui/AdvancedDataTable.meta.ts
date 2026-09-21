@@ -6,7 +6,7 @@ const meta: EasyUIComponentMeta = {
   category: 'Forms',
   tagline: 'Enterprise-grade data table with sorting, filtering, selection, and expandable rows',
   badges: ['Table', 'Interactive', 'Enterprise', 'Accessible'],
-  createdAt: '2026-09-21T10:00:00.000Z',
+  createdAt: '2026-09-21',
   features: [
     'Multi-state column sorting with clean directional indicator icons',
     'Global live search with instant filtering across all data fields',

@@ -194,7 +194,7 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
       "Sortable header buttons announce current sort direction via text and icons",
       "Full keyboard navigation support with visible focus rings on all interactive elements"
     ],
-    "createdAt": "2026-09-21T10:00:00.000Z",
+    "createdAt": "2026-09-21",
     "usageCode": "import { AdvancedDataTable, type ColumnDef } from \"@/components/ui/advanced-data-table\";\n\ninterface UserRecord {\n  id: string;\n  name: string;\n  role: string;\n  status: 'active' | 'pending';\n}\n\nconst columns: ColumnDef<UserRecord>[] = [\n  { id: 'name', header: 'User', accessorKey: 'name', sortable: true },\n  { id: 'role', header: 'Role', accessorKey: 'role', sortable: true },\n  { id: 'status', header: 'Status', accessorKey: 'status', filterable: true },\n];\n\nexport function Demo() {\n  const data: UserRecord[] = [\n    { id: '1', name: 'Alex Chen', role: 'Engineer', status: 'active' },\n    { id: '2', name: 'Elena Rostova', role: 'Designer', status: 'pending' },\n  ];\n\n  return (\n    <AdvancedDataTable\n      title=\"Team Members\"\n      data={data}\n      columns={columns}\n      onBulkDelete={(ids) => console.log('Delete:', ids)}\n    />\n  );\n}",
     "dependencies": [
       "framer-motion",
@@ -277,7 +277,7 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
       "Active running steps indicate animated progress with affirmative textual status badges for screen readers",
       "Full keyboard navigation allowing users to tab through steps and expand/collapse details using Enter or Spacebar"
     ],
-    "createdAt": "2026-09-21T10:00:00.000Z",
+    "createdAt": "2026-09-21",
     "usageCode": "import { AIAgentActivity, type AgentActivityItemData } from \"@/components/ui/ai-agent-activity\";\n\nexport function Demo() {\n  const activities: AgentActivityItemData[] = [\n    { id: '1', type: 'thinking', title: 'Analyze request', status: 'success', duration: '42ms' },\n    { id: '2', type: 'searching', title: 'Search tokens', status: 'success', duration: '94ms' },\n    { id: '3', type: 'code_execution', title: 'Generate scaffold', status: 'running' },\n  ];\n\n  return (\n    <AIAgentActivity\n      activities={activities}\n      isRunning={true}\n    />\n  );\n}",
     "dependencies": [
       "framer-motion",
@@ -374,7 +374,7 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
       "Code blocks feature keyboard-accessible copy triggers with affirmative screen-reader labels",
       "Respects reduced motion preferences through soft, non-intrusive physics springs"
     ],
-    "createdAt": "2026-09-21T10:00:00.000Z",
+    "createdAt": "2026-09-21",
     "usageCode": "import { AIResponse, AIResponseHeader, AIResponseContent, AIResponseSources, AIResponseActions } from \"@/components/ui/ai-response\";\n\nexport function Demo() {\n  return (\n    <AIResponse\n      status=\"complete\"\n      modelName=\"Claude 3.7 Sonnet\"\n      content=\"Here is a verified solution using **EasyUI** motion tokens:\\n\\n```typescript\\nimport { motionTransitions } from '@/lib/motion-tokens';\\n\\nexport const config = motionTransitions.springSnappy;\\n```\"\n      sources={[\n        { id: 1, title: \"EasyUI Motion Tokens\", url: \"https://easyui.pro/docs\" },\n        { id: 2, title: \"Framer Motion Spring Spec\", url: \"https://www.framer.com/motion/\" }\n      ]}\n      onRegenerate={() => console.log('Regenerating...')}\n    />\n  );\n}",
     "dependencies": [
       "framer-motion",
@@ -1269,7 +1269,7 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
       "Mobile sidebar features focus isolation, escape key dismissal, and backdrop overlay click handlers",
       "Action buttons include aria-label descriptors for screen reader compatibility"
     ],
-    "createdAt": "2026-09-21T10:00:00.000Z",
+    "createdAt": "2026-09-21",
     "usageCode": "import { Chat, type ChatMessageItem } from \"@/components/ui/chat\";\n\nexport function Demo() {\n  const messages: ChatMessageItem[] = [\n    { id: '1', role: 'user', content: 'Can you show me how to style EasyUI tables?', timestamp: '10:40 AM' },\n    { id: '2', role: 'assistant', content: 'Certainly! EasyUI tables use the semantic --border and --surface tokens.', timestamp: '10:41 AM' },\n  ];\n\n  return (\n    <Chat\n      messages={messages}\n      onSendMessage={(text) => console.log('Send:', text)}\n    />\n  );\n}",
     "dependencies": [
       "framer-motion",

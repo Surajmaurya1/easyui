@@ -6,7 +6,7 @@ const meta: EasyUIComponentMeta = {
   category: 'Feedback',
   tagline: 'Production-ready conversation interface with history sidebar and composer',
   badges: ['Chat', 'AI', 'Messaging', 'Interactive'],
-  createdAt: '2026-09-21T10:00:00.000Z',
+  createdAt: '2026-09-21',
   features: [
     'Complete conversational layout with optional historical threads sidebar and responsive mobile drawer',
     'Rich message components supporting user, assistant, and system roles with timestamps and avatars',
