@@ -138,6 +138,12 @@ import { GlyphMatrix } from '../ui/GlyphMatrix';
 import { MorphingIcon } from '../ui/MorphingIcon';
 import { SpeedWarp } from '../ui/SpeedWarp';
 import { SplitButton } from '../ui/SplitButton';
+import {
+  AIResponseLiveShowcase,
+  AdvancedDataTableLiveShowcase,
+  ChatLiveShowcase,
+  AIAgentActivityLiveShowcase,
+} from './sections/NewComponentsShowcase';
 
 export type MainTab = 'preview' | 'usage' | 'code' | 'props' | 'accessibility';
 export type PkgManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
@@ -1433,6 +1439,14 @@ export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
 
   const renderInteractiveDemo = () => {
     switch (component.id) {
+      case 'ai-response':
+        return <AIResponseLiveShowcase />;
+      case 'advanced-data-table':
+        return <AdvancedDataTableLiveShowcase />;
+      case 'chat':
+        return <ChatLiveShowcase />;
+      case 'ai-agent-activity':
+        return <AIAgentActivityLiveShowcase />;
       case 'interactive-timeline':
         return (
           <div className="w-full">
@@ -3169,7 +3183,7 @@ const completion = await client.completions.create({
                       that are not yet light/dark aware keep their original styling. */}
                   <div
                     className={cn(
-                      'relative min-h-[360px] sm:min-h-[420px] p-6 sm:p-10 flex items-center justify-center overflow-hidden transition-colors duration-200',
+                      'relative min-h-[360px] sm:min-h-[420px] p-2.5 sm:p-10 flex items-center justify-center overflow-hidden transition-colors duration-200',
                       theme === 'dark' ? 'bg-[#050505] text-text-primary' : 'bg-[#FAFAFA] text-[#0A0A0A]'
                     )}
                   >
