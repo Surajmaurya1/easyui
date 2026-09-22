@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, memo, useCallback } from 'react';
-import './DotField.css';
 
 const TWO_PI = Math.PI * 2;
 
@@ -99,7 +98,7 @@ export const DotField: React.FC<DotFieldProps> = memo(({
   return (
     <div
       ref={containerRef}
-      className={`dot-field-container relative overflow-hidden ${className}`}
+      className={`relative w-full h-full overflow-hidden ${className}`}
       style={style}
       aria-hidden="true"
       {...rest}

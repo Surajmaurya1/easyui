@@ -43,14 +43,20 @@ export const ComponentPreviewRenderer: React.FC<ComponentPreviewRendererProps> =
   className = '',
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Check if IntersectionObserver is available (default to true in environments without IO, e.g. tests)
-  const isIoSupported = typeof window !== 'undefined' && 'IntersectionObserver' in window;
-  const [hasEnteredViewport, setHasEnteredViewport] = useState<boolean>(!isIoSupported);
-  const [isInViewport, setIsInViewport] = useState<boolean>(!isIoSupported);
+  // Default to false on both server (SSR) and client initial render to ensure 100% hydration parity.
+  // IntersectionObserver will trigger loading after mount when in viewport (or immediately in tests).
+  const [hasEnteredViewport, setHasEnteredViewport] = useState<boolean>(false);
+  const [isInViewport, setIsInViewport] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!isIoSupported || hasEnteredViewport) return;
+    const isIoSupported = typeof window !== 'undefined' && 'IntersectionObserver' in window;
+    if (!isIoSupported) {
+      setHasEnteredViewport(true);
+      setIsInViewport(true);
+      return;
+    }
+
+    if (hasEnteredViewport) return;
 
     const el = containerRef.current;
     if (!el) return;
@@ -76,7 +82,7 @@ export const ComponentPreviewRenderer: React.FC<ComponentPreviewRendererProps> =
     return () => {
       observer.disconnect();
     };
-  }, [isIoSupported, hasEnteredViewport]);
+  }, [hasEnteredViewport]);
 
   const definition = getComponentPreview(component.id);
   const LazyComponent = definition ? getLazyPreviewComponent(component.id) : null;

@@ -1362,13 +1362,6 @@ export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
   // Preview surface follows the global page theme (no local toggle).
   const { theme } = useTheme();
 
-  const handleBackToComponents = () => {
-    if (typeof window !== 'undefined' && window.history.length > 1) {
-      window.history.back();
-    } else {
-      onNavigateComponents();
-    }
-  };
 
   // Reset tab and scroll top on component change
   useEffect(() => {
@@ -3050,9 +3043,16 @@ const completion = await client.completions.create({
                     const isActive = item.id === component.id;
                     const isNew = isComponentNew(item);
                     return (
-                      <button
+                      <a
                         key={item.id}
-                        onClick={() => onSelectComponent(item.id)}
+                        href={`/components/${item.id}`}
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                            e.preventDefault();
+                            onSelectComponent(item.id);
+                          }
+                        }}
+                        aria-current={isActive ? 'page' : undefined}
                         className={cn(
                           'w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all text-left group cursor-pointer',
                           isActive
@@ -3067,7 +3067,7 @@ const completion = await client.completions.create({
                             <span className="w-1.5 h-1.5 rounded-full bg-text-primary shrink-0" />
                           )}
                         </div>
-                      </button>
+                      </a>
                     );
                   })}
                 </div>
@@ -3078,22 +3078,47 @@ const completion = await client.completions.create({
           {/* ========================================================================= */}
           {/* 2. CENTER COLUMN: Dedicated Component Documentation Surface               */}
           {/* ========================================================================= */}
-          <main className="flex-1 min-w-0 space-y-8 pb-20">
+          <main className="flex-1 min-w-0 pb-20">
+            <article className="space-y-8">
             {/* Breadcrumb & Header */}
             <div id="overview-section" className="space-y-3 pt-1">
               {/* Breadcrumb */}
-              <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-text-muted">
-                <button
-                  type="button"
-                  onClick={handleBackToComponents}
-                  className="hover:text-text-primary transition-colors cursor-pointer"
-                >
-                  Components
-                </button>
-                <ChevronRight className="w-3 h-3 text-text-muted" />
-                <span className="text-text-secondary">{component.category || 'UI'}</span>
-                <ChevronRight className="w-3 h-3 text-text-muted" />
-                <span className="text-text-primary font-medium">{component.name}</span>
+              <nav aria-label="Breadcrumb" className="text-xs text-text-muted">
+                <ol className="flex items-center gap-1.5 list-none p-0 m-0">
+                  <li>
+                    <a
+                      href="/"
+                      onClick={(e) => {
+                        if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                          e.preventDefault();
+                          onNavigateHome();
+                        }
+                      }}
+                      className="hover:text-text-primary transition-colors cursor-pointer"
+                    >
+                      EasyUI
+                    </a>
+                  </li>
+                  <li aria-hidden className="text-text-subtle"><ChevronRight className="w-3 h-3 text-text-muted" /></li>
+                  <li>
+                    <a
+                      href="/components"
+                      onClick={(e) => {
+                        if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                          e.preventDefault();
+                          onNavigateComponents();
+                        }
+                      }}
+                      className="hover:text-text-primary transition-colors cursor-pointer"
+                    >
+                      Components
+                    </a>
+                  </li>
+                  <li aria-hidden className="text-text-subtle"><ChevronRight className="w-3 h-3 text-text-muted" /></li>
+                  <li aria-current="page" className="text-text-primary font-medium truncate">
+                    {component.name}
+                  </li>
+                </ol>
               </nav>
 
               {/* Title */}
@@ -3397,10 +3422,10 @@ const completion = await client.completions.create({
                     <table className="w-full text-left text-xs">
                       <thead className="bg-surface-raised text-text-secondary border-b border-border">
                         <tr>
-                          <th className="py-3 px-4 font-mono font-medium">Prop</th>
-                          <th className="py-3 px-4 font-mono font-medium">Type</th>
-                          <th className="py-3 px-4 font-mono font-medium">Default</th>
-                          <th className="py-3 px-4 font-medium">Description</th>
+                          <th scope="col" className="py-3 px-4 font-mono font-medium">Prop</th>
+                          <th scope="col" className="py-3 px-4 font-mono font-medium">Type</th>
+                          <th scope="col" className="py-3 px-4 font-mono font-medium">Default</th>
+                          <th scope="col" className="py-3 px-4 font-medium">Description</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border">
@@ -3429,10 +3454,16 @@ const completion = await client.completions.create({
                 <h2 className="text-lg font-semibold text-text-primary tracking-tight">Related Components</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {relatedComponents.map((rel) => (
-                    <button
+                    <a
                       key={rel.id}
-                      onClick={() => onSelectComponent(rel.id)}
-                      className="p-4 rounded-xl border border-border bg-surface hover:border-border-hover hover:bg-surface-hover transition-all text-left group cursor-pointer"
+                      href={`/components/${rel.id}`}
+                      onClick={(e) => {
+                        if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                          e.preventDefault();
+                          onSelectComponent(rel.id);
+                        }
+                      }}
+                      className="p-4 rounded-xl border border-border bg-surface hover:border-border-hover hover:bg-surface-hover transition-all text-left group cursor-pointer block"
                     >
                       <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block mb-1">
                         {rel.category}
@@ -3443,11 +3474,12 @@ const completion = await client.completions.create({
                       <p className="text-[11px] text-text-secondary line-clamp-2 leading-relaxed">
                         {rel.tagline || rel.description}
                       </p>
-                    </button>
+                    </a>
                   ))}
                 </div>
               </section>
             )}
+            </article>
           </main>
         </div>
       </div>

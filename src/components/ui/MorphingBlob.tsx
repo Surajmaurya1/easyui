@@ -76,9 +76,10 @@ export const MorphingBlob: React.FC<MorphingBlobProps> = ({
     y: height / 2,
   });
 
+  const rawId = React.useId();
   const gradientId = useMemo(
-    () => `blob-gradient-${Math.random().toString(36).slice(2, 9)}`,
-    []
+    () => `blob-gradient-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`,
+    [rawId]
   );
 
   const prefersReducedMotion = useRef(

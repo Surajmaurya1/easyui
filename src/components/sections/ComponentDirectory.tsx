@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Container } from '../layout/Container';
 import { EASY_COMPONENTS } from '../registry/components-data';
 import type { ComponentCategory } from '../../types/component';
@@ -25,14 +25,20 @@ export const ComponentDirectory: React.FC<ComponentDirectoryProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<ComponentCategory>('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [currentPage, setCurrentPage] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  // Restore saved pagination from sessionStorage after client hydration
+  useEffect(() => {
+    try {
       const saved = sessionStorage.getItem('easyui_dir_page');
       const p = saved ? parseInt(saved, 10) : 1;
-      return !isNaN(p) && p > 0 ? p : 1;
+      if (!isNaN(p) && p > 1) {
+        setCurrentPage(p);
+      }
+    } catch {
+      /* ignore */
     }
-    return 1;
-  });
+  }, []);
 
   const categories: ComponentCategory[] = [
     'All',

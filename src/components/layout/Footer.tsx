@@ -28,18 +28,30 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateComponents, onNavigate
             className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px]"
             aria-label="Footer navigation"
           >
-            <button
-              onClick={onNavigateComponents}
+            <a
+              href="/components"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0 && onNavigateComponents) {
+                  e.preventDefault();
+                  onNavigateComponents();
+                }
+              }}
               className="text-text-secondary hover:text-text-primary transition-colors focus-ring rounded cursor-pointer"
             >
               Components
-            </button>
-            <button
-              onClick={onNavigateDocs}
+            </a>
+            <a
+              href="/docs/introduction"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0 && onNavigateDocs) {
+                  e.preventDefault();
+                  onNavigateDocs();
+                }
+              }}
               className="text-text-secondary hover:text-text-primary transition-colors focus-ring rounded cursor-pointer"
             >
               Docs
-            </button>
+            </a>
             <a
               href={GITHUB_URL}
               target="_blank"
@@ -47,6 +59,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateComponents, onNavigate
               className="text-text-secondary hover:text-text-primary transition-colors focus-ring rounded"
             >
               GitHub
+            </a>
+            <a
+              href="/llms.txt"
+              className="text-text-secondary hover:text-text-primary transition-colors focus-ring rounded"
+            >
+              LLMs
             </a>
           </nav>
         </div>

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 
 export type Theme = 'light' | 'dark';
@@ -41,7 +41,7 @@ export interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export interface ThemeProviderProps {
-  children: ReactNode;
+  children?: ReactNode;
   /** Optional initial theme override; useful for tests / Storybook. */
   initialTheme?: Theme;
 }
@@ -60,8 +60,20 @@ export function ThemeProvider({ children, initialTheme }: ThemeProviderProps): R
     return readStoredTheme() ?? systemTheme();
   });
 
-  // Whenever the theme changes, persist + apply to <html>.
+  // True on the very first useEffect flush when initialTheme was used for SSR/prerender.
+  // We skip applying + persisting the SSR default so we don't overwrite the user's
+  // stored preference or fight with the inline theme bootstrap script in index.html.
+  const skipFirstPersist = useRef(!!initialTheme);
+
+  // Whenever the theme changes, apply to <html> and persist to localStorage.
+  // Skips the very first run if this was bootstrapped via initialTheme (SSR hydration).
   useEffect(() => {
+    if (skipFirstPersist.current) {
+      skipFirstPersist.current = false;
+      // The inline <script> in index.html already applied the correct CSS theme class.
+      // Don't overwrite localStorage with the SSR default.
+      return;
+    }
     applyTheme(theme);
     try {
       window.localStorage.setItem(STORAGE_KEY, theme);
@@ -69,6 +81,18 @@ export function ThemeProvider({ children, initialTheme }: ThemeProviderProps): R
       /* ignore */
     }
   }, [theme]);
+
+  // One-time post-hydration sync: if initialTheme was used for SSR compatibility,
+  // check whether the user actually has a different stored or system preference
+  // and apply it now (after React hydration is complete).
+  useEffect(() => {
+    if (!initialTheme) return;
+    const preferred = readStoredTheme() ?? systemTheme();
+    if (preferred !== theme) {
+      setThemeState(preferred); // triggers re-render + the persist useEffect above
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Keep multiple tabs in sync.
   useEffect(() => {

@@ -80,18 +80,7 @@ export function generateSitemap(): void {
       const registry = JSON.parse(fs.readFileSync(REGISTRY_PATH, 'utf-8'));
       const items = registry.items || [];
 
-      // Add component pagination pages if > 10 items
-      const totalPages = Math.ceil(items.length / 10);
-      for (let p = 2; p <= totalPages; p++) {
-        entries.push({
-          loc: `${SITE_URL}/components?page=${p}`,
-          lastmod: today,
-          changefreq: 'weekly',
-          priority: '0.80',
-        });
-      }
-
-      // Add each component
+      // Add each component (dynamically discovered from registry.json)
       for (const item of items) {
         if (item.name) {
           entries.push({

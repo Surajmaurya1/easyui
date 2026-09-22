@@ -28,8 +28,12 @@ export const AllComponentsPage: React.FC<AllComponentsPageProps> = ({
   onSelectComponent,
   onNavigateHome,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<ComponentCategory>(() => {
-    if (typeof window !== 'undefined') {
+  const [selectedCategory, setSelectedCategory] = useState<ComponentCategory>('All');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Sync category filter from query params after mount/hydration
+  useEffect(() => {
+    try {
       const params = new URLSearchParams(window.location.search);
       const cat = params.get('category');
       const validCategories: ComponentCategory[] = [
@@ -44,12 +48,12 @@ export const AllComponentsPage: React.FC<AllComponentsPageProps> = ({
         'Auth',
       ];
       if (cat && validCategories.includes(cat as ComponentCategory)) {
-        return cat as ComponentCategory;
+        setSelectedCategory(cat as ComponentCategory);
       }
+    } catch {
+      /* ignore */
     }
-    return 'All';
-  });
-  const [searchQuery, setSearchQuery] = useState('');
+  }, []);
 
   const categories: ComponentCategory[] = [
     'All',
