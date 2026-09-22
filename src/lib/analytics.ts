@@ -13,8 +13,8 @@ declare global {
  * Loaded from environment variables (NEXT_PUBLIC_GA_MEASUREMENT_ID or VITE_GA_MEASUREMENT_ID).
  */
 export const GA_MEASUREMENT_ID: string = (
-  import.meta.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ||
-  import.meta.env.VITE_GA_MEASUREMENT_ID ||
+  (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || import.meta.env.VITE_GA_MEASUREMENT_ID)) ||
+  ((globalThis as any).process?.env?.NEXT_PUBLIC_GA_MEASUREMENT_ID || (globalThis as any).process?.env?.VITE_GA_MEASUREMENT_ID) ||
   ''
 ).trim();
 

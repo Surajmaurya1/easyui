@@ -43,6 +43,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({
   fullScreen = true,
   intervalMs = 240,
   showProgress = true,
+  showLangBadge = true,
   allowSkip = true,
   speedMultiplier = 1,
   className,

@@ -51,6 +51,7 @@ export function runSEOAudit(): AuditReport {
     'Links': { total: 0, passed: 0, criticals: 0, warnings: 0 },
     'Images': { total: 0, passed: 0, criticals: 0, warnings: 0 },
     'Structured Data': { total: 0, passed: 0, criticals: 0, warnings: 0 },
+    'AI & LLM Discoverability': { total: 0, passed: 0, criticals: 0, warnings: 0 },
     'Performance & A11y': { total: 0, passed: 0, criticals: 0, warnings: 0 },
   };
 
@@ -95,6 +96,8 @@ export function runSEOAudit(): AuditReport {
     check('Technical SEO', sitemap.includes(`${SITE_URL}/`), 'CRITICAL', 'sitemap.xml contains homepage URL', 'sitemap.xml missing homepage URL', 'public/sitemap.xml');
     check('Technical SEO', sitemap.includes(`${SITE_URL}/components`), 'CRITICAL', 'sitemap.xml contains components catalog URL', 'sitemap.xml missing components catalog URL', 'public/sitemap.xml');
     check('Technical SEO', sitemap.includes(`${SITE_URL}/docs/introduction`), 'WARNING', 'sitemap.xml contains documentation topic URLs', 'sitemap.xml missing documentation URLs', 'public/sitemap.xml');
+    check('Technical SEO', sitemap.includes(`${SITE_URL}/docs/motion-system`), 'CRITICAL', 'sitemap.xml contains canonical /docs/motion-system URL', 'sitemap.xml missing canonical /docs/motion-system URL', 'public/sitemap.xml');
+    check('Technical SEO', !sitemap.includes('?page='), 'CRITICAL', 'sitemap.xml has no client pagination noise (?page=)', 'sitemap.xml contains noisy pagination query URLs', 'public/sitemap.xml');
   }
 
   const manifestExists = fs.existsSync(MANIFEST_PATH);
@@ -120,6 +123,7 @@ export function runSEOAudit(): AuditReport {
     check('Metadata', indexHtml.includes('<title>EasyUI'), 'CRITICAL', 'index.html has valid document title', 'index.html missing <title>', 'index.html');
     check('Metadata', indexHtml.includes('name="description"'), 'CRITICAL', 'index.html has meta description', 'index.html missing meta description', 'index.html');
     check('Metadata', indexHtml.includes('rel="canonical"'), 'CRITICAL', 'index.html has canonical URL link', 'index.html missing canonical URL link', 'index.html');
+    check('Metadata', indexHtml.includes('rel="describedby"'), 'WARNING', 'index.html declares describedby relation to /llms.txt', 'index.html missing link rel="describedby" href="/llms.txt"', 'index.html');
     check('Metadata', indexHtml.includes('property="og:title"'), 'WARNING', 'index.html contains Open Graph title', 'index.html missing og:title', 'index.html');
     check('Metadata', indexHtml.includes('property="og:image"'), 'WARNING', 'index.html contains Open Graph image', 'index.html missing og:image', 'index.html');
     check('Metadata', indexHtml.includes('name="twitter:card"'), 'WARNING', 'index.html contains Twitter card meta', 'index.html missing twitter:card', 'index.html');
@@ -251,7 +255,21 @@ export function runSEOAudit(): AuditReport {
   }
 
   // ==========================================
-  // 7. Performance & Accessibility Checks
+  // 7. AI & LLM Discoverability Checks
+  // ==========================================
+  const llmsPath = path.join(ROOT_DIR, 'public', 'llms.txt');
+  const llmsExists = fs.existsSync(llmsPath);
+  check('AI & LLM Discoverability', llmsExists, 'CRITICAL', '/llms.txt exists in public directory', 'public/llms.txt is missing', 'public/llms.txt');
+
+  if (llmsExists) {
+    const llmsContent = fs.readFileSync(llmsPath, 'utf-8');
+    check('AI & LLM Discoverability', llmsContent.startsWith('# EasyUI'), 'CRITICAL', '/llms.txt contains standard H1 title (# EasyUI)', 'public/llms.txt missing standard # EasyUI header', 'public/llms.txt');
+    check('AI & LLM Discoverability', llmsContent.includes('## Documentation') && llmsContent.includes('## Components'), 'WARNING', '/llms.txt includes curated sections for Documentation and Components', 'public/llms.txt missing required sections', 'public/llms.txt');
+    check('AI & LLM Discoverability', llmsContent.includes('https://easyui.site/'), 'WARNING', '/llms.txt uses absolute URLs for all authoritative resources', 'public/llms.txt missing absolute URLs', 'public/llms.txt');
+  }
+
+  // ==========================================
+  // 8. Performance & Accessibility Checks
   // ==========================================
   if (indexExists) {
     const fontsDir = path.join(ROOT_DIR, 'public', 'fonts');
@@ -276,6 +294,31 @@ export function runSEOAudit(): AuditReport {
     check('Performance & A11y', motionTokens.includes('spring') || motionTokens.includes('transition'), 'INFO', 'Motion system uses optimized spring physics tokens', 'motion-tokens.ts is incomplete', 'src/lib/motion-tokens.ts');
   }
 
+  // Check pre-rendered static HTML in dist/ if dist directory exists
+  const distDir = path.join(ROOT_DIR, 'dist');
+  if (fs.existsSync(distDir)) {
+    const distIndex = path.join(distDir, 'index.html');
+    if (fs.existsSync(distIndex)) {
+      const distIndexContent = fs.readFileSync(distIndex, 'utf-8');
+      const hasMeaningfulRoot = distIndexContent.includes('<div id="root">') && !distIndexContent.includes('<div id="root"></div>');
+      check('Metadata', hasMeaningfulRoot, 'WARNING', 'dist/index.html contains pre-rendered initial HTML inside #root', 'dist/index.html #root is empty (CSR only)', 'dist/index.html');
+    }
+
+    const distCompAdv = path.join(distDir, 'components', 'advanced-data-table', 'index.html');
+    if (fs.existsSync(distCompAdv)) {
+      const advContent = fs.readFileSync(distCompAdv, 'utf-8');
+      check('Metadata', advContent.includes('<title>Advanced Data Table'), 'CRITICAL', 'Pre-rendered Advanced Data Table route has route-specific title', 'dist/components/advanced-data-table/index.html missing specific title', 'dist/components/advanced-data-table/index.html');
+      check('Metadata', advContent.includes('rel="canonical" href="https://easyui.site/components/advanced-data-table"'), 'CRITICAL', 'Pre-rendered Advanced Data Table has exact canonical URL', 'dist/components/advanced-data-table/index.html missing canonical URL', 'dist/components/advanced-data-table/index.html');
+      check('Content', advContent.includes('Advanced Data Table') && advContent.includes('API Reference'), 'CRITICAL', 'Pre-rendered component page exposes H1, description, and API reference in initial HTML', 'dist/components/advanced-data-table/index.html missing initial content', 'dist/components/advanced-data-table/index.html');
+    }
+
+    const distMotionDoc = path.join(distDir, 'docs', 'motion-system', 'index.html');
+    if (fs.existsSync(distMotionDoc)) {
+      const motionContent = fs.readFileSync(distMotionDoc, 'utf-8');
+      check('Content', motionContent.includes('Motion Tokens') || motionContent.includes('Motion System'), 'CRITICAL', 'Pre-rendered /docs/motion-system exposes motion documentation initial content', 'dist/docs/motion-system/index.html missing motion documentation content', 'dist/docs/motion-system/index.html');
+    }
+  }
+
   // ==========================================
   // Calculate Final Category Scores & Overall Score
   // ==========================================
@@ -285,8 +328,9 @@ export function runSEOAudit(): AuditReport {
     'Content': 0.15,
     'Links': 0.15,
     'Images': 0.10,
-    'Structured Data': 0.15,
-    'Performance & A11y': 0.10,
+    'Structured Data': 0.10,
+    'AI & LLM Discoverability': 0.10,
+    'Performance & A11y': 0.05,
   };
 
   const categories: Record<string, CategoryResult> = {};

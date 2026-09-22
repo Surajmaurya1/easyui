@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from '../../lib/utils';
 
 export interface MorphingIconProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {

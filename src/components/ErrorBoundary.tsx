@@ -120,7 +120,7 @@ export class ErrorBoundary extends Component<Props, State> {
             </p>
 
             {/* Development Error Details */}
-            {import.meta.env.DEV && this.state.error && (
+            {Boolean(import.meta.env?.DEV) && this.state.error && (
               <pre
                 style={{
                   width: '100%',
