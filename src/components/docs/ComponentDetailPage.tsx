@@ -143,6 +143,14 @@ import {
   AdvancedDataTableLiveShowcase,
   ChatLiveShowcase,
   AIAgentActivityLiveShowcase,
+  DotShaderLiveShowcase,
+  GlitchTextLiveShowcase,
+  MeteorsLiveShowcase,
+  RainbowButtonLiveShowcase,
+  ScrollVelocityTextLiveShowcase,
+  ShootingStarsLiveShowcase,
+  SparklesCoreLiveShowcase,
+  StickyPagesLiveShowcase,
 } from './sections/NewComponentsShowcase';
 
 export type MainTab = 'preview' | 'usage' | 'code' | 'props' | 'accessibility';
@@ -2839,6 +2847,38 @@ const completion = await client.completions.create({
       case 'split-buttons':
       case 'splitbutton':
         return <SplitButtonShowcase key={demoKey} />;
+      case 'dot-shader':
+      case 'dotshader':
+      case 'dot-matrix-shader':
+        return <DotShaderLiveShowcase key={demoKey} />;
+      case 'glitch-text':
+      case 'glitchtext':
+      case 'glitch-typography':
+        return <GlitchTextLiveShowcase key={demoKey} />;
+      case 'meteors':
+      case 'meteor-shower':
+      case 'meteor-card':
+        return <MeteorsLiveShowcase key={demoKey} />;
+      case 'rainbow-button':
+      case 'rainbowbutton':
+      case 'chromatic-button':
+        return <RainbowButtonLiveShowcase key={demoKey} />;
+      case 'scrollvelocitytext':
+      case 'scroll-velocity-text':
+      case 'velocity-text':
+        return <ScrollVelocityTextLiveShowcase key={demoKey} />;
+      case 'shooting-stars':
+      case 'shootingstars':
+      case 'celestial-stars':
+        return <ShootingStarsLiveShowcase key={demoKey} />;
+      case 'sparkles-core':
+      case 'sparklescore':
+      case 'sparkles':
+        return <SparklesCoreLiveShowcase key={demoKey} />;
+      case 'sticky-pages':
+      case 'stickypages':
+      case 'sticky-stacking-pages':
+        return <StickyPagesLiveShowcase key={demoKey} />;
       default:
         return (
           <div className="py-12 text-center text-xs text-[#808080]">

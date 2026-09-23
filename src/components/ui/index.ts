@@ -388,3 +388,46 @@ export type {
   ActivityType,
   ActivityStatus,
 } from './AIAgentActivity';
+
+export { DotShader } from './DotShader';
+export type { DotShaderProps } from './DotShader';
+
+export { GlitchText } from './GlitchText';
+export type {
+  GlitchTextProps,
+  GlitchVariant,
+  GlitchIntensity,
+  GlitchTrigger,
+} from './GlitchText';
+
+export { Meteors } from './Meteors';
+export type { MeteorsProps } from './Meteors';
+
+export { RainbowButton, rainbowButtonVariants } from './RainbowButton';
+export type {
+  RainbowButtonProps,
+  RainbowButtonVariant,
+  RainbowButtonSize,
+} from './RainbowButton';
+
+export { ScrollVelocityText } from './Scrollvelocitytext';
+export type { ScrollVelocityTextProps } from './Scrollvelocitytext';
+
+export { ShootingStars } from './ShootingStars';
+export type { ShootingStarsProps } from './ShootingStars';
+
+export { SparklesCore } from './SparklesCore';
+export type {
+  SparklesCoreProps,
+  SparkleShape,
+  SparkleDirection,
+  SparkleCursorMode,
+} from './SparklesCore';
+
+export { StickyPages, StickyPage } from './StickyPages';
+export type {
+  StickyPagesProps,
+  StickyPageProps,
+  StickyPageItem,
+} from './StickyPages';
+
