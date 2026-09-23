@@ -1423,6 +1423,33 @@
       ]
     },
     {
+      "name": "not-found",
+      "type": "registry:ui",
+      "title": "Not Found",
+      "description": "A minimal, production-ready 404 / route error component featuring floating spring-physics proximity displacement on individual glyphs, clear typography hierarchy, and accessible recovery actions.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/NotFound.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/not-found.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        },
+        {
+          "path": "src/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
       "name": "notification-bell",
       "type": "registry:ui",
       "title": "Notification Bell",

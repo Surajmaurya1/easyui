@@ -43,6 +43,18 @@
       "skillPath": "skills/taste-skill-v1/SKILL.md",
       "computedHash": "0a226c13d69639553cf8a7c40aa5527b026820f8ddaf7a6b263988e32ab44a27"
     },
+    "emil-design-eng": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/emil-design-eng/SKILL.md",
+      "computedHash": "77853cec799207f80868c611374c6ed5fdf34a55355c5ab544b59e791c63ad98"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "106acf230014cbb43ca34e6410371321b56ca742f9ee0442e8ec05bf02eb0384"
+    },
     "full-output-enforcement": {
       "source": "Leonxlnx/taste-skill",
       "sourceType": "github",
@@ -102,6 +114,12 @@
       "sourceType": "github",
       "skillPath": "skills/redesign-skill/SKILL.md",
       "computedHash": "47eced3e960a2c961d3cbee11fa1216264f589344b586a5cbd03967cd6b9c54b"
+    },
+    "shadcn": {
+      "source": "shadcn-ui/ui",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "computedHash": "d04e43ec01e921558b93bb8046c14a42a22556689a2827243df900825a4e1604"
     },
     "stitch-design-taste": {
       "source": "Leonxlnx/taste-skill",

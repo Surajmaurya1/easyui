@@ -643,6 +643,13 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/sticky-pages'),
     metadata: { type: 'interactive' },
   },
+  'not-found': {
+    id: 'not-found',
+    componentId: 'not-found',
+    aliases: ['404', 'notfound', 'error-404'],
+    load: () => import('./items/not-found'),
+    metadata: { type: 'interactive' },
+  },
 };
 
 // Fast lookup map supporting both primary slugs and aliases
