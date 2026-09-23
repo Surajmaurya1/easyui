@@ -13,7 +13,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 96 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 104 animated React components.
 
 ### Component Index
 
@@ -40,6 +40,7 @@
 - [Depth Corridor](https://easyui.site/components/depth-corridor): A 3D spatial layer stack with receding perspective depth, progressive focal blurs, and pointer parallax motion.
 - [DirectionalTooltip](https://easyui.site/components/directional-tooltip): A tooltip that appears from the direction it originates — it starts a small distance outside the trigger in its preferred direction and springs inward, so it feels like it materializes from the trigger.
 - [Dot Field](https://easyui.site/components/dot-field): High-performance lightweight static Canvas dot matrix background with dynamic gradient coloring and responsive density scaling.
+- [Dot Shader](https://easyui.site/components/dot-shader): A GPU-accelerated interactive dot matrix background shader with magnetic cursor repulsion, proximity illumination glow, dynamic lens scaling, and ambient wave motion.
 - [Drag to Confirm](https://easyui.site/components/drag-to-confirm): A physical drag-to-confirm slider for high-stakes and destructive actions, equipped with elastic spring snapback physics, progressive track illumination, and accessible keyboard fallbacks.
 - [DrawCheckbox](https://easyui.site/components/draw-checkbox): A checkbox whose checkmark draws itself (path length animation) and settles with a tiny overshoot. The box scales from 0.9 -> 1.04 -> 1.0 for a tactile snap feel.
 - [Evil Eye](https://easyui.site/components/evil-eye): A hanging navy amulet disc with concentric sky-blue and white rings that swings with realistic inertia in response to the pointer, painted as a layered SVG and driven by a single spring pipeline.
@@ -50,6 +51,7 @@
 - [Focus Mode](https://easyui.site/components/focus-mode): An atmospheric focus-mode interaction that isolates selected cards or sections by smoothly dimming surrounding distractions with zero layout shift, tactile spring scaling, and Escape key dismissal.
 - [Form](https://easyui.site/components/form): A modular, composable form system with accessible inputs, textareas, custom selects, checkboxes, radio groups, switches, and animated validation messages.
 - [Glass Navbar](https://easyui.site/components/glass-navbar): A modern, responsive glassmorphic navbar with smooth spring navigation pills, mobile menu drawer, and keyboard accessibility.
+- [Glitch Text](https://easyui.site/components/glitch-text): A multi-modal cybernetic glitch typography component featuring 5 distinct animation variants (RGB split chromatic aberration, cyberpunk clip-slicing, analog VHS tracking loss, matrix rune scramble decode, and electrical voltage surge).
 - [Glyph Matrix](https://easyui.site/components/glyph-matrix): A high-performance, canvas-driven Matrix digital rain background effect featuring streaming Katakana and numeric glyphs, glowing head highlights, decaying phosphor trails, and interactive cursor disturbances.
 - [Gooey Menu](https://easyui.site/components/gooey-menu): A tactile liquid dropdown menu with organic SVG metaball fusion filter and spring-driven extrusion animation.
 - [Gravity Particle Burst](https://easyui.site/components/gravity-particle-burst): A pointer-triggered canvas particle burst with velocity, gravity, friction, and short-lived physical follow-through.
@@ -64,6 +66,7 @@
 - [Login](https://easyui.site/components/login): A production-ready authentication card built with the EasyUI form system, featuring password show/hide, remember me, validation states, and social logins.
 - [macOS Folder Cards](https://easyui.site/components/mac-os-folder-cards): An authentic porcelain-white macOS Finder folder icon that unrolls interactive cards with fluid Apple spring physics.
 - [Magnetic Button](https://easyui.site/components/magnetic-button): A responsive button with subtle proximity-based physics that pulls towards the cursor on hover and snaps back on departure.
+- [Meteors](https://easyui.site/components/meteors): A lightweight, highly aesthetic animated meteor shower effect that streams diagonal glowing celestial light beams across cards, badges, hero containers, and call-to-action sections.
 - [Metric HUD](https://easyui.site/components/metric-hud): An interactive developer telemetry card featuring hardware-accelerated SVG sparklines, pointer-scrubbing point inspection, spring-animated time range morphing, and delta indicators.
 - [Morphing Blob](https://easyui.site/components/morphing-blob): An ambient, accessible SVG blob background that continuously morphs with spring physics and subtly follows the cursor for a fluid, interactive visual effect.
 - [Morphing Button](https://easyui.site/components/morphing-button): A layout-stable interactive action button that smoothly transitions between Idle, Loading, Success, and Error states without jarring jumps or dimension shifts.
@@ -85,17 +88,21 @@
 - [PressButton](https://easyui.site/components/press-button): A button that compresses slightly on press and settles with a tiny natural overshoot for a tactile, physical feel.
 - [Pricing](https://easyui.site/components/pricing): A minimal two-tier pricing component for EasyUI. Native to the existing design system, fully theme-aware, with a quiet Free tier and a slightly more attractive Pro tier — without resorting to SaaS marketing tropes.
 - [Profile Card](https://easyui.site/components/profile-card): A premium dark social profile card with a painted blue cover-art panel, action row, and a detail panel with avatar, verified name, bio, follower stats, and outbound website link.
+- [Rainbow Button](https://easyui.site/components/rainbow-button): A vibrant button featuring an animated chromatic rainbow gradient border, dynamic 3D surface reflections, and an ambient blurred rainbow underglow.
 - [Recovery Ledger](https://easyui.site/components/recovery-ledger): An archival audit timeline and state recovery ledger with chronological snapshot markers, diff inspection, and one-click rollback triggers.
 - [Reveal Card](https://easyui.site/components/reveal-card): A high-definition product card with smooth cursor-driven 3D perspective rotation, dynamic glare, and revealed content.
 - [Rocket Party Popper](https://easyui.site/components/rocket-party-popper): An interactive black rocket launch that blasts into a colorful party popper confetti shower to reveal celebratory milestones.
 - [Scroll Progress Navigation](https://easyui.site/components/scroll-progress-nav): A floating table-of-contents navigation pill that tracks scroll depth, dynamically morphs between resting and floating states, highlights active sections, and enables smooth scrolling.
+- [Scroll Velocity Text](https://easyui.site/components/scrollvelocitytext): A direction-aware kinetic typography component that smoothly expands letter-spacing and scale on downward scroll, and winds back on upward scroll, with zero per-frame React re-renders.
 - [Selection Basket](https://easyui.site/components/selection-basket): A floating bulk-action toolbar that smoothly rises from the bottom of the screen when multiple dataset items are selected, supporting batch operations, horizontal scrolling, and clear triggers.
 - [SettleModal](https://easyui.site/components/settle-modal): A modal whose content has a tiny scale/settle instead of a generic fade. The panel scales 0.94 -> 1.02 -> 1.0 with a small y travel, then the inner content layers its own gentle settle on top.
+- [Shooting Stars](https://easyui.site/components/shooting-stars): A high-performance deep-space cosmos background featuring multi-depth twinkling celestial stars, glowing atmospheric nebula clouds, and cinematic shooting stars with luminous head flares, tapered fading trails, ember stardust, and click-to-summon interactivity.
 - [Sign Up](https://easyui.site/components/sign-up): A comprehensive registration card with live password strength metrics, password confirmation matching, terms validation, and social onboarding.
 - [SlidePagination](https://easyui.site/components/slide-pagination): A pagination control where the active indicator slides between pages rather than instantly switching. The active background uses shared layoutId so the indicator visibly travels from one item to the next.
 - [Small Floating Dock](https://easyui.site/components/small-floating-dock): A minimal, gesture-responsive floating dock for quick access to 3-5 primary actions.
 - [Smart Comparison](https://easyui.site/components/smart-comparison): An interactive feature matrix and SaaS tier comparison component featuring live difference filtering, collapsible specification categories, search indexing, and mobile card toggle.
 - [Smooth Accordion](https://easyui.site/components/smooth-accordion): An accordion component with physics height transition, rotating chevron indicators, and accessible keyboard toggles.
+- [Sparkles Core](https://easyui.site/components/sparkles-core): A high-performance, zero-dependency particle sparkle canvas with multi-shape geometry (circles, radiant diamond stars, cross starlets), organic twinkling, interactive cursor repulsion/attraction, click particle bursts, and fluid SSR safety.
 - [Speed Warp](https://easyui.site/components/speed-warp): A 3D perspective canvas starfield simulation that projects relativistic light streaks toward the viewer, creating an intense hyperspace or warp drive velocity effect.
 - [Split Button](https://easyui.site/components/split-button): A primary action fused with a chevron trigger that reveals related actions in a spring-timed dropdown, sharing a single pill silhouette.
 - [Spotlight Card](https://easyui.site/components/spotlight-card): A dark elevated surface that illuminates border and inner surfaces dynamically based on mouse pointer coordinates.
@@ -103,6 +110,7 @@
 - [SpringSelect](https://easyui.site/components/spring-select): A select dropdown whose menu follows the trigger with a tiny spring. The chevron rotates a hair past 180° before settling, and the panel slides down with a subtle overshoot.
 - [Stack Unfold Panel](https://easyui.site/components/stack-unfold-panel): A vertically stacked card deck that unfolds progressively with spring physics, shifting adjacent panels with zero layout jank.
 - [Stacked Cards](https://easyui.site/components/stacked-cards): A responsive, scroll-driven stacking cards component built with Tailwind CSS and Framer Motion. Cards start aligned in a column and stack gracefully on scroll without hijacking page scrolling.
+- [Sticky Pages](https://easyui.site/components/sticky-pages): A pure static full-page sticky stacking scroll component where pages slide up and stack cleanly one over another without any tilting or distortion, before releasing smoothly into natural page scrolling.
 - [Story Cards](https://easyui.site/components/story-card): A responsive, accessible story cards carousel for React applications built with Tailwind CSS and Framer Motion.
 - [StretchSwitch](https://easyui.site/components/stretch-switch): A toggle switch whose thumb stretches slightly while dragging or pressing, then snaps naturally to its destination via a snappy spring.
 - [Text Scramble Decoder](https://easyui.site/components/text-scramble-decoder): A controlled text reveal that resolves scrambled glyphs into readable copy without changing the text semantics.

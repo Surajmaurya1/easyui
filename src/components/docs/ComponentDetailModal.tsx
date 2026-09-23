@@ -94,6 +94,14 @@ import {
   AdvancedDataTableLiveShowcase,
   ChatLiveShowcase,
   AIAgentActivityLiveShowcase,
+  DotShaderLiveShowcase,
+  GlitchTextLiveShowcase,
+  MeteorsLiveShowcase,
+  RainbowButtonLiveShowcase,
+  ScrollVelocityTextLiveShowcase,
+  ShootingStarsLiveShowcase,
+  SparklesCoreLiveShowcase,
+  StickyPagesLiveShowcase,
 } from './sections/NewComponentsShowcase';
 
 export interface ComponentDetailModalProps {
@@ -1803,6 +1811,38 @@ func main() {
       case 'split-buttons':
       case 'splitbutton':
         return <SplitButtonShowcase />;
+      case 'dot-shader':
+      case 'dotshader':
+      case 'dot-matrix-shader':
+        return <DotShaderLiveShowcase />;
+      case 'glitch-text':
+      case 'glitchtext':
+      case 'glitch-typography':
+        return <GlitchTextLiveShowcase />;
+      case 'meteors':
+      case 'meteor-shower':
+      case 'meteor-card':
+        return <MeteorsLiveShowcase />;
+      case 'rainbow-button':
+      case 'rainbowbutton':
+      case 'chromatic-button':
+        return <RainbowButtonLiveShowcase />;
+      case 'scrollvelocitytext':
+      case 'scroll-velocity-text':
+      case 'velocity-text':
+        return <ScrollVelocityTextLiveShowcase />;
+      case 'shooting-stars':
+      case 'shootingstars':
+      case 'celestial-stars':
+        return <ShootingStarsLiveShowcase />;
+      case 'sparkles-core':
+      case 'sparklescore':
+      case 'sparkles':
+        return <SparklesCoreLiveShowcase />;
+      case 'sticky-pages':
+      case 'stickypages':
+      case 'sticky-stacking-pages':
+        return <StickyPagesLiveShowcase />;
       default:
         return (
           <div className="py-12 text-center text-xs text-[#808080]">

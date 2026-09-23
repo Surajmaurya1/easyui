@@ -587,6 +587,62 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/split-button'),
     metadata: { type: 'interactive' },
   },
+  'dot-shader': {
+    id: 'dot-shader',
+    componentId: 'dot-shader',
+    aliases: ["dotshader", "dot-matrix-shader"],
+    load: () => import('./items/dot-shader'),
+    metadata: { type: 'interactive' },
+  },
+  'glitch-text': {
+    id: 'glitch-text',
+    componentId: 'glitch-text',
+    aliases: ["glitchtext", "glitch-typography"],
+    load: () => import('./items/glitch-text'),
+    metadata: { type: 'interactive' },
+  },
+  'meteors': {
+    id: 'meteors',
+    componentId: 'meteors',
+    aliases: ["meteor-shower", "meteor-card"],
+    load: () => import('./items/meteors'),
+    metadata: { type: 'interactive' },
+  },
+  'rainbow-button': {
+    id: 'rainbow-button',
+    componentId: 'rainbow-button',
+    aliases: ["rainbowbutton", "chromatic-button"],
+    load: () => import('./items/rainbow-button'),
+    metadata: { type: 'interactive' },
+  },
+  'scrollvelocitytext': {
+    id: 'scrollvelocitytext',
+    componentId: 'scrollvelocitytext',
+    aliases: ["scroll-velocity-text", "velocity-text"],
+    load: () => import('./items/scrollvelocitytext'),
+    metadata: { type: 'interactive' },
+  },
+  'shooting-stars': {
+    id: 'shooting-stars',
+    componentId: 'shooting-stars',
+    aliases: ["shootingstars", "celestial-stars"],
+    load: () => import('./items/shooting-stars'),
+    metadata: { type: 'interactive' },
+  },
+  'sparkles-core': {
+    id: 'sparkles-core',
+    componentId: 'sparkles-core',
+    aliases: ["sparklescore", "sparkles"],
+    load: () => import('./items/sparkles-core'),
+    metadata: { type: 'interactive' },
+  },
+  'sticky-pages': {
+    id: 'sticky-pages',
+    componentId: 'sticky-pages',
+    aliases: ["stickypages", "sticky-stacking-pages"],
+    load: () => import('./items/sticky-pages'),
+    metadata: { type: 'interactive' },
+  },
 };
 
 // Fast lookup map supporting both primary slugs and aliases

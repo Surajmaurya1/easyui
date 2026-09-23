@@ -128,7 +128,7 @@ export const Meteors: React.FC<MeteorsProps> = ({
         ))}
 
       {children && (
-        <div className="pointer-events-auto relative z-10 h-full w-full">
+        <div className="pointer-events-auto relative z-10 h-full w-full flex items-center justify-center">
           {children}
         </div>
       )}

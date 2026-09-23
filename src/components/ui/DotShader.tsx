@@ -531,7 +531,7 @@ export const DotShader: React.FC<DotShaderProps> = ({
 
       {/* Interactive Content Layer */}
       {children && (
-        <div className="relative z-10 w-full">
+        <div className="relative z-10 h-full w-full flex items-center justify-center">
           {children}
         </div>
       )}

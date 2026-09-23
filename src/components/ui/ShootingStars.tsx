@@ -661,7 +661,7 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
       />
 
       {children && (
-        <div className="relative z-10 h-full w-full">
+        <div className="relative z-10 h-full w-full flex items-center justify-center">
           {children}
         </div>
       )}
