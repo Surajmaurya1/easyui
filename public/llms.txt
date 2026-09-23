@@ -13,7 +13,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 104 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 105 animated React components.
 
 ### Component Index
 
@@ -75,6 +75,7 @@
 - [Morphing Shape Loader](https://easyui.site/components/morphing-shape-loader): A loading indicator that continuously morphs between configurable SVG shapes via real path interpolation. The transition is a genuine geometric morph — never a fade out / in.
 - [Neon Edge Button](https://easyui.site/components/neon-edge-button): A button with a restrained light source travelling around the border while the label remains primary.
 - [Nimbu Mirchi](https://easyui.site/components/nimbu-mirchi): A hanging lemon-and-green-chilli charm that swings with realistic inertia in response to the pointer, built from layered physical springs rather than a single rigid illustration.
+- [Not Found](https://easyui.site/components/not-found): A minimal, production-ready 404 / route error component featuring floating spring-physics proximity displacement on individual glyphs, clear typography hierarchy, and accessible recovery actions.
 - [Notification Bell](https://easyui.site/components/notification-bell): An interactive notification trigger with animated badge counter, arrival shake feedback, and dropdown panel.
 - [Notification Stack](https://easyui.site/components/notification-stack): A stacked notification card system with physical spring stacking elevation, swipe-to-dismiss drag, and simulation triggers.
 - [Orbital Loading Ring](https://easyui.site/components/orbital-loading-ring): A lightweight loading indicator with layered rings and orbiting particles that communicate active processing.

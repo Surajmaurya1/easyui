@@ -197,7 +197,13 @@ async function discoverComponents(): Promise<DiscoveredComponent[]> {
       // Check for same-named companion files (e.g., DotField.css)
       const siblingFiles = fs.readdirSync(UI_DIR);
       for (const sib of siblingFiles) {
-        if (sib !== entry.name && sib !== `${componentName}.meta.ts` && sib.startsWith(componentName)) {
+        if (
+          sib !== entry.name &&
+          sib !== `${componentName}.meta.ts` &&
+          !sib.endsWith('.test.tsx') &&
+          !sib.endsWith('.stories.tsx') &&
+          sib.startsWith(componentName)
+        ) {
           additionalFiles.push(path.join(UI_DIR, sib));
         }
       }

@@ -431,3 +431,7 @@ export type {
   StickyPageItem,
 } from './StickyPages';
 
+export { NotFound } from './NotFound';
+export type { NotFoundProps } from './NotFound';
+
+

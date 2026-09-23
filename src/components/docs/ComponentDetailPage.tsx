@@ -138,6 +138,7 @@ import { GlyphMatrix } from '../ui/GlyphMatrix';
 import { MorphingIcon } from '../ui/MorphingIcon';
 import { SpeedWarp } from '../ui/SpeedWarp';
 import { SplitButton } from '../ui/SplitButton';
+import { NotFound } from '../ui/NotFound';
 import {
   AIResponseLiveShowcase,
   AdvancedDataTableLiveShowcase,
@@ -2879,6 +2880,20 @@ const completion = await client.completions.create({
       case 'stickypages':
       case 'sticky-stacking-pages':
         return <StickyPagesLiveShowcase key={demoKey} />;
+      case 'not-found':
+      case 'notfound':
+      case '404':
+        return (
+          <div className="w-full py-4 sm:py-8 flex items-center justify-center">
+            <NotFound
+              key={demoKey}
+              errorCode="404"
+              title="This page took a wrong turn."
+              description="The requested page doesn't exist or may have moved."
+              actionLabel="Go back home"
+            />
+          </div>
+        );
       default:
         return (
           <div className="py-12 text-center text-xs text-[#808080]">
@@ -3539,42 +3554,21 @@ const completion = await client.completions.create({
               theme === 'dark' ? 'bg-[#050505] text-text-primary' : 'bg-[#FAFAFA] text-[#0A0A0A]'
             )}
           >
-            {/* Header — follows global theme */}
-            <div
+            {/* Floating Close Button */}
+            <button
+              type="button"
+              onClick={() => setIsFullscreenPreview(false)}
               className={cn(
-                'sticky top-0 inset-x-0 z-[110] backdrop-blur-md px-4 sm:px-8 py-2.5 flex items-center justify-between gap-3 shrink-0 transition-colors duration-200',
+                'fixed top-4 right-4 sm:top-6 sm:right-6 z-[120] p-2 rounded-full border transition-colors cursor-pointer shadow-subtle',
                 theme === 'dark'
-                  ? 'bg-[#0E0E0E]/90 border-b border-[#1F1F1F]'
-                  : 'bg-white/90 border-b border-[#E4E4E7]'
+                  ? 'bg-[#141414]/80 hover:bg-[#1A1A1A] border-[#29292C] hover:border-[#343438] text-[#A1A1A6] hover:text-[#F2F2F3] backdrop-blur-md'
+                  : 'bg-white/80 hover:bg-zinc-100 border-[#E4E4E7] hover:border-[#D4D4D8] text-zinc-600 hover:text-zinc-900 backdrop-blur-md'
               )}
+              title="Close fullscreen"
+              aria-label="Close fullscreen"
             >
-              <span
-                className={cn(
-                  'font-mono text-xs font-medium',
-                  theme === 'dark' ? 'text-text-primary' : 'text-[#0A0A0A]'
-                )}
-              >
-                {component.name}
-              </span>
-
-              <div className="flex items-center gap-2">
-                {/* Close Fullscreen */}
-                <button
-                  type="button"
-                  onClick={() => setIsFullscreenPreview(false)}
-                  className={cn(
-                    'p-1.5 rounded-lg border transition-colors shrink-0 cursor-pointer',
-                    theme === 'dark'
-                      ? 'bg-[#141414] hover:bg-[#1A1A1A] border-[#1F1F1F] hover:border-[#4A4A4A] text-[#A1A1A1] hover:text-text-primary'
-                      : 'bg-zinc-100 hover:bg-zinc-200 border-zinc-200 hover:border-zinc-300 text-zinc-600 hover:text-zinc-900'
-                  )}
-                  title="Close fullscreen"
-                  aria-label="Close fullscreen"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
+              <X className="w-4 h-4" />
+            </button>
 
             {/* Canvas Body — backdrop follows the page theme. Components that are
                 not yet light/dark aware keep their original styling.
