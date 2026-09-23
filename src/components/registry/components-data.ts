@@ -2029,6 +2029,128 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "dot-shader",
+    "name": "Dot Shader",
+    "tagline": "Interactive GPU dot matrix background with cursor proximity shader dynamics",
+    "description": "A GPU-accelerated interactive dot matrix background shader with magnetic cursor repulsion, proximity illumination glow, dynamic lens scaling, and ambient wave motion.",
+    "category": "Motion",
+    "badges": [
+      "WebGL",
+      "GLSL Shader",
+      "Interactive",
+      "Background"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/dot-shader",
+    "features": [
+      "Hardware-accelerated WebGL point primitive vertex & fragment shader with Canvas 2D fallback",
+      "Interactive cursor proximity illumination transitioning smoothly to accent color",
+      "Magnetic/gravitational radial repulsion with smooth exponential damping",
+      "Dynamic scale expansion creating a 3D lens bulge around the cursor",
+      "Ambient wave undulation breathing subtle life into the background when idle",
+      "Zero CPU overhead during rendering via GPU vertex shader positioning",
+      "Supports wrapping arbitrary children without interfering with pointer interactions",
+      "Full prefers-reduced-motion compliance freezing displacement and waves"
+    ],
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "description": "Optional content rendered above the interactive dot shader canvas with full clickability"
+      },
+      {
+        "name": "dotColor",
+        "type": "string",
+        "default": "'rgba(255, 255, 255, 0.15)'",
+        "description": "Idle color of the background matrix dots (hex, rgb, or rgba)"
+      },
+      {
+        "name": "accentColor",
+        "type": "string",
+        "default": "'#00F0FF'",
+        "description": "Luminous highlight color of dots illuminated by cursor proximity"
+      },
+      {
+        "name": "dotSize",
+        "type": "number",
+        "default": "1.5",
+        "description": "Base radius in pixels of each individual dot"
+      },
+      {
+        "name": "spacing",
+        "type": "number",
+        "default": "22",
+        "description": "Distance in pixels between adjacent dots in the grid"
+      },
+      {
+        "name": "cursorRadius",
+        "type": "number",
+        "default": "180",
+        "description": "Radius in pixels of cursor influence and repulsion"
+      },
+      {
+        "name": "distortionStrength",
+        "type": "number",
+        "default": "0.35",
+        "description": "Force multiplier of magnetic repulsion away from the cursor (0 to 1)"
+      },
+      {
+        "name": "maxScale",
+        "type": "number",
+        "default": "2.2",
+        "description": "Maximum scale multiplier of dots at peak cursor proximity"
+      },
+      {
+        "name": "waveIntensity",
+        "type": "number",
+        "default": "0.25",
+        "description": "Amplitude of ambient idle sinusoidal wave motion"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": "1",
+        "description": "Speed multiplier for the ambient background waves"
+      },
+      {
+        "name": "interactive",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether dots react to cursor movements with repulsion and illumination"
+      },
+      {
+        "name": "overlay",
+        "type": "boolean",
+        "default": "true",
+        "description": "Enables a soft radial vignette gradient to seamlessly blend container edges"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "description": "Additional CSS classes for container sizing and layout"
+      }
+    ],
+    "accessibility": [
+      "Shader canvas is marked with aria-hidden=\"true\" and pointer-events-none",
+      "Child content remains fully accessible with standard keyboard, focus, and pointer events",
+      "prefers-reduced-motion automatically disables wave animations and repulsion displacement, preserving calm static dots"
+    ],
+    "createdAt": "2026-09-20",
+    "usageCode": "import { DotShader } from \"@/components/ui/dot-shader\";\n\nexport function Demo() {\n  return (\n    <div className=\"relative w-full min-h-[500px] rounded-2xl overflow-hidden bg-background border border-border\">\n      <DotShader\n        dotColor=\"rgba(255, 255, 255, 0.15)\"\n        accentColor=\"#00F0FF\"\n        spacing={24}\n        dotSize={1.5}\n        cursorRadius={200}\n        distortionStrength={0.4}\n        maxScale={2.5}\n      >\n        <div className=\"min-h-[500px] flex flex-col items-center justify-center text-center p-8\">\n          <span className=\"text-xs font-mono uppercase tracking-widest text-cyan-400 mb-2\">\n            GPU WebGL Shader\n          </span>\n          <h2 className=\"text-3xl sm:text-5xl font-bold tracking-tight text-text-primary\">\n            Interactive Dot Matrix\n          </h2>\n          <p className=\"mt-3 text-xs sm:text-sm text-text-secondary max-w-md\">\n            Move your cursor across the canvas to experience magnetic repulsion and proximity illumination.\n          </p>\n        </div>\n      </DotShader>\n    </div>\n  );\n}",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "src/components/ui/DotShader.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/dot-shader.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
     "id": "drag-to-confirm",
     "name": "Drag to Confirm",
     "tagline": "Spring-resistant slider for confirming destructive or critical operations",
@@ -2855,6 +2977,110 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/motion-tokens.ts",
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
+    "id": "glitch-text",
+    "name": "Glitch Text",
+    "tagline": "Cybernetic glitch typography with 5 distinct kinetic animation modes",
+    "description": "A multi-modal cybernetic glitch typography component featuring 5 distinct animation variants (RGB split chromatic aberration, cyberpunk clip-slicing, analog VHS tracking loss, matrix rune scramble decode, and electrical voltage surge).",
+    "category": "Motion",
+    "badges": [
+      "Glitch",
+      "Cyberpunk",
+      "Kinetic Typography",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/glitch-text",
+    "features": [
+      "5 distinct visual glitch modes: 'rgb-split', 'slice', 'vhs', 'scramble', and 'pulse'",
+      "Interactive trigger options: 'continuous' periodic looping, on 'hover', or interactive 'click' burst",
+      "Dual chromatic color customization (color1/color2, with backward-compatible greenColor/purpleColor)",
+      "Calibrated multi-tiered intensity scaling: 'low', 'medium', and 'high'",
+      "Screen-reader safe: rendered as unbroken native text with aria-hidden on decorative duplicate slices",
+      "Full prefers-reduced-motion compliance freezing all displacements into clean resting text",
+      "Polymorphic rendering via the 'as' prop ('span', 'h1', 'h2', 'p', etc.) with full ref forwarding"
+    ],
+    "props": [
+      {
+        "name": "text",
+        "type": "string",
+        "description": "The text string to animate with the cybernetic glitch effects"
+      },
+      {
+        "name": "variant",
+        "type": "'rgb-split' | 'slice' | 'vhs' | 'scramble' | 'pulse'",
+        "default": "'rgb-split'",
+        "description": "Visual animation mode: chromatic aberration, horizontal slicing, VHS jitter, matrix decode, or voltage pulse"
+      },
+      {
+        "name": "trigger",
+        "type": "'continuous' | 'hover' | 'click'",
+        "default": "'continuous'",
+        "description": "Interaction trigger mode governing when the glitch animation activates"
+      },
+      {
+        "name": "color1",
+        "type": "string",
+        "default": "'#00e571'",
+        "description": "Primary chromatic aberration color (alias: greenColor)"
+      },
+      {
+        "name": "color2",
+        "type": "string",
+        "default": "'#8b00ff'",
+        "description": "Secondary chromatic aberration color (alias: purpleColor)"
+      },
+      {
+        "name": "intensity",
+        "type": "'low' | 'medium' | 'high'",
+        "default": "'medium'",
+        "description": "Glitch magnitude scaling multiplier for displacement, skew, and jitter"
+      },
+      {
+        "name": "duration",
+        "type": "number",
+        "default": "0.5",
+        "description": "Duration in seconds of an active glitch burst cycle"
+      },
+      {
+        "name": "repeatDelay",
+        "type": "number",
+        "default": "2.5",
+        "description": "Rest interval in seconds between continuous glitch bursts"
+      },
+      {
+        "name": "as",
+        "type": "keyof JSX.IntrinsicElements",
+        "default": "'span'",
+        "description": "HTML tag to render as (e.g. 'h1', 'h2', 'span', 'p', 'div')"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "description": "Additional CSS classes for font size, weight, color, and positioning"
+      }
+    ],
+    "accessibility": [
+      "Decorative split layers and slice artifacts are marked with aria-hidden='true' so screen readers read the text clearly once",
+      "Under prefers-reduced-motion: reduce, all jitter, slice displacement, and color oscillations are neutralized"
+    ],
+    "createdAt": "2026-09-20",
+    "usageCode": "import { GlitchText } from \"@/components/ui/glitch-text\";\n\nexport function Demo() {\n  return (\n    <div className=\"flex flex-col items-center gap-6 p-8\">\n      {/* 1. RGB Split (Chromatic Aberration) */}\n      <GlitchText\n        as=\"h2\"\n        text=\"CHROMATIC SPLIT\"\n        variant=\"rgb-split\"\n        color1=\"#00f0ff\"\n        color2=\"#ff0055\"\n        className=\"text-4xl font-black tracking-tight\"\n      />\n\n      {/* 2. Cyberpunk Slicing */}\n      <GlitchText\n        as=\"h2\"\n        text=\"CYBERPUNK SLICE\"\n        variant=\"slice\"\n        color1=\"#22c55e\"\n        color2=\"#a855f7\"\n        className=\"text-4xl font-black tracking-tight\"\n      />\n\n      {/* 3. Matrix Scramble Decode on Hover */}\n      <GlitchText\n        as=\"span\"\n        text=\"SYSTEM BREACH DETECTED\"\n        variant=\"scramble\"\n        trigger=\"hover\"\n        color1=\"#10b981\"\n        className=\"text-lg font-mono text-emerald-400 cursor-pointer\"\n      />\n    </div>\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/GlitchText.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/glitch-text.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
       }
     ]
   },
@@ -4072,6 +4298,113 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/motion-tokens.ts",
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
+    "id": "meteors",
+    "name": "Meteors",
+    "tagline": "Luminous diagonal meteor trails streaming across cards and hero containers",
+    "description": "A lightweight, highly aesthetic animated meteor shower effect that streams diagonal glowing celestial light beams across cards, badges, hero containers, and call-to-action sections.",
+    "category": "Motion",
+    "badges": [
+      "CSS Animation",
+      "Meteors",
+      "Card Effect",
+      "New"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/meteors",
+    "features": [
+      "Super lightweight pure CSS keyframe hardware-accelerated animations",
+      "Configurable trajectory angle (default 215° diagonal down-left)",
+      "Customizable head color, tail gradient, tail length, and speed",
+      "Randomized distribution and staggered delays preventing rhythmic clustering",
+      "Drop-in compatible with cards, hero banners, and button containers",
+      "Full prefers-reduced-motion support disabling animations automatically"
+    ],
+    "props": [
+      {
+        "name": "number",
+        "type": "number",
+        "default": "20",
+        "description": "Total number of animated meteor streaks to generate"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "'#94A3B8'",
+        "description": "Luminous head color and halo glow tint"
+      },
+      {
+        "name": "trailColor",
+        "type": "string",
+        "default": "'#64748B'",
+        "description": "Base color of the gradient fading tail"
+      },
+      {
+        "name": "tailLength",
+        "type": "number",
+        "default": "60",
+        "description": "Length in pixels of each meteor streak tail"
+      },
+      {
+        "name": "angle",
+        "type": "number",
+        "default": "215",
+        "description": "Flight trajectory angle in degrees (215° is down-left)"
+      },
+      {
+        "name": "minDelay",
+        "type": "number",
+        "default": "0.2",
+        "description": "Minimum animation delay in seconds"
+      },
+      {
+        "name": "maxDelay",
+        "type": "number",
+        "default": "1.2",
+        "description": "Maximum animation delay in seconds"
+      },
+      {
+        "name": "minDuration",
+        "type": "number",
+        "default": "2",
+        "description": "Minimum animation duration in seconds"
+      },
+      {
+        "name": "maxDuration",
+        "type": "number",
+        "default": "8",
+        "description": "Maximum animation duration in seconds"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "description": "Additional CSS classes for container positioning"
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "description": "Optional content rendered above or inside the meteor container"
+      }
+    ],
+    "accessibility": [
+      "Meteor container is marked with aria-hidden=\"true\" and pointer-events-none",
+      "prefers-reduced-motion automatically hides and freezes meteor animations"
+    ],
+    "createdAt": "2026-09-20",
+    "usageCode": "import { Meteors } from \"@/components/ui/meteors\";\n\nexport function MeteorCardDemo() {\n  return (\n    <div className=\"relative w-full max-w-sm rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 p-8 shadow-2xl\">\n      <Meteors number={25} color=\"#38BDF8\" trailColor=\"#0284C7\" />\n      <div className=\"relative z-10\">\n        <span className=\"text-xs font-mono uppercase text-sky-400\">Card Meteors</span>\n        <h3 className=\"text-xl font-bold text-white mt-2\">Space Exploration</h3>\n        <p className=\"text-sm text-slate-400 mt-2\">\n          Streams of glowing meteors darting across dark surfaces with gradient tails.\n        </p>\n      </div>\n    </div>\n  );\n}",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "src/components/ui/Meteors.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/meteors.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
       }
     ]
   },
@@ -5990,6 +6323,115 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "rainbow-button",
+    "name": "Rainbow Button",
+    "tagline": "Vibrant chromatic rainbow border button with animated glowing under-reflection",
+    "description": "A vibrant button featuring an animated chromatic rainbow gradient border, dynamic 3D surface reflections, and an ambient blurred rainbow underglow.",
+    "category": "Motion",
+    "badges": [
+      "Button",
+      "Gradient",
+      "Interactive",
+      "New"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/rainbow-button",
+    "features": [
+      "Continuous seamless multi-stop chromatic rainbow border animation",
+      "Ambient blurred rainbow underglow shadow reflecting beneath the button surface",
+      "Customizable chromatic color variables (color1 through color5) with vivid defaults",
+      "Zero external library requirements: native CSS animation and self-contained Slot component for asChild support",
+      "Variants: default and outline, with sizes: default, sm, lg, and icon",
+      "Fully accessible: keyboard focus ring, aria attributes pass-through, and prefers-reduced-motion support"
+    ],
+    "props": [
+      {
+        "name": "variant",
+        "type": "'default' | 'outline'",
+        "default": "'default'",
+        "description": "Visual presentation style of the button surface"
+      },
+      {
+        "name": "size",
+        "type": "'default' | 'sm' | 'lg' | 'icon'",
+        "default": "'default'",
+        "description": "Button dimension scale and padding"
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "default": "false",
+        "description": "Render as child component (e.g. Next.js Link or a tag) passing through props and styles"
+      },
+      {
+        "name": "glow",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether to show the ambient blurred rainbow glow drop-shadow beneath the button"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": "3",
+        "description": "Rainbow animation cycle duration in seconds"
+      },
+      {
+        "name": "color1",
+        "type": "string",
+        "default": "'hsl(0 100% 63%)'",
+        "description": "First chromatic gradient stop (red/pink)"
+      },
+      {
+        "name": "color2",
+        "type": "string",
+        "default": "'hsl(270 100% 63%)'",
+        "description": "Second chromatic gradient stop (purple)"
+      },
+      {
+        "name": "color3",
+        "type": "string",
+        "default": "'hsl(210 100% 63%)'",
+        "description": "Third chromatic gradient stop (blue)"
+      },
+      {
+        "name": "color4",
+        "type": "string",
+        "default": "'hsl(195 100% 63%)'",
+        "description": "Fourth chromatic gradient stop (cyan)"
+      },
+      {
+        "name": "color5",
+        "type": "string",
+        "default": "'hsl(90 100% 63%)'",
+        "description": "Fifth chromatic gradient stop (green)"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "description": "Additional CSS classes"
+      }
+    ],
+    "accessibility": [
+      "Full keyboard focus state with visible focus-visible ring",
+      "Supports standard button and anchor keyboard activation (Enter / Space)",
+      "prefers-reduced-motion halts the infinite background animation automatically"
+    ],
+    "createdAt": "2026-09-20",
+    "usageCode": "import { RainbowButton } from \"@/components/ui/rainbow-button\";\n\nexport function RainbowButtonDemo() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-4 p-8\">\n      <RainbowButton>\n        Get Unlimited Access\n      </RainbowButton>\n\n      <RainbowButton variant=\"outline\" size=\"sm\">\n        Explore Features\n      </RainbowButton>\n    </div>\n  );\n}",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "src/components/ui/RainbowButton.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/rainbow-button.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
     "id": "recovery-ledger",
     "name": "Recovery Ledger",
     "tagline": "Version history timeline & state recovery ledger",
@@ -6301,6 +6743,120 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "scrollvelocitytext",
+    "name": "Scroll Velocity Text",
+    "tagline": "Direction-aware kinetic text that expands and contracts with scroll",
+    "description": "A direction-aware kinetic typography component that smoothly expands letter-spacing and scale on downward scroll, and winds back on upward scroll, with zero per-frame React re-renders.",
+    "category": "Motion",
+    "badges": [
+      "Kinetic Typography",
+      "Scroll Driven",
+      "Accessibility",
+      "Zero Overhead"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/scrollvelocitytext",
+    "features": [
+      "Direction-aware scroll physics: expands on downward scroll, winds back on upward scroll, and holds position on idle",
+      "Zero per-frame React re-renders: progress is written directly to the DOM via requestAnimationFrame batching",
+      "GPU-accelerated CSS transitions with cubic-bezier easing for buttery smooth kinetic tracking",
+      "Screen-reader safe: rendered as an unbroken native text node rather than fragmented per-letter DOM spans",
+      "Customizable expansion range, letter spacing bounds (em), scale multiplier, and fade threshold",
+      "Flexible polymorphic tag rendering via the \"as\" prop (h1, h2, span, p, etc.) with custom transform-origin",
+      "Supports both global window scroll and scoped scrollable container refs",
+      "Built-in prefers-reduced-motion detection automatically locks text to resting state"
+    ],
+    "props": [
+      {
+        "name": "text",
+        "type": "string",
+        "description": "The text string to render as a single accessible text node"
+      },
+      {
+        "name": "as",
+        "type": "keyof JSX.IntrinsicElements",
+        "default": "'span'",
+        "description": "HTML tag to render as (e.g. \"h1\", \"h2\", \"span\", \"p\", \"div\")"
+      },
+      {
+        "name": "expandDistance",
+        "type": "number",
+        "default": "500",
+        "description": "Net scroll distance in pixels needed to progress from resting size to fully expanded and faded out"
+      },
+      {
+        "name": "intensity",
+        "type": "number",
+        "default": "1",
+        "description": "Multiplier on how much each scrolled pixel contributes to expansion progress"
+      },
+      {
+        "name": "minLetterSpacing",
+        "type": "number",
+        "default": "0",
+        "description": "Letter-spacing in em units at rest (zero scroll progress)"
+      },
+      {
+        "name": "maxLetterSpacing",
+        "type": "number",
+        "default": "1",
+        "description": "Letter-spacing in em units at full scroll expansion"
+      },
+      {
+        "name": "maxScale",
+        "type": "number",
+        "default": "1.6",
+        "description": "Scale multiplier at full scroll expansion (1 = no scale change)"
+      },
+      {
+        "name": "fadeStart",
+        "type": "number",
+        "default": "0.4",
+        "description": "Progress fraction (0–1) at which the text begins fading out (>= 1 disables fading)"
+      },
+      {
+        "name": "smoothingMs",
+        "type": "number",
+        "default": "400",
+        "description": "Duration in milliseconds of the CSS easing transition between scroll updates"
+      },
+      {
+        "name": "transformOrigin",
+        "type": "string",
+        "default": "'center center'",
+        "description": "CSS transform origin for expansion and scaling (e.g. \"left center\" for left-aligned headlines)"
+      },
+      {
+        "name": "scrollContainerRef",
+        "type": "RefObject<HTMLElement | null>",
+        "description": "Optional ref to a custom scrollable container instead of the window viewport"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "description": "Additional CSS classes for font size, weight, color, and positioning"
+      }
+    ],
+    "accessibility": [
+      "Renders a single continuous text node rather than splitting words into individual <span> letters, ensuring screen readers announce the text smoothly and search engines index it properly",
+      "Under prefers-reduced-motion: reduce, scroll tracking is disabled, letter-spacing and scale are pinned to resting state, and CSS transitions are neutralized"
+    ],
+    "createdAt": "2026-09-20",
+    "usageCode": "import { ScrollVelocityText } from \"@/components/ui/scrollvelocitytext\";\n\nexport function Demo() {\n  return (\n    <div className=\"min-h-[140vh] flex flex-col items-center justify-center p-8\">\n      <p className=\"text-xs font-mono uppercase tracking-widest text-text-muted mb-4\">\n        Scroll down to expand · Scroll up to wind back\n      </p>\n      <ScrollVelocityText\n        as=\"h1\"\n        text=\"BUILD SOMETHING GREAT\"\n        intensity={1.2}\n        expandDistance={450}\n        minLetterSpacing={0.05}\n        maxLetterSpacing={0.8}\n        maxScale={1.5}\n        className=\"text-4xl sm:text-6xl font-black tracking-tight text-text-primary uppercase select-none text-center\"\n      />\n    </div>\n  );\n}",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "src/components/ui/Scrollvelocitytext.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/scrollvelocitytext.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
     "id": "selection-basket",
     "name": "Selection Basket",
     "tagline": "Floating bulk-action toolbar for multi-item batch operations and export flows",
@@ -6482,6 +7038,168 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/motion-tokens.ts",
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
+    "id": "shooting-stars",
+    "name": "Shooting Stars",
+    "tagline": "Deep space canvas cosmos with glowing shooting stars, radiant twinkling starfield, and interactive stardust",
+    "description": "A high-performance deep-space cosmos background featuring multi-depth twinkling celestial stars, glowing atmospheric nebula clouds, and cinematic shooting stars with luminous head flares, tapered fading trails, ember stardust, and click-to-summon interactivity.",
+    "category": "Motion",
+    "badges": [
+      "Canvas",
+      "Space",
+      "Stars",
+      "Interactive",
+      "Background"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/shooting-stars",
+    "features": [
+      "Zero external runtime dependencies: 100% native HTML5 Canvas 2D with sub-pixel DPR scaling",
+      "Multi-depth twinkling starfield with radiant 4-point celestial cross-sparkles and soft halo blooms",
+      "Cinematic meteors with radiant head bursts, tapered linear-gradient fading trails, and custom trajectory angles",
+      "Stardust ember particles dynamically shed from traveling meteor tails for realistic atmospheric burns",
+      "Subtle ambient cosmic nebula haze clouds rendering layered indigo, violet, and cyan deep-space depth",
+      "Interactive mouse parallax tilt creating multi-plane 3D astronomical perspective",
+      "Interactive click & tap summons custom meteors sweeping directly across the interaction point",
+      "Full prefers-reduced-motion compliance freezing meteors and twinkle to a serene static night sky",
+      "Stratified children wrapper supporting titles, hero copy, and buttons with intact pointer events"
+    ],
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "description": "Optional content rendered above the starry sky with full interactivity and clickability"
+      },
+      {
+        "name": "background",
+        "type": "string",
+        "default": "'#020617'",
+        "description": "Deep space background color (CSS color, hex, rgba, or gradient)"
+      },
+      {
+        "name": "starCount",
+        "type": "number",
+        "default": "120",
+        "description": "Total number of ambient background stars distributed across the sky"
+      },
+      {
+        "name": "starColors",
+        "type": "string[]",
+        "default": "['#FFFFFF', '#E0F2FE', '#C7D2FE', '#FEF08A']",
+        "description": "Palette of celestial tints applied to ambient background stars"
+      },
+      {
+        "name": "minStarSize",
+        "type": "number",
+        "default": "0.6",
+        "description": "Minimum radius in pixels of ambient stars"
+      },
+      {
+        "name": "maxStarSize",
+        "type": "number",
+        "default": "2.2",
+        "description": "Maximum radius in pixels of ambient stars"
+      },
+      {
+        "name": "twinkleSpeed",
+        "type": "number",
+        "default": "1",
+        "description": "Frequency speed multiplier for ambient star twinkle pulsation"
+      },
+      {
+        "name": "trailColor",
+        "type": "string",
+        "default": "'#38BDF8'",
+        "description": "Primary neon/atmospheric color of the shooting star trail"
+      },
+      {
+        "name": "headColor",
+        "type": "string",
+        "default": "'#FFFFFF'",
+        "description": "Luminous core burst color of the shooting star meteor head"
+      },
+      {
+        "name": "interval",
+        "type": "number",
+        "default": "2200",
+        "description": "Average delay in milliseconds between automatic shooting star spawns"
+      },
+      {
+        "name": "speed",
+        "type": "[number, number] | number",
+        "default": "[12, 22]",
+        "description": "Speed range [min, max] or uniform velocity in pixels per frame"
+      },
+      {
+        "name": "trailLength",
+        "type": "[number, number] | number",
+        "default": "[90, 180]",
+        "description": "Trail length range [min, max] or uniform length in pixels"
+      },
+      {
+        "name": "angle",
+        "type": "number",
+        "default": "42",
+        "description": "Trajectory flight angle in degrees clockwise from horizontal (45° is down-right)"
+      },
+      {
+        "name": "maxActiveShootingStars",
+        "type": "number",
+        "default": "2",
+        "description": "Maximum concurrent active meteors streaking across the sky at once"
+      },
+      {
+        "name": "showEmbers",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether shooting stars shed glowing stardust ember particles in their wake"
+      },
+      {
+        "name": "nebula",
+        "type": "boolean",
+        "default": "true",
+        "description": "Enables layered atmospheric cosmic nebula clouds in the deep background"
+      },
+      {
+        "name": "clickToSpawn",
+        "type": "boolean",
+        "default": "true",
+        "description": "Enables clicking or tapping to summon a shooting star sweeping past the cursor"
+      },
+      {
+        "name": "parallax",
+        "type": "boolean",
+        "default": "true",
+        "description": "Enables subtle mouse parallax perspective shifting background stars by depth"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "description": "Additional CSS classes for container sizing, layout, and styling"
+      }
+    ],
+    "accessibility": [
+      "Cosmic canvas is marked with aria-hidden=\"true\" and pointer-events-none",
+      "Child elements retain standard focus order, screen reader accessibility, and pointer handling",
+      "Supports prefers-reduced-motion media query: disables meteor spawning, particle embers, and twinkle oscillations"
+    ],
+    "createdAt": "2026-09-20",
+    "usageCode": "import { ShootingStars } from \"@/components/ui/shooting-stars\";\n\nexport function SpaceHeroDemo() {\n  return (\n    <div className=\"relative w-full h-[520px] rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center\">\n      <ShootingStars\n        starCount={140}\n        interval={1800}\n        trailColor=\"#38BDF8\"\n        headColor=\"#FFFFFF\"\n        angle={45}\n        nebula={true}\n        parallax={true}\n        clickToSpawn={true}\n        className=\"w-full h-full\"\n      >\n        <div className=\"flex flex-col items-center justify-center h-full text-center px-6\">\n          <span className=\"inline-flex items-center gap-2 px-3 py-1 text-xs font-mono font-medium text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 rounded-full mb-4\">\n            ✦ Celestial Cosmos\n          </span>\n          <h1 className=\"text-4xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-slate-400 tracking-tight\">\n            Journey Into The Stars\n          </h1>\n          <p className=\"mt-4 text-sm sm:text-base text-slate-400 max-w-lg\">\n            High-performance cosmic background with realistic meteors, radiant starfields, and atmospheric nebula glow.\n          </p>\n        </div>\n      </ShootingStars>\n    </div>\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/ShootingStars.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/shooting-stars.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
       }
     ]
   },
@@ -6920,6 +7638,182 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/motion-tokens.ts",
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
+    "id": "sparkles-core",
+    "name": "Sparkles Core",
+    "tagline": "Zero-dependency GPU canvas particle sparkles with celestial stars, organic twinkle, and cursor reactions",
+    "description": "A high-performance, zero-dependency particle sparkle canvas with multi-shape geometry (circles, radiant diamond stars, cross starlets), organic twinkling, interactive cursor repulsion/attraction, click particle bursts, and fluid SSR safety.",
+    "category": "Motion",
+    "badges": [
+      "Canvas",
+      "Particles",
+      "Interactive",
+      "Background"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/sparkles-core",
+    "features": [
+      "Zero external particle dependencies: 100% native HTML5 Canvas 2D with sub-pixel DPR scaling",
+      "Full backward compatibility with Aceternity SparklesCore props signature",
+      "Multiple particle shapes: circle, 4-pointed diamond star, celestial cross starlet, or mixed",
+      "Multi-color palette distribution supporting chromatic nebulae and gradient sparkle fields",
+      "Organic twinkle brightness pulsation with phase modulation and customizable twinkle speeds",
+      "Directional drift flows: float organically in all directions, or drift top, bottom, left, or right",
+      "Interactive cursor modes: repulsion, attraction, or proximity radiant enlargement",
+      "Click & tap particle burst generation spawning dynamic kinetic firework sparks",
+      "Wraps arbitrary children effortlessly with pointer event pass-through and depth stratification",
+      "Full accessibility: aria-hidden canvas and prefers-reduced-motion compliance"
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "description": "Optional unique HTML id attribute for the canvas element"
+      },
+      {
+        "name": "background",
+        "type": "string",
+        "default": "'transparent'",
+        "description": "Background color of the sparkle container (CSS color, hex, rgba, or gradient)"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "description": "Additional CSS utility classes applied to the root container"
+      },
+      {
+        "name": "particleColor",
+        "type": "string",
+        "default": "'#FFFFFF'",
+        "description": "Primary color for single-tint particle sparkle fields"
+      },
+      {
+        "name": "particleColors",
+        "type": "string[]",
+        "description": "Array of colors distributed across sparkles for chromatic or starry night effects"
+      },
+      {
+        "name": "minSize",
+        "type": "number",
+        "default": "0.6",
+        "description": "Minimum radius/size in pixels for spawned sparkles"
+      },
+      {
+        "name": "maxSize",
+        "type": "number",
+        "default": "2.4",
+        "description": "Maximum radius/size in pixels for spawned sparkles"
+      },
+      {
+        "name": "particleSize",
+        "type": "number",
+        "description": "Uniform particle size override (locks both minSize and maxSize)"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": "1",
+        "description": "Particle movement velocity multiplier"
+      },
+      {
+        "name": "particleDensity",
+        "type": "number",
+        "default": "120",
+        "description": "Particle density factor calculated relative to a 400x400 area"
+      },
+      {
+        "name": "particleCount",
+        "type": "number",
+        "description": "Exact particle count override ignoring density calculations"
+      },
+      {
+        "name": "particleShape",
+        "type": "'circle' | 'star' | 'cross' | 'mixed'",
+        "default": "'circle'",
+        "description": "Geometry shape of particles: circle, 4-point radiant star, cross starlet, or mixed"
+      },
+      {
+        "name": "direction",
+        "type": "'none' | 'top' | 'bottom' | 'left' | 'right'",
+        "default": "'none'",
+        "description": "Directional flow drift; none provides organic cosmic floating"
+      },
+      {
+        "name": "twinkle",
+        "type": "boolean",
+        "default": "true",
+        "description": "Enables dynamic sinusoidal twinkle opacity pulsation"
+      },
+      {
+        "name": "twinkleSpeed",
+        "type": "number",
+        "default": "1",
+        "description": "Frequency speed multiplier for twinkle pulsation"
+      },
+      {
+        "name": "interactive",
+        "type": "boolean",
+        "default": "true",
+        "description": "Enables mouse pointer tracking and interaction reactions"
+      },
+      {
+        "name": "cursorMode",
+        "type": "'repulse' | 'attract' | 'sparkle' | 'none'",
+        "default": "'repulse'",
+        "description": "Cursor reaction: repulse away, attract toward cursor, or sparkle illuminate"
+      },
+      {
+        "name": "cursorRadius",
+        "type": "number",
+        "default": "140",
+        "description": "Influence radius in pixels around the pointer"
+      },
+      {
+        "name": "clickPush",
+        "type": "number",
+        "default": "6",
+        "description": "Number of spark particles burst on click/tap"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": "1",
+        "description": "Global master opacity scalar for the sparkle canvas"
+      },
+      {
+        "name": "blur",
+        "type": "number",
+        "default": "0",
+        "description": "CSS blur filter radius in pixels for soft glowing bloom"
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "description": "Optional content rendered above the sparkles with full clickability and isolation"
+      }
+    ],
+    "accessibility": [
+      "Canvas layer is isolated with aria-hidden=\"true\" and pointer-events-none",
+      "Respects prefers-reduced-motion media query: freezes particle drift and twinkle when requested",
+      "Children render in a stratified foreground container with native keyboard and focus semantics intact"
+    ],
+    "createdAt": "2026-09-20",
+    "usageCode": "import { SparklesCore } from \"@/components/ui/sparkles-core\";\n\nexport function SparklesDemo() {\n  return (\n    <div className=\"relative w-full h-80 rounded-2xl overflow-hidden bg-slate-950 flex flex-col items-center justify-center\">\n      <SparklesCore\n        id=\"tsparticlesfullpage\"\n        background=\"transparent\"\n        minSize={0.6}\n        maxSize={2}\n        particleDensity={100}\n        className=\"w-full h-full\"\n        particleColor=\"#FFFFFF\"\n        particleShape=\"mixed\"\n        particleColors={[\"#60A5FA\", \"#C084FC\", \"#F472B6\", \"#FFFFFF\"]}\n        cursorMode=\"repulse\"\n        clickPush={10}\n      >\n        <div className=\"flex flex-col items-center justify-center h-full px-4 text-center\">\n          <h1 className=\"text-3xl md:text-5xl font-bold text-white tracking-tight\">\n            Build Stunning Interfaces\n          </h1>\n          <p className=\"mt-3 text-sm text-slate-400 max-w-sm\">\n            Zero-dependency canvas particle sparkle system with celestial stars and cursor dynamics.\n          </p>\n        </div>\n      </SparklesCore>\n    </div>\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/SparklesCore.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/sparkles-core.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
       }
     ]
   },
@@ -7448,6 +8342,101 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/components/ui/StackedCards.tsx",
         "type": "registry:ui",
         "target": "components/ui/stacked-cards.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
+    "id": "sticky-pages",
+    "name": "Sticky Pages",
+    "tagline": "Static sticky full-page stacking scroll sections with clean physical shadows and natural release",
+    "description": "A pure static full-page sticky stacking scroll component where pages slide up and stack cleanly one over another without any tilting or distortion, before releasing smoothly into natural page scrolling.",
+    "category": "Motion",
+    "badges": [
+      "CSS Sticky",
+      "Stacking",
+      "Scroll",
+      "New"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/sticky-pages",
+    "features": [
+      "Pure static stacking: zero tilting, zero rotation, zero transform distortion",
+      "Native browser scrolling: zero scroll hijacking or wheel locking, built on native CSS position: sticky",
+      "Stacking depth: each page slides up directly over the previous one with elevated top shadows and rounded borders",
+      "Natural release: once the final page finishes stacking, the container seamlessly transitions back into normal document flow",
+      "Dual composition support: pass a structured pages data array or arbitrary <StickyPage> child components",
+      "Configurable top offset, stack offset, page height, rounded corners, and drop shadows",
+      "Full prefers-reduced-motion compliance maintaining standard clean sticky reading"
+    ],
+    "props": [
+      {
+        "name": "pages",
+        "type": "StickyPageItem[]",
+        "description": "Array of page data objects (title, subtitle, description, badge, content, bg)"
+      },
+      {
+        "name": "pageHeight",
+        "type": "string",
+        "default": "'100vh'",
+        "description": "CSS height of each sticky page (e.g. 100vh, 85vh, 600px)"
+      },
+      {
+        "name": "topOffset",
+        "type": "number",
+        "default": "0",
+        "description": "Distance from top of viewport in pixels when a page locks into sticky position"
+      },
+      {
+        "name": "stackOffset",
+        "type": "number",
+        "default": "0",
+        "description": "Progressive pixel offset between stacked cards (0 for clean cover, 24 for visible deck header tabs)"
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether pages have rounded top corners (rounded-t-3xl) as they stack over one another"
+      },
+      {
+        "name": "shadow",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether pages cast an elevated top drop shadow over the preceding page"
+      },
+      {
+        "name": "border",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether pages have a subtle top highlight border"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "description": "Additional CSS classes for outer container"
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "description": "Optional <StickyPage> elements for JSX composition mode"
+      }
+    ],
+    "accessibility": [
+      "Maintains standard keyboard Tab order and native browser scroll behavior without wheel trapping",
+      "Accessible for screen readers with semantic document structure"
+    ],
+    "createdAt": "2026-09-20",
+    "usageCode": "import { StickyPages, StickyPage } from \"@/components/ui/sticky-pages\";\n\nexport function StickyPagesDemo() {\n  return (\n    <div className=\"w-full bg-slate-950\">\n      {/* Intro content */}\n      <div className=\"h-96 flex items-center justify-center\">\n        <p className=\"text-slate-400\">Scroll down to see the sticky pages stack</p>\n      </div>\n\n      {/* Sticky Stacking Pages */}\n      <StickyPages>\n        <StickyPage className=\"bg-slate-900 flex items-center justify-center\">\n          <h2 className=\"text-4xl font-bold text-white\">01. Architected for Speed</h2>\n        </StickyPage>\n\n        <StickyPage className=\"bg-indigo-950 flex items-center justify-center\">\n          <h2 className=\"text-4xl font-bold text-white\">02. Modern Aesthetic System</h2>\n        </StickyPage>\n\n        <StickyPage className=\"bg-sky-950 flex items-center justify-center\">\n          <h2 className=\"text-4xl font-bold text-white\">03. Production Grade Components</h2>\n        </StickyPage>\n      </StickyPages>\n\n      {/* Subsequent normal page content */}\n      <div className=\"h-96 flex items-center justify-center bg-black\">\n        <p className=\"text-slate-400\">Normal scroll resumes seamlessly here.</p>\n      </div>\n    </div>\n  );\n}",
+    "dependencies": [],
+    "files": [
+      {
+        "path": "src/components/ui/StickyPages.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/sticky-pages.tsx"
       },
       {
         "path": "src/lib/utils.ts",

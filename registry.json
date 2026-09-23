@@ -566,6 +566,24 @@
       ]
     },
     {
+      "name": "dot-shader",
+      "type": "registry:ui",
+      "title": "Dot Shader",
+      "description": "A GPU-accelerated interactive dot matrix background shader with magnetic cursor repulsion, proximity illumination glow, dynamic lens scaling, and ambient wave motion.",
+      "files": [
+        {
+          "path": "src/components/ui/DotShader.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dot-shader.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "drag-to-confirm",
       "type": "registry:ui",
       "title": "Drag to Confirm",
@@ -824,6 +842,27 @@
           "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib",
           "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "glitch-text",
+      "type": "registry:ui",
+      "title": "Glitch Text",
+      "description": "A multi-modal cybernetic glitch typography component featuring 5 distinct animation variants (RGB split chromatic aberration, cyberpunk clip-slicing, analog VHS tracking loss, matrix rune scramble decode, and electrical voltage surge).",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/GlitchText.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/glitch-text.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
         }
       ]
     },
@@ -1171,6 +1210,24 @@
           "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib",
           "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "meteors",
+      "type": "registry:ui",
+      "title": "Meteors",
+      "description": "A lightweight, highly aesthetic animated meteor shower effect that streams diagonal glowing celestial light beams across cards, badges, hero containers, and call-to-action sections.",
+      "files": [
+        {
+          "path": "src/components/ui/Meteors.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/meteors.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
         }
       ]
     },
@@ -1694,6 +1751,24 @@
       ]
     },
     {
+      "name": "rainbow-button",
+      "type": "registry:ui",
+      "title": "Rainbow Button",
+      "description": "A vibrant button featuring an animated chromatic rainbow gradient border, dynamic 3D surface reflections, and an ambient blurred rainbow underglow.",
+      "files": [
+        {
+          "path": "src/components/ui/RainbowButton.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/rainbow-button.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "recovery-ledger",
       "type": "registry:ui",
       "title": "Recovery Ledger",
@@ -1796,6 +1871,24 @@
       ]
     },
     {
+      "name": "scrollvelocitytext",
+      "type": "registry:ui",
+      "title": "Scroll Velocity Text",
+      "description": "A direction-aware kinetic typography component that smoothly expands letter-spacing and scale on downward scroll, and winds back on upward scroll, with zero per-frame React re-renders.",
+      "files": [
+        {
+          "path": "src/components/ui/Scrollvelocitytext.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/scrollvelocitytext.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "selection-basket",
       "type": "registry:ui",
       "title": "Selection Basket",
@@ -1846,6 +1939,27 @@
           "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib",
           "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "shooting-stars",
+      "type": "registry:ui",
+      "title": "Shooting Stars",
+      "description": "A high-performance deep-space cosmos background featuring multi-depth twinkling celestial stars, glowing atmospheric nebula clouds, and cinematic shooting stars with luminous head flares, tapered fading trails, ember stardust, and click-to-summon interactivity.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/ShootingStars.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/shooting-stars.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
         }
       ]
     },
@@ -1980,6 +2094,27 @@
           "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib",
           "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "sparkles-core",
+      "type": "registry:ui",
+      "title": "Sparkles Core",
+      "description": "A high-performance, zero-dependency particle sparkle canvas with multi-shape geometry (circles, radiant diamond stars, cross starlets), organic twinkling, interactive cursor repulsion/attraction, click particle bursts, and fluid SSR safety.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/SparklesCore.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/sparkles-core.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
         }
       ]
     },
@@ -2143,6 +2278,24 @@
           "path": "src/components/ui/StackedCards.tsx",
           "type": "registry:ui",
           "target": "components/ui/stacked-cards.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "sticky-pages",
+      "type": "registry:ui",
+      "title": "Sticky Pages",
+      "description": "A pure static full-page sticky stacking scroll component where pages slide up and stack cleanly one over another without any tilting or distortion, before releasing smoothly into natural page scrolling.",
+      "files": [
+        {
+          "path": "src/components/ui/StickyPages.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/sticky-pages.tsx"
         },
         {
           "path": "src/lib/utils.ts",
