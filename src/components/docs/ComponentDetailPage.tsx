@@ -139,6 +139,7 @@ import { MorphingIcon } from '../ui/MorphingIcon';
 import { SpeedWarp } from '../ui/SpeedWarp';
 import { SplitButton } from '../ui/SplitButton';
 import { NotFound } from '../ui/NotFound';
+import { PullToRefresh } from '../ui/PullToRefresh';
 import {
   AIResponseLiveShowcase,
   AdvancedDataTableLiveShowcase,
@@ -2892,6 +2893,13 @@ const completion = await client.completions.create({
               description="The requested page doesn't exist or may have moved."
               actionLabel="Go back home"
             />
+          </div>
+        );
+      case 'pull-to-refresh':
+      case 'pulltorefresh':
+        return (
+          <div className="py-6 flex flex-col items-center justify-center w-full max-w-md mx-auto">
+            <PullToRefresh key={demoKey} />
           </div>
         );
       default:

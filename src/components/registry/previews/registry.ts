@@ -650,6 +650,13 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/not-found'),
     metadata: { type: 'interactive' },
   },
+  'pull-to-refresh': {
+    id: 'pull-to-refresh',
+    componentId: 'pull-to-refresh',
+    aliases: ['pulltorefresh', 'pull-refresh'],
+    load: () => import('./items/pull-to-refresh'),
+    metadata: { type: 'interactive' },
+  },
 };
 
 // Fast lookup map supporting both primary slugs and aliases

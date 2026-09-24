@@ -59,6 +59,7 @@ import { SignUp } from '../ui/SignUp';
 import { FAQ } from '../ui/FAQ';
 import { PaymentReceiptPrinter } from '../ui/PaymentReceiptPrinter';
 import { ParticleDelete } from '../ui/ParticleDelete';
+import { PullToRefresh } from '../ui/PullToRefresh';
 import { AnimatedFileUpload } from '../ui/AnimatedFileUpload';
 import { PaymentStatus } from '../ui/PaymentStatus';
 import { UndoToast } from '../ui/UndoToast';
@@ -1585,6 +1586,12 @@ func main() {
         return (
           <div className="py-2 w-full">
             <ParticleDelete />
+          </div>
+        );
+      case 'pull-to-refresh':
+        return (
+          <div className="py-6 w-full flex flex-col items-center justify-center">
+            <PullToRefresh />
           </div>
         );
       case 'animated-file-upload':

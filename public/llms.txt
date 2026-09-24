@@ -13,7 +13,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 105 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 106 animated React components.
 
 ### Component Index
 
@@ -89,6 +89,7 @@
 - [PressButton](https://easyui.site/components/press-button): A button that compresses slightly on press and settles with a tiny natural overshoot for a tactile, physical feel.
 - [Pricing](https://easyui.site/components/pricing): A minimal two-tier pricing component for EasyUI. Native to the existing design system, fully theme-aware, with a quiet Free tier and a slightly more attractive Pro tier — without resorting to SaaS marketing tropes.
 - [Profile Card](https://easyui.site/components/profile-card): A premium dark social profile card with a painted blue cover-art panel, action row, and a detail panel with avatar, verified name, bio, follower stats, and outbound website link.
+- [Pull to Refresh](https://easyui.site/components/pull-to-refresh): A physical pull-to-refresh component and container featuring realistic elastic resistance curves, smooth cubic bezier line chart visualization with interactive point scrubbing, high/low metrics, and seamless light & dark mode compatibility.
 - [Rainbow Button](https://easyui.site/components/rainbow-button): A vibrant button featuring an animated chromatic rainbow gradient border, dynamic 3D surface reflections, and an ambient blurred rainbow underglow.
 - [Recovery Ledger](https://easyui.site/components/recovery-ledger): An archival audit timeline and state recovery ledger with chronological snapshot markers, diff inspection, and one-click rollback triggers.
 - [Reveal Card](https://easyui.site/components/reveal-card): A high-definition product card with smooth cursor-driven 3D perspective rotation, dynamic glare, and revealed content.
