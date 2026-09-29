@@ -5,6 +5,9 @@ import './styles/index.css'
 import App from './App.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx'
 import { ThemeProvider } from './lib/theme/useTheme'
+import { installGlobalErrorReporting } from './lib/error-reporting'
+
+installGlobalErrorReporting()
 
 // Suppress the React 19 internal INP (Interaction to Next Paint) tracking
 // error that fires in some browsers when the Performance Observer returns
@@ -59,4 +62,3 @@ if (rootElement.hasChildNodes()) {
 } else {
   createRoot(rootElement).render(appElement)
 }
-

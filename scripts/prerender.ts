@@ -1,13 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+import { PassThrough } from 'stream';
 import { fileURLToPath } from 'url';
 import React from 'react';
 (globalThis as any).React = React;
-import { renderToString } from 'react-dom/server';
+import { renderToPipeableStream } from 'react-dom/server';
 import { MotionConfig } from 'framer-motion';
 import { ThemeProvider } from '../src/lib/theme/useTheme';
 import { App, type AppProps } from '../src/App';
 import { EASY_COMPONENTS } from '../src/components/registry/components-data';
+import { ITEMS_PER_PAGE } from '../src/lib/components';
 import { SEO_CONFIG } from '../src/lib/seo/config';
 import {
   getCanonicalUrl,
@@ -38,6 +40,27 @@ interface RouteToPrerender {
   keywords?: string[];
   structuredData?: Record<string, any> | Array<Record<string, any>>;
   element: React.ReactElement;
+}
+
+function renderRouteElement(element: React.ReactElement): Promise<string> {
+  return new Promise((resolve, reject) => {
+    let html = '';
+    const output = new PassThrough();
+    output.on('data', (chunk: Buffer) => {
+      html += chunk.toString('utf8');
+    });
+    output.on('end', () => resolve(html));
+    output.on('error', reject);
+
+    const stream = renderToPipeableStream(element, {
+      onAllReady() {
+        stream.pipe(output);
+      },
+      onError(error) {
+        reject(error);
+      },
+    });
+  });
 }
 
 function escapeHtml(str: string): string {
@@ -191,18 +214,6 @@ export async function prerenderAllRoutes(): Promise<void> {
     element: catalogElement,
   });
 
-  // Also write flat /components.html for Vercel cleanUrls flexibility
-  routes.push({
-    path: '/components.html',
-    outputPath: path.join(DIST_DIR, 'components.html'),
-    title: 'All React Components — EasyUI',
-    description:
-      'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
-    canonical: componentsCanonical,
-    structuredData: catalogSchema,
-    element: catalogElement,
-  });
-
     // 3. Documentation Topics
     const docTopicIds = ['introduction', 'quick-start', 'architecture', 'motion-system', 'collaboration', 'seo'];
     const docsCanonical = getCanonicalUrl('docs');
@@ -216,16 +227,6 @@ export async function prerenderAllRoutes(): Promise<void> {
       structuredData: generateDocArticleSchema({ id: 'introduction', title: 'Documentation — EasyUI', description: 'Comprehensive documentation and guides for EasyUI.' }),
       element: docsElement,
     });
-    routes.push({
-      path: '/docs.html',
-      outputPath: path.join(DIST_DIR, 'docs.html'),
-      title: 'Documentation — EasyUI',
-      description: 'Comprehensive documentation and guides for EasyUI components, motion systems, and architecture.',
-      canonical: docsCanonical,
-      structuredData: generateDocArticleSchema({ id: 'introduction', title: 'Documentation — EasyUI', description: 'Comprehensive documentation and guides for EasyUI.' }),
-      element: docsElement,
-    });
-
     for (const topicId of docTopicIds) {
       const docSEO = getDocTopicSEO(topicId);
       const docSchema = generateDocArticleSchema({
@@ -246,15 +247,23 @@ export async function prerenderAllRoutes(): Promise<void> {
         element: docElement,
       });
 
-      // Flat cleanUrl format: /docs/:topic.html
+    }
+
+    // Each catalog page gets one canonical directory output. Keeping the
+    // pagination routes explicit prevents the server from serving page 1's
+    // HTML for every page number.
+    const totalComponentPages = Math.ceil(EASY_COMPONENTS.length / ITEMS_PER_PAGE);
+    for (let page = 2; page <= totalComponentPages; page++) {
+      const routePath = `/components/page/${page}`;
       routes.push({
-        path: `/docs/${topicId}.html`,
-        outputPath: path.join(DIST_DIR, 'docs', `${topicId}.html`),
-        title: docSEO.title,
-        description: docSEO.description,
-        canonical: docSEO.canonical,
-        structuredData: docSchema,
-        element: docElement,
+        path: routePath,
+        outputPath: path.join(DIST_DIR, 'components', 'page', String(page), 'index.html'),
+        title: `All React Components (Page ${page}) — EasyUI`,
+        description:
+          'Explore EasyUI production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
+        canonical: getCanonicalUrl(`components/page/${page}`),
+        structuredData: generateComponentCatalogSchema(EASY_COMPONENTS, page),
+        element: makePrerenderElement(routePath),
       });
     }
 
@@ -276,36 +285,22 @@ export async function prerenderAllRoutes(): Promise<void> {
         element: compElement,
       });
 
-      // Flat cleanUrl format: /components/:id.html
-      routes.push({
-        path: `/components/${comp.id}.html`,
-        outputPath: path.join(DIST_DIR, 'components', `${comp.id}.html`),
-        title: compSEO.title,
-        description: compSEO.description,
-        canonical: compSEO.canonical,
-        structuredData: compSchema,
-        element: compElement,
-      });
     }
 
-  // Execute rendering for all routes
-  let successCount = 0;
-  for (const r of routes) {
-    const renderedHtml = renderToString(r.element);
+  // Resolve lazy previews and write canonical outputs concurrently. This avoids
+  // serially repeating the same render work while preserving complete SSR HTML.
+  await Promise.all(routes.map(async (r) => {
+    const renderedHtml = await renderRouteElement(r.element);
     const finalHtml = buildHtml(template, r, renderedHtml);
-
     const dir = path.dirname(r.outputPath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
+    fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(r.outputPath, finalHtml, 'utf-8');
-    successCount++;
-  }
+  }));
+  const successCount = routes.length;
 
-  console.log(`\n Successfully pre-rendered ${successCount} routes with React renderToString:`);
+  console.log(`\n Successfully pre-rendered ${successCount} routes with React streaming SSR:`);
   console.log(`  - 1 Homepage (/)`);
-  console.log(`  - 1 Components catalog (/components)`);
+  console.log(`  - ${totalComponentPages} Components catalog pages (/components[/page/*])`);
   console.log(`  - ${docTopicIds.length} Documentation topics (/docs/*)`);
   console.log(`  - ${EASY_COMPONENTS.length} Component detail pages (/components/*)`);
   console.log('========================================================\n');

@@ -194,7 +194,7 @@ export function generateComponentCatalogSchema(
   components: EasyComponentMeta[],
   currentPage = 1
 ): Record<string, any> {
-  const canonical = getCanonicalUrl(currentPage > 1 ? `components?page=${currentPage}` : 'components');
+  const canonical = getCanonicalUrl(currentPage > 1 ? `components/page/${currentPage}` : 'components');
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Copy,
@@ -35,125 +35,131 @@ import { isComponentNew } from '../../lib/components';
 import { useComponentSource } from '../../lib/source-loader';
 import { NewBadge } from '../common/NewBadge';
 import { useTheme } from '../../lib/theme/useTheme';
+import type { ThinkingOrbState } from '../ui/ThinkingOrb';
 
-// UI components for live interactive demonstrations
-import { MagneticButton } from '../ui/MagneticButton';
-import { SpotlightCard } from '../ui/SpotlightCard';
-import { CursorFollower } from '../ui/CursorFollower';
-import { ExpandableSearch } from '../ui/ExpandableSearch';
-import { AnimatedTabs } from '../ui/AnimatedTabs';
-import { FloatingActionDock } from '../ui/FloatingActionDock';
-import { RevealCard } from '../ui/RevealCard';
-import { SmoothAccordion } from '../ui/SmoothAccordion';
-import { NotificationStack } from '../ui/NotificationStack';
-import { MorphingDialog } from '../ui/MorphingDialog';
-import { DotField } from '../ui/DotField';
-import { InteractiveTimeline } from '../ui/InteractiveTimeline';
-import { SmartComparison } from '../ui/SmartComparison';
-import { ActivityFeed } from '../ui/ActivityFeed';
-import { MetricHUD } from '../ui/MetricHUD';
-import { CodeSnippetDeck } from '../ui/CodeSnippetDeck';
-import { GlassNavbar } from '../ui/GlassNavbar';
-import { Button } from '../ui/Button';
-import {
-  Form,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  Input,
-  Select,
-  Checkbox,
-  Switch,
-} from '../ui/Form';
-import { Login } from '../ui/Login';
-import { SignUp } from '../ui/SignUp';
-import { FAQ } from '../ui/FAQ';
-import { PaymentReceiptPrinter } from '../ui/PaymentReceiptPrinter';
-import { ParticleDelete } from '../ui/ParticleDelete';
-import { AnimatedFileUpload } from '../ui/AnimatedFileUpload';
-import { PaymentStatus } from '../ui/PaymentStatus';
-import { UndoToast } from '../ui/UndoToast';
-import { ExpandableDataRow } from '../ui/ExpandableDataRow';
-import { ScrollProgressNav } from '../ui/ScrollProgressNav';
-import { AnimatedNumber } from '../ui/AnimatedNumber';
-import { SpotlightSearch } from '../ui/SpotlightSearch';
-import { MorphingButton } from '../ui/MorphingButton';
-import { DragToConfirm } from '../ui/DragToConfirm';
-import { PeekCard } from '../ui/PeekCard';
-import { SelectionBasket } from '../ui/SelectionBasket';
-import { FocusMode } from '../ui/FocusMode';
-import { Loader } from '../ui/Loader';
-import { SmallFloatingDock } from '../ui/SmallFloatingDock';
-import { HamburgerMenu } from '../ui/HamburgerMenu';
-import { NotificationBell } from '../ui/NotificationBell';
-import { IOSSearchBar } from '../ui/IOSSearchBar';
-import { TypewriterButton } from '../ui/TypewriterButton';
-import { DepthCorridor } from '../ui/DepthCorridor';
-import { DensityLens } from '../ui/DensityLens';
-import { TorqueDial } from '../ui/TorqueDial';
-import { StackUnfoldPanel } from '../ui/StackUnfoldPanel';
-import { DependencyTrace } from '../ui/DependencyTrace';
-import { BatchGestureTray } from '../ui/BatchGestureTray';
-import { RecoveryLedger } from '../ui/RecoveryLedger';
-import { RocketPartyPopper } from '../ui/RocketPartyPopper';
-import { BranchingSubmenu } from '../ui/BranchingSubmenu';
-import { GravityParticleBurst } from '../ui/GravityParticleBurst';
-import { LiquidRippleButton } from '../ui/LiquidRippleButton';
-import { NeonEdgeButton } from '../ui/NeonEdgeButton';
-import { OrbitalLoadingRing } from '../ui/OrbitalLoadingRing';
-import { PillNavigation } from '../ui/PillNavigation';
-import { TextScrambleDecoder } from '../ui/TextScrambleDecoder';
-import { MacOSFolderCards } from '../ui/MacOSFolderCards';
-import { IntroLoader } from '../ui/IntroLoader';
-import { NimbuMirchi } from '../ui/NimbuMirchi';
-import { EvilEye } from '../ui/EvilEye';
-import { WalletCard } from '../ui/WalletCard';
-import { CircularOrbit } from '../ui/CircularOrbit';
-import { ProfileCard } from '../ui/ProfileCard';
-import { BookCallButton } from '../ui/BookCallButton';
-import { GooeyMenu } from '../ui/GooeyMenu';
-import { MorphingShapeLoader } from '../ui/MorphingShapeLoader';
-import { LiquidToggle } from '../ui/LiquidToggle';
-import { PressButton } from '../ui/PressButton';
-import { LockInput } from '../ui/LockInput';
-import { SpringSelect } from '../ui/SpringSelect';
-import { DrawCheckbox } from '../ui/DrawCheckbox';
-import { StretchSwitch } from '../ui/StretchSwitch';
-import { SettleModal } from '../ui/SettleModal';
-import { VelocityToast } from '../ui/VelocityToast';
-import { DirectionalTooltip } from '../ui/DirectionalTooltip';
-import { OriginDropdown } from '../ui/OriginDropdown';
-import { UnfoldAccordion } from '../ui/UnfoldAccordion';
-import { SlidePagination } from '../ui/SlidePagination';
-import { Pricing } from '../ui/Pricing';
-import { CarSmokePageTransition } from '../ui/CarSmokePageTransition';
-import { MorphingBlob } from '../ui/MorphingBlob';
-import { OTPInput } from '../ui/OtpInput';
-import { ThinkingOrb, type ThinkingOrbState } from '../ui/ThinkingOrb';
-import { StackedCards } from '../ui/StackedCards';
-import { StoryCards } from '../ui/StoryCard';
-import { AvatarStack } from '../ui/AvatarStack';
-import { GlyphMatrix } from '../ui/GlyphMatrix';
-import { MorphingIcon } from '../ui/MorphingIcon';
-import { SpeedWarp } from '../ui/SpeedWarp';
-import { SplitButton } from '../ui/SplitButton';
-import { NotFound } from '../ui/NotFound';
-import { PullToRefresh } from '../ui/PullToRefresh';
-import {
-  AIResponseLiveShowcase,
-  AdvancedDataTableLiveShowcase,
-  ChatLiveShowcase,
-  AIAgentActivityLiveShowcase,
-  DotShaderLiveShowcase,
-  GlitchTextLiveShowcase,
-  MeteorsLiveShowcase,
-  RainbowButtonLiveShowcase,
-  ScrollVelocityTextLiveShowcase,
-  ShootingStarsLiveShowcase,
-  SparklesCoreLiveShowcase,
-  StickyPagesLiveShowcase,
-} from './sections/NewComponentsShowcase';
+// Live demonstrations are split into route-level chunks. The detail shell can
+// render metadata, source, props, and accessibility tabs without loading the
+// component implementations for unrelated demos.
+function lazyNamed<T extends React.ComponentType<any>>(
+  loader: () => Promise<Record<string, unknown>>,
+  exportName: string,
+) {
+  return lazy(async () => ({ default: (await loader())[exportName] as T }));
+}
+
+const MagneticButton = lazyNamed(() => import('../ui/MagneticButton'), 'MagneticButton');
+const SpotlightCard = lazyNamed(() => import('../ui/SpotlightCard'), 'SpotlightCard');
+const CursorFollower = lazyNamed(() => import('../ui/CursorFollower'), 'CursorFollower');
+const ExpandableSearch = lazyNamed(() => import('../ui/ExpandableSearch'), 'ExpandableSearch');
+const AnimatedTabs = lazyNamed(() => import('../ui/AnimatedTabs'), 'AnimatedTabs');
+const FloatingActionDock = lazyNamed(() => import('../ui/FloatingActionDock'), 'FloatingActionDock');
+const RevealCard = lazyNamed(() => import('../ui/RevealCard'), 'RevealCard');
+const SmoothAccordion = lazyNamed(() => import('../ui/SmoothAccordion'), 'SmoothAccordion');
+const NotificationStack = lazyNamed(() => import('../ui/NotificationStack'), 'NotificationStack');
+const MorphingDialog = lazyNamed(() => import('../ui/MorphingDialog'), 'MorphingDialog');
+const DotField = lazyNamed(() => import('../ui/DotField'), 'DotField');
+const InteractiveTimeline = lazyNamed(() => import('../ui/InteractiveTimeline'), 'InteractiveTimeline');
+const SmartComparison = lazyNamed(() => import('../ui/SmartComparison'), 'SmartComparison');
+const ActivityFeed = lazyNamed(() => import('../ui/ActivityFeed'), 'ActivityFeed');
+const MetricHUD = lazyNamed(() => import('../ui/MetricHUD'), 'MetricHUD');
+const CodeSnippetDeck = lazyNamed(() => import('../ui/CodeSnippetDeck'), 'CodeSnippetDeck');
+const GlassNavbar = lazyNamed(() => import('../ui/GlassNavbar'), 'GlassNavbar');
+const Button = lazyNamed(() => import('../ui/Button'), 'Button');
+const Form = lazyNamed(() => import('../ui/Form'), 'Form');
+const FormItem = lazyNamed(() => import('../ui/Form'), 'FormItem');
+const FormLabel = lazyNamed(() => import('../ui/Form'), 'FormLabel');
+const FormControl = lazyNamed(() => import('../ui/Form'), 'FormControl');
+const FormDescription = lazyNamed(() => import('../ui/Form'), 'FormDescription');
+const Input = lazyNamed(() => import('../ui/Form'), 'Input');
+const Select = lazyNamed(() => import('../ui/Form'), 'Select');
+const Checkbox = lazyNamed(() => import('../ui/Form'), 'Checkbox');
+const Switch = lazyNamed(() => import('../ui/Form'), 'Switch');
+const Login = lazyNamed(() => import('../ui/Login'), 'Login');
+const SignUp = lazyNamed(() => import('../ui/SignUp'), 'SignUp');
+const FAQ = lazyNamed(() => import('../ui/FAQ'), 'FAQ');
+const PaymentReceiptPrinter = lazyNamed(() => import('../ui/PaymentReceiptPrinter'), 'PaymentReceiptPrinter');
+const ParticleDelete = lazyNamed(() => import('../ui/ParticleDelete'), 'ParticleDelete');
+const AnimatedFileUpload = lazyNamed(() => import('../ui/AnimatedFileUpload'), 'AnimatedFileUpload');
+const PaymentStatus = lazyNamed(() => import('../ui/PaymentStatus'), 'PaymentStatus');
+const UndoToast = lazyNamed(() => import('../ui/UndoToast'), 'UndoToast');
+const ExpandableDataRow = lazyNamed(() => import('../ui/ExpandableDataRow'), 'ExpandableDataRow');
+const ScrollProgressNav = lazyNamed(() => import('../ui/ScrollProgressNav'), 'ScrollProgressNav');
+const AnimatedNumber = lazyNamed(() => import('../ui/AnimatedNumber'), 'AnimatedNumber');
+const SpotlightSearch = lazyNamed(() => import('../ui/SpotlightSearch'), 'SpotlightSearch');
+const MorphingButton = lazyNamed(() => import('../ui/MorphingButton'), 'MorphingButton');
+const DragToConfirm = lazyNamed(() => import('../ui/DragToConfirm'), 'DragToConfirm');
+const PeekCard = lazyNamed(() => import('../ui/PeekCard'), 'PeekCard');
+const SelectionBasket = lazyNamed(() => import('../ui/SelectionBasket'), 'SelectionBasket');
+const FocusMode = lazyNamed(() => import('../ui/FocusMode'), 'FocusMode');
+const Loader = lazyNamed(() => import('../ui/Loader'), 'Loader');
+const SmallFloatingDock = lazyNamed(() => import('../ui/SmallFloatingDock'), 'SmallFloatingDock');
+const HamburgerMenu = lazyNamed(() => import('../ui/HamburgerMenu'), 'HamburgerMenu');
+const NotificationBell = lazyNamed(() => import('../ui/NotificationBell'), 'NotificationBell');
+const IOSSearchBar = lazyNamed(() => import('../ui/IOSSearchBar'), 'IOSSearchBar');
+const TypewriterButton = lazyNamed(() => import('../ui/TypewriterButton'), 'TypewriterButton');
+const DepthCorridor = lazyNamed(() => import('../ui/DepthCorridor'), 'DepthCorridor');
+const DensityLens = lazyNamed(() => import('../ui/DensityLens'), 'DensityLens');
+const TorqueDial = lazyNamed(() => import('../ui/TorqueDial'), 'TorqueDial');
+const StackUnfoldPanel = lazyNamed(() => import('../ui/StackUnfoldPanel'), 'StackUnfoldPanel');
+const DependencyTrace = lazyNamed(() => import('../ui/DependencyTrace'), 'DependencyTrace');
+const BatchGestureTray = lazyNamed(() => import('../ui/BatchGestureTray'), 'BatchGestureTray');
+const RecoveryLedger = lazyNamed(() => import('../ui/RecoveryLedger'), 'RecoveryLedger');
+const RocketPartyPopper = lazyNamed(() => import('../ui/RocketPartyPopper'), 'RocketPartyPopper');
+const BranchingSubmenu = lazyNamed(() => import('../ui/BranchingSubmenu'), 'BranchingSubmenu');
+const GravityParticleBurst = lazyNamed(() => import('../ui/GravityParticleBurst'), 'GravityParticleBurst');
+const LiquidRippleButton = lazyNamed(() => import('../ui/LiquidRippleButton'), 'LiquidRippleButton');
+const NeonEdgeButton = lazyNamed(() => import('../ui/NeonEdgeButton'), 'NeonEdgeButton');
+const OrbitalLoadingRing = lazyNamed(() => import('../ui/OrbitalLoadingRing'), 'OrbitalLoadingRing');
+const PillNavigation = lazyNamed(() => import('../ui/PillNavigation'), 'PillNavigation');
+const TextScrambleDecoder = lazyNamed(() => import('../ui/TextScrambleDecoder'), 'TextScrambleDecoder');
+const MacOSFolderCards = lazyNamed(() => import('../ui/MacOSFolderCards'), 'MacOSFolderCards');
+const IntroLoader = lazyNamed(() => import('../ui/IntroLoader'), 'IntroLoader');
+const NimbuMirchi = lazyNamed(() => import('../ui/NimbuMirchi'), 'NimbuMirchi');
+const EvilEye = lazyNamed(() => import('../ui/EvilEye'), 'EvilEye');
+const WalletCard = lazyNamed(() => import('../ui/WalletCard'), 'WalletCard');
+const CircularOrbit = lazyNamed(() => import('../ui/CircularOrbit'), 'CircularOrbit');
+const ProfileCard = lazyNamed(() => import('../ui/ProfileCard'), 'ProfileCard');
+const BookCallButton = lazyNamed(() => import('../ui/BookCallButton'), 'BookCallButton');
+const GooeyMenu = lazyNamed(() => import('../ui/GooeyMenu'), 'GooeyMenu');
+const MorphingShapeLoader = lazyNamed(() => import('../ui/MorphingShapeLoader'), 'MorphingShapeLoader');
+const LiquidToggle = lazyNamed(() => import('../ui/LiquidToggle'), 'LiquidToggle');
+const PressButton = lazyNamed(() => import('../ui/PressButton'), 'PressButton');
+const LockInput = lazyNamed(() => import('../ui/LockInput'), 'LockInput');
+const SpringSelect = lazyNamed(() => import('../ui/SpringSelect'), 'SpringSelect');
+const DrawCheckbox = lazyNamed(() => import('../ui/DrawCheckbox'), 'DrawCheckbox');
+const StretchSwitch = lazyNamed(() => import('../ui/StretchSwitch'), 'StretchSwitch');
+const SettleModal = lazyNamed(() => import('../ui/SettleModal'), 'SettleModal');
+const VelocityToast = lazyNamed(() => import('../ui/VelocityToast'), 'VelocityToast');
+const DirectionalTooltip = lazyNamed(() => import('../ui/DirectionalTooltip'), 'DirectionalTooltip');
+const OriginDropdown = lazyNamed(() => import('../ui/OriginDropdown'), 'OriginDropdown');
+const UnfoldAccordion = lazyNamed(() => import('../ui/UnfoldAccordion'), 'UnfoldAccordion');
+const SlidePagination = lazyNamed(() => import('../ui/SlidePagination'), 'SlidePagination');
+const Pricing = lazyNamed(() => import('../ui/Pricing'), 'Pricing');
+const CarSmokePageTransition = lazyNamed(() => import('../ui/CarSmokePageTransition'), 'CarSmokePageTransition');
+const MorphingBlob = lazyNamed(() => import('../ui/MorphingBlob'), 'MorphingBlob');
+const OTPInput = lazyNamed(() => import('../ui/OtpInput'), 'OTPInput');
+const ThinkingOrb = lazyNamed(() => import('../ui/ThinkingOrb'), 'ThinkingOrb');
+const StackedCards = lazyNamed(() => import('../ui/StackedCards'), 'StackedCards');
+const StoryCards = lazyNamed(() => import('../ui/StoryCard'), 'StoryCards');
+const AvatarStack = lazyNamed(() => import('../ui/AvatarStack'), 'AvatarStack');
+const GlyphMatrix = lazyNamed(() => import('../ui/GlyphMatrix'), 'GlyphMatrix');
+const MorphingIcon = lazyNamed(() => import('../ui/MorphingIcon'), 'MorphingIcon');
+const SpeedWarp = lazyNamed(() => import('../ui/SpeedWarp'), 'SpeedWarp');
+const SplitButton = lazyNamed(() => import('../ui/SplitButton'), 'SplitButton');
+const NotFound = lazyNamed(() => import('../ui/NotFound'), 'NotFound');
+const PullToRefresh = lazyNamed(() => import('../ui/PullToRefresh'), 'PullToRefresh');
+const AIResponseLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'AIResponseLiveShowcase');
+const AdvancedDataTableLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'AdvancedDataTableLiveShowcase');
+const ChatLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'ChatLiveShowcase');
+const AIAgentActivityLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'AIAgentActivityLiveShowcase');
+const DotShaderLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'DotShaderLiveShowcase');
+const GlitchTextLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'GlitchTextLiveShowcase');
+const MeteorsLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'MeteorsLiveShowcase');
+const RainbowButtonLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'RainbowButtonLiveShowcase');
+const ScrollVelocityTextLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'ScrollVelocityTextLiveShowcase');
+const ShootingStarsLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'ShootingStarsLiveShowcase');
+const SparklesCoreLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'SparklesCoreLiveShowcase');
+const StickyPagesLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'StickyPagesLiveShowcase');
 
 export type MainTab = 'preview' | 'usage' | 'code' | 'props' | 'accessibility';
 export type PkgManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
@@ -1701,7 +1707,7 @@ export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
                   label: 'TypeScript',
                   filename: 'client.ts',
                   highlightLines: [4, 5],
-                  code: (p) => `import { EasyClient } from "@easyui/sdk";
+                  code: (p: { apiKey?: string; env?: string; stream?: boolean }) => `import { EasyClient } from "@easyui/sdk";
 
 // Initialize resilient client
 const client = new EasyClient({
@@ -1721,7 +1727,7 @@ const completion = await client.completions.create({
                   label: 'cURL',
                   filename: 'stream.sh',
                   highlightLines: [2],
-                  code: (p) => `curl -X POST https://api.easyui.dev/v1/completions \\
+                  code: (p: { apiKey?: string; env?: string; stream?: boolean }) => `curl -X POST https://api.easyui.dev/v1/completions \\
   -H "Authorization: Bearer ${p.apiKey || 'sk_live_9981'}" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -1797,7 +1803,7 @@ const completion = await client.completions.create({
       case 'otp-input':
         return (
           <div className="flex items-center justify-center h-[400px] w-full">
-            <OTPInput length={6} autoFocus onComplete={(value) =>{
+            <OTPInput length={6} autoFocus onComplete={(value: string) =>{
               alert(value)
             }}/>
           </div>
@@ -1919,7 +1925,7 @@ const completion = await client.completions.create({
               id="detail-morph"
               title="Authentication Settings"
               subtitle="Configure multi-factor tokens and OAuth2 providers."
-              trigger={(open) => (
+              trigger={(open: () => void) => (
                 <button
                   onClick={open}
                   className="px-5 py-2.5 rounded-xl bg-[#141414] border border-[#1F1F1F] hover:border-[#4A4A4A] text-xs font-medium text-[#FAFAFA] transition-all cursor-pointer"
@@ -2007,7 +2013,7 @@ const completion = await client.completions.create({
               <div className="text-sm font-semibold text-[#FAFAFA]">Interactive Form System</div>
               <Form
                 key={demoKey}
-                onSubmit={(e) => {
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   e.preventDefault();
                   alert('Form submitted successfully!');
                 }}
@@ -2051,10 +2057,10 @@ const completion = await client.completions.create({
           <div className="py-4 flex justify-center w-full">
             <Login
               key={demoKey}
-              onSubmit={(data) => alert(`Login Attempt: ${JSON.stringify(data)}`)}
+              onSubmit={(data: Record<string, unknown>) => alert(`Login Attempt: ${JSON.stringify(data)}`)}
               onForgotPassword={() => alert('Forgot password action')}
               onSignUpClick={() => alert('Switch to sign up')}
-              onSocialLogin={(prov) => alert(`SSO provider: ${prov}`)}
+              onSocialLogin={(prov: string) => alert(`SSO provider: ${prov}`)}
             />
           </div>
         );
@@ -2063,9 +2069,9 @@ const completion = await client.completions.create({
           <div className="py-4 flex justify-center w-full">
             <SignUp
               key={demoKey}
-              onSubmit={(data) => alert(`Registration: ${data.name} (${data.email})`)}
+              onSubmit={(data: { name: string; email: string }) => alert(`Registration: ${data.name} (${data.email})`)}
               onSignInClick={() => alert('Switch to sign in')}
-              onSocialSignUp={(prov) => alert(`Social sign up: ${prov}`)}
+              onSocialSignUp={(prov: string) => alert(`Social sign up: ${prov}`)}
             />
           </div>
         );
@@ -2140,8 +2146,8 @@ const completion = await client.completions.create({
               multiple
               accept="image/*,application/pdf"
               maxSize={15 * 1024 * 1024}
-              onFilesSelected={(files) => console.log('Selected:', files)}
-              onUploadComplete={(file) => console.log('Uploaded:', file.name)}
+              onFilesSelected={(files: File[]) => console.log('Selected:', files)}
+              onUploadComplete={(file: File) => console.log('Uploaded:', file.name)}
             />
           </div>
         );
@@ -3208,7 +3214,7 @@ const completion = await client.completions.create({
                   { id: 'code', label: 'Code' },
                 ]}
                 activeTab={activeTab}
-                onChange={(tabId) => setActiveTab(tabId as MainTab)}
+                onChange={(tabId: string) => setActiveTab(tabId as MainTab)}
                 variant="glass"
                 renderContent={false}
                 layoutId={`detail-glass-tab-${component.id}`}
@@ -3276,7 +3282,11 @@ const completion = await client.completions.create({
                     )}
                   >
                     <div className="w-full flex items-center justify-center">
-                      {!isFullscreenPreview && renderInteractiveDemo()}
+                      {!isFullscreenPreview && (
+                        <Suspense fallback={<div className="min-h-48 w-full flex items-center justify-center text-xs text-text-muted">Loading preview…</div>}>
+                          {renderInteractiveDemo()}
+                        </Suspense>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -3587,7 +3597,9 @@ const completion = await client.completions.create({
                 components to be clipped above the visible area on mobile. */}
             <div className="flex-1 flex items-start sm:items-center justify-center p-3 sm:p-12 overflow-y-auto overflow-x-hidden">
               <div className="w-full max-w-4xl mx-auto flex items-center justify-center min-w-0 my-auto">
-                {renderInteractiveDemo()}
+                <Suspense fallback={<div className="min-h-48 w-full flex items-center justify-center text-xs text-text-muted">Loading preview…</div>}>
+                  {renderInteractiveDemo()}
+                </Suspense>
               </div>
             </div>
           </motion.div>

@@ -1,11 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
+import { lazy, Suspense, useState, useEffect, useCallback } from 'react';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { HeroSection } from './components/sections/HeroSection';
 import { ComponentDirectory } from './components/sections/ComponentDirectory';
 import { DevExperience } from './components/sections/DevExperience';
 import { FinalCta } from './components/sections/FinalCta';
-import { SpotlightSearch } from './components/ui/SpotlightSearch';
 import { EASY_COMPONENTS } from './components/registry/components-data';
 import type { EasyComponentMeta } from './types/component';
 import { Analytics } from '@vercel/analytics/react';
@@ -14,9 +13,10 @@ import { useAnalyticsTracker } from './lib/analytics';
 import { useSEO } from './lib/seo';
 import { scrollToTop } from './lib/utils';
 import { AlertCircle, ArrowLeft, Grid } from 'lucide-react';
-import { ComponentDetailPage } from './components/docs/ComponentDetailPage';
-import { DocsPage } from './components/docs/DocsPage';
-import { AllComponentsPage } from './components/sections/AllComponentsPage';
+const ComponentDetailPage = lazy(() => import('./components/docs/ComponentDetailPage'));
+const DocsPage = lazy(() => import('./components/docs/DocsPage'));
+const AllComponentsPage = lazy(() => import('./components/sections/AllComponentsPage').then(({ AllComponentsPage: page }) => ({ default: page })));
+const SpotlightSearch = lazy(() => import('./components/ui/SpotlightSearch').then(({ SpotlightSearch: search }) => ({ default: search })));
 
 // Fast Map lookup for components
 const COMPONENT_MAP = new Map<string, EasyComponentMeta>(
@@ -107,15 +107,17 @@ export function parseRouteFromUrl(pathname?: string, search?: string): RouteStat
     }
   }
 
-  // 2. All components catalog view: /components or /all-components
-  if (cleanPath === 'components' || cleanPath === 'all-components') {
+  // 2. All components catalog view: /components, /components/page/:page, or legacy /all-components
+  const pagedComponentsMatch = cleanPath.match(/^components\/page\/(\d+)$/);
+  if (cleanPath === 'components' || cleanPath === 'all-components' || pagedComponentsMatch) {
+    const routePage = pagedComponentsMatch ? parseInt(pagedComponentsMatch[1], 10) : pageFromUrl;
     return {
       activeView: 'components',
       selectedComponent: null,
       invalidComponentSlug: null,
       invalidRoutePath: null,
       activeDocTopic: 'introduction',
-      componentPage: pageFromUrl,
+      componentPage: routePage > 0 ? routePage : 1,
     };
   }
 
@@ -257,14 +259,7 @@ export function App({ initialPath }: AppProps = {}) {
 
   const handleNavigateAllComponents = useCallback(
     (page = 1) => {
-      const searchParams = new URLSearchParams(window.location.search);
-      if (page > 1) {
-        searchParams.set('page', page.toString());
-      } else {
-        searchParams.delete('page');
-      }
-      const newQuery = searchParams.toString();
-      const newPath = newQuery ? `/components?${newQuery}` : '/components';
+      const newPath = page > 1 ? `/components/page/${page}` : '/components';
       navigate(newPath);
       scrollToTop();
     },
@@ -278,14 +273,7 @@ export function App({ initialPath }: AppProps = {}) {
 
   const handlePageChange = useCallback(
     (page: number) => {
-      const searchParams = new URLSearchParams(window.location.search);
-      if (page > 1) {
-        searchParams.set('page', page.toString());
-      } else {
-        searchParams.delete('page');
-      }
-      const newQuery = searchParams.toString();
-      const newPath = newQuery ? `/components?${newQuery}` : '/components';
+      const newPath = page > 1 ? `/components/page/${page}` : '/components';
       navigate(newPath);
       scrollToTop();
     },
@@ -337,6 +325,7 @@ export function App({ initialPath }: AppProps = {}) {
       />
 
       {/* Main View Router */}
+      <Suspense fallback={<main className="min-h-[70vh]" aria-busy="true" />}>
       {activeView === 'component-detail' && selectedComponent ? (
         <ComponentDetailPage
           component={selectedComponent}
@@ -445,6 +434,7 @@ export function App({ initialPath }: AppProps = {}) {
           <FinalCta onBrowse={() => handleNavigateAllComponents(1)} />
         </main>
       )}
+      </Suspense>
 
       {/* Footer */}
       <Footer
@@ -453,12 +443,14 @@ export function App({ initialPath }: AppProps = {}) {
       />
 
       {/* Global Spotlight Search (⌘K) */}
-      <SpotlightSearch
-        open={isSearchOpen}
-        onOpenChange={setIsSearchOpen}
-        onSelectComponent={handleSelectComponentById}
-        onNavigateDocs={handleNavigateDocs}
-      />
+      <Suspense fallback={null}>
+        <SpotlightSearch
+          open={isSearchOpen}
+          onOpenChange={setIsSearchOpen}
+          onSelectComponent={handleSelectComponentById}
+          onNavigateDocs={handleNavigateDocs}
+        />
+      </Suspense>
     </div>
   );
 }

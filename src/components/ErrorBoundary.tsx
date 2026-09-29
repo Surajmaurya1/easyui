@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { reportClientError } from '../lib/error-reporting';
 
 interface Props {
   children: ReactNode;
@@ -22,6 +23,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, info: ErrorInfo) {
     console.error('[ErrorBoundary] Uncaught application error:', error, info.componentStack);
+    reportClientError(error, 'react-error-boundary', info.componentStack || undefined);
   }
 
   private handleReset = () => {

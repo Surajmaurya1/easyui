@@ -87,7 +87,7 @@ export function useSEO({
           ? `All React Components (Page ${componentPage}) — EasyUI`
           : 'All React Components — EasyUI';
       const canonical = getCanonicalUrl(
-        componentPage > 1 ? `components?page=${componentPage}` : 'components'
+        componentPage > 1 ? `components/page/${componentPage}` : 'components'
       );
       const description =
         'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.';
