@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { App } from './App';
+import { App, parseRouteFromUrl } from './App';
 
 describe('App Routing and Navigation', () => {
   beforeEach(() => {
@@ -57,5 +57,22 @@ describe('App Routing and Navigation', () => {
     );
     expect(docHeading).toBeInTheDocument();
   }, 15000);
-});
 
+  it('normalizes the canonical motion-system documentation route to the motion topic', () => {
+    expect(parseRouteFromUrl('/docs/motion-system')).toMatchObject({
+      activeView: 'docs',
+      activeDocTopic: 'motion',
+    });
+  });
+
+  it('marks unknown documentation and top-level routes as not found', () => {
+    expect(parseRouteFromUrl('/docs/does-not-exist')).toMatchObject({
+      activeView: 'route-not-found',
+      invalidRoutePath: '/docs/does-not-exist',
+    });
+    expect(parseRouteFromUrl('/does-not-exist')).toMatchObject({
+      activeView: 'route-not-found',
+      invalidRoutePath: '/does-not-exist',
+    });
+  });
+});

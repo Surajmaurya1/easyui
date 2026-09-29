@@ -53,7 +53,7 @@ export default defineConfig({
     host: true,
   },
   build: {
-    minify: false,
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks(id) {

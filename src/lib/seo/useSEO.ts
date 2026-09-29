@@ -4,6 +4,7 @@ import {
   getCanonicalUrl,
   getComponentSEO,
   getDocTopicSEO,
+  normalizeDocTopicId,
   type PageSEOMeta,
 } from './helpers';
 import {
@@ -18,7 +19,7 @@ import type { EasyComponentMeta } from '../../types/component';
 import { EASY_COMPONENTS } from '../../components/registry/components-data';
 
 interface UseSEOProps {
-  activeView: 'showcase' | 'components' | 'docs' | 'component-detail';
+  activeView: 'showcase' | 'components' | 'docs' | 'component-detail' | 'component-not-found' | 'route-not-found';
   componentPage?: number;
   activeDocTopic?: string;
   selectedModalComponent?: EasyComponentMeta | null;
@@ -38,6 +39,19 @@ export function useSEO({
 }: UseSEOProps): void {
   useEffect(() => {
     const activeComponent = selectedComponent || selectedModalComponent;
+
+    if (activeView === 'component-not-found' || activeView === 'route-not-found') {
+      updatePageMetadata({
+        title: 'Page Not Found — EasyUI',
+        description: 'The requested EasyUI page could not be found.',
+        canonical: getCanonicalUrl('/'),
+        ogTitle: 'Page Not Found — EasyUI',
+        ogDescription: 'The requested EasyUI page could not be found.',
+        ogType: 'website',
+        noindex: true,
+      });
+      return;
+    }
     // 1. If viewing dedicated component page or component detail, apply component-specific SEO
     if (activeComponent) {
       const compSEO = getComponentSEO(activeComponent);
@@ -54,7 +68,7 @@ export function useSEO({
     if (activeView === 'docs') {
       const docSEO = getDocTopicSEO(activeDocTopic);
       const structuredData = generateDocArticleSchema({
-        id: activeDocTopic,
+        id: normalizeDocTopicId(activeDocTopic),
         title: docSEO.title,
         description: docSEO.description,
       });
