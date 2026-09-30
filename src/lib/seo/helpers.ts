@@ -91,12 +91,17 @@ export const DOC_TOPICS_SEO: Record<string, { title: string; description: string
   },
 };
 
+export function normalizeDocTopicId(topicId = 'introduction'): string {
+  return topicId === 'motion' || topicId === 'motion-tokens' ? 'motion-system' : topicId;
+}
+
 /**
  * Generates SEO metadata for any documentation topic.
  */
 export function getDocTopicSEO(topicId = 'introduction'): PageSEOMeta {
-  const topic = DOC_TOPICS_SEO[topicId] || DOC_TOPICS_SEO.introduction;
-  const canonical = getCanonicalUrl(`docs/${topicId}`);
+  const normalizedTopicId = normalizeDocTopicId(topicId);
+  const topic = DOC_TOPICS_SEO[normalizedTopicId] || DOC_TOPICS_SEO.introduction;
+  const canonical = getCanonicalUrl(`docs/${normalizedTopicId}`);
 
   return {
     title: topic.title,

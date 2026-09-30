@@ -9,6 +9,7 @@ const SITEMAP_PATH = path.join(ROOT_DIR, 'public', 'sitemap.xml');
 const REGISTRY_PATH = path.join(ROOT_DIR, 'registry.json');
 
 const SITE_URL = 'https://easyui.site';
+const ITEMS_PER_PAGE = 12;
 
 interface SitemapEntry {
   loc: string;
@@ -79,6 +80,16 @@ export function generateSitemap(): void {
     try {
       const registry = JSON.parse(fs.readFileSync(REGISTRY_PATH, 'utf-8'));
       const items = registry.items || [];
+
+      const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+      for (let page = 2; page <= totalPages; page++) {
+        entries.push({
+          loc: `${SITE_URL}/components/page/${page}`,
+          lastmod: today,
+          changefreq: 'daily',
+          priority: '0.80',
+        });
+      }
 
       // Add each component (dynamically discovered from registry.json)
       for (const item of items) {

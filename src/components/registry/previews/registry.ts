@@ -134,6 +134,7 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/button'),
     metadata: { type: 'interactive' },
   },
+
   'form': {
     id: 'form',
     componentId: 'form',
@@ -342,7 +343,7 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
   'mac-os-folder-cards': {
     id: 'mac-os-folder-cards',
     componentId: 'mac-os-folder-cards',
-    aliases: ["macos-folder-cards","velocity-aware-scroll-cards"],
+    aliases: ["macos-folder-cards", "velocity-aware-scroll-cards"],
     load: () => import('./items/mac-os-folder-cards'),
     metadata: { type: 'interactive' },
   },
@@ -541,7 +542,7 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
   'stacked-cards': {
     id: 'stacked-cards',
     componentId: 'stacked-cards',
-    aliases: ["stacked-card","stack-cards","stack-card"],
+    aliases: ["stacked-card", "stack-cards", "stack-card"],
     load: () => import('./items/stacked-cards'),
     metadata: { type: 'interactive' },
   },
@@ -555,35 +556,35 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
   'avatar-stack': {
     id: 'avatar-stack',
     componentId: 'avatar-stack',
-    aliases: ["avatar-stacks","avatarstack"],
+    aliases: ["avatar-stacks", "avatarstack"],
     load: () => import('./items/avatar-stack'),
     metadata: { type: 'interactive' },
   },
   'glyph-matrix': {
     id: 'glyph-matrix',
     componentId: 'glyph-matrix',
-    aliases: ["glyph-matrices","glyphmatrix"],
+    aliases: ["glyph-matrices", "glyphmatrix"],
     load: () => import('./items/glyph-matrix'),
     metadata: { type: 'interactive' },
   },
   'morphing-icon': {
     id: 'morphing-icon',
     componentId: 'morphing-icon',
-    aliases: ["morphing-icons","morphingicon"],
+    aliases: ["morphing-icons", "morphingicon"],
     load: () => import('./items/morphing-icon'),
     metadata: { type: 'interactive' },
   },
   'speed-warp': {
     id: 'speed-warp',
     componentId: 'speed-warp',
-    aliases: ["speed-warps","speedwarp"],
+    aliases: ["speed-warps", "speedwarp"],
     load: () => import('./items/speed-warp'),
     metadata: { type: 'interactive' },
   },
   'split-button': {
     id: 'split-button',
     componentId: 'split-button',
-    aliases: ["split-buttons","splitbutton"],
+    aliases: ["split-buttons", "splitbutton"],
     load: () => import('./items/split-button'),
     metadata: { type: 'interactive' },
   },

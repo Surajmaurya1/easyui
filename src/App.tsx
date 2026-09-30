@@ -1,11 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { lazy, Suspense, useState, useEffect, useCallback } from 'react';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { HeroSection } from './components/sections/HeroSection';
 import { ComponentDirectory } from './components/sections/ComponentDirectory';
 import { DevExperience } from './components/sections/DevExperience';
 import { FinalCta } from './components/sections/FinalCta';
-import { SpotlightSearch } from './components/ui/SpotlightSearch';
 import { EASY_COMPONENTS } from './components/registry/components-data';
 import type { EasyComponentMeta } from './types/component';
 import { Analytics } from '@vercel/analytics/react';
@@ -14,9 +12,11 @@ import { useAnalyticsTracker } from './lib/analytics';
 import { useSEO } from './lib/seo';
 import { scrollToTop } from './lib/utils';
 import { AlertCircle, ArrowLeft, Grid } from 'lucide-react';
-import { ComponentDetailPage } from './components/docs/ComponentDetailPage';
-import { DocsPage } from './components/docs/DocsPage';
-import { AllComponentsPage } from './components/sections/AllComponentsPage';
+const ComponentDetailPage = lazy(() => import('./components/docs/ComponentDetailPage'));
+const DocsPage = lazy(() => import('./components/docs/DocsPage'));
+const AllComponentsPage = lazy(() => import('./components/sections/AllComponentsPage').then(({ AllComponentsPage: page }) => ({ default: page })));
+const SpotlightSearch = lazy(() => import('./components/ui/SpotlightSearch').then(({ SpotlightSearch: search }) => ({ default: search })));
+const HeroSection = lazy(() => import('./components/sections/HeroSection').then(({ HeroSection: hero }) => ({ default: hero })));
 
 // Fast Map lookup for components
 const COMPONENT_MAP = new Map<string, EasyComponentMeta>(
@@ -24,12 +24,21 @@ const COMPONENT_MAP = new Map<string, EasyComponentMeta>(
 );
 
 export interface RouteState {
-  activeView: 'showcase' | 'components' | 'docs' | 'component-detail' | 'component-not-found';
+  activeView: 'showcase' | 'components' | 'docs' | 'component-detail' | 'component-not-found' | 'route-not-found';
   selectedComponent: EasyComponentMeta | null;
   invalidComponentSlug: string | null;
+  invalidRoutePath: string | null;
   activeDocTopic: string;
   componentPage: number;
 }
+
+const DOC_TOPIC_ALIASES: Record<string, string> = {
+  'motion-system': 'motion',
+  'motion-tokens': 'motion',
+  contributing: 'collaboration',
+};
+
+const DOC_TOPIC_IDS = new Set(['introduction', 'quick-start', 'architecture', 'motion', 'collaboration', 'seo']);
 
 /**
  * Pure route parser — extracts the initial and active route state synchronously
@@ -82,6 +91,7 @@ export function parseRouteFromUrl(pathname?: string, search?: string): RouteStat
         activeView: 'component-detail',
         selectedComponent: found,
         invalidComponentSlug: null,
+        invalidRoutePath: null,
         activeDocTopic: 'introduction',
         componentPage: 1,
       };
@@ -90,20 +100,24 @@ export function parseRouteFromUrl(pathname?: string, search?: string): RouteStat
         activeView: 'component-not-found',
         selectedComponent: null,
         invalidComponentSlug: compSlug,
+        invalidRoutePath: currentPath,
         activeDocTopic: 'introduction',
         componentPage: 1,
       };
     }
   }
 
-  // 2. All components catalog view: /components or /all-components
-  if (cleanPath === 'components' || cleanPath === 'all-components') {
+  // 2. All components catalog view: /components, /components/page/:page, or legacy /all-components
+  const pagedComponentsMatch = cleanPath.match(/^components\/page\/(\d+)$/);
+  if (cleanPath === 'components' || cleanPath === 'all-components' || pagedComponentsMatch) {
+    const routePage = pagedComponentsMatch ? parseInt(pagedComponentsMatch[1], 10) : pageFromUrl;
     return {
       activeView: 'components',
       selectedComponent: null,
       invalidComponentSlug: null,
+      invalidRoutePath: null,
       activeDocTopic: 'introduction',
-      componentPage: pageFromUrl,
+      componentPage: routePage > 0 ? routePage : 1,
     };
   }
 
@@ -118,28 +132,45 @@ export function parseRouteFromUrl(pathname?: string, search?: string): RouteStat
     let topic = 'introduction';
     if (parts.length > 1 && parts[1]) {
       const rawTopic = parts[1].toLowerCase();
-      if (rawTopic === 'motion-tokens') {
-        topic = 'motion';
-      } else if (rawTopic === 'contributing') {
-        topic = 'collaboration';
-      } else {
-        topic = rawTopic;
-      }
+      topic = DOC_TOPIC_ALIASES[rawTopic] || rawTopic;
+    }
+    if (!DOC_TOPIC_IDS.has(topic)) {
+      return {
+        activeView: 'route-not-found',
+        selectedComponent: null,
+        invalidComponentSlug: null,
+        invalidRoutePath: currentPath,
+        activeDocTopic: 'introduction',
+        componentPage: 1,
+      };
     }
     return {
       activeView: 'docs',
       selectedComponent: null,
       invalidComponentSlug: null,
+      invalidRoutePath: null,
       activeDocTopic: topic,
       componentPage: 1,
     };
   }
 
-  // 4. Default: showcase / homepage (/)
+  // 4. Default: showcase / homepage (/); every other path is invalid.
+  if (cleanPath !== '') {
+    return {
+      activeView: 'route-not-found',
+      selectedComponent: null,
+      invalidComponentSlug: null,
+      invalidRoutePath: currentPath,
+      activeDocTopic: 'introduction',
+      componentPage: 1,
+    };
+  }
+
   return {
     activeView: 'showcase',
     selectedComponent: null,
     invalidComponentSlug: null,
+    invalidRoutePath: null,
     activeDocTopic: 'introduction',
     componentPage: 1,
   };
@@ -152,7 +183,7 @@ export interface AppProps {
 export function App({ initialPath }: AppProps = {}) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [routeState, setRouteState] = useState<RouteState>(() => parseRouteFromUrl(initialPath));
-  const { activeView, selectedComponent, invalidComponentSlug, activeDocTopic, componentPage } = routeState;
+  const { activeView, selectedComponent, invalidComponentSlug, invalidRoutePath, activeDocTopic, componentPage } = routeState;
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -164,7 +195,7 @@ export function App({ initialPath }: AppProps = {}) {
 
   // Dynamic SEO metadata & JSON-LD management
   useSEO({
-    activeView: activeView === 'component-not-found' ? 'showcase' : activeView,
+    activeView,
     componentPage,
     activeDocTopic,
     selectedComponent,
@@ -228,14 +259,7 @@ export function App({ initialPath }: AppProps = {}) {
 
   const handleNavigateAllComponents = useCallback(
     (page = 1) => {
-      const searchParams = new URLSearchParams(window.location.search);
-      if (page > 1) {
-        searchParams.set('page', page.toString());
-      } else {
-        searchParams.delete('page');
-      }
-      const newQuery = searchParams.toString();
-      const newPath = newQuery ? `/components?${newQuery}` : '/components';
+      const newPath = page > 1 ? `/components/page/${page}` : '/components';
       navigate(newPath);
       scrollToTop();
     },
@@ -249,14 +273,7 @@ export function App({ initialPath }: AppProps = {}) {
 
   const handlePageChange = useCallback(
     (page: number) => {
-      const searchParams = new URLSearchParams(window.location.search);
-      if (page > 1) {
-        searchParams.set('page', page.toString());
-      } else {
-        searchParams.delete('page');
-      }
-      const newQuery = searchParams.toString();
-      const newPath = newQuery ? `/components?${newQuery}` : '/components';
+      const newPath = page > 1 ? `/components/page/${page}` : '/components';
       navigate(newPath);
       scrollToTop();
     },
@@ -304,10 +321,11 @@ export function App({ initialPath }: AppProps = {}) {
         onNavigateComponents={handleNavigateComponents}
         onNavigateDocs={() => handleNavigateDocs('introduction')}
         onNavigateHome={handleNavigateHome}
-        activeView={activeView === 'component-not-found' ? 'components' : activeView}
+        activeView={activeView === 'component-not-found' || activeView === 'route-not-found' ? 'components' : activeView}
       />
 
       {/* Main View Router */}
+      <Suspense fallback={<main className="min-h-[70vh]" aria-busy="true" />}>
       {activeView === 'component-detail' && selectedComponent ? (
         <ComponentDetailPage
           component={selectedComponent}
@@ -352,6 +370,34 @@ export function App({ initialPath }: AppProps = {}) {
             </div>
           </div>
         </main>
+      ) : activeView === 'route-not-found' ? (
+        <main className="min-h-[70vh] flex items-center justify-center p-6 text-center">
+          <div className="max-w-md w-full p-8 rounded-2xl bg-surface border border-border space-y-5">
+            <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center mx-auto">
+              <AlertCircle className="w-6 h-6" />
+            </div>
+            <div className="space-y-2">
+              <h1 className="text-xl font-bold text-text-primary tracking-tight">Page Not Found</h1>
+              <p className="text-xs text-text-secondary leading-relaxed">
+                No EasyUI page exists at{' '}
+                <code className="px-1.5 py-0.5 rounded bg-surface-hover text-rose-500 font-mono">
+                  {invalidRoutePath || 'this URL'}
+                </code>
+                .
+              </p>
+            </div>
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button type="button" onClick={handleNavigateComponents} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent text-background text-xs font-medium hover:opacity-90 transition-opacity cursor-pointer">
+                <Grid className="w-3.5 h-3.5" />
+                <span>Browse Components</span>
+              </button>
+              <button type="button" onClick={handleNavigateHome} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-hover hover:bg-surface-raised border border-border text-xs text-text-primary transition-colors cursor-pointer">
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Go Home</span>
+              </button>
+            </div>
+          </div>
+        </main>
       ) : activeView === 'docs' ? (
         <DocsPage
           activeTopic={activeDocTopic}
@@ -388,6 +434,7 @@ export function App({ initialPath }: AppProps = {}) {
           <FinalCta onBrowse={() => handleNavigateAllComponents(1)} />
         </main>
       )}
+      </Suspense>
 
       {/* Footer */}
       <Footer
@@ -396,12 +443,14 @@ export function App({ initialPath }: AppProps = {}) {
       />
 
       {/* Global Spotlight Search (⌘K) */}
-      <SpotlightSearch
-        open={isSearchOpen}
-        onOpenChange={setIsSearchOpen}
-        onSelectComponent={handleSelectComponentById}
-        onNavigateDocs={handleNavigateDocs}
-      />
+      <Suspense fallback={null}>
+        <SpotlightSearch
+          open={isSearchOpen}
+          onOpenChange={setIsSearchOpen}
+          onSelectComponent={handleSelectComponentById}
+          onNavigateDocs={handleNavigateDocs}
+        />
+      </Suspense>
     </div>
   );
 }

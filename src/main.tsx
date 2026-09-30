@@ -1,10 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import { MotionConfig } from 'framer-motion'
 import './styles/index.css'
 import App from './App.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx'
 import { ThemeProvider } from './lib/theme/useTheme'
+import { installGlobalErrorReporting } from './lib/error-reporting'
+
+installGlobalErrorReporting()
 
 // Suppress the React 19 internal INP (Interaction to Next Paint) tracking
 // error that fires in some browsers when the Performance Observer returns
@@ -45,11 +47,9 @@ const rootElement = document.getElementById('root')!
 const appElement = (
   <StrictMode>
     <ErrorBoundary>
-      <MotionConfig reducedMotion="user">
-        <ThemeProvider initialTheme="dark">
-          <App />
-        </ThemeProvider>
-      </MotionConfig>
+      <ThemeProvider initialTheme="dark">
+        <App />
+      </ThemeProvider>
     </ErrorBoundary>
   </StrictMode>
 )
@@ -59,4 +59,3 @@ if (rootElement.hasChildNodes()) {
 } else {
   createRoot(rootElement).render(appElement)
 }
-

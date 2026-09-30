@@ -12,8 +12,9 @@ const SITEMAP_PATH = path.join(ROOT_DIR, 'public', 'sitemap.xml');
 const ROBOTS_PATH = path.join(ROOT_DIR, 'public', 'robots.txt');
 const MANIFEST_PATH = path.join(ROOT_DIR, 'public', 'site.webmanifest');
 const INDEX_HTML_PATH = path.join(ROOT_DIR, 'index.html');
+const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, 'vercel.json');
 const LOGO_PATH = path.join(ROOT_DIR, 'public', 'logo.png');
-const OG_IMAGE_PATH = path.join(ROOT_DIR, 'public', 'og-image.webp');
+const OG_IMAGE_PATH = path.join(ROOT_DIR, 'public', 'easyui-og-concept-v3.png');
 const UI_DIR = path.join(ROOT_DIR, 'src', 'components', 'ui');
 
 export type IssueSeverity = 'CRITICAL' | 'WARNING' | 'INFO' | 'PASS';
@@ -132,6 +133,25 @@ export function runSEOAudit(): AuditReport {
     check('Metadata', indexHtml.includes('name="theme-color"'), 'INFO', 'index.html contains theme-color meta tag', 'index.html missing theme-color', 'index.html');
   }
 
+  if (fs.existsSync(VERCEL_CONFIG_PATH)) {
+    try {
+      const vercel = JSON.parse(fs.readFileSync(VERCEL_CONFIG_PATH, 'utf-8'));
+      const hasCatchAllRewrite = Array.isArray(vercel.rewrites) && vercel.rewrites.some(
+        (rewrite: { source?: string; destination?: string }) => rewrite.source === '/(.*)' && rewrite.destination === '/index.html'
+      );
+      check(
+        'Technical SEO',
+        !hasCatchAllRewrite,
+        'CRITICAL',
+        'Vercel serves unknown paths through the platform 404 handler',
+        'Vercel catch-all rewrite masks unknown paths as SPA HTTP 200 responses',
+        'vercel.json'
+      );
+    } catch {
+      check('Technical SEO', false, 'CRITICAL', '', 'vercel.json is not valid JSON', 'vercel.json');
+    }
+  }
+
   // Filesystem Discovery of Components
   let uiFiles: string[] = [];
   if (fs.existsSync(UI_DIR)) {
@@ -218,14 +238,14 @@ export function runSEOAudit(): AuditReport {
   check('Images', logoExists, 'WARNING', 'Brand logo asset exists in public/logo.png', 'public/logo.png is missing', 'public/logo.png');
 
   const ogImgExists = fs.existsSync(OG_IMAGE_PATH);
-  check('Images', ogImgExists, 'WARNING', 'Open Graph social card image exists in public/og-image.webp', 'public/og-image.webp is missing', 'public/og-image.webp');
+  check('Images', ogImgExists, 'WARNING', 'Open Graph social card image exists in public/easyui-og-concept-v3.png', 'public/easyui-og-concept-v3.png is missing', 'public/easyui-og-concept-v3.png');
 
   const faviconIcoExists = fs.existsSync(path.join(ROOT_DIR, 'public', 'favicon.ico'));
   check('Images', faviconIcoExists || logoExists, 'INFO', 'Favicon brand asset exists (public/logo.png & public/favicon.ico)', 'Favicon asset is missing', 'public/logo.png');
 
   if (ogImgExists) {
     const stat = fs.statSync(OG_IMAGE_PATH);
-    check('Images', stat.size > 1000, 'INFO', `OG image is non-empty (${(stat.size / 1024).toFixed(1)} KB)`, 'public/og-image.webp is empty or corrupt', 'public/og-image.webp');
+    check('Images', stat.size > 1000, 'INFO', `OG image is non-empty (${(stat.size / 1024).toFixed(1)} KB)`, 'public/easyui-og-concept-v3.png is empty or corrupt', 'public/easyui-og-concept-v3.png');
   }
 
   // ==========================================
@@ -316,6 +336,31 @@ export function runSEOAudit(): AuditReport {
     if (fs.existsSync(distMotionDoc)) {
       const motionContent = fs.readFileSync(distMotionDoc, 'utf-8');
       check('Content', motionContent.includes('Motion Tokens') || motionContent.includes('Motion System'), 'CRITICAL', 'Pre-rendered /docs/motion-system exposes motion documentation initial content', 'dist/docs/motion-system/index.html missing motion documentation content', 'dist/docs/motion-system/index.html');
+    }
+
+    for (const item of registryItems) {
+      if (!item.name) continue;
+      const routePath = path.join(distDir, 'components', item.name, 'index.html');
+      const routeExists = fs.existsSync(routePath);
+      check(
+        'Metadata',
+        routeExists,
+        'CRITICAL',
+        `Pre-rendered component route exists: /components/${item.name}`,
+        `Missing pre-rendered component route: /components/${item.name}`,
+        routePath
+      );
+      if (routeExists) {
+        const routeHtml = fs.readFileSync(routePath, 'utf-8');
+        check(
+          'Metadata',
+          routeHtml.includes(`rel="canonical" href="${SITE_URL}/components/${item.name}"`),
+          'CRITICAL',
+          `Component route has an exact canonical: /components/${item.name}`,
+          `Component route has an incorrect canonical: /components/${item.name}`,
+          routePath
+        );
+      }
     }
   }
 
