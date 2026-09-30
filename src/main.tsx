@@ -1,6 +1,5 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import { MotionConfig } from 'framer-motion'
 import './styles/index.css'
 import App from './App.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx'
@@ -48,11 +47,9 @@ const rootElement = document.getElementById('root')!
 const appElement = (
   <StrictMode>
     <ErrorBoundary>
-      <MotionConfig reducedMotion="user">
-        <ThemeProvider initialTheme="dark">
-          <App />
-        </ThemeProvider>
-      </MotionConfig>
+      <ThemeProvider initialTheme="dark">
+        <App />
+      </ThemeProvider>
     </ErrorBoundary>
   </StrictMode>
 )

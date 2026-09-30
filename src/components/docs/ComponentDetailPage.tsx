@@ -1803,9 +1803,9 @@ const completion = await client.completions.create({
       case 'otp-input':
         return (
           <div className="flex items-center justify-center h-[400px] w-full">
-            <OTPInput length={6} autoFocus onComplete={(value: string) =>{
+            <OTPInput length={6} autoFocus onComplete={(value: string) => {
               alert(value)
-            }}/>
+            }} />
           </div>
         );
 
@@ -3149,409 +3149,409 @@ const completion = await client.completions.create({
           {/* ========================================================================= */}
           <main className="flex-1 min-w-0 pb-20">
             <article className="space-y-8">
-            {/* Breadcrumb & Header */}
-            <div id="overview-section" className="space-y-3 pt-1">
-              {/* Breadcrumb */}
-              <nav aria-label="Breadcrumb" className="text-xs text-text-muted">
-                <ol className="flex items-center gap-1.5 list-none p-0 m-0">
-                  <li>
-                    <a
-                      href="/"
-                      onClick={(e) => {
-                        if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                          e.preventDefault();
-                          onNavigateHome();
-                        }
-                      }}
-                      className="hover:text-text-primary transition-colors cursor-pointer"
-                    >
-                      EasyUI
-                    </a>
-                  </li>
-                  <li aria-hidden className="text-text-subtle"><ChevronRight className="w-3 h-3 text-text-muted" /></li>
-                  <li>
-                    <a
-                      href="/components"
-                      onClick={(e) => {
-                        if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                          e.preventDefault();
-                          onNavigateComponents();
-                        }
-                      }}
-                      className="hover:text-text-primary transition-colors cursor-pointer"
-                    >
-                      Components
-                    </a>
-                  </li>
-                  <li aria-hidden className="text-text-subtle"><ChevronRight className="w-3 h-3 text-text-muted" /></li>
-                  <li aria-current="page" className="text-text-primary font-medium truncate">
-                    {component.name}
-                  </li>
-                </ol>
-              </nav>
+              {/* Breadcrumb & Header */}
+              <div id="overview-section" className="space-y-3 pt-1">
+                {/* Breadcrumb */}
+                <nav aria-label="Breadcrumb" className="text-xs text-text-muted">
+                  <ol className="flex items-center gap-1.5 list-none p-0 m-0">
+                    <li>
+                      <a
+                        href="/"
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                            e.preventDefault();
+                            onNavigateHome();
+                          }
+                        }}
+                        className="hover:text-text-primary transition-colors cursor-pointer"
+                      >
+                        EasyUI
+                      </a>
+                    </li>
+                    <li aria-hidden className="text-text-subtle"><ChevronRight className="w-3 h-3 text-text-muted" /></li>
+                    <li>
+                      <a
+                        href="/components"
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                            e.preventDefault();
+                            onNavigateComponents();
+                          }
+                        }}
+                        className="hover:text-text-primary transition-colors cursor-pointer"
+                      >
+                        Components
+                      </a>
+                    </li>
+                    <li aria-hidden className="text-text-subtle"><ChevronRight className="w-3 h-3 text-text-muted" /></li>
+                    <li aria-current="page" className="text-text-primary font-medium truncate">
+                      {component.name}
+                    </li>
+                  </ol>
+                </nav>
 
-              {/* Title */}
-              <div className="pt-1">
-                <h1 className="text-3xl sm:text-4xl font-bold text-text-primary tracking-tight">
-                  {component.name}
-                </h1>
+                {/* Title */}
+                <div className="pt-1">
+                  <h1 className="text-3xl sm:text-4xl font-bold text-text-primary tracking-tight">
+                    {component.name}
+                  </h1>
+                </div>
+
+                {/* Description Paragraph */}
+                <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-3xl pt-1">
+                  {component.description || component.tagline}
+                </p>
               </div>
 
-              {/* Description Paragraph */}
-              <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-3xl pt-1">
-                {component.description || component.tagline}
-              </p>
-            </div>
+              {/* ========================================================================= */}
+              {/* MINIMAL GLASS TABS: Using AnimatedTabs Component                           */}
+              {/* ========================================================================= */}
+              <div className="flex items-center justify-start gap-4 pt-1">
+                <AnimatedTabs
+                  tabs={[
+                    { id: 'preview', label: 'Preview' },
+                    { id: 'usage', label: 'Usage' },
+                    { id: 'code', label: 'Code' },
+                  ]}
+                  activeTab={activeTab}
+                  onChange={(tabId: string) => setActiveTab(tabId as MainTab)}
+                  variant="glass"
+                  renderContent={false}
+                  layoutId={`detail-glass-tab-${component.id}`}
+                />
+              </div>
 
-            {/* ========================================================================= */}
-            {/* MINIMAL GLASS TABS: Using AnimatedTabs Component                           */}
-            {/* ========================================================================= */}
-            <div className="flex items-center justify-start gap-4 pt-1">
-              <AnimatedTabs
-                tabs={[
-                  { id: 'preview', label: 'Preview' },
-                  { id: 'usage', label: 'Usage' },
-                  { id: 'code', label: 'Code' },
-                ]}
-                activeTab={activeTab}
-                onChange={(tabId: string) => setActiveTab(tabId as MainTab)}
-                variant="glass"
-                renderContent={false}
-                layoutId={`detail-glass-tab-${component.id}`}
-              />
-            </div>
+              {/* ========================================================================= */}
+              {/* TAB VIEW 1: PREVIEW (Interactive Surface Box + Floating Dock)             */}
+              {/* ========================================================================= */}
+              {activeTab === 'preview' && (
+                <div id="preview-section" className="space-y-6">
+                  {/* Main Interactive Stage Box */}
+                  <div className="relative rounded-2xl border border-border bg-surface overflow-hidden shadow-elevated flex flex-col">
+                    {/* Top Bar inside the preview card */}
+                    <div className="px-4 py-2.5 border-b border-border bg-surface-raised/90 backdrop-blur-md flex items-center justify-end gap-3 text-xs">
+                      {/* Stage Controls */}
+                      <div className="flex items-center gap-1.5">
 
-            {/* ========================================================================= */}
-            {/* TAB VIEW 1: PREVIEW (Interactive Surface Box + Floating Dock)             */}
-            {/* ========================================================================= */}
-            {activeTab === 'preview' && (
-              <div id="preview-section" className="space-y-6">
-                {/* Main Interactive Stage Box */}
-                <div className="relative rounded-2xl border border-border bg-surface overflow-hidden shadow-elevated flex flex-col">
-                  {/* Top Bar inside the preview card */}
-                  <div className="px-4 py-2.5 border-b border-border bg-surface-raised/90 backdrop-blur-md flex items-center justify-end gap-3 text-xs">
-                    {/* Stage Controls */}
-                    <div className="flex items-center gap-1.5">
+                        {/* Reset Demo */}
+                        <button
+                          type="button"
+                          onClick={() => setDemoKey((k) => k + 1)}
+                          className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
+                          title="Reset interactive demo"
+                          aria-label="Reset demo"
+                        >
+                          <RefreshCw className="w-3.5 h-3.5" />
+                        </button>
 
-                      {/* Reset Demo */}
+                        {/* Copy CLI Command */}
+                        <button
+                          type="button"
+                          onClick={() => handleCopy(component.cliCommand, 'cli-top')}
+                          className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
+                          title="Copy CLI command"
+                          aria-label="Copy CLI command"
+                        >
+                          {copiedCode === 'cli-top' ? (
+                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5" />
+                          )}
+                        </button>
+
+                        {/* Fullscreen Preview */}
+                        <button
+                          type="button"
+                          onClick={() => setIsFullscreenPreview(true)}
+                          className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
+                          title="Fullscreen preview"
+                          aria-label="Fullscreen preview"
+                        >
+                          <Maximize2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Component Render Canvas — backdrop follows the global theme.
+                      The component demo itself follows the page theme too; components
+                      that are not yet light/dark aware keep their original styling. */}
+                    <div
+                      className={cn(
+                        'relative min-h-[360px] sm:min-h-[420px] p-2.5 sm:p-10 flex items-center justify-center overflow-hidden transition-colors duration-200',
+                        theme === 'dark' ? 'bg-[#050505] text-text-primary' : 'bg-[#FAFAFA] text-[#0A0A0A]'
+                      )}
+                    >
+                      <div className="w-full flex items-center justify-center">
+                        {!isFullscreenPreview && (
+                          <Suspense fallback={<div className="min-h-48 w-full flex items-center justify-center text-xs text-text-muted">Loading preview…</div>}>
+                            {renderInteractiveDemo()}
+                          </Suspense>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ========================================================================= */}
+              {/* TAB VIEW 2: USAGE                                                         */}
+              {/* ========================================================================= */}
+              {activeTab === 'usage' && (
+                <div id="usage-section" className="space-y-6">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-text-secondary font-medium">Import Component</span>
                       <button
                         type="button"
-                        onClick={() => setDemoKey((k) => k + 1)}
+                        onClick={() => {
+                          const importStmt = `import { ${component.name.replace(/[\s-]+/g, '')} } from "@/components/ui/${component.id}";`;
+                          handleCopy(importStmt, 'import');
+                        }}
                         className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                        title="Reset interactive demo"
-                        aria-label="Reset demo"
+                        title={copiedCode === 'import' ? 'Copied' : 'Copy Import Statement'}
+                        aria-label={copiedCode === 'import' ? 'Copied import statement' : 'Copy import statement'}
                       >
-                        <RefreshCw className="w-3.5 h-3.5" />
-                      </button>
-
-                      {/* Copy CLI Command */}
-                      <button
-                        type="button"
-                        onClick={() => handleCopy(component.cliCommand, 'cli-top')}
-                        className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                        title="Copy CLI command"
-                        aria-label="Copy CLI command"
-                      >
-                        {copiedCode === 'cli-top' ? (
+                        {copiedCode === 'import' ? (
                           <Check className="w-3.5 h-3.5 text-emerald-400" />
                         ) : (
                           <Copy className="w-3.5 h-3.5" />
                         )}
                       </button>
+                    </div>
+                    <pre className="p-4 rounded-xl border border-border bg-surface-raised font-mono text-xs text-text-primary overflow-x-auto">
+                      <code>{`import { ${component.name.replace(/[\s-]+/g, '')} } from "@/components/ui/${component.id}";`}</code>
+                    </pre>
+                  </div>
 
-                      {/* Fullscreen Preview */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-text-secondary font-medium">Example Code</span>
                       <button
                         type="button"
-                        onClick={() => setIsFullscreenPreview(true)}
+                        onClick={() => handleCopy(component.usageCode, 'usage')}
                         className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                        title="Fullscreen preview"
-                        aria-label="Fullscreen preview"
+                        title={copiedCode === 'usage' ? 'Copied' : 'Copy Example Code'}
+                        aria-label={copiedCode === 'usage' ? 'Copied example code' : 'Copy example code'}
                       >
-                        <Maximize2 className="w-3.5 h-3.5" />
+                        {copiedCode === 'usage' ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+                    <pre className="p-4 rounded-xl border border-border bg-surface-raised font-mono text-xs text-text-secondary overflow-x-auto max-h-[460px] leading-relaxed scrollbar-thin">
+                      <code>{component.usageCode}</code>
+                    </pre>
+                  </div>
+                </div>
+              )}
+
+              {/* ========================================================================= */}
+              {/* TAB VIEW 3: CODE (Source)                                                 */}
+              {/* ========================================================================= */}
+              {activeTab === 'code' && (
+                <div id="code-section" className="space-y-3">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-text-secondary font-medium font-mono">
+                      src/components/ui/{component.id}.tsx
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(effectiveSourceCode, 'source')}
+                      className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
+                      title={copiedCode === 'source' ? 'Copied' : 'Copy Source Code'}
+                      aria-label={copiedCode === 'source' ? 'Copied source code' : 'Copy source code'}
+                    >
+                      {copiedCode === 'source' ? (
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
+                    </button>
+                  </div>
+                  <pre className="p-4 rounded-xl border border-border bg-surface-raised font-mono text-xs text-text-secondary overflow-x-auto max-h-[520px] leading-relaxed scrollbar-thin">
+                    <code>{effectiveSourceCode}</code>
+                  </pre>
+                </div>
+              )}
+
+              {/* ========================================================================= */}
+              {/* SECTION: INSTALLATION                                                     */}
+              {/* ========================================================================= */}
+              <section id="install-section" className="space-y-4 pt-4 border-t border-border">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-semibold text-text-primary tracking-tight">Installation</h2>
+                  {/* CLI vs Manual Toggle */}
+                  <div className="flex items-center gap-1 p-0.5 rounded-lg bg-surface border border-border">
+                    <button
+                      type="button"
+                      onClick={() => setInstallMode('cli')}
+                      className={cn(
+                        'px-3 py-1 text-xs font-medium rounded-md transition-colors cursor-pointer',
+                        installMode === 'cli'
+                          ? 'bg-surface-hover text-text-primary shadow-xs'
+                          : 'text-text-muted hover:text-text-primary'
+                      )}
+                    >
+                      CLI
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setInstallMode('manual')}
+                      className={cn(
+                        'px-3 py-1 text-xs font-medium rounded-md transition-colors cursor-pointer',
+                        installMode === 'manual'
+                          ? 'bg-surface-hover text-text-primary shadow-xs'
+                          : 'text-text-muted hover:text-text-primary'
+                      )}
+                    >
+                      Manual
+                    </button>
+                  </div>
+                </div>
+
+                {installMode === 'cli' ? (
+                  <div className="space-y-3">
+                    <p className="text-xs text-text-secondary">
+                      Add the component directly to your repository using shadcn CLI:
+                    </p>
+                    <div className="rounded-xl border border-border bg-surface-raised p-3.5 sm:p-4 flex items-center justify-between gap-3 font-mono text-xs text-text-primary">
+                      <span className="truncate">{component.cliCommand}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(component.cliCommand, 'cli')}
+                        className="p-1.5 rounded-md text-text-subtle hover:text-text-primary bg-surface hover:bg-surface-hover border border-border transition-colors cursor-pointer shrink-0"
+                      >
+                        {copiedCode === 'cli' ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
                       </button>
                     </div>
                   </div>
-
-                  {/* Component Render Canvas — backdrop follows the global theme.
-                      The component demo itself follows the page theme too; components
-                      that are not yet light/dark aware keep their original styling. */}
-                  <div
-                    className={cn(
-                      'relative min-h-[360px] sm:min-h-[420px] p-2.5 sm:p-10 flex items-center justify-center overflow-hidden transition-colors duration-200',
-                      theme === 'dark' ? 'bg-[#050505] text-text-primary' : 'bg-[#FAFAFA] text-[#0A0A0A]'
-                    )}
-                  >
-                    <div className="w-full flex items-center justify-center">
-                      {!isFullscreenPreview && (
-                        <Suspense fallback={<div className="min-h-48 w-full flex items-center justify-center text-xs text-text-muted">Loading preview…</div>}>
-                          {renderInteractiveDemo()}
-                        </Suspense>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ========================================================================= */}
-            {/* TAB VIEW 2: USAGE                                                         */}
-            {/* ========================================================================= */}
-            {activeTab === 'usage' && (
-              <div id="usage-section" className="space-y-6">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-text-secondary font-medium">Import Component</span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const importStmt = `import { ${component.name.replace(/[\s-]+/g, '')} } from "@/components/ui/${component.id}";`;
-                        handleCopy(importStmt, 'import');
-                      }}
-                      className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                      title={copiedCode === 'import' ? 'Copied' : 'Copy Import Statement'}
-                      aria-label={copiedCode === 'import' ? 'Copied import statement' : 'Copy import statement'}
-                    >
-                      {copiedCode === 'import' ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                    </button>
-                  </div>
-                  <pre className="p-4 rounded-xl border border-border bg-surface-raised font-mono text-xs text-text-primary overflow-x-auto">
-                    <code>{`import { ${component.name.replace(/[\s-]+/g, '')} } from "@/components/ui/${component.id}";`}</code>
-                  </pre>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-text-secondary font-medium">Example Code</span>
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(component.usageCode, 'usage')}
-                      className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                      title={copiedCode === 'usage' ? 'Copied' : 'Copy Example Code'}
-                      aria-label={copiedCode === 'usage' ? 'Copied example code' : 'Copy example code'}
-                    >
-                      {copiedCode === 'usage' ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                    </button>
-                  </div>
-                  <pre className="p-4 rounded-xl border border-border bg-surface-raised font-mono text-xs text-text-secondary overflow-x-auto max-h-[460px] leading-relaxed scrollbar-thin">
-                    <code>{component.usageCode}</code>
-                  </pre>
-                </div>
-              </div>
-            )}
-
-            {/* ========================================================================= */}
-            {/* TAB VIEW 3: CODE (Source)                                                 */}
-            {/* ========================================================================= */}
-            {activeTab === 'code' && (
-              <div id="code-section" className="space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-text-secondary font-medium font-mono">
-                    src/components/ui/{component.id}.tsx
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => handleCopy(effectiveSourceCode, 'source')}
-                    className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                    title={copiedCode === 'source' ? 'Copied' : 'Copy Source Code'}
-                    aria-label={copiedCode === 'source' ? 'Copied source code' : 'Copy source code'}
-                  >
-                    {copiedCode === 'source' ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    ) : (
-                      <Copy className="w-3.5 h-3.5" />
-                    )}
-                  </button>
-                </div>
-                <pre className="p-4 rounded-xl border border-border bg-surface-raised font-mono text-xs text-text-secondary overflow-x-auto max-h-[520px] leading-relaxed scrollbar-thin">
-                  <code>{effectiveSourceCode}</code>
-                </pre>
-              </div>
-            )}
-
-            {/* ========================================================================= */}
-            {/* SECTION: INSTALLATION                                                     */}
-            {/* ========================================================================= */}
-            <section id="install-section" className="space-y-4 pt-4 border-t border-border">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-text-primary tracking-tight">Installation</h2>
-                {/* CLI vs Manual Toggle */}
-                <div className="flex items-center gap-1 p-0.5 rounded-lg bg-surface border border-border">
-                  <button
-                    type="button"
-                    onClick={() => setInstallMode('cli')}
-                    className={cn(
-                      'px-3 py-1 text-xs font-medium rounded-md transition-colors cursor-pointer',
-                      installMode === 'cli'
-                        ? 'bg-surface-hover text-text-primary shadow-xs'
-                        : 'text-text-muted hover:text-text-primary'
-                    )}
-                  >
-                    CLI
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setInstallMode('manual')}
-                    className={cn(
-                      'px-3 py-1 text-xs font-medium rounded-md transition-colors cursor-pointer',
-                      installMode === 'manual'
-                        ? 'bg-surface-hover text-text-primary shadow-xs'
-                        : 'text-text-muted hover:text-text-primary'
-                    )}
-                  >
-                    Manual
-                  </button>
-                </div>
-              </div>
-
-              {installMode === 'cli' ? (
-                <div className="space-y-3">
-                  <p className="text-xs text-text-secondary">
-                    Add the component directly to your repository using shadcn CLI:
-                  </p>
-                  <div className="rounded-xl border border-border bg-surface-raised p-3.5 sm:p-4 flex items-center justify-between gap-3 font-mono text-xs text-text-primary">
-                    <span className="truncate">{component.cliCommand}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(component.cliCommand, 'cli')}
-                      className="p-1.5 rounded-md text-text-subtle hover:text-text-primary bg-surface hover:bg-surface-hover border border-border transition-colors cursor-pointer shrink-0"
-                    >
-                      {copiedCode === 'cli' ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* Package Manager selector */}
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-text-secondary">1. Install dependencies</span>
-                    <div className="flex items-center gap-1 font-mono text-[11px]">
-                      {(['pnpm', 'npm', 'yarn', 'bun'] as PkgManager[]).map((pm) => (
-                        <button
-                          key={pm}
-                          type="button"
-                          onClick={() => setPkgManager(pm)}
-                          className={cn(
-                            'px-2 py-0.5 rounded transition-colors cursor-pointer',
-                            pkgManager === pm
-                              ? 'bg-surface-hover text-text-primary'
-                              : 'text-text-muted hover:text-text-secondary'
-                          )}
-                        >
-                          {pm}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="rounded-xl border border-border bg-surface-raised p-3.5 flex items-center justify-between gap-3 font-mono text-xs text-text-primary">
-                    <span className="truncate">{getInstallDepCommand()}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(getInstallDepCommand(), 'deps')}
-                      className="p-1.5 rounded-md text-text-subtle hover:text-text-primary bg-surface border border-border transition-colors cursor-pointer"
-                    >
-                      {copiedCode === 'deps' ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                    </button>
-                  </div>
-
-                  <p className="text-xs text-text-secondary pt-1">
-                    2. Copy the component source code from the{' '}
-                    <button
-                      onClick={() => setActiveTab('code')}
-                      className="text-text-primary underline hover:opacity-80"
-                    >
-                      Code tab
-                    </button>{' '}
-                    into your project at <code className="text-text-primary">components/ui/{component.id}.tsx</code>.
-                  </p>
-                </div>
-              )}
-            </section>
-
-            {/* ========================================================================= */}
-            {/* SECTION: PROPS & API REFERENCE                                            */}
-            {/* ========================================================================= */}
-            <section id="props-section" className="space-y-4 pt-4 border-t border-border">
-              <h2 className="text-lg font-semibold text-text-primary tracking-tight">API Reference</h2>
-              {component.props && component.props.length > 0 ? (
-                <div className="rounded-xl border border-border overflow-hidden bg-surface">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs">
-                      <thead className="bg-surface-raised text-text-secondary border-b border-border">
-                        <tr>
-                          <th scope="col" className="py-3 px-4 font-mono font-medium">Prop</th>
-                          <th scope="col" className="py-3 px-4 font-mono font-medium">Type</th>
-                          <th scope="col" className="py-3 px-4 font-mono font-medium">Default</th>
-                          <th scope="col" className="py-3 px-4 font-medium">Description</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-border">
-                        {component.props.map((p, i) => (
-                          <tr key={i} className="hover:bg-surface-hover transition-colors">
-                            <td className="py-3 px-4 font-mono text-text-primary font-medium">{p.name}</td>
-                            <td className="py-3 px-4 font-mono text-text-secondary">{p.type}</td>
-                            <td className="py-3 px-4 font-mono text-text-muted">{p.default || '—'}</td>
-                            <td className="py-3 px-4 text-text-secondary leading-relaxed">{p.description}</td>
-                          </tr>
+                ) : (
+                  <div className="space-y-4">
+                    {/* Package Manager selector */}
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-text-secondary">1. Install dependencies</span>
+                      <div className="flex items-center gap-1 font-mono text-[11px]">
+                        {(['pnpm', 'npm', 'yarn', 'bun'] as PkgManager[]).map((pm) => (
+                          <button
+                            key={pm}
+                            type="button"
+                            onClick={() => setPkgManager(pm)}
+                            className={cn(
+                              'px-2 py-0.5 rounded transition-colors cursor-pointer',
+                              pkgManager === pm
+                                ? 'bg-surface-hover text-text-primary'
+                                : 'text-text-muted hover:text-text-secondary'
+                            )}
+                          >
+                            {pm}
+                          </button>
                         ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              ) : (
-                <p className="text-xs text-text-muted">Standard React HTML element attributes supported.</p>
-              )}
-            </section>
+                      </div>
+                    </div>
 
-            {/* ========================================================================= */}
-            {/* SECTION: RELATED COMPONENTS                                               */}
-            {/* ========================================================================= */}
-            {relatedComponents.length > 0 && (
-              <section id="related-section" className="space-y-4 pt-4 border-t border-border">
-                <h2 className="text-lg font-semibold text-text-primary tracking-tight">Related Components</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {relatedComponents.map((rel) => (
-                    <a
-                      key={rel.id}
-                      href={`/components/${rel.id}`}
-                      onClick={(e) => {
-                        if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                          e.preventDefault();
-                          onSelectComponent(rel.id);
-                        }
-                      }}
-                      className="p-4 rounded-xl border border-border bg-surface hover:border-border-hover hover:bg-surface-hover transition-all text-left group cursor-pointer block"
-                    >
-                      <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block mb-1">
-                        {rel.category}
-                      </span>
-                      <h4 className="text-xs font-semibold text-text-primary truncate mb-1">
-                        {rel.name}
-                      </h4>
-                      <p className="text-[11px] text-text-secondary line-clamp-2 leading-relaxed">
-                        {rel.tagline || rel.description}
-                      </p>
-                    </a>
-                  ))}
-                </div>
+                    <div className="rounded-xl border border-border bg-surface-raised p-3.5 flex items-center justify-between gap-3 font-mono text-xs text-text-primary">
+                      <span className="truncate">{getInstallDepCommand()}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(getInstallDepCommand(), 'deps')}
+                        className="p-1.5 rounded-md text-text-subtle hover:text-text-primary bg-surface border border-border transition-colors cursor-pointer"
+                      >
+                        {copiedCode === 'deps' ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+
+                    <p className="text-xs text-text-secondary pt-1">
+                      2. Copy the component source code from the{' '}
+                      <button
+                        onClick={() => setActiveTab('code')}
+                        className="text-text-primary underline hover:opacity-80"
+                      >
+                        Code tab
+                      </button>{' '}
+                      into your project at <code className="text-text-primary">components/ui/{component.id}.tsx</code>.
+                    </p>
+                  </div>
+                )}
               </section>
-            )}
+
+              {/* ========================================================================= */}
+              {/* SECTION: PROPS & API REFERENCE                                            */}
+              {/* ========================================================================= */}
+              <section id="props-section" className="space-y-4 pt-4 border-t border-border">
+                <h2 className="text-lg font-semibold text-text-primary tracking-tight">API Reference</h2>
+                {component.props && component.props.length > 0 ? (
+                  <div className="rounded-xl border border-border overflow-hidden bg-surface">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs">
+                        <thead className="bg-surface-raised text-text-secondary border-b border-border">
+                          <tr>
+                            <th scope="col" className="py-3 px-4 font-mono font-medium">Prop</th>
+                            <th scope="col" className="py-3 px-4 font-mono font-medium">Type</th>
+                            <th scope="col" className="py-3 px-4 font-mono font-medium">Default</th>
+                            <th scope="col" className="py-3 px-4 font-medium">Description</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-border">
+                          {component.props.map((p, i) => (
+                            <tr key={i} className="hover:bg-surface-hover transition-colors">
+                              <td className="py-3 px-4 font-mono text-text-primary font-medium">{p.name}</td>
+                              <td className="py-3 px-4 font-mono text-text-secondary">{p.type}</td>
+                              <td className="py-3 px-4 font-mono text-text-muted">{p.default || '—'}</td>
+                              <td className="py-3 px-4 text-text-secondary leading-relaxed">{p.description}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-xs text-text-muted">Standard React HTML element attributes supported.</p>
+                )}
+              </section>
+
+              {/* ========================================================================= */}
+              {/* SECTION: RELATED COMPONENTS                                               */}
+              {/* ========================================================================= */}
+              {relatedComponents.length > 0 && (
+                <section id="related-section" className="space-y-4 pt-4 border-t border-border">
+                  <h2 className="text-lg font-semibold text-text-primary tracking-tight">Related Components</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {relatedComponents.map((rel) => (
+                      <a
+                        key={rel.id}
+                        href={`/components/${rel.id}`}
+                        onClick={(e) => {
+                          if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                            e.preventDefault();
+                            onSelectComponent(rel.id);
+                          }
+                        }}
+                        className="p-4 rounded-xl border border-border bg-surface hover:border-border-hover hover:bg-surface-hover transition-all text-left group cursor-pointer block"
+                      >
+                        <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block mb-1">
+                          {rel.category}
+                        </span>
+                        <h4 className="text-xs font-semibold text-text-primary truncate mb-1">
+                          {rel.name}
+                        </h4>
+                        <p className="text-[11px] text-text-secondary line-clamp-2 leading-relaxed">
+                          {rel.tagline || rel.description}
+                        </p>
+                      </a>
+                    ))}
+                  </div>
+                </section>
+              )}
             </article>
           </main>
         </div>

@@ -1,7 +1,6 @@
 import { lazy, Suspense, useState, useEffect, useCallback } from 'react';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { HeroSection } from './components/sections/HeroSection';
 import { ComponentDirectory } from './components/sections/ComponentDirectory';
 import { DevExperience } from './components/sections/DevExperience';
 import { FinalCta } from './components/sections/FinalCta';
@@ -17,6 +16,7 @@ const ComponentDetailPage = lazy(() => import('./components/docs/ComponentDetail
 const DocsPage = lazy(() => import('./components/docs/DocsPage'));
 const AllComponentsPage = lazy(() => import('./components/sections/AllComponentsPage').then(({ AllComponentsPage: page }) => ({ default: page })));
 const SpotlightSearch = lazy(() => import('./components/ui/SpotlightSearch').then(({ SpotlightSearch: search }) => ({ default: search })));
+const HeroSection = lazy(() => import('./components/sections/HeroSection').then(({ HeroSection: hero }) => ({ default: hero })));
 
 // Fast Map lookup for components
 const COMPONENT_MAP = new Map<string, EasyComponentMeta>(
