@@ -82,7 +82,22 @@ export function parseRouteFromUrl(pathname?: string, search?: string): RouteStat
 
   const cleanPath = currentPath.replace(/^\/+|\/+$/g, '');
 
-  // 1. Dedicated component page route: /components/:slug
+  // 1. All components catalog view: /components, /components/page/:page, or legacy /all-components
+  // Match this before component details because /components/page/2 also starts with /components/.
+  const pagedComponentsMatch = cleanPath.match(/^components\/page\/(\d+)$/);
+  if (cleanPath === 'components' || cleanPath === 'all-components' || pagedComponentsMatch) {
+    const routePage = pagedComponentsMatch ? parseInt(pagedComponentsMatch[1], 10) : pageFromUrl;
+    return {
+      activeView: 'components',
+      selectedComponent: null,
+      invalidComponentSlug: null,
+      invalidRoutePath: null,
+      activeDocTopic: 'introduction',
+      componentPage: routePage > 0 ? routePage : 1,
+    };
+  }
+
+  // 2. Dedicated component detail route: /components/:slug
   if (cleanPath.startsWith('components/')) {
     const compSlug = cleanPath.replace(/^components\//, '').split('/')[0];
     const found = COMPONENT_MAP.get(compSlug);
@@ -105,20 +120,6 @@ export function parseRouteFromUrl(pathname?: string, search?: string): RouteStat
         componentPage: 1,
       };
     }
-  }
-
-  // 2. All components catalog view: /components, /components/page/:page, or legacy /all-components
-  const pagedComponentsMatch = cleanPath.match(/^components\/page\/(\d+)$/);
-  if (cleanPath === 'components' || cleanPath === 'all-components' || pagedComponentsMatch) {
-    const routePage = pagedComponentsMatch ? parseInt(pagedComponentsMatch[1], 10) : pageFromUrl;
-    return {
-      activeView: 'components',
-      selectedComponent: null,
-      invalidComponentSlug: null,
-      invalidRoutePath: null,
-      activeDocTopic: 'introduction',
-      componentPage: routePage > 0 ? routePage : 1,
-    };
   }
 
   // 3. Documentation topics: /docs, /doc, /docs/:topic, /doc/:topic
