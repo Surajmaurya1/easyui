@@ -89,35 +89,35 @@ export interface PullToRefreshProps extends React.HTMLAttributes<HTMLDivElement>
 
 const DEFAULT_FINANCIAL_DATA: Record<string, FinancialDataPoint> = {
   '1H': {
-    value: 58610.2,
-    displayValue: '$58,610.20',
-    change: '+340.50 · 0.6%',
+    value: 42318.5,
+    displayValue: '$42,318.50',
+    change: '+128.30 · 0.3%',
     context: 'last hour',
-    high: '$58,790.00',
-    low: '$58,210.50',
-    volume: '$240.5M',
+    high: '$42,580.00',
+    low: '$42,012.40',
+    volume: '$180.6M',
     points: [35, 38, 42, 40, 48, 46, 54, 52, 60, 68, 72, 75],
     timestamps: ['11:00 AM', '11:05 AM', '11:10 AM', '11:15 AM', '11:20 AM', '11:25 AM', '11:30 AM', '11:35 AM', '11:40 AM', '11:45 AM', '11:50 AM', '12:00 PM'],
   },
   '4H': {
-    value: 57980.4,
-    displayValue: '$57,980.40',
-    change: '+850.15 · 1.5%',
+    value: 41742.85,
+    displayValue: '$41,742.85',
+    change: '+462.10 · 1.1%',
     context: 'last 4 hrs',
-    high: '$58,450.00',
-    low: '$56,920.00',
-    volume: '$680.2M',
+    high: '$42,150.00',
+    low: '$40,920.50',
+    volume: '$512.4M',
     points: [25, 28, 36, 32, 44, 42, 50, 48, 58, 64, 70, 78],
     timestamps: ['08:00 AM', '08:20 AM', '08:40 AM', '09:00 AM', '09:20 AM', '09:40 AM', '10:00 AM', '10:20 AM', '10:40 AM', '11:00 AM', '11:30 AM', '12:00 PM'],
   },
   '1D': {
-    value: 58834.75,
-    displayValue: '$58,834.75',
-    change: '+1,204.60 · 2.1%',
+    value: 43128.4,
+    displayValue: '$43,128.40',
+    change: '+982.55 · 2.3%',
     context: 'today',
-    high: '$59,140.00',
-    low: '$57,410.80',
-    volume: '$1.42B',
+    high: '$43,510.20',
+    low: '$41,840.75',
+    volume: '$1.08B',
     // Multi-crest wave climbing up to the top right endpoint
     points: [16, 20, 26, 24, 32, 36, 34, 52, 46, 60, 56, 62, 68, 80],
     timestamps: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '21:00', '22:00', '23:59'],
@@ -214,6 +214,14 @@ export const FinancialStatsCard: React.FC<FinancialStatsCardProps> = ({
   let displayChange = change || currentData.change;
   let displayContext = activeTimestamp || context || currentData.context;
 
+  // Direction-agnostic by default; overridden to red when change is negative.
+  // A `−` (U+2212) or `-` leading character means the value is down.
+  const isNegative =
+    displayChange.startsWith('−') || displayChange.startsWith('-');
+  const trendStroke = isNegative ? '#ef4444' : '#E5E5E5';
+  const trendGradient = isNegative ? '#ef4444' : '#A3A3A3';
+  const trendTextClass = isNegative ? 'text-[#ef4444]' : 'text-[#E5E5E5]';
+
   if (scrubIndex !== null && currentData.points[scrubIndex] !== undefined) {
     const minP = Math.min(...currentData.points);
     const maxP = Math.max(...currentData.points);
@@ -302,7 +310,7 @@ export const FinancialStatsCard: React.FC<FinancialStatsCardProps> = ({
               initial={prefersReducedMotion ? false : { opacity: 0.4 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.18 }}
-              className="text-emerald-600 dark:text-[#22c55e] tracking-tight font-medium"
+              className={cn(trendTextClass, 'tracking-tight font-medium')}
             >
               {displayChange}
             </motion.span>
@@ -327,8 +335,8 @@ export const FinancialStatsCard: React.FC<FinancialStatsCardProps> = ({
           {/* Subtle Glow Defs and Gradients */}
           <defs>
             <linearGradient id={`chart-grad-${componentId}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#22c55e" stopOpacity="0.16" />
-              <stop offset="100%" stopColor="#22c55e" stopOpacity="0.0" />
+              <stop offset="0%" stopColor={trendGradient} stopOpacity="0.14" />
+              <stop offset="100%" stopColor={trendGradient} stopOpacity="0.0" />
             </linearGradient>
             <filter id={`glow-${componentId}`} x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="2.5" result="blur" />
@@ -351,13 +359,15 @@ export const FinancialStatsCard: React.FC<FinancialStatsCardProps> = ({
             />
           )}
 
-          {/* Smooth Bezier Stroke Path */}
+          {/* Smooth Bezier Stroke Path.
+              Direction-aware: stroke is red when the value is trending down
+              (`#ef4444`), otherwise the calm monochrome `#E5E5E5`. */}
           {pathD && (
             <motion.path
               key={`path-${activeRange}-${displayMain}`}
               d={pathD}
               fill="none"
-              stroke="#22c55e"
+              stroke={trendStroke}
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -379,7 +389,7 @@ export const FinancialStatsCard: React.FC<FinancialStatsCardProps> = ({
               y1="0"
               x2={activePoint.x}
               y2="110"
-              stroke="rgba(34, 197, 94, 0.35)"
+              stroke="rgba(229, 229, 229, 0.35)"
               strokeWidth="1.2"
               strokeDasharray="3 3"
             />
@@ -395,7 +405,7 @@ export const FinancialStatsCard: React.FC<FinancialStatsCardProps> = ({
                   cy={activePoint.y}
                   r="9"
                   fill="none"
-                  stroke="#22c55e"
+                  stroke={trendStroke}
                   strokeWidth="1.5"
                   initial={{ scale: 0.7, opacity: 0.9 }}
                   animate={{ scale: 1.7, opacity: 0 }}
@@ -410,7 +420,7 @@ export const FinancialStatsCard: React.FC<FinancialStatsCardProps> = ({
                 cy={activePoint.y}
                 r={scrubIndex !== null ? '6' : '5.5'}
                 className="fill-white dark:fill-[#161616]"
-                stroke="#22c55e"
+                stroke={trendStroke}
                 strokeWidth="2.4"
                 initial={prefersReducedMotion ? false : { scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -592,19 +602,23 @@ export const PullToRefresh: React.FC<PullToRefreshProps> = ({
       } else {
         // Simulated network refresh with realistic delay
         await new Promise((resolve) => setTimeout(resolve, 1100));
-        // Fluctuate prices realistically
+        // Fluctuate prices realistically. The sign of the change drives the
+        // chart's semantic coloring — red (`#ef4444`) on a downtick, monochrome
+        // (`#E5E5E5`) on an uptick — matching EasyUI's directional convention.
         setDemoValues((prev) => {
-          const deltaMultiplier = Math.random() * 0.035 - 0.012;
+          const deltaMultiplier = Math.random() * 0.035 - 0.018;
           const base1D = prev['1D'].value * (1 + deltaMultiplier);
-          const changeVal = base1D - 57630.15;
-          const changePct = (changeVal / 57630.15) * 100;
+          const changeVal = base1D - 42145.85;
+          const changePct = (changeVal / 42145.85) * 100;
+          const sign = changeVal >= 0 ? '+' : '−'; // U+2212 minus, never "+-"
+          const pctSign = changePct >= 0 ? '+' : '−';
           return {
             ...prev,
             '1D': {
               ...prev['1D'],
               value: base1D,
               displayValue: `$${base1D.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-              change: `+${changeVal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} · ${changePct.toFixed(1)}%`,
+              change: `${sign}${Math.abs(changeVal).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} · ${pctSign}${Math.abs(changePct).toFixed(1)}%`,
               points: prev['1D'].points.map((p) =>
                 Math.max(12, Math.min(92, p + (Math.random() * 6 - 3)))
               ),
@@ -790,7 +804,7 @@ export const PullToRefresh: React.FC<PullToRefreshProps> = ({
                   initial={{ rotate: 0 }}
                   animate={{ rotate: 360 }}
                   transition={{ duration: 0.75, repeat: Infinity, ease: 'linear' }}
-                  className="w-4 h-4 flex items-center justify-center text-emerald-600 dark:text-emerald-400"
+                  className="w-4 h-4 flex items-center justify-center text-[#E5E5E5]"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                 </motion.div>
@@ -800,7 +814,7 @@ export const PullToRefresh: React.FC<PullToRefreshProps> = ({
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={motionTransitions.springSnappy}
-                  className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400"
+                  className="w-4 h-4 rounded-full bg-[#1F1F1F] border border-[#2A2A2A] flex items-center justify-center text-[#F5F5F5]"
                 >
                   <Check className="w-3 h-3 stroke-[2.5]" />
                 </motion.div>
@@ -821,7 +835,7 @@ export const PullToRefresh: React.FC<PullToRefreshProps> = ({
                       cx="8"
                       cy="8"
                       r="6.5"
-                      stroke="#22c55e"
+                      stroke="#E5E5E5"
                       strokeWidth="1.8"
                       fill="none"
                       strokeDasharray={ringCircumference}
