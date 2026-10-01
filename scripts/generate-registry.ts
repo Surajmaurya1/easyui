@@ -370,7 +370,7 @@ function generateComponentsData(components: DiscoveredComponent[]): void {
     const createdAt = comp.meta.createdAt || '2026-08-01';
     const usageCode = comp.meta.usageCode || `import { ${comp.componentName} } from "@/components/ui/${comp.slug}";\n\nexport function Demo() {\n  return <${comp.componentName} />;\n}`;
 
-    return {
+    const entry: Record<string, any> = {
       id: comp.slug,
       name: comp.meta.title,
       tagline,
@@ -386,6 +386,13 @@ function generateComponentsData(components: DiscoveredComponent[]): void {
       dependencies: comp.dependencies,
       files: comp.registryFiles,
     };
+
+    // Preserve the optional featured flag when set in the component's meta file
+    if (comp.meta.featured === true) {
+      entry.featured = true;
+    }
+
+    return entry;
   });
 
   const content = `// AUTO-GENERATED — DO NOT EDIT MANUALLY.

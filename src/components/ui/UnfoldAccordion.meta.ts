@@ -4,6 +4,7 @@ const meta: EasyUIComponentMeta = {
   title: 'UnfoldAccordion',
   description: 'An accordion whose content unfolds with the chevron and spacing moving together. The chevron rotates 180° while the content height expands and the inner content slides up to close the gap, producing a single, fluid motion.',
   category: 'Feedback',
+  featured: true,
   tagline: 'Content unfolds with chevron and spacing',
   badges: ['Coordinated Motion', 'Spring Height', 'Accessible', 'Light & Dark'],
   createdAt: '2026-09-03',

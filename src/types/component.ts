@@ -43,6 +43,8 @@ export interface EasyComponentMeta {
   accessibility: string[];
   features: string[];
   createdAt: string;
+  /** When true, this component is featured in the homepage showcase. */
+  featured?: boolean;
   dependencies?: string[];
   registryDependencies?: string[];
   files?: Array<{

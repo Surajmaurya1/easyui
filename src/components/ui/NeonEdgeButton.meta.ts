@@ -4,6 +4,7 @@ const meta: EasyUIComponentMeta = {
   title: 'Neon Edge Button',
   description: 'A button with a restrained light source travelling around the border while the label remains primary.',
   category: 'Buttons',
+  featured: true,
   tagline: 'Precise travelling edge light button',
   badges: ['Button', 'CSS Motion', 'Reduced Motion'],
   createdAt: '2026-08-28',

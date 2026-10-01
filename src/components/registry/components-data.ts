@@ -1057,7 +1057,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "car-smoke-page-transition",
@@ -2320,7 +2321,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "evil-eye",
@@ -2651,7 +2653,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "floating-action-dock",
@@ -2871,7 +2874,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "glass-navbar",
@@ -2978,7 +2982,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "glitch-text",
@@ -3289,7 +3294,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/utils.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "gravity-particle-burst",
@@ -3873,7 +3879,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/theme/useTheme.tsx"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "loader",
@@ -4040,7 +4047,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "login",
@@ -4154,7 +4162,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "mac-os-folder-cards",
@@ -4299,7 +4308,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "meteors",
@@ -4985,7 +4995,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/utils.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "nimbu-mirchi",
@@ -5175,7 +5186,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "notification-bell",
@@ -5474,7 +5486,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "otp-input",
@@ -6143,7 +6156,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "press-button",
@@ -7526,7 +7540,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "slide-pagination",
@@ -7613,7 +7628,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "small-floating-dock",
@@ -9378,7 +9394,8 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "type": "registry:lib",
         "target": "lib/motion-tokens.ts"
       }
-    ]
+    ],
+    "featured": true
   },
   {
     "id": "velocity-toast",
