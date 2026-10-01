@@ -4,6 +4,7 @@ const meta: EasyUIComponentMeta = {
   title: 'Liquid Toggle',
   description: 'A toggle with a liquid/blob-like transition. The internal shape deforms organically as it travels from off to on — stretching along the travel axis and settling into a natural blob shape rather than simply translating.',
   category: 'Buttons',
+  featured: true,
   tagline: 'Morphing liquid blob toggle',
   badges: ['SVG Morph', 'Spring', 'Accessible'],
   createdAt: '2026-09-02',

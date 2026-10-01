@@ -4,6 +4,7 @@ const meta: EasyUIComponentMeta = {
   title: 'OriginDropdown',
   description: 'A dropdown with origin-aware expansion — the menu materializes from the chosen side with a slight scale and an inward translation, so its perceived origin is the trigger edge closest to the menu.',
   category: 'Overlays',
+  featured: true,
   tagline: 'Origin-aware expansion',
   badges: ['Origin-Aware', 'Spring In', 'Accessible', 'Light & Dark'],
   createdAt: '2026-09-03',

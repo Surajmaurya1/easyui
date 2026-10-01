@@ -4,6 +4,7 @@ const meta: EasyUIComponentMeta = {
   title: 'Gooey Menu',
   description: 'A tactile liquid dropdown menu with organic SVG metaball fusion filter and spring-driven extrusion animation.',
   category: 'Navigation',
+  featured: true,
   tagline: 'Liquid gooey spring dropdown menu with SVG filter physics',
   badges: ['SVG Filter', 'Framer Motion', 'Metaball', 'Spring Physics'],
   createdAt: '2026-08-31',

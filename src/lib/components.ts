@@ -6,9 +6,45 @@ import type { EasyComponentMeta } from '../types/component';
 export const ITEMS_PER_PAGE = 10;
 
 /**
- * Default number of featured components displayed on the homepage showroom.
+ * @deprecated The homepage now uses `getFeaturedComponents()` instead of a numeric limit.
+ * Kept for backwards compatibility with any external references.
  */
-export const FEATURED_COMPONENT_LIMIT = 6;
+export const FEATURED_COMPONENT_LIMIT = 9;
+
+/**
+ * The ordered list of component IDs that appear in the homepage showcase.
+ * The order here determines display order on the homepage.
+ */
+export const FEATURED_COMPONENT_IDS: readonly string[] = [
+  'draw-checkbox',
+  'lock-input',
+  'origin-dropdown',
+  'slide-pagination',
+  'unfold-accordion',
+  'liquid-toggle',
+  'gooey-menu',
+  'pill-navigation',
+  'neon-edge-button',
+] as const;
+
+/**
+ * Returns the curated set of featured homepage components.
+ *
+ * Priority: components with `featured: true` in the registry, sorted by the
+ * canonical FEATURED_COMPONENT_IDS order so the homepage always renders in
+ * the intended sequence.
+ *
+ * To feature a component in the future, set `featured: true` in its
+ * `.meta.ts` file and add its ID to FEATURED_COMPONENT_IDS above.
+ */
+export function getFeaturedComponents(components: EasyComponentMeta[]): EasyComponentMeta[] {
+  const byId = new Map<string, EasyComponentMeta>(components.map((c) => [c.id, c]));
+  return FEATURED_COMPONENT_IDS.reduce<EasyComponentMeta[]>((acc, id) => {
+    const comp = byId.get(id);
+    if (comp) acc.push(comp);
+    return acc;
+  }, []);
+}
 
 export const NEW_BADGE_DURATION_DAYS = 7;
 export const NEW_BADGE_DURATION_MS = NEW_BADGE_DURATION_DAYS * 24 * 60 * 60 * 1000;

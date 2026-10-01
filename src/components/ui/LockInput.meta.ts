@@ -4,6 +4,7 @@ const meta: EasyUIComponentMeta = {
   title: 'LockInput',
   description: 'A text input whose focus state subtly "locks" into place — a focus ring scales in from the center and the border tweens to active, giving the impression that the input snaps closed on itself.',
   category: 'Forms',
+  featured: true,
   tagline: 'Focus state that "locks" into place',
   badges: ['Focus Lock', 'Spring Ring', 'Accessible', 'Light & Dark'],
   createdAt: '2026-09-03',

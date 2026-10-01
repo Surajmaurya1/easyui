@@ -2,8 +2,6 @@ import { lazy, Suspense, useState, useEffect, useCallback } from 'react';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { ComponentDirectory } from './components/sections/ComponentDirectory';
-import { DevExperience } from './components/sections/DevExperience';
-import { FinalCta } from './components/sections/FinalCta';
 import { EASY_COMPONENTS } from './components/registry/components-data';
 import type { EasyComponentMeta } from './types/component';
 import { Analytics } from '@vercel/analytics/react';
@@ -327,114 +325,107 @@ export function App({ initialPath }: AppProps = {}) {
 
       {/* Main View Router */}
       <Suspense fallback={<main className="min-h-[70vh]" aria-busy="true" />}>
-      {activeView === 'component-detail' && selectedComponent ? (
-        <ComponentDetailPage
-          component={selectedComponent}
-          onSelectComponent={handleSelectComponentById}
-          onNavigateHome={handleNavigateHome}
-          onNavigateComponents={handleNavigateComponents}
-          onNavigateDocs={handleNavigateDocs}
-        />
-      ) : activeView === 'component-not-found' ? (
-        <main className="min-h-[70vh] flex items-center justify-center p-6 text-center">
-          <div className="max-w-md w-full p-8 rounded-2xl bg-surface border border-border space-y-5">
-            <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center mx-auto">
-              <AlertCircle className="w-6 h-6" />
-            </div>
-            <div className="space-y-2">
-              <h1 className="text-xl font-bold text-text-primary tracking-tight">Component Not Found</h1>
-              <p className="text-xs text-text-secondary leading-relaxed">
-                No component exists matching{' '}
-                <code className="px-1.5 py-0.5 rounded bg-surface-hover text-rose-500 font-mono">
-                  /components/{invalidComponentSlug || 'unknown'}
-                </code>
-                . It may have been moved or renamed.
-              </p>
-            </div>
-            <div className="flex items-center justify-center gap-3 pt-2">
-              <button
-                type="button"
-                onClick={handleNavigateComponents}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent text-background text-xs font-medium hover:opacity-90 transition-opacity cursor-pointer"
-              >
-                <Grid className="w-3.5 h-3.5" />
-                <span>Browse Components</span>
-              </button>
-              <button
-                type="button"
-                onClick={handleNavigateHome}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-hover hover:bg-surface-raised border border-border text-xs text-text-primary transition-colors cursor-pointer"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Go Home</span>
-              </button>
-            </div>
-          </div>
-        </main>
-      ) : activeView === 'route-not-found' ? (
-        <main className="min-h-[70vh] flex items-center justify-center p-6 text-center">
-          <div className="max-w-md w-full p-8 rounded-2xl bg-surface border border-border space-y-5">
-            <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center mx-auto">
-              <AlertCircle className="w-6 h-6" />
-            </div>
-            <div className="space-y-2">
-              <h1 className="text-xl font-bold text-text-primary tracking-tight">Page Not Found</h1>
-              <p className="text-xs text-text-secondary leading-relaxed">
-                No EasyUI page exists at{' '}
-                <code className="px-1.5 py-0.5 rounded bg-surface-hover text-rose-500 font-mono">
-                  {invalidRoutePath || 'this URL'}
-                </code>
-                .
-              </p>
-            </div>
-            <div className="flex items-center justify-center gap-3 pt-2">
-              <button type="button" onClick={handleNavigateComponents} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent text-background text-xs font-medium hover:opacity-90 transition-opacity cursor-pointer">
-                <Grid className="w-3.5 h-3.5" />
-                <span>Browse Components</span>
-              </button>
-              <button type="button" onClick={handleNavigateHome} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-hover hover:bg-surface-raised border border-border text-xs text-text-primary transition-colors cursor-pointer">
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Go Home</span>
-              </button>
-            </div>
-          </div>
-        </main>
-      ) : activeView === 'docs' ? (
-        <DocsPage
-          activeTopic={activeDocTopic}
-          onSelectTopic={handleSelectDocTopic}
-          onNavigateHome={handleNavigateHome}
-          onNavigateComponents={handleNavigateComponents}
-        />
-      ) : activeView === 'components' ? (
-        <AllComponentsPage
-          currentPage={componentPage}
-          onPageChange={handlePageChange}
-          onSelectComponent={handleSelectComponentById}
-          onNavigateHome={handleNavigateHome}
-          onNavigateDocs={() => handleNavigateDocs('introduction')}
-        />
-      ) : (
-        <main>
-          {/* Hero */}
-          <HeroSection
-            onExplore={handleNavigateComponents}
+        {activeView === 'component-detail' && selectedComponent ? (
+          <ComponentDetailPage
+            component={selectedComponent}
             onSelectComponent={handleSelectComponentById}
+            onNavigateHome={handleNavigateHome}
+            onNavigateComponents={handleNavigateComponents}
+            onNavigateDocs={handleNavigateDocs}
           />
-
-          {/* How It Works (Dev Experience) */}
-          <DevExperience onExploreDocs={() => handleNavigateDocs('introduction')} />
-
-          {/* Component Directory (Homepage limited 6 items) */}
-          <ComponentDirectory
+        ) : activeView === 'component-not-found' ? (
+          <main className="min-h-[70vh] flex items-center justify-center p-6 text-center">
+            <div className="max-w-md w-full p-8 rounded-2xl bg-surface border border-border space-y-5">
+              <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center mx-auto">
+                <AlertCircle className="w-6 h-6" />
+              </div>
+              <div className="space-y-2">
+                <h1 className="text-xl font-bold text-text-primary tracking-tight">Component Not Found</h1>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  No component exists matching{' '}
+                  <code className="px-1.5 py-0.5 rounded bg-surface-hover text-rose-500 font-mono">
+                    /components/{invalidComponentSlug || 'unknown'}
+                  </code>
+                  . It may have been moved or renamed.
+                </p>
+              </div>
+              <div className="flex items-center justify-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={handleNavigateComponents}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent text-background text-xs font-medium hover:opacity-90 transition-opacity cursor-pointer"
+                >
+                  <Grid className="w-3.5 h-3.5" />
+                  <span>Browse Components</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNavigateHome}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-hover hover:bg-surface-raised border border-border text-xs text-text-primary transition-colors cursor-pointer"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Go Home</span>
+                </button>
+              </div>
+            </div>
+          </main>
+        ) : activeView === 'route-not-found' ? (
+          <main className="min-h-[70vh] flex items-center justify-center p-6 text-center">
+            <div className="max-w-md w-full p-8 rounded-2xl bg-surface border border-border space-y-5">
+              <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center mx-auto">
+                <AlertCircle className="w-6 h-6" />
+              </div>
+              <div className="space-y-2">
+                <h1 className="text-xl font-bold text-text-primary tracking-tight">Page Not Found</h1>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  No EasyUI page exists at{' '}
+                  <code className="px-1.5 py-0.5 rounded bg-surface-hover text-rose-500 font-mono">
+                    {invalidRoutePath || 'this URL'}
+                  </code>
+                  .
+                </p>
+              </div>
+              <div className="flex items-center justify-center gap-3 pt-2">
+                <button type="button" onClick={handleNavigateComponents} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent text-background text-xs font-medium hover:opacity-90 transition-opacity cursor-pointer">
+                  <Grid className="w-3.5 h-3.5" />
+                  <span>Browse Components</span>
+                </button>
+                <button type="button" onClick={handleNavigateHome} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-hover hover:bg-surface-raised border border-border text-xs text-text-primary transition-colors cursor-pointer">
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Go Home</span>
+                </button>
+              </div>
+            </div>
+          </main>
+        ) : activeView === 'docs' ? (
+          <DocsPage
+            activeTopic={activeDocTopic}
+            onSelectTopic={handleSelectDocTopic}
+            onNavigateHome={handleNavigateHome}
+            onNavigateComponents={handleNavigateComponents}
+          />
+        ) : activeView === 'components' ? (
+          <AllComponentsPage
+            currentPage={componentPage}
+            onPageChange={handlePageChange}
             onSelectComponent={handleSelectComponentById}
-            onNavigateAllComponents={() => handleNavigateAllComponents(1)}
+            onNavigateHome={handleNavigateHome}
+            onNavigateDocs={() => handleNavigateDocs('introduction')}
           />
-
-          {/* Final CTA */}
-          <FinalCta onBrowse={() => handleNavigateAllComponents(1)} />
-        </main>
-      )}
+        ) : (
+          <main>
+            {/* Hero */}
+            <HeroSection
+              onExplore={handleNavigateComponents}
+              onSelectComponent={handleSelectComponentById}
+            />
+            {/* Component Directory */}
+            <ComponentDirectory
+              onSelectComponent={handleSelectComponentById}
+              onNavigateAllComponents={() => handleNavigateAllComponents(1)}
+            />
+          </main>
+        )}
       </Suspense>
 
       {/* Footer */}

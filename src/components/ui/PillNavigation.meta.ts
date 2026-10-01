@@ -4,6 +4,7 @@ const meta: EasyUIComponentMeta = {
   title: 'Pill Navigation',
   description: 'A restrained segmented navigation control with shared pill layout morphing and nested submenu dropdown support.',
   category: 'Navigation',
+  featured: true,
   tagline: 'Minimal shared-pill navigation continuity with fluid submenus',
   badges: ['Layout Springs', 'Submenu Dropdown', 'Accessible', 'Minimal'],
   createdAt: '2026-08-28',

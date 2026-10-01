@@ -4,6 +4,7 @@ const meta: EasyUIComponentMeta = {
   title: 'DrawCheckbox',
   description: 'A checkbox whose checkmark draws itself (path length animation) and settles with a tiny overshoot. The box scales from 0.9 -> 1.04 -> 1.0 for a tactile snap feel.',
   category: 'Forms',
+  featured: true,
   tagline: 'Checkmark draws itself, then settles',
   badges: ['Path Draw', 'Overshoot', 'Indeterminate', 'Light & Dark'],
   createdAt: '2026-09-03',
