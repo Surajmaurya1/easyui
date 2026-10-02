@@ -33,9 +33,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplore }) => {
             transition={{ duration: 0.55, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
             className="mt-2 sm:mt-3 text-[36px] sm:text-[56px] lg:text-[72px] font-medium tracking-[-0.035em] text-text-primary leading-[1.02]"
           >
-            Beautiful Components,
+            Beautiful Components
             <br />
-            Made to Stand Out.
+            Made to Stand Out
           </motion.h1>
 
           {/* ONE short description */}
@@ -45,7 +45,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplore }) => {
             transition={{ duration: 0.5, delay: 0.14, ease: [0.16, 1, 0.3, 1] }}
             className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] text-text-secondary max-w-md leading-relaxed"
           >
-            Beautiful, open source and animated React components you can copy, customize, and install with one command.
+            Beautiful React components for modern interfaces
           </motion.p>
 
           {/* Browse components CTA */}
