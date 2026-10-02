@@ -26,20 +26,8 @@ export const ComponentDirectory: React.FC<ComponentDirectoryProps> = ({
   const featuredComponents = useMemo(() => getFeaturedComponents(EASY_COMPONENTS), []);
 
   return (
-    <section id="components-directory" className="py-24 sm:py-32 lg:py-40 bg-background border-t border-border">
+    <section id="components-directory" className="pt-4 sm:pt-6 lg:pt-8 pb-16 sm:pb-20 lg:pb-24 bg-background">
       <Container size="xl">
-        {/* Section header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
-          <div>
-            <span className="text-[11px] font-mono text-text-muted uppercase tracking-[0.18em]">
-              Featured
-            </span>
-            <h2 className="mt-3 text-3xl sm:text-[44px] font-semibold text-text-primary tracking-[-0.02em] leading-[1.1]">
-              Components
-            </h2>
-          </div>
-        </div>
-
         {/* Featured Components Grid — no pagination */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {featuredComponents.map((comp) => (
