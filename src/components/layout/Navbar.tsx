@@ -95,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               height="22"
               className="w-[22px] h-[22px] object-contain group-hover:scale-105 transition-transform duration-200 invert dark:invert-0"
             />
-            <span className="text-sm font-medium text-text-primary font-mono group-hover:text-accent transition-colors">
+            <span className="hidden sm:inline text-sm font-medium text-text-primary font-mono group-hover:text-accent transition-colors">
               easyui
             </span>
           </a>
