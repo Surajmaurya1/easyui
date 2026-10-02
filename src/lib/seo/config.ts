@@ -10,10 +10,10 @@ export const SEO_CONFIG = {
   defaultDescription:
     'Production-ready, beautifully crafted animated UI components built with React, Tailwind CSS, and Framer Motion for modern web applications.',
   siteUrl: 'https://easyui.site',
-  ogImage: 'https://easyui.site/easyui-og-concept-v3.png',
+  ogImage: 'https://easyui.site/og-image.png',
   ogImageType: 'image/png',
-  ogImageWidth: 1733,
-  ogImageHeight: 907,
+  ogImageWidth: 1731,
+  ogImageHeight: 909,
   ogImageAlt: 'EasyUI — Beautiful UI. Made easy.',
   twitterCard: 'summary_large_image',
   twitterHandle: '@easyui',
