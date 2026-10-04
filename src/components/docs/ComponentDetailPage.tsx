@@ -31,6 +31,7 @@ import {
 import type { EasyComponentMeta } from '../../types/component';
 import { EASY_COMPONENTS } from '../registry/components-data';
 import { cn, copyToClipboard } from '../../lib/utils';
+import { trackTracwellEvent } from '../../lib/tracwell-client';
 import { isComponentNew } from '../../lib/components';
 import { useComponentSource } from '../../lib/source-loader';
 import { NewBadge } from '../common/NewBadge';
@@ -1400,16 +1401,25 @@ export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isFullscreenPreview]);
 
-  const handleCopy = (text: string, label: string) => {
-    copyToClipboard(text);
+  const handleCopy = async (text: string, label: string) => {
+    const copied = await copyToClipboard(text);
+    if (!copied) return;
     setCopiedCode(label);
     setTimeout(() => setCopiedCode(null), 2000);
+    trackTracwellEvent('component_code_copied', {
+      component_id: component.id,
+      code_type: label,
+    });
   };
 
-  const handleCopyCli = () => {
-    copyToClipboard(component.cliCommand);
+  const handleCopyCli = async () => {
+    const copied = await copyToClipboard(component.cliCommand);
+    if (!copied) return;
     setIsCopiedCli(true);
     setTimeout(() => setIsCopiedCli(false), 2000);
+    trackTracwellEvent('component_install_command_copied', {
+      component_id: component.id,
+    });
   };
 
   // Filtered components list for the sidebar

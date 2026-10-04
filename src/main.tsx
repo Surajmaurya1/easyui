@@ -5,6 +5,7 @@ import App from './App.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx'
 import { ThemeProvider } from './lib/theme/useTheme'
 import { installGlobalErrorReporting } from './lib/error-reporting'
+import { TracwellAnalytics } from './lib/tracwell-analytics'
 
 installGlobalErrorReporting()
 
@@ -48,6 +49,7 @@ const appElement = (
   <StrictMode>
     <ErrorBoundary>
       <ThemeProvider initialTheme="dark">
+        <TracwellAnalytics />
         <App />
       </ThemeProvider>
     </ErrorBoundary>

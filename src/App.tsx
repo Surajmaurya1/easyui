@@ -428,6 +428,7 @@ export function App({ initialPath }: AppProps = {}) {
 
       {/* Footer */}
       <Footer
+        onNavigateHome={handleNavigateHome}
         onNavigateComponents={handleNavigateComponents}
         onNavigateDocs={() => handleNavigateDocs('introduction')}
       />

@@ -3,29 +3,65 @@ import { Container } from './Container';
 import { GITHUB_URL, LINKEDIN_URL } from '../../lib/constants';
 
 export interface FooterProps {
+  onNavigateHome?: () => void;
   onNavigateComponents?: () => void;
   onNavigateDocs?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigateComponents, onNavigateDocs }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigateHome, onNavigateComponents, onNavigateDocs }) => {
   return (
-    <footer className="bg-background pt-10 sm:pt-12 pb-8 sm:pb-10 text-text-muted border-t border-border-subtle">
+    <footer className="bg-background pt-10 sm:pt-12 pb-24 sm:pb-10 text-text-muted border-t border-border-subtle">
       <Container size="xl">
-        {/* Top row: wordmark on the left, simple link row on the right */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-6">
-          <div className="flex items-center gap-2.5">
-            <img
-              src="/logo.png"
-              alt="EasyUI Logo"
-              width="24"
-              height="24"
-              className="w-6 h-6 object-contain invert dark:invert-0"
-            />
-            <span className="text-base font-medium text-text-primary font-mono">easyui</span>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-y-6">
+          <div className="flex flex-col items-start gap-5 sm:col-start-1 sm:row-start-1 sm:justify-self-start">
+            <a
+              href="https://tracwell.app/"
+              aria-label="Tracwell — analytics sponsor"
+              className="group flex items-center gap-2 rounded focus-ring"
+            >
+              <img
+                src="/tracwell-icon-dark.svg"
+                alt=""
+                width="24"
+                height="24"
+                className="h-6 w-6 object-contain"
+              />
+              <span className="flex flex-col leading-tight">
+                <span className="text-sm font-semibold tracking-tight text-text-primary transition-colors group-hover:text-text-secondary">
+                  Tracwell
+                </span>
+                <span className="text-[9px] font-semibold uppercase tracking-[0.12em] text-text-muted">
+                Analytics sponsor
+                </span>
+              </span>
+            </a>
+
+            <a
+              href="/"
+              aria-label="EasyUI home"
+              onClick={(e) => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0 && onNavigateHome) {
+                  e.preventDefault();
+                  onNavigateHome();
+                }
+              }}
+              className="group flex items-center gap-2.5 self-start rounded focus-ring sm:self-auto"
+            >
+              <img
+                src="/logo.png"
+                alt=""
+                width="24"
+                height="24"
+                className="w-6 h-6 object-contain invert dark:invert-0"
+              />
+              <span className="text-base font-medium text-text-primary font-mono transition-colors group-hover:text-text-secondary">
+                easyui
+              </span>
+            </a>
           </div>
 
           <nav
-            className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px]"
+            className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] sm:col-start-2 sm:row-start-1 sm:justify-self-end"
             aria-label="Footer navigation"
           >
             <a
@@ -67,11 +103,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateComponents, onNavigate
               LLMs
             </a>
           </nav>
-        </div>
-
-        {/* Bottom row: copyright + signature — tight gap, no border line */}
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[12px]">
-          <div>
+          <div className="text-[12px] sm:col-start-2 sm:row-start-2 sm:justify-self-end">
             © {new Date().getFullYear()} EasyUI. Built by{' '}
             <a
               href={LINKEDIN_URL}
@@ -81,11 +113,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateComponents, onNavigate
             >
               Suraj Maurya
             </a>
-            .
+            
           </div>
-          <span className="font-mono text-[11px] text-text-subtle tracking-wide">
-            React · TypeScript · Motion
-          </span>
         </div>
       </Container>
     </footer>

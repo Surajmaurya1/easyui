@@ -4,6 +4,7 @@ import { Copy, Check, ArrowUpRight } from 'lucide-react';
 import { NewBadge } from './NewBadge';
 import { isComponentNew } from '../../lib/components';
 import { copyToClipboard, cn } from '../../lib/utils';
+import { trackTracwellEvent } from '../../lib/tracwell-client';
 import { ComponentPreviewRenderer } from './ComponentPreviewRenderer';
 
 export interface ComponentCardProps {
@@ -23,11 +24,15 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
   const [copied, setCopied] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleCopyCLI = (e: React.MouseEvent) => {
+  const handleCopyCLI = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    copyToClipboard(component.cliCommand);
+    const copied = await copyToClipboard(component.cliCommand);
+    if (!copied) return;
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    trackTracwellEvent('component_install_command_copied', {
+      component_id: component.id,
+    });
   };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
