@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Container } from '../layout/Container';
-import { DotField } from '../ui/DotField';
 
 export interface HeroSectionProps {
   onExplore: () => void;
@@ -11,19 +10,6 @@ export interface HeroSectionProps {
 export const HeroSection: React.FC<HeroSectionProps> = ({ onExplore }) => {
   return (
     <section className="relative pt-14 sm:pt-16 lg:pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
-      {/* Atmosphere: same DotField + radial vignette as the rest of the site */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <DotField
-          dotRadius={1.5}
-          dotSpacing={18}
-          gradientFrom="rgba(10, 10, 10, 0.18)"
-          gradientTo="rgba(10, 10, 10, 0.05)"
-          className="w-full h-full"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,var(--bg)_95%)]" />
-      </div>
-
       <Container size="lg">
         <div className="relative flex flex-col items-center text-center max-w-3xl mx-auto">
           {/* ONE strong headline — comma + period punctuation for typographic drama */}

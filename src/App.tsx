@@ -4,7 +4,6 @@ import { Footer } from './components/layout/Footer';
 import { ComponentDirectory } from './components/sections/ComponentDirectory';
 import { EASY_COMPONENTS } from './components/registry/components-data';
 import type { EasyComponentMeta } from './types/component';
-import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useAnalyticsTracker } from './lib/analytics';
 import { useSEO } from './lib/seo';
@@ -303,13 +302,12 @@ export function App({ initialPath }: AppProps = {}) {
 
   return (
     <div className="min-h-screen bg-background text-text-primary font-sans selection:bg-accent/25 selection:text-text-primary">
-      {/* Vercel Analytics & Speed Insights (active on production deployment after hydration) */}
+      {/* Vercel Speed Insights (active on production deployment after hydration) */}
       {mounted &&
         typeof window !== 'undefined' &&
         !window.location.hostname.includes('localhost') &&
         !window.location.hostname.includes('127.0.0.1') && (
           <>
-            <Analytics />
             <SpeedInsights />
           </>
         )}

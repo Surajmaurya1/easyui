@@ -53,7 +53,7 @@ export const FeaturedShowcase: React.FC<FeaturedShowcaseProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
           {/* Item 1: Large Featured Spotlight Card (8 cols) */}
           <div className="md:col-span-8">
-            <SpotlightCard className="h-full flex flex-col justify-between p-7 bg-[#0E0E0E] border-[#1F1F1F]">
+            <SpotlightCard className="h-full flex flex-col justify-between rounded-[26px] p-7 bg-[#19191b] border-white/[0.08]">
               <div>
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ export const FeaturedShowcase: React.FC<FeaturedShowcaseProps> = ({
           </div>
 
           {/* Item 2: Magnetic Button Showcase (4 cols) */}
-          <div className="md:col-span-4 flex flex-col justify-between p-6 rounded-xl border border-[#1F1F1F] bg-[#0E0E0E] hover:border-[#4A4A4A] transition-colors">
+          <div className="md:col-span-4 flex flex-col justify-between p-6 rounded-[26px] border border-white/[0.08] bg-[#19191b] hover:border-white/[0.14] transition-colors">
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-mono uppercase tracking-wider text-[#A1A1A1]">
@@ -155,7 +155,7 @@ export const FeaturedShowcase: React.FC<FeaturedShowcaseProps> = ({
           </div>
 
           {/* Item 3: Morphing Dialog (4 cols) */}
-          <div className="md:col-span-4 p-6 rounded-xl border border-[#1F1F1F] bg-[#0E0E0E] hover:border-[#4A4A4A] transition-colors flex flex-col justify-between">
+          <div className="md:col-span-4 p-6 rounded-[26px] border border-white/[0.08] bg-[#19191b] hover:border-white/[0.14] transition-colors flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-mono uppercase tracking-wider text-[#A1A1A1]">
@@ -218,7 +218,7 @@ export const FeaturedShowcase: React.FC<FeaturedShowcaseProps> = ({
           </div>
 
           {/* Item 4: Floating Action Dock (8 cols) */}
-          <div className="md:col-span-8 p-6 rounded-xl border border-[#1F1F1F] bg-[#0E0E0E] hover:border-[#4A4A4A] transition-colors flex flex-col justify-between">
+          <div className="md:col-span-8 p-6 rounded-[26px] border border-white/[0.08] bg-[#19191b] hover:border-white/[0.14] transition-colors flex flex-col justify-between">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
                 <span className="text-xs font-mono uppercase tracking-wider text-[#A1A1A1]">

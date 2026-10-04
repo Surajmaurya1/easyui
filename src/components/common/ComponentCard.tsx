@@ -54,12 +54,12 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
       className={cn(
-        'group relative block rounded-[20px] border-[1.5px] border-border bg-surface p-2 hover:border-border-hover hover:shadow-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary/80 transition-all duration-200 cursor-pointer',
+        'group relative block rounded-[26px] bg-[#F1F1F2] dark:bg-[#18181B] p-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-all duration-200 cursor-pointer',
         className
       )}
     >
       {/* Inset Live Preview Box — backdrop follows the global theme. */}
-      <div className="relative rounded-2xl bg-surface-raised border border-border dark:bg-[#0c0c0c] dark:border-[#161616] overflow-hidden min-h-[260px] sm:min-h-[300px] flex flex-col justify-center">
+      <div className="relative rounded-[22px] bg-[#F1F1F2] dark:bg-[#18181B] overflow-hidden min-h-[260px] sm:min-h-[300px] flex flex-col justify-center">
         {/* Subtle Copy CLI Button (Reveals on card hover) — minimal, ghost-like */}
         <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150">
           <button
@@ -82,7 +82,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
       </div>
 
       {/* Component Footer — large title, prominent persistent arrow */}
-      <div className="pt-5 pb-2 px-2 flex items-center justify-between gap-3">
+      <div className="pt-5 pb-2 px-2 flex items-center justify-between gap-3 opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0 motion-reduce:transition-none">
         <div className="flex items-center gap-2 min-w-0">
           <h3 className="text-base sm:text-lg font-semibold text-text-primary transition-colors truncate">
             {component.name}
