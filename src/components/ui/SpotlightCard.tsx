@@ -46,7 +46,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
     >
       {/* Animated subtle dynamic border spotlight */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
           background: borderGradient,
         }}
