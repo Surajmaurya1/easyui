@@ -13,7 +13,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 106 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 107 animated React components.
 
 ### Component Index
 
@@ -21,6 +21,7 @@
 - [Advanced Data Table](https://easyui.site/components/advanced-data-table): A powerful, accessible data table component with multi-column sorting, faceted filters, global search, row selection, bulk actions, expandable sub-rows, and pagination.
 - [AI Agent Activity](https://easyui.site/components/ai-agent-activity): A timeline component for tracking AI agent reasoning, tool calls, API queries, database fetches, and execution states with inspectable parameters and results.
 - [AI Response](https://easyui.site/components/ai-response): A production-ready, accessible AI response component supporting streaming markdown, syntax-styled code blocks, citations, feedback actions, and tool execution status.
+- [Airport Matrix Clock](https://easyui.site/components/airport-matrix-clock): A live world clock that renders local times and city names as crisp dot-matrix characters with restrained, character-level rolling transitions.
 - [Animated File Upload](https://easyui.site/components/animated-file-upload): A minimal, physical drag-and-drop file uploader with smooth drop reaction, independent file upload tracking, progressive state morphing, and accessible retry flows.
 - [Animated Number Morph](https://easyui.site/components/animated-number): An Apple-grade smooth rolling digit counter that independently morphs individual numerical columns with physics-based springs, locale commas, currencies, and compact notation.
 - [Animated Tabs](https://easyui.site/components/animated-tabs): A tabbed switcher with physical pill indicator sliding smoothly between active items with content cross-fades.

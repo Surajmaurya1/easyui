@@ -1,6 +1,12 @@
 import type { ComponentPreviewDefinition } from './types';
 
 export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
+  'airport-matrix-clock': {
+    id: 'airport-matrix-clock',
+    componentId: 'airport-matrix-clock',
+    load: () => import('./items/airport-matrix-clock'),
+    metadata: { type: 'interactive' },
+  },
   'ai-response': {
     id: 'ai-response',
     componentId: 'ai-response',

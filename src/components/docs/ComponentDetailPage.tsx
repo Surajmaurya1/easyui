@@ -86,6 +86,7 @@ const UndoToast = lazyNamed(() => import('../ui/UndoToast'), 'UndoToast');
 const ExpandableDataRow = lazyNamed(() => import('../ui/ExpandableDataRow'), 'ExpandableDataRow');
 const ScrollProgressNav = lazyNamed(() => import('../ui/ScrollProgressNav'), 'ScrollProgressNav');
 const AnimatedNumber = lazyNamed(() => import('../ui/AnimatedNumber'), 'AnimatedNumber');
+const AirportMatrixClock = lazyNamed(() => import('../ui/AirportMatrixClock'), 'AirportMatrixClock');
 const SpotlightSearch = lazyNamed(() => import('../ui/SpotlightSearch'), 'SpotlightSearch');
 const MorphingButton = lazyNamed(() => import('../ui/MorphingButton'), 'MorphingButton');
 const DragToConfirm = lazyNamed(() => import('../ui/DragToConfirm'), 'DragToConfirm');
@@ -1458,6 +1459,12 @@ export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
 
   const renderInteractiveDemo = () => {
     switch (component.id) {
+      case 'airport-matrix-clock':
+        return (
+          <div key={demoKey} className="w-full max-w-xl mx-auto">
+            <AirportMatrixClock showControls />
+          </div>
+        );
       case 'ai-response':
         return <AIResponseLiveShowcase />;
       case 'advanced-data-table':
