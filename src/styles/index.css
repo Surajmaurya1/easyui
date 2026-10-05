@@ -3,8 +3,6 @@
 @import './tokens.css';
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/inter";
-@import "@fontsource-variable/roboto";
 
 @custom-variant dark (&:is(.dark *));
 @config "../../tailwind.config.js";

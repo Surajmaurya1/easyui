@@ -1,6 +1,16 @@
 export { AnimatedTabs } from './AnimatedTabs';
 export type { AnimatedTabsProps, TabItem } from './AnimatedTabs';
 
+export { DynamicIsland } from './DynamicIsland';
+export type {
+  DynamicIslandProps,
+  DynamicIslandState,
+  DynamicIslandSocials,
+  DynamicIslandSocialItem,
+  DynamicIslandSocialPlatform,
+  DynamicIslandMetadataItem,
+} from './DynamicIsland';
+
 export { CommandMenu } from './CommandMenu';
 export type { CommandMenuProps, CommandItem } from './CommandMenu';
 

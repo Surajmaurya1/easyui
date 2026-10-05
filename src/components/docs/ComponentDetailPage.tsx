@@ -48,6 +48,7 @@ function lazyNamed<T extends React.ComponentType<any>>(
   return lazy(async () => ({ default: (await loader())[exportName] as T }));
 }
 
+const DynamicIsland = lazyNamed(() => import('../ui/DynamicIsland'), 'DynamicIsland');
 const MagneticButton = lazyNamed(() => import('../ui/MagneticButton'), 'MagneticButton');
 const SpotlightCard = lazyNamed(() => import('../ui/SpotlightCard'), 'SpotlightCard');
 const CursorFollower = lazyNamed(() => import('../ui/CursorFollower'), 'CursorFollower');
@@ -86,6 +87,7 @@ const UndoToast = lazyNamed(() => import('../ui/UndoToast'), 'UndoToast');
 const ExpandableDataRow = lazyNamed(() => import('../ui/ExpandableDataRow'), 'ExpandableDataRow');
 const ScrollProgressNav = lazyNamed(() => import('../ui/ScrollProgressNav'), 'ScrollProgressNav');
 const AnimatedNumber = lazyNamed(() => import('../ui/AnimatedNumber'), 'AnimatedNumber');
+const AirportMatrixClock = lazyNamed(() => import('../ui/AirportMatrixClock'), 'AirportMatrixClock');
 const SpotlightSearch = lazyNamed(() => import('../ui/SpotlightSearch'), 'SpotlightSearch');
 const MorphingButton = lazyNamed(() => import('../ui/MorphingButton'), 'MorphingButton');
 const DragToConfirm = lazyNamed(() => import('../ui/DragToConfirm'), 'DragToConfirm');
@@ -1458,6 +1460,12 @@ export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
 
   const renderInteractiveDemo = () => {
     switch (component.id) {
+      case 'airport-matrix-clock':
+        return (
+          <div key={demoKey} className="w-full max-w-xl mx-auto">
+            <AirportMatrixClock showControls />
+          </div>
+        );
       case 'ai-response':
         return <AIResponseLiveShowcase />;
       case 'advanced-data-table':
@@ -1861,6 +1869,29 @@ const completion = await client.completions.create({
                 },
               ]}
               defaultTab="tab1"
+            />
+          </div>
+        );
+      case 'dynamic-island':
+        return (
+          <div className="py-12 flex flex-col items-center justify-center gap-4 min-h-[340px]">
+            <DynamicIsland
+              key={demoKey}
+              name="Suraj Maurya"
+              role="Frontend Developer"
+              description="Building thoughtful interfaces with React, Next.js, and Framer Motion."
+              statusText="Available for hire"
+              metadata={[
+                { label: 'Role', value: 'Lead Engineer' },
+                { label: 'Location', value: 'Remote / Global' },
+              ]}
+              socials={{
+                github: 'https://github.com/Surajmaurya1',
+                x: 'https://x.com',
+                linkedin: 'https://linkedin.com',
+                instagram: 'https://instagram.com',
+                email: 'mailto:suraj@example.com',
+              }}
             />
           </div>
         );

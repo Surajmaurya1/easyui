@@ -394,6 +394,101 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "airport-matrix-clock",
+    "name": "Airport Matrix Clock",
+    "tagline": "World time, one rolling matrix character at a time",
+    "description": "A live world clock that renders local times and city names as crisp dot-matrix characters with restrained, character-level rolling transitions.",
+    "category": "Motion",
+    "badges": [
+      "Live Time",
+      "Dot Matrix",
+      "Reduced Motion"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/airport-matrix-clock",
+    "features": [
+      "IANA timezone formatting handles local time and daylight-saving changes without a time service",
+      "Three-city default with a five-city maximum, duplicate removal, and safe fallback for invalid input",
+      "Built-in country and city selectors let viewers add or remove cities from the supported set",
+      "Compact bitmap glyphs for city names and 12-hour or 24-hour time",
+      "Only changed character cells roll; unchanged cells retain their rendered state",
+      "Hovering a city or time rolls its characters through a brief staggered rebuild",
+      "Dedicated dark matrix board surface with authentic high-contrast dot matrix typography"
+    ],
+    "props": [
+      {
+        "name": "cities",
+        "type": "AirportMatrixCityId[]",
+        "default": "['los-angeles', 'london', 'tokyo']",
+        "description": "Initial or controlled city IDs; supports one to five cities."
+      },
+      {
+        "name": "format",
+        "type": "'12h' | '24h'",
+        "default": "'24h'",
+        "description": "Local time display format."
+      },
+      {
+        "name": "showSeconds",
+        "type": "boolean",
+        "default": "false",
+        "description": "Include seconds in each displayed time."
+      },
+      {
+        "name": "updateInterval",
+        "type": "number",
+        "default": "1000",
+        "description": "Shared clock refresh interval in milliseconds."
+      },
+      {
+        "name": "showCountry",
+        "type": "boolean",
+        "default": "false",
+        "description": "Show the country name under each city."
+      },
+      {
+        "name": "showControls",
+        "type": "boolean",
+        "default": "true when cities is omitted",
+        "description": "Show country and city selectors plus add and remove controls."
+      },
+      {
+        "name": "onCitiesChange",
+        "type": "(cities: AirportMatrixCityId[]) => void",
+        "default": "undefined",
+        "description": "Receive city selection changes when using a controlled cities prop."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "''",
+        "description": "Additional classes for the board container."
+      }
+    ],
+    "accessibility": [
+      "The board exposes a concise accessible name with the current times and city names; decorative dot SVGs are hidden from assistive technology.",
+      "Framer Motion reduced-motion preference removes character travel while retaining current values and live updates.",
+      "Semantic section and list markup provides a clear reading order.",
+      "Native country and city selects and labeled remove buttons support keyboard use."
+    ],
+    "createdAt": "2026-10-05",
+    "usageCode": "import { AirportMatrixClock } from \"@/components/ui/airport-matrix-clock\";\n\nexport function WorldClocks() {\n  return (\n    <AirportMatrixClock\n      cities={[\"los-angeles\", \"london\", \"tokyo\"]}\n      format=\"24h\"\n    />\n  );\n}\n\n// India: new-delhi, mumbai, bengaluru, hyderabad, chennai, kolkata, lucknow,\n// ahmedabad, pune, jaipur, varanasi. United States: new-york, los-angeles,\n// san-francisco, chicago, houston, miami, seattle, boston. United Kingdom:\n// london, manchester, birmingham, edinburgh, glasgow. UAE: dubai, abu-dhabi,\n// sharjah. Japan: tokyo, osaka, kyoto, nagoya, yokohama.\n<AirportMatrixClock cities={[\"new-delhi\", \"mumbai\", \"tokyo\"]} format=\"12h\" showSeconds showCountry showControls />",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/AirportMatrixClock.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/airport-matrix-clock.tsx"
+      },
+      {
+        "path": "src/lib/motion-tokens.ts",
+        "type": "registry:lib",
+        "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
     "id": "animated-file-upload",
     "name": "Animated File Upload",
     "tagline": "Physical drag-and-drop file uploader with per-file progress morphing",
@@ -2323,6 +2418,146 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
       }
     ],
     "featured": true
+  },
+  {
+    "id": "dynamic-island",
+    "name": "Dynamic Island",
+    "tagline": "Continuous physical morphing island with spring layout physics",
+    "description": "A physical morphing island component that smoothly transitions between a compact indicator, interactive summary, profile card, and social dock with spring physics.",
+    "category": "Navigation",
+    "badges": [
+      "Navigation",
+      "Layout Morphing",
+      "Spring Physics",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/dynamic-island",
+    "features": [
+      "Continuous physical morphing between collapsed, expanded, profile, and share states",
+      "Spring-based layout-aware geometry and radius interpolation with no abrupt snapping",
+      "Persistent spatial continuity for the avatar across collapsed and profile states",
+      "Fully accessible keyboard navigation with Escape key dismissal and click-outside collapse",
+      "Configurable social dock supporting predefined platform detection and custom links",
+      "Light and dark mode compatibility adhering strictly to the EasyUI design token system",
+      "Respects prefers-reduced-motion media query with instant fallback states"
+    ],
+    "props": [
+      {
+        "name": "avatar",
+        "type": "string",
+        "default": "undefined",
+        "description": "URL of user avatar image"
+      },
+      {
+        "name": "avatarAlt",
+        "type": "string",
+        "default": "undefined",
+        "description": "Alt text for the avatar image"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'Suraj Maurya'",
+        "description": "Display name in expanded and profile views"
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "default": "'Frontend Developer'",
+        "description": "Subtitle or profession title"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "default": "'Building thoughtful interfaces...'",
+        "description": "Bio or description text rendered in profile view"
+      },
+      {
+        "name": "greeting",
+        "type": "string",
+        "default": "'Hello, I am [name]'",
+        "description": "Custom message displayed in expanded state"
+      },
+      {
+        "name": "statusText",
+        "type": "string",
+        "default": "'Available for work'",
+        "description": "Optional availability chip displayed beside name"
+      },
+      {
+        "name": "metadata",
+        "type": "DynamicIslandMetadataItem[]",
+        "default": "undefined",
+        "description": "Key-value badges rendered in profile card"
+      },
+      {
+        "name": "socials",
+        "type": "DynamicIslandSocials",
+        "default": "5 default links",
+        "description": "Social links as an array of items or platform key-value object"
+      },
+      {
+        "name": "state",
+        "type": "'collapsed' | 'expanded' | 'profile' | 'share'",
+        "default": "undefined",
+        "description": "Controlled state value"
+      },
+      {
+        "name": "defaultState",
+        "type": "'collapsed' | 'expanded' | 'profile' | 'share'",
+        "default": "'collapsed'",
+        "description": "Initial uncontrolled state"
+      },
+      {
+        "name": "onStateChange",
+        "type": "(state: DynamicIslandState) => void",
+        "default": "undefined",
+        "description": "Callback invoked whenever state changes"
+      },
+      {
+        "name": "profileContent",
+        "type": "ReactNode",
+        "default": "undefined",
+        "description": "Custom ReactNode replacing default profile body"
+      },
+      {
+        "name": "shareContent",
+        "type": "ReactNode",
+        "default": "undefined",
+        "description": "Custom ReactNode replacing default share dock"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional additional styling applied to the island container"
+      }
+    ],
+    "accessibility": [
+      "Semantic native button and anchor elements with descriptive aria-labels",
+      "Escape key dismisses island back to collapsed state",
+      "Clicking outside the island boundary automatically collapses it",
+      "Full keyboard tabbing order across controls and social anchors with focus-ring outlines",
+      "Respects prefers-reduced-motion query by eliminating spring animations"
+    ],
+    "createdAt": "2026-10-05",
+    "usageCode": "import { DynamicIsland } from \"@/components/ui/dynamic-island\";\n\nexport function Demo() {\n  return (\n    <DynamicIsland\n      name=\"Suraj Maurya\"\n      role=\"Frontend Developer\"\n      description=\"Building thoughtful interfaces with React and Next.js.\"\n      statusText=\"Available for hire\"\n      socials={{\n        github: \"https://github.com/Surajmaurya1\",\n        x: \"https://x.com\",\n        linkedin: \"https://linkedin.com\",\n        instagram: \"https://instagram.com\",\n        email: \"mailto:suraj@example.com\",\n      }}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/DynamicIsland.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/dynamic-island.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
   },
   {
     "id": "evil-eye",

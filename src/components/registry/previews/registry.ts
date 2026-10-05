@@ -1,6 +1,18 @@
 import type { ComponentPreviewDefinition } from './types';
 
 export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
+  'dynamic-island': {
+    id: 'dynamic-island',
+    componentId: 'dynamic-island',
+    load: () => import('./items/dynamic-island'),
+    metadata: { type: 'interactive' },
+  },
+  'airport-matrix-clock': {
+    id: 'airport-matrix-clock',
+    componentId: 'airport-matrix-clock',
+    load: () => import('./items/airport-matrix-clock'),
+    metadata: { type: 'interactive' },
+  },
   'ai-response': {
     id: 'ai-response',
     componentId: 'ai-response',

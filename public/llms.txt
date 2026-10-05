@@ -13,7 +13,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 106 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 108 animated React components.
 
 ### Component Index
 
@@ -21,6 +21,7 @@
 - [Advanced Data Table](https://easyui.site/components/advanced-data-table): A powerful, accessible data table component with multi-column sorting, faceted filters, global search, row selection, bulk actions, expandable sub-rows, and pagination.
 - [AI Agent Activity](https://easyui.site/components/ai-agent-activity): A timeline component for tracking AI agent reasoning, tool calls, API queries, database fetches, and execution states with inspectable parameters and results.
 - [AI Response](https://easyui.site/components/ai-response): A production-ready, accessible AI response component supporting streaming markdown, syntax-styled code blocks, citations, feedback actions, and tool execution status.
+- [Airport Matrix Clock](https://easyui.site/components/airport-matrix-clock): A live world clock that renders local times and city names as crisp dot-matrix characters with restrained, character-level rolling transitions.
 - [Animated File Upload](https://easyui.site/components/animated-file-upload): A minimal, physical drag-and-drop file uploader with smooth drop reaction, independent file upload tracking, progressive state morphing, and accessible retry flows.
 - [Animated Number Morph](https://easyui.site/components/animated-number): An Apple-grade smooth rolling digit counter that independently morphs individual numerical columns with physics-based springs, locale commas, currencies, and compact notation.
 - [Animated Tabs](https://easyui.site/components/animated-tabs): A tabbed switcher with physical pill indicator sliding smoothly between active items with content cross-fades.
@@ -43,6 +44,7 @@
 - [Dot Shader](https://easyui.site/components/dot-shader): A GPU-accelerated interactive dot matrix background shader with magnetic cursor repulsion, proximity illumination glow, dynamic lens scaling, and ambient wave motion.
 - [Drag to Confirm](https://easyui.site/components/drag-to-confirm): A physical drag-to-confirm slider for high-stakes and destructive actions, equipped with elastic spring snapback physics, progressive track illumination, and accessible keyboard fallbacks.
 - [DrawCheckbox](https://easyui.site/components/draw-checkbox): A checkbox whose checkmark draws itself (path length animation) and settles with a tiny overshoot. The box scales from 0.9 -> 1.04 -> 1.0 for a tactile snap feel.
+- [Dynamic Island](https://easyui.site/components/dynamic-island): A physical morphing island component that smoothly transitions between a compact indicator, interactive summary, profile card, and social dock with spring physics.
 - [Evil Eye](https://easyui.site/components/evil-eye): A hanging navy amulet disc with concentric sky-blue and white rings that swings with realistic inertia in response to the pointer, painted as a layered SVG and driven by a single spring pipeline.
 - [Expandable Data Row](https://easyui.site/components/expandable-data-row): A polished table component with fluid accordion row unfolding, revealing deep metadata, audit activity feeds, and quick actions, with automatic card restructuring on mobile viewports.
 - [Expandable Search](https://easyui.site/components/expandable-search): A compact search pill that smoothly widens on focus with shortcut hint pills and clear button.
