@@ -658,6 +658,28 @@
       ]
     },
     {
+      "name": "dynamic-island",
+      "type": "registry:ui",
+      "title": "Dynamic Island",
+      "description": "A physical morphing island component that smoothly transitions between a compact indicator, interactive summary, profile card, and social dock with spring physics.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/DynamicIsland.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dynamic-island.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "evil-eye",
       "type": "registry:ui",
       "title": "Evil Eye",

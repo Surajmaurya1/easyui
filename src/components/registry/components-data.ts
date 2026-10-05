@@ -2420,6 +2420,146 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     "featured": true
   },
   {
+    "id": "dynamic-island",
+    "name": "Dynamic Island",
+    "tagline": "Continuous physical morphing island with spring layout physics",
+    "description": "A physical morphing island component that smoothly transitions between a compact indicator, interactive summary, profile card, and social dock with spring physics.",
+    "category": "Navigation",
+    "badges": [
+      "Navigation",
+      "Layout Morphing",
+      "Spring Physics",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/dynamic-island",
+    "features": [
+      "Continuous physical morphing between collapsed, expanded, profile, and share states",
+      "Spring-based layout-aware geometry and radius interpolation with no abrupt snapping",
+      "Persistent spatial continuity for the avatar across collapsed and profile states",
+      "Fully accessible keyboard navigation with Escape key dismissal and click-outside collapse",
+      "Configurable social dock supporting predefined platform detection and custom links",
+      "Light and dark mode compatibility adhering strictly to the EasyUI design token system",
+      "Respects prefers-reduced-motion media query with instant fallback states"
+    ],
+    "props": [
+      {
+        "name": "avatar",
+        "type": "string",
+        "default": "undefined",
+        "description": "URL of user avatar image"
+      },
+      {
+        "name": "avatarAlt",
+        "type": "string",
+        "default": "undefined",
+        "description": "Alt text for the avatar image"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "default": "'Suraj Maurya'",
+        "description": "Display name in expanded and profile views"
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "default": "'Frontend Developer'",
+        "description": "Subtitle or profession title"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "default": "'Building thoughtful interfaces...'",
+        "description": "Bio or description text rendered in profile view"
+      },
+      {
+        "name": "greeting",
+        "type": "string",
+        "default": "'Hello, I am [name]'",
+        "description": "Custom message displayed in expanded state"
+      },
+      {
+        "name": "statusText",
+        "type": "string",
+        "default": "'Available for work'",
+        "description": "Optional availability chip displayed beside name"
+      },
+      {
+        "name": "metadata",
+        "type": "DynamicIslandMetadataItem[]",
+        "default": "undefined",
+        "description": "Key-value badges rendered in profile card"
+      },
+      {
+        "name": "socials",
+        "type": "DynamicIslandSocials",
+        "default": "5 default links",
+        "description": "Social links as an array of items or platform key-value object"
+      },
+      {
+        "name": "state",
+        "type": "'collapsed' | 'expanded' | 'profile' | 'share'",
+        "default": "undefined",
+        "description": "Controlled state value"
+      },
+      {
+        "name": "defaultState",
+        "type": "'collapsed' | 'expanded' | 'profile' | 'share'",
+        "default": "'collapsed'",
+        "description": "Initial uncontrolled state"
+      },
+      {
+        "name": "onStateChange",
+        "type": "(state: DynamicIslandState) => void",
+        "default": "undefined",
+        "description": "Callback invoked whenever state changes"
+      },
+      {
+        "name": "profileContent",
+        "type": "ReactNode",
+        "default": "undefined",
+        "description": "Custom ReactNode replacing default profile body"
+      },
+      {
+        "name": "shareContent",
+        "type": "ReactNode",
+        "default": "undefined",
+        "description": "Custom ReactNode replacing default share dock"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional additional styling applied to the island container"
+      }
+    ],
+    "accessibility": [
+      "Semantic native button and anchor elements with descriptive aria-labels",
+      "Escape key dismisses island back to collapsed state",
+      "Clicking outside the island boundary automatically collapses it",
+      "Full keyboard tabbing order across controls and social anchors with focus-ring outlines",
+      "Respects prefers-reduced-motion query by eliminating spring animations"
+    ],
+    "createdAt": "2026-10-05",
+    "usageCode": "import { DynamicIsland } from \"@/components/ui/dynamic-island\";\n\nexport function Demo() {\n  return (\n    <DynamicIsland\n      name=\"Suraj Maurya\"\n      role=\"Frontend Developer\"\n      description=\"Building thoughtful interfaces with React and Next.js.\"\n      statusText=\"Available for hire\"\n      socials={{\n        github: \"https://github.com/Surajmaurya1\",\n        x: \"https://x.com\",\n        linkedin: \"https://linkedin.com\",\n        instagram: \"https://instagram.com\",\n        email: \"mailto:suraj@example.com\",\n      }}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/DynamicIsland.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/dynamic-island.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
     "id": "evil-eye",
     "name": "Evil Eye",
     "tagline": "Pointer-driven hanging amulet with layered spring physics",

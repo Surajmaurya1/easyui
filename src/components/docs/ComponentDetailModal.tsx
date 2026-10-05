@@ -25,6 +25,7 @@ import { motionTransitions } from '../../lib/motion-tokens';
 import { cn, copyToClipboard } from '../../lib/utils';
 import { useComponentSource } from '../../lib/source-loader';
 import { useFocusTrap } from '../../lib/hooks/useFocusTrap';
+import { DynamicIsland } from '../ui/DynamicIsland';
 import { MagneticButton } from '../ui/MagneticButton';
 import { SpotlightCard } from '../ui/SpotlightCard';
 import { CursorFollower } from '../ui/CursorFollower';
@@ -1289,6 +1290,28 @@ func main() {
                 { id: 'tab3', label: 'Security', content: <div className="text-xs text-[#A1A1A1] p-4 bg-[#141414] rounded-xl border border-[#1F1F1F]">Zero external runtime network dependencies</div> },
               ]}
               defaultTab="tab1"
+            />
+          </div>
+        );
+      case 'dynamic-island':
+        return (
+          <div className="py-12 flex flex-col items-center justify-center gap-4 min-h-[340px]">
+            <DynamicIsland
+              name="Suraj Maurya"
+              role="Frontend Developer"
+              description="Building thoughtful interfaces with React, Next.js, and Framer Motion."
+              statusText="Available for hire"
+              metadata={[
+                { label: 'Role', value: 'Lead Engineer' },
+                { label: 'Location', value: 'Remote / Global' },
+              ]}
+              socials={{
+                github: 'https://github.com/Surajmaurya1',
+                x: 'https://x.com',
+                linkedin: 'https://linkedin.com',
+                instagram: 'https://instagram.com',
+                email: 'mailto:suraj@example.com',
+              }}
             />
           </div>
         );

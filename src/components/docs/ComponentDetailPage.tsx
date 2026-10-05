@@ -48,6 +48,7 @@ function lazyNamed<T extends React.ComponentType<any>>(
   return lazy(async () => ({ default: (await loader())[exportName] as T }));
 }
 
+const DynamicIsland = lazyNamed(() => import('../ui/DynamicIsland'), 'DynamicIsland');
 const MagneticButton = lazyNamed(() => import('../ui/MagneticButton'), 'MagneticButton');
 const SpotlightCard = lazyNamed(() => import('../ui/SpotlightCard'), 'SpotlightCard');
 const CursorFollower = lazyNamed(() => import('../ui/CursorFollower'), 'CursorFollower');
@@ -1868,6 +1869,29 @@ const completion = await client.completions.create({
                 },
               ]}
               defaultTab="tab1"
+            />
+          </div>
+        );
+      case 'dynamic-island':
+        return (
+          <div className="py-12 flex flex-col items-center justify-center gap-4 min-h-[340px]">
+            <DynamicIsland
+              key={demoKey}
+              name="Suraj Maurya"
+              role="Frontend Developer"
+              description="Building thoughtful interfaces with React, Next.js, and Framer Motion."
+              statusText="Available for hire"
+              metadata={[
+                { label: 'Role', value: 'Lead Engineer' },
+                { label: 'Location', value: 'Remote / Global' },
+              ]}
+              socials={{
+                github: 'https://github.com/Surajmaurya1',
+                x: 'https://x.com',
+                linkedin: 'https://linkedin.com',
+                instagram: 'https://instagram.com',
+                email: 'mailto:suraj@example.com',
+              }}
             />
           </div>
         );

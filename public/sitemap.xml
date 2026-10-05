@@ -259,6 +259,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://easyui.site/components/dynamic-island</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://easyui.site/components/evil-eye</loc>
     <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
