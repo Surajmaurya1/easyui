@@ -20,7 +20,7 @@ function DefaultPreviewFallback({ component }: { component: EasyComponentMeta })
       className="h-52 flex flex-col items-center justify-center p-4 text-center select-none"
     >
       <span className="text-xs font-semibold text-text-primary mb-1">{component.name}</span>
-      <span className="text-[11px] text-text-muted line-clamp-2 max-w-[200px]">
+      <span className="text-[11px] text-text-muted line-clamp-2 max-w-50">
         {component.tagline || component.description}
       </span>
     </div>
@@ -93,9 +93,9 @@ export const ComponentPreviewRenderer: React.FC<ComponentPreviewRendererProps> =
         {!definition || !LazyComponent ? (
           <DefaultPreviewFallback component={component} />
         ) : !hasEnteredViewport ? (
-          <PreviewSkeleton />
+          <PreviewSkeleton componentId={component.id} />
         ) : (
-          <Suspense fallback={<PreviewSkeleton />}>
+          <Suspense fallback={<PreviewSkeleton componentId={component.id} />}>
             <LazyComponent
               component={component}
               isHovered={isHovered}
