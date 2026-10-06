@@ -1,3 +1,5 @@
+'use client';
+
 import {
   type CSSProperties,
   useEffect,
@@ -576,12 +578,42 @@ export function ThinkingOrb({
       ctx.fillStyle = hotCenter;
       ctx.fill();
 
+      if (!isIntersecting || paused || reducedMotionRef.current) {
+        animationRef.current = null;
+        return;
+      }
+
       animationRef.current = requestAnimationFrame(render);
     };
 
-    animationRef.current = requestAnimationFrame(render);
+    let isIntersecting = true;
+    let intersectionObserver: IntersectionObserver | undefined;
+    if (typeof IntersectionObserver === 'function') {
+      intersectionObserver = new IntersectionObserver(
+        ([entry]) => {
+          const visible = entry ? (entry.isIntersecting || entry.intersectionRatio > 0) : true;
+          if (visible !== isIntersecting) {
+            isIntersecting = visible;
+            if (isIntersecting && !paused && !reducedMotionRef.current) {
+              if (animationRef.current === null) {
+                animationRef.current = requestAnimationFrame(render);
+              }
+            } else if (!isIntersecting && animationRef.current !== null) {
+              cancelAnimationFrame(animationRef.current);
+              animationRef.current = null;
+            }
+          }
+        },
+        { rootMargin: '100px 0px' }
+      );
+      intersectionObserver.observe(canvas);
+    }
+
+    // Always perform initial frame draw
+    render(performance.now());
 
     return () => {
+      intersectionObserver?.disconnect();
       if (animationRef.current !== null) {
         cancelAnimationFrame(animationRef.current);
       }

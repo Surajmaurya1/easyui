@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { ComponentPreviewRenderer } from './ComponentPreviewRenderer';
 import { ComponentCard } from './ComponentCard';
 import { PreviewErrorBoundary } from './PreviewErrorBoundary';
@@ -67,6 +67,65 @@ describe('ComponentPreviewRenderer', () => {
     expect(screen.getByRole('button', { name: /retry loading preview/i })).toBeInTheDocument();
 
     warnSpy.mockRestore();
+  });
+
+  it('manages IntersectionObserver lifecycle correctly without disconnecting on first visibility', () => {
+    let observerCallback: IntersectionObserverCallback | null = null;
+    const disconnectSpy = vi.fn();
+    const observeSpy = vi.fn();
+
+    class ControllableMockObserver {
+      constructor(cb: IntersectionObserverCallback) {
+        observerCallback = cb;
+      }
+      observe = observeSpy;
+      unobserve = vi.fn();
+      disconnect = disconnectSpy;
+      takeRecords = () => [];
+    }
+
+    const originalIO = window.IntersectionObserver;
+    window.IntersectionObserver = ControllableMockObserver as any;
+
+    try {
+      const { unmount } = render(<ComponentPreviewRenderer component={mockMeta} />);
+      expect(observeSpy).toHaveBeenCalledTimes(1);
+      expect(observerCallback).toBeDefined();
+
+      // 1. Simulate entering viewport
+      act(() => {
+        observerCallback!(
+          [{ isIntersecting: true, intersectionRatio: 1 } as IntersectionObserverEntry],
+          {} as IntersectionObserver
+        );
+      });
+      // Crucial: Observer must NOT be disconnected upon entering viewport!
+      expect(disconnectSpy).not.toHaveBeenCalled();
+
+      // 2. Simulate leaving viewport
+      act(() => {
+        observerCallback!(
+          [{ isIntersecting: false, intersectionRatio: 0 } as IntersectionObserverEntry],
+          {} as IntersectionObserver
+        );
+      });
+      expect(disconnectSpy).not.toHaveBeenCalled();
+
+      // 3. Simulate re-entering viewport
+      act(() => {
+        observerCallback!(
+          [{ isIntersecting: true, intersectionRatio: 1 } as IntersectionObserverEntry],
+          {} as IntersectionObserver
+        );
+      });
+      expect(disconnectSpy).not.toHaveBeenCalled();
+
+      // 4. When unmounted, observer must be cleaned up
+      unmount();
+      expect(disconnectSpy).toHaveBeenCalledTimes(1);
+    } finally {
+      window.IntersectionObserver = originalIO;
+    }
   });
 });
 

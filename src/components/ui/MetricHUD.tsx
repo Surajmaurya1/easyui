@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo, useRef, useId } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Minus, Activity, Copy, Check } from 'lucide-react';

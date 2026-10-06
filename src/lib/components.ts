@@ -1,5 +1,3 @@
-import type { EasyComponentMeta } from '../types/component';
-
 /**
  * Default number of items per page for the dedicated components page.
  */
@@ -37,9 +35,9 @@ export const FEATURED_COMPONENT_IDS: readonly string[] = [
  * To feature a component in the future, set `featured: true` in its
  * `.meta.ts` file and add its ID to FEATURED_COMPONENT_IDS above.
  */
-export function getFeaturedComponents(components: EasyComponentMeta[]): EasyComponentMeta[] {
-  const byId = new Map<string, EasyComponentMeta>(components.map((c) => [c.id, c]));
-  return FEATURED_COMPONENT_IDS.reduce<EasyComponentMeta[]>((acc, id) => {
+export function getFeaturedComponents<T extends { id: string }>(components: T[]): T[] {
+  const byId = new Map<string, T>(components.map((c) => [c.id, c]));
+  return FEATURED_COMPONENT_IDS.reduce<T[]>((acc, id) => {
     const comp = byId.get(id);
     if (comp) acc.push(comp);
     return acc;
@@ -53,7 +51,7 @@ export const NEW_BADGE_DURATION_MS = NEW_BADGE_DURATION_DAYS * 24 * 60 * 60 * 10
  * Returns all components sorted by creation date descending (newest first).
  * Stable secondary sort on component name for identical timestamps.
  */
-export function getSortedComponents(components: EasyComponentMeta[]): EasyComponentMeta[] {
+export function getSortedComponents<T extends { createdAt: string; name: string }>(components: T[]): T[] {
   return [...components].sort((a, b) => {
     const timeA = new Date(a.createdAt).getTime();
     const timeB = new Date(b.createdAt).getTime();
@@ -67,7 +65,7 @@ export function getSortedComponents(components: EasyComponentMeta[]): EasyCompon
 /**
  * Resolves the single newest component from the collection based on createdAt.
  */
-export function getNewestComponent(components: EasyComponentMeta[]): EasyComponentMeta | null {
+export function getNewestComponent<T extends { createdAt: string; name: string }>(components: T[]): T | null {
   if (!components || components.length === 0) return null;
   const sorted = getSortedComponents(components);
   return sorted[0] || null;
@@ -117,11 +115,11 @@ export interface PaginatedResult<T> {
 /**
  * Slices a component array into a paginated subset.
  */
-export function getPaginatedComponents(
-  components: EasyComponentMeta[],
+export function getPaginatedComponents<T>(
+  components: T[],
   page = 1,
   pageSize = ITEMS_PER_PAGE
-): PaginatedResult<EasyComponentMeta> {
+): PaginatedResult<T> {
   const totalItems = components.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
   const safeCurrentPage = Math.min(Math.max(1, Math.floor(page) || 1), totalPages);

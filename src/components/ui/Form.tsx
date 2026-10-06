@@ -1,3 +1,5 @@
+'use client';
+
 import React, { forwardRef, useId } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Check, AlertCircle, Eye, EyeOff } from 'lucide-react';

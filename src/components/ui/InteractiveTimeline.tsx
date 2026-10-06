@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useId } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Clock, AlertCircle, Loader2, GitCommit, Copy, CheckCheck, ChevronDown } from 'lucide-react';

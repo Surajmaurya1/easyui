@@ -1,3 +1,5 @@
+'use client';
+
 import { memo, useEffect, useId, useMemo, useState, type PointerEvent } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { motionTransitions } from '../../lib/motion-tokens';

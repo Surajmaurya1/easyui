@@ -1,5 +1,25 @@
 export type ComponentCategory = 'All' | 'Recent' | 'Motion' | 'Buttons' | 'Navigation' | 'Feedback' | 'Overlays' | 'Forms' | 'Auth';
 
+/**
+ * Lightweight catalog entry used in the initial app-shell bundle.
+ *
+ * Contains only the fields required by the homepage, routing, and card previews.
+ * Heavy fields (usageCode, props, accessibility, features, files) are omitted
+ * to keep the entry chunk small. The full EasyComponentMeta is available only
+ * in lazy-loaded route chunks that actually need it.
+ */
+export interface ComponentCatalogIndex {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  category: Exclude<ComponentCategory, 'All'>;
+  badges: string[];
+  cliCommand: string;
+  createdAt: string;
+  featured?: boolean;
+}
+
 export interface ComponentProp {
   name: string;
   type: string;

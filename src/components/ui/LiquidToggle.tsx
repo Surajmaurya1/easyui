@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useId, useCallback, useEffect } from 'react';
 import {
   motion,

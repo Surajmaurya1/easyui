@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '../../lib/utils';
 
@@ -26,6 +28,8 @@ export interface DotShaderProps extends React.HTMLAttributes<HTMLDivElement> {
   interactive?: boolean;
   /** Subtle dark/light gradient vignette to blend container boundaries. Default: true */
   overlay?: boolean;
+  /** Whether the animation loop is paused. Default: false */
+  paused?: boolean;
 }
 
 interface ParsedColor {
@@ -167,6 +171,7 @@ export const DotShader: React.FC<DotShaderProps> = ({
   speed = 1,
   interactive = true,
   overlay = true,
+  paused = false,
   style,
   ...props
 }) => {
@@ -365,7 +370,7 @@ export const DotShader: React.FC<DotShaderProps> = ({
     let lastTime = startTime;
 
     // Render Loop
-    const render = (now: number) => {
+    const render = (now: number = performance.now()) => {
       const dt = Math.min(0.064, (now - lastTime) / 1000);
       lastTime = now;
       const elapsed = (now - startTime) * 0.001 * speed;
@@ -477,14 +482,44 @@ export const DotShader: React.FC<DotShaderProps> = ({
         }
       }
 
+      if (!isIntersecting || paused || reducedMotion) {
+        animFrameId = 0;
+        return;
+      }
+
       animFrameId = requestAnimationFrame(render);
     };
 
-    animFrameId = requestAnimationFrame(render);
+    let isIntersecting = true;
+    let intersectionObserver: IntersectionObserver | undefined;
+    if (typeof IntersectionObserver === 'function') {
+      intersectionObserver = new IntersectionObserver(
+        ([entry]) => {
+          const visible = entry ? (entry.isIntersecting || entry.intersectionRatio > 0) : true;
+          if (visible !== isIntersecting) {
+            isIntersecting = visible;
+            if (isIntersecting && !paused && !reducedMotion) {
+              if (!animFrameId) {
+                animFrameId = requestAnimationFrame(render);
+              }
+            } else if (!isIntersecting && animFrameId) {
+              cancelAnimationFrame(animFrameId);
+              animFrameId = 0;
+            }
+          }
+        },
+        { rootMargin: '100px 0px' }
+      );
+      intersectionObserver.observe(container);
+    }
+
+    // Initial render pass
+    render(performance.now());
 
     return () => {
       resizeObserver.disconnect();
-      cancelAnimationFrame(animFrameId);
+      intersectionObserver?.disconnect();
+      if (animFrameId) cancelAnimationFrame(animFrameId);
       if (gl) {
         if (positionBuffer) gl.deleteBuffer(positionBuffer);
         if (gridPosBuffer) gl.deleteBuffer(gridPosBuffer);
@@ -503,6 +538,7 @@ export const DotShader: React.FC<DotShaderProps> = ({
     speed,
     interactive,
     reducedMotion,
+    paused,
   ]);
 
   return (

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -107,7 +109,6 @@ export const UndoToast: React.FC<UndoToastProps> = ({
 
     const animate = () => {
       if (isPaused) {
-        requestRef.current = requestAnimationFrame(animate);
         return;
       }
 

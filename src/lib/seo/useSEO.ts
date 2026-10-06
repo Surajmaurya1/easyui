@@ -15,15 +15,14 @@ import {
   generateComponentCatalogSchema,
 } from './structured-data';
 import { updatePageMetadata } from './metadata';
-import type { EasyComponentMeta } from '../../types/component';
-import { EASY_COMPONENTS } from '../../components/registry/components-data';
+import type { ComponentCatalogIndex } from '../../types/component';
 
 interface UseSEOProps {
   activeView: 'showcase' | 'components' | 'docs' | 'component-detail' | 'component-not-found' | 'route-not-found';
   componentPage?: number;
   activeDocTopic?: string;
-  selectedModalComponent?: EasyComponentMeta | null;
-  selectedComponent?: EasyComponentMeta | null;
+  selectedModalComponent?: ComponentCatalogIndex | null;
+  selectedComponent?: ComponentCatalogIndex | null;
 }
 
 /**
@@ -92,8 +91,35 @@ export function useSEO({
       const description =
         'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.';
 
-      const structuredData = generateComponentCatalogSchema(EASY_COMPONENTS, componentPage);
+      // Lazily import the full catalog only when generating the components-page
+      // catalog schema. This keeps the initial app-shell bundle free of
+      // the 386 KB components-data.ts module.
+      import('../../components/registry/components-data').then(({ EASY_COMPONENTS }) => {
+        const structuredData = generateComponentCatalogSchema(EASY_COMPONENTS, componentPage);
 
+        updatePageMetadata({
+          title: pageTitle,
+          description,
+          canonical,
+          ogTitle: pageTitle,
+          ogDescription: description,
+          ogType: 'website',
+          keywords: [
+            'React components list',
+            'Tailwind UI components',
+            'Framer motion buttons cards modals',
+            'UI library catalog',
+            ...SEO_CONFIG.keywords,
+          ],
+          breadcrumbs: [
+            { name: 'EasyUI', item: SEO_CONFIG.siteUrl },
+            { name: 'Components', item: canonical },
+          ],
+          structuredData,
+        });
+      });
+
+      // Apply non-schema metadata immediately (without waiting for the dynamic import)
       updatePageMetadata({
         title: pageTitle,
         description,
@@ -112,7 +138,6 @@ export function useSEO({
           { name: 'EasyUI', item: SEO_CONFIG.siteUrl },
           { name: 'Components', item: canonical },
         ],
-        structuredData,
       });
       return;
     }

@@ -1,28 +1,31 @@
-import { lazy, Suspense, useState, useEffect, useCallback } from 'react';
+import { Suspense, useState, useEffect, useCallback } from 'react';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { ComponentDirectory } from './components/sections/ComponentDirectory';
-import { EASY_COMPONENTS } from './components/registry/components-data';
-import type { EasyComponentMeta } from './types/component';
+import { CATALOG_INDEX } from './components/registry/catalog-index';
+import type { ComponentCatalogIndex } from './types/component';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useAnalyticsTracker } from './lib/analytics';
 import { useSEO } from './lib/seo';
 import { scrollToTop } from './lib/utils';
 import { AlertCircle, ArrowLeft, Grid } from 'lucide-react';
-const ComponentDetailPage = lazy(() => import('./components/docs/ComponentDetailPage'));
-const DocsPage = lazy(() => import('./components/docs/DocsPage'));
-const AllComponentsPage = lazy(() => import('./components/sections/AllComponentsPage').then(({ AllComponentsPage: page }) => ({ default: page })));
-const SpotlightSearch = lazy(() => import('./components/ui/SpotlightSearch').then(({ SpotlightSearch: search }) => ({ default: search })));
-const HeroSection = lazy(() => import('./components/sections/HeroSection').then(({ HeroSection: hero }) => ({ default: hero })));
+import { lazyWithPreload } from './lib/lazy-preload';
 
-// Fast Map lookup for components
-const COMPONENT_MAP = new Map<string, EasyComponentMeta>(
-  EASY_COMPONENTS.map((c) => [c.id, c])
+export const ComponentDetailPage = lazyWithPreload(() => import('./components/docs/ComponentDetailPage'));
+export const DocsPage = lazyWithPreload(() => import('./components/docs/DocsPage'));
+export const AllComponentsPage = lazyWithPreload(() => import('./components/sections/AllComponentsPage'), 'AllComponentsPage');
+export const SpotlightSearch = lazyWithPreload(() => import('./components/ui/SpotlightSearch'), 'SpotlightSearch');
+export const HeroSection = lazyWithPreload(() => import('./components/sections/HeroSection'), 'HeroSection');
+
+// Fast Map lookup for routing — uses the lightweight catalog index (catalog-index.ts)
+// so the full 386 KB components-data.ts is NOT included in the initial entry bundle.
+const COMPONENT_MAP = new Map<string, ComponentCatalogIndex>(
+  CATALOG_INDEX.map((c) => [c.id, c])
 );
 
 export interface RouteState {
   activeView: 'showcase' | 'components' | 'docs' | 'component-detail' | 'component-not-found' | 'route-not-found';
-  selectedComponent: EasyComponentMeta | null;
+  selectedComponent: ComponentCatalogIndex | null;
   invalidComponentSlug: string | null;
   invalidRoutePath: string | null;
   activeDocTopic: string;
@@ -180,7 +183,9 @@ export interface AppProps {
 
 export function App({ initialPath }: AppProps = {}) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [routeState, setRouteState] = useState<RouteState>(() => parseRouteFromUrl(initialPath));
+  const [routeState, setRouteState] = useState<RouteState>(() => {
+    return parseRouteFromUrl(initialPath);
+  });
   const { activeView, selectedComponent, invalidComponentSlug, invalidRoutePath, activeDocTopic, componentPage } = routeState;
   const [mounted, setMounted] = useState(false);
 
@@ -325,7 +330,7 @@ export function App({ initialPath }: AppProps = {}) {
       <Suspense fallback={<main className="min-h-[70vh]" aria-busy="true" />}>
         {activeView === 'component-detail' && selectedComponent ? (
           <ComponentDetailPage
-            component={selectedComponent}
+            componentId={selectedComponent.id}
             onSelectComponent={handleSelectComponentById}
             onNavigateHome={handleNavigateHome}
             onNavigateComponents={handleNavigateComponents}

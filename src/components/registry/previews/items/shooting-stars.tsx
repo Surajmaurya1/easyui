@@ -1,7 +1,7 @@
 import { ShootingStars } from '../../../ui/ShootingStars';
 import type { ComponentPreviewProps } from '../types';
 
-export default function Preview({ isHovered = false }: ComponentPreviewProps) {
+export default function Preview({ isHovered = false, isInViewport = true }: ComponentPreviewProps) {
   return (
     <div className="relative w-full h-full min-h-[260px] sm:min-h-[300px] overflow-hidden bg-transparent select-none flex items-center justify-center">
       <ShootingStars
@@ -14,6 +14,7 @@ export default function Preview({ isHovered = false }: ComponentPreviewProps) {
         nebula={false}
         parallax={true}
         clickToSpawn={true}
+        paused={!isInViewport}
         className="w-full h-full flex items-center justify-center"
       >
         <div className="flex flex-col items-center justify-center text-center pointer-events-none px-4">

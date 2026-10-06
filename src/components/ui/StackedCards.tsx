@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { cn } from '../../lib/utils';

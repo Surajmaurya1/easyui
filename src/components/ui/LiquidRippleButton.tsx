@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Droplets } from 'lucide-react';

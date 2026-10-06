@@ -1,4 +1,5 @@
 import { SEO_CONFIG } from './config';
+import type { ComponentCatalogIndex } from '../../types/component';
 import type { EasyComponentMeta } from '../../types/component';
 import { getCanonicalUrl } from './helpers';
 
@@ -76,8 +77,10 @@ export function generateBreadcrumbSchema(
 
 /**
  * SoftwareApplication & ItemPage schema for individual EasyUI components.
+ * Accepts the lightweight ComponentCatalogIndex type so that schema can be
+ * generated without loading the full component catalog into the initial bundle.
  */
-export function generateComponentSchema(component: EasyComponentMeta): Record<string, any> {
+export function generateComponentSchema(component: ComponentCatalogIndex): Record<string, any> {
   const canonical = getCanonicalUrl(`components/${component.id}`);
   const breadcrumbList = generateBreadcrumbSchema([
     { name: 'EasyUI', item: SEO_CONFIG.siteUrl },

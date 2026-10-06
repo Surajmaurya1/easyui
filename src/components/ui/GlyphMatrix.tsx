@@ -204,7 +204,18 @@ export const GlyphMatrix = forwardRef<GlyphMatrixHandle, GlyphMatrixProps>(
       if (typeof IntersectionObserver === 'function') {
         intersectionObserver = new IntersectionObserver(
           ([entry]) => {
-            isVisibleRef.current = entry.isIntersecting;
+            const nextVisible = entry ? (entry.isIntersecting || entry.intersectionRatio > 0) : true;
+            if (nextVisible !== isVisibleRef.current) {
+              isVisibleRef.current = nextVisible;
+              if (isVisibleRef.current && !isPausedRef.current && !reduceMotion) {
+                if (rafRef.current === null) {
+                  rafRef.current = requestAnimationFrame(render);
+                }
+              } else if (!isVisibleRef.current && rafRef.current !== null) {
+                cancelAnimationFrame(rafRef.current);
+                rafRef.current = null;
+              }
+            }
           },
           { rootMargin: '100px' }
         );
@@ -259,8 +270,12 @@ export const GlyphMatrix = forwardRef<GlyphMatrixHandle, GlyphMatrixProps>(
       const fadeColor = hexToRgba(backgroundColor, fadeRate);
 
       const render = (now: number) => {
+        if (isPausedRef.current || !isVisibleRef.current || reduceMotion) {
+          rafRef.current = null;
+          return;
+        }
+
         rafRef.current = requestAnimationFrame(render);
-        if (isPausedRef.current || !isVisibleRef.current) return;
 
         const delta = Math.min((now - lastTime) / 1000, 0.1);
         lastTime = now;
@@ -340,7 +355,9 @@ export const GlyphMatrix = forwardRef<GlyphMatrixHandle, GlyphMatrixProps>(
         }
       };
 
-      rafRef.current = requestAnimationFrame(render);
+      if (!paused && !reduceMotion && isVisibleRef.current) {
+        rafRef.current = requestAnimationFrame(render);
+      }
 
       return () => {
         if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
@@ -361,6 +378,7 @@ export const GlyphMatrix = forwardRef<GlyphMatrixHandle, GlyphMatrixProps>(
       speed,
       fadeRate,
       interactive,
+      paused,
     ]);
 
     return (

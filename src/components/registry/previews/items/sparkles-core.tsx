@@ -1,7 +1,7 @@
 import { SparklesCore } from '../../../ui/SparklesCore';
 import type { ComponentPreviewProps } from '../types';
 
-export default function Preview({ isHovered = false }: ComponentPreviewProps) {
+export default function Preview({ isHovered = false, isInViewport = true }: ComponentPreviewProps) {
   return (
     <div className="relative w-full h-full min-h-[260px] sm:min-h-[300px] overflow-hidden bg-transparent flex items-center justify-center select-none">
       <SparklesCore
@@ -13,6 +13,7 @@ export default function Preview({ isHovered = false }: ComponentPreviewProps) {
         particleColors={['#FFFFFF', '#E5E5E5', '#D4D4D4', '#A3A3A3', '#737373']}
         particleShape="mixed"
         cursorMode="repulse"
+        paused={!isInViewport}
         className="w-full h-full"
       >
         <div className="flex flex-col items-center justify-center h-full px-4 text-center pointer-events-none">

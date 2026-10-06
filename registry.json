@@ -608,7 +608,7 @@
       "name": "drag-to-confirm",
       "type": "registry:ui",
       "title": "Drag to Confirm",
-      "description": "A physical drag-to-confirm slider for high-stakes and destructive actions, equipped with elastic spring snapback physics, progressive track illumination, and accessible keyboard fallbacks.",
+      "description": "A minimalist physical drag-to-confirm slider for high-stakes and destructive actions, equipped with progressive track fill physics, spring snapback resistance, full light/dark theme adaptation, and accessible keyboard controls.",
       "dependencies": [
         "framer-motion",
         "lucide-react"

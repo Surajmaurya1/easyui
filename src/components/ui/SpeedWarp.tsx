@@ -17,6 +17,8 @@ export interface SpeedWarpProps {
   starCount?: number;
   /** Optional custom class name */
   className?: string;
+  /** Whether the warp animation loop is paused. Default: false */
+  paused?: boolean;
   /** Optional children rendered on top of the warp canvas */
   children?: React.ReactNode;
 }
@@ -24,6 +26,7 @@ export interface SpeedWarpProps {
 export function SpeedWarp({
   speed = 25,
   starCount = 600,
+  paused = false,
   className,
   children,
 }: SpeedWarpProps) {
@@ -106,16 +109,45 @@ export function SpeedWarp({
         }
       }
 
+      if (!isIntersecting || paused) {
+        animationFrameId = 0;
+        return;
+      }
+
       animationFrameId = requestAnimationFrame(render);
     };
+
+    let isIntersecting = true;
+    let intersectionObserver: IntersectionObserver | undefined;
+    if (typeof IntersectionObserver === 'function' && parent) {
+      intersectionObserver = new IntersectionObserver(
+        ([entry]) => {
+          const visible = entry ? (entry.isIntersecting || entry.intersectionRatio > 0) : true;
+          if (visible !== isIntersecting) {
+            isIntersecting = visible;
+            if (isIntersecting && !paused) {
+              if (!animationFrameId) {
+                animationFrameId = requestAnimationFrame(render);
+              }
+            } else if (!isIntersecting && animationFrameId) {
+              cancelAnimationFrame(animationFrameId);
+              animationFrameId = 0;
+            }
+          }
+        },
+        { rootMargin: '100px 0px' }
+      );
+      intersectionObserver.observe(parent);
+    }
 
     render();
 
     return () => {
       resizeObserver.disconnect();
-      cancelAnimationFrame(animationFrameId);
+      intersectionObserver?.disconnect();
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
-  }, [speed, starCount]);
+  }, [speed, starCount, paused]);
 
   if (children) {
     return (

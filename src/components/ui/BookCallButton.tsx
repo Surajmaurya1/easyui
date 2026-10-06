@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '../../lib/utils';

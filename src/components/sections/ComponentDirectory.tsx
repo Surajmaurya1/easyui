@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Container } from '../layout/Container';
-import { EASY_COMPONENTS } from '../registry/components-data';
+import { CATALOG_INDEX } from '../registry/catalog-index';
 import { ArrowRight } from 'lucide-react';
 import { ComponentCard } from '../common/ComponentCard';
 import { getFeaturedComponents, isComponentNew } from '../../lib/components';
@@ -23,7 +23,7 @@ export const ComponentDirectory: React.FC<ComponentDirectoryProps> = ({
   onSelectComponent,
   onNavigateAllComponents,
 }) => {
-  const featuredComponents = useMemo(() => getFeaturedComponents(EASY_COMPONENTS), []);
+  const featuredComponents = useMemo(() => getFeaturedComponents(CATALOG_INDEX), []);
 
   return (
     <section id="components-directory" className="pt-4 sm:pt-6 lg:pt-8 pb-16 sm:pb-20 lg:pb-24 bg-background">

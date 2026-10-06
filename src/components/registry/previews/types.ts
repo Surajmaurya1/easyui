@@ -1,10 +1,10 @@
 import React from 'react';
-import type { EasyComponentMeta } from '../../../types/component';
+import type { ComponentCatalogIndex, EasyComponentMeta } from '../../../types/component';
 
 export type PreviewType = 'interactive' | 'lightweight' | 'static' | 'deferred';
 
 export interface ComponentPreviewProps {
-  component: EasyComponentMeta;
+  component: ComponentCatalogIndex | EasyComponentMeta;
   isHovered?: boolean;
   isInViewport?: boolean;
 }

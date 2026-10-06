@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react';
+import React, { Suspense, useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Copy,
@@ -28,7 +28,6 @@ import {
   Lock,
   Unlock,
 } from 'lucide-react';
-import type { EasyComponentMeta } from '../../types/component';
 import { EASY_COMPONENTS } from '../registry/components-data';
 import { cn, copyToClipboard } from '../../lib/utils';
 import { trackTracwellEvent } from '../../lib/tracwell-client';
@@ -37,6 +36,8 @@ import { useComponentSource } from '../../lib/source-loader';
 import { NewBadge } from '../common/NewBadge';
 import { useTheme } from '../../lib/theme/useTheme';
 import type { ThinkingOrbState } from '../ui/ThinkingOrb';
+import type { DragConfirmActionType, DragConfirmSize } from '../ui/DragToConfirm';
+import { lazyWithPreload, type PreloadableComponent } from '../../lib/lazy-preload';
 
 // Live demonstrations are split into route-level chunks. The detail shell can
 // render metadata, source, props, and accessibility tabs without loading the
@@ -44,8 +45,8 @@ import type { ThinkingOrbState } from '../ui/ThinkingOrb';
 function lazyNamed<T extends React.ComponentType<any>>(
   loader: () => Promise<Record<string, unknown>>,
   exportName: string,
-) {
-  return lazy(async () => ({ default: (await loader())[exportName] as T }));
+): PreloadableComponent<T> {
+  return lazyWithPreload(loader, exportName);
 }
 
 const DynamicIsland = lazyNamed(() => import('../ui/DynamicIsland'), 'DynamicIsland');
@@ -53,7 +54,7 @@ const MagneticButton = lazyNamed(() => import('../ui/MagneticButton'), 'Magnetic
 const SpotlightCard = lazyNamed(() => import('../ui/SpotlightCard'), 'SpotlightCard');
 const CursorFollower = lazyNamed(() => import('../ui/CursorFollower'), 'CursorFollower');
 const ExpandableSearch = lazyNamed(() => import('../ui/ExpandableSearch'), 'ExpandableSearch');
-const AnimatedTabs = lazyNamed(() => import('../ui/AnimatedTabs'), 'AnimatedTabs');
+import { AnimatedTabs } from '../ui/AnimatedTabs';
 const FloatingActionDock = lazyNamed(() => import('../ui/FloatingActionDock'), 'FloatingActionDock');
 const RevealCard = lazyNamed(() => import('../ui/RevealCard'), 'RevealCard');
 const SmoothAccordion = lazyNamed(() => import('../ui/SmoothAccordion'), 'SmoothAccordion');
@@ -164,11 +165,138 @@ const ShootingStarsLiveShowcase = lazyNamed(() => import('./sections/NewComponen
 const SparklesCoreLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'SparklesCoreLiveShowcase');
 const StickyPagesLiveShowcase = lazyNamed(() => import('./sections/NewComponentsShowcase'), 'StickyPagesLiveShowcase');
 
+const DEMO_PRELOADERS: Record<string, () => Promise<any>> = {
+  'dynamic-island': () => DynamicIsland.preload(),
+  'magnetic-button': () => MagneticButton.preload(),
+  'spotlight-card': () => SpotlightCard.preload(),
+  'cursor-follower': () => CursorFollower.preload(),
+  'expandable-search': () => ExpandableSearch.preload(),
+  'animated-tabs': () => Promise.resolve(),
+  'floating-action-dock': () => FloatingActionDock.preload(),
+  'reveal-card': () => RevealCard.preload(),
+  'smooth-accordion': () => SmoothAccordion.preload(),
+  'notification-stack': () => NotificationStack.preload(),
+  'morphing-dialog': () => MorphingDialog.preload(),
+  'dot-field': () => DotField.preload(),
+  'interactive-timeline': () => InteractiveTimeline.preload(),
+  'smart-comparison': () => SmartComparison.preload(),
+  'activity-feed': () => ActivityFeed.preload(),
+  'metric-hud': () => MetricHUD.preload(),
+  'code-snippet-deck': () => CodeSnippetDeck.preload(),
+  'glass-navbar': () => GlassNavbar.preload(),
+  'button': () => Button.preload(),
+  'form': () => Promise.all([Form.preload(), FormItem.preload(), FormLabel.preload(), FormControl.preload(), FormDescription.preload(), Input.preload(), Select.preload(), Checkbox.preload(), Switch.preload()]),
+  'login': () => Login.preload(),
+  'sign-up': () => SignUp.preload(),
+  'faq': () => FAQ.preload(),
+  'payment-receipt-printer': () => PaymentReceiptPrinter.preload(),
+  'particle-delete': () => ParticleDelete.preload(),
+  'animated-file-upload': () => AnimatedFileUpload.preload(),
+  'payment-status': () => PaymentStatus.preload(),
+  'undo-toast': () => UndoToast.preload(),
+  'expandable-data-row': () => ExpandableDataRow.preload(),
+  'scroll-progress-nav': () => ScrollProgressNav.preload(),
+  'animated-number': () => AnimatedNumber.preload(),
+  'airport-matrix-clock': () => AirportMatrixClock.preload(),
+  'spotlight-search': () => SpotlightSearch.preload(),
+  'morphing-button': () => MorphingButton.preload(),
+  'drag-to-confirm': () => DragToConfirm.preload(),
+  'peek-card': () => PeekCard.preload(),
+  'selection-basket': () => SelectionBasket.preload(),
+  'focus-mode': () => FocusMode.preload(),
+  'loader': () => Loader.preload(),
+  'small-floating-dock': () => SmallFloatingDock.preload(),
+  'hamburger-menu': () => HamburgerMenu.preload(),
+  'notification-bell': () => NotificationBell.preload(),
+  'ios-search-bar': () => IOSSearchBar.preload(),
+  'typewriter-button': () => TypewriterButton.preload(),
+  'depth-corridor': () => DepthCorridor.preload(),
+  'density-lens': () => DensityLens.preload(),
+  'torque-dial': () => TorqueDial.preload(),
+  'stack-unfold-panel': () => StackUnfoldPanel.preload(),
+  'dependency-trace': () => DependencyTrace.preload(),
+  'batch-gesture-tray': () => BatchGestureTray.preload(),
+  'recovery-ledger': () => RecoveryLedger.preload(),
+  'rocket-party-popper': () => RocketPartyPopper.preload(),
+  'branching-submenu': () => BranchingSubmenu.preload(),
+  'gravity-particle-burst': () => GravityParticleBurst.preload(),
+  'liquid-ripple-button': () => LiquidRippleButton.preload(),
+  'neon-edge-button': () => NeonEdgeButton.preload(),
+  'orbital-loading-ring': () => OrbitalLoadingRing.preload(),
+  'pill-navigation': () => PillNavigation.preload(),
+  'text-scramble-decoder': () => TextScrambleDecoder.preload(),
+  'mac-os-folder-cards': () => MacOSFolderCards.preload(),
+  'intro-loader': () => IntroLoader.preload(),
+  'nimbu-mirchi': () => NimbuMirchi.preload(),
+  'evil-eye': () => EvilEye.preload(),
+  'wallet-card': () => WalletCard.preload(),
+  'circular-orbit': () => CircularOrbit.preload(),
+  'profile-card': () => ProfileCard.preload(),
+  'book-call-button': () => BookCallButton.preload(),
+  'gooey-menu': () => GooeyMenu.preload(),
+  'morphing-shape-loader': () => MorphingShapeLoader.preload(),
+  'liquid-toggle': () => LiquidToggle.preload(),
+  'press-button': () => PressButton.preload(),
+  'lock-input': () => LockInput.preload(),
+  'spring-select': () => SpringSelect.preload(),
+  'draw-checkbox': () => DrawCheckbox.preload(),
+  'stretch-switch': () => StretchSwitch.preload(),
+  'settle-modal': () => SettleModal.preload(),
+  'velocity-toast': () => VelocityToast.preload(),
+  'directional-tooltip': () => DirectionalTooltip.preload(),
+  'origin-dropdown': () => OriginDropdown.preload(),
+  'unfold-accordion': () => UnfoldAccordion.preload(),
+  'slide-pagination': () => SlidePagination.preload(),
+  'pricing': () => Pricing.preload(),
+  'car-smoke-page-transition': () => CarSmokePageTransition.preload(),
+  'morphing-blob': () => MorphingBlob.preload(),
+  'otp-input': () => OTPInput.preload(),
+  'thinking-orb': () => ThinkingOrb.preload(),
+  'stacked-cards': () => StackedCards.preload(),
+  'story-card': () => StoryCards.preload(),
+  'avatar-stack': () => AvatarStack.preload(),
+  'glyph-matrix': () => GlyphMatrix.preload(),
+  'morphing-icon': () => MorphingIcon.preload(),
+  'speed-warp': () => SpeedWarp.preload(),
+  'split-button': () => SplitButton.preload(),
+  'not-found': () => NotFound.preload(),
+  'pull-to-refresh': () => PullToRefresh.preload(),
+  'ai-response': () => AIResponseLiveShowcase.preload(),
+  'advanced-data-table': () => AdvancedDataTableLiveShowcase.preload(),
+  'chat': () => ChatLiveShowcase.preload(),
+  'ai-agent-activity': () => AIAgentActivityLiveShowcase.preload(),
+  'dot-shader': () => DotShaderLiveShowcase.preload(),
+  'glitch-text': () => GlitchTextLiveShowcase.preload(),
+  'meteors': () => MeteorsLiveShowcase.preload(),
+  'rainbow-button': () => RainbowButtonLiveShowcase.preload(),
+  'scrollvelocitytext': () => ScrollVelocityTextLiveShowcase.preload(),
+  'shooting-stars': () => ShootingStarsLiveShowcase.preload(),
+  'sparkles-core': () => SparklesCoreLiveShowcase.preload(),
+  'sticky-pages': () => StickyPagesLiveShowcase.preload(),
+};
+
+/**
+ * Preloads the interactive demo component for a given componentId during SSR/prerender.
+ * Ensures the preview canvas resolves synchronously, eliminating unresolved Suspense boundaries.
+ */
+export async function preloadComponentDemo(componentId: string): Promise<void> {
+  const loader = DEMO_PRELOADERS[componentId];
+  if (loader) {
+    try {
+      await loader();
+    } catch {
+      // Non-fatal if demo preloading fails
+    }
+  }
+}
+
 export type MainTab = 'preview' | 'usage' | 'code' | 'props' | 'accessibility';
 export type PkgManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
 
 export interface ComponentDetailPageProps {
-  component: EasyComponentMeta;
+  /** The component's slug/id — the full EasyComponentMeta is resolved internally
+   *  from EASY_COMPONENTS so the initial bundle does not need to carry it. */
+  componentId: string;
   onSelectComponent: (id: string) => void;
   onNavigateHome: () => void;
   onNavigateComponents: () => void;
@@ -859,6 +987,153 @@ const SpotlightSearchShowcase: React.FC = () => {
   );
 };
 
+const DragToConfirmShowcase: React.FC = () => {
+  const [actionType, setActionType] = useState<DragConfirmActionType>('delete');
+  const [size, setSize] = useState<DragConfirmSize>('md');
+  const [statusText, setStatusText] = useState<string | null>(null);
+  const [key, setKey] = useState(0);
+
+  const presets: Record<
+    DragConfirmActionType,
+    { label: string; confirmedLabel: string; title: string; desc: string }
+  > = {
+    delete: {
+      title: 'Destructive Action',
+      label: 'Slide to delete database →',
+      confirmedLabel: 'Database Deleted ✓',
+      desc: 'Protects critical databases with explicit drag confirmation',
+    },
+    confirm: {
+      title: 'Deployment Release',
+      label: 'Slide to confirm release →',
+      confirmedLabel: 'Production Deployed ✓',
+      desc: 'High-stakes multi-region deployments with spring tactile slider',
+    },
+    unlock: {
+      title: 'Access Security',
+      label: 'Slide to unlock vault →',
+      confirmedLabel: 'Vault Unlocked ✓',
+      desc: 'Safeguards privileged API credentials and hardware tokens',
+    },
+    archive: {
+      title: 'Archive Project',
+      label: 'Slide to archive project →',
+      confirmedLabel: 'Project Archived ✓',
+      desc: 'Bulk state transitions with elastic snapback resistance',
+    },
+    submit: {
+      title: 'Transfer Funds',
+      label: 'Slide to transfer funds →',
+      confirmedLabel: 'Transfer Completed ✓',
+      desc: 'Financial payments and irrevocable wire settlements',
+    },
+    continue: {
+      title: 'Proceed Step',
+      label: 'Slide to continue →',
+      confirmedLabel: 'Step Completed ✓',
+      desc: 'Multi-step provisioning wizards and deployment checks',
+    },
+  };
+
+  const currentPreset = presets[actionType] || presets.delete;
+
+  return (
+    <div className="w-full max-w-lg mx-auto py-6 sm:py-8 space-y-5">
+      {/* Control Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-2.5 p-2 rounded-2xl bg-neutral-100/80 dark:bg-surface border border-neutral-200/80 dark:border-border text-xs">
+        {/* Archetype selector */}
+        <div className="flex items-center gap-1 overflow-x-auto p-0.5 max-w-full">
+          {(['delete', 'confirm', 'unlock', 'archive', 'submit'] as const).map((type) => (
+            <button
+              key={type}
+              type="button"
+              onClick={() => {
+                setActionType(type);
+                setStatusText(null);
+                setKey((k) => k + 1);
+              }}
+              className={cn(
+                'px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer capitalize text-[11px]',
+                actionType === type
+                  ? 'bg-white dark:bg-surface-raised text-text-primary shadow-xs border border-neutral-200/80 dark:border-border'
+                  : 'text-text-muted hover:text-text-primary'
+              )}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+
+        {/* Size selector */}
+        <div className="flex items-center gap-1 border-t sm:border-t-0 sm:border-l border-neutral-200/70 dark:border-border pt-1.5 sm:pt-0 sm:pl-2">
+          {(['sm', 'md', 'lg'] as const).map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => {
+                setSize(s);
+                setKey((k) => k + 1);
+              }}
+              className={cn(
+                'px-2 py-0.5 rounded-md font-mono transition-all cursor-pointer text-[10px] uppercase',
+                size === s
+                  ? 'bg-text-primary text-background font-semibold shadow-xs'
+                  : 'text-text-muted hover:text-text-primary'
+              )}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Drag Slider Interactive Card */}
+      <div className="p-6 sm:p-8 rounded-2xl border border-neutral-200/80 dark:border-border bg-white dark:bg-[#121214] shadow-xs flex flex-col items-center justify-center gap-4 min-h-[160px] transition-colors">
+        <div className="w-full max-w-sm flex justify-center">
+          <DragToConfirm
+            key={`${actionType}-${size}-${key}`}
+            actionType={actionType}
+            size={size}
+            label={currentPreset.label}
+            confirmedLabel={currentPreset.confirmedLabel}
+            onConfirm={() => {
+              setStatusText(`Confirmed: ${currentPreset.title}`);
+            }}
+            onReset={() => {
+              setStatusText(null);
+            }}
+          />
+        </div>
+
+        <div className="flex items-center gap-2 text-xs font-mono text-text-muted pt-1">
+          {statusText ? (
+            <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+              {statusText}
+            </span>
+          ) : (
+            <span>Drag slider or press Enter / Space to trigger</span>
+          )}
+        </div>
+      </div>
+
+      {/* Reset & Status Bar */}
+      <div className="flex items-center justify-between text-xs text-text-muted px-1 font-mono">
+        <span className="truncate pr-2">{currentPreset.desc}</span>
+        <button
+          type="button"
+          onClick={() => {
+            setStatusText(null);
+            setKey((k) => k + 1);
+          }}
+          className="hover:text-text-primary underline underline-offset-2 transition-colors cursor-pointer shrink-0"
+        >
+          Reset
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const LoaderShowcase: React.FC = () => {
   const [variant, setVariant] = useState<'arc' | 'dots' | 'line' | 'rings'>('arc');
   const [size, setSize] = useState(36);
@@ -1361,12 +1636,26 @@ const ThinkingOrbDemo: React.FC = () => {
 };
 
 export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
-  component,
+  componentId,
   onSelectComponent,
   onNavigateHome,
   onNavigateComponents,
   onNavigateDocs,
 }) => {
+  // Resolve the full component metadata from the catalog — EASY_COMPONENTS is already
+  // in this chunk, so this lookup adds no extra bundle cost.
+  const component = EASY_COMPONENTS.find((c) => c.id === componentId);
+
+  // Guard: if the component doesn't exist (e.g., stale link), show a fallback.
+  // This should not occur in normal operation since routing validates the ID first.
+  if (!component) {
+    return (
+      <main className="min-h-[70vh] flex items-center justify-center p-6">
+        <p className="text-text-secondary text-sm">Component not found.</p>
+      </main>
+    );
+  }
+
   const [activeTab, setActiveTab] = useState<MainTab>('preview');
   const { sourceCode: loadedSourceCode } = useComponentSource(component.id, activeTab === 'code');
   const effectiveSourceCode = loadedSourceCode || component.sourceCode || '';
@@ -2243,18 +2532,7 @@ const completion = await client.completions.create({
           </div>
         );
       case 'drag-to-confirm':
-        return (
-          <div className="py-8 w-full max-w-md mx-auto space-y-4">
-            <DragToConfirm
-              key={demoKey}
-              actionType="delete"
-              label="Slide to delete pipeline →"
-              confirmedLabel="Pipeline Deleted ✓"
-              onConfirm={() => console.log('Confirmed')}
-            />
-            <p className="text-xs text-center text-[#6B6B6B]">Physical resistance spring handle with tactile snapback</p>
-          </div>
-        );
+        return <DragToConfirmShowcase key={demoKey} />;
       case 'peek-card':
         return (
           <div className="py-12 w-full flex flex-col items-center justify-center gap-4">

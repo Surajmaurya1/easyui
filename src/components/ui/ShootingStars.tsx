@@ -44,6 +44,8 @@ export interface ShootingStarsProps
   clickToSpawn?: boolean;
   /** Interactive mouse parallax tilt of stars. Default: true */
   parallax?: boolean;
+  /** Whether the animation loop is paused. Default: false */
+  paused?: boolean;
 }
 
 interface Star {
@@ -115,6 +117,7 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
   nebula = true,
   clickToSpawn = true,
   parallax = true,
+  paused = false,
   style,
   ...props
 }) => {
@@ -320,7 +323,7 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
     };
 
     // Render loop
-    const render = (now: number) => {
+    const render = (now: number = performance.now()) => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
 
@@ -578,13 +581,43 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
       }
 
       ctx.globalAlpha = 1;
+
+      if (!isIntersecting || paused || reducedMotion) {
+        rafId.current = null;
+        return;
+      }
+
       rafId.current = requestAnimationFrame(render);
     };
 
-    rafId.current = requestAnimationFrame(render);
+    let isIntersecting = true;
+    let intersectionObserver: IntersectionObserver | undefined;
+    if (typeof IntersectionObserver === 'function') {
+      intersectionObserver = new IntersectionObserver(
+        ([entry]) => {
+          const visible = entry ? (entry.isIntersecting || entry.intersectionRatio > 0) : true;
+          if (visible !== isIntersecting) {
+            isIntersecting = visible;
+            if (isIntersecting && !paused && !reducedMotion) {
+              if (!rafId.current) {
+                rafId.current = requestAnimationFrame(render);
+              }
+            } else if (!isIntersecting && rafId.current) {
+              cancelAnimationFrame(rafId.current);
+              rafId.current = null;
+            }
+          }
+        },
+        { rootMargin: '100px 0px' }
+      );
+      intersectionObserver.observe(container);
+    }
+
+    render(performance.now());
 
     return () => {
       observer.disconnect();
+      intersectionObserver?.disconnect();
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
   }, [
@@ -600,6 +633,7 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
     starColors,
     starCount,
     twinkleSpeed,
+    paused,
   ]);
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
