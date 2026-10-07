@@ -1,7 +1,7 @@
 import { DotShader } from '../../../ui/DotShader';
 import type { ComponentPreviewProps } from '../types';
 
-export default function Preview({ isHovered = false }: ComponentPreviewProps) {
+export default function Preview({ isHovered = false, isInViewport = true }: ComponentPreviewProps) {
   return (
     <div className="relative w-full h-full min-h-[260px] sm:min-h-[300px] overflow-hidden bg-transparent flex items-center justify-center select-none">
       <DotShader
@@ -14,6 +14,7 @@ export default function Preview({ isHovered = false }: ComponentPreviewProps) {
         maxScale={isHovered ? 2.5 : 2.0}
         speed={isHovered ? 1.2 : 0.8}
         overlay={false}
+        paused={!isInViewport}
         className="absolute inset-0 h-full w-full flex items-center justify-center"
       >
         <div className="flex flex-col items-center justify-center text-center pointer-events-none select-none px-4">

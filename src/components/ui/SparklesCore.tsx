@@ -52,6 +52,8 @@ export interface SparklesCoreProps
   opacity?: number;
   /** Blur filter radius in pixels for soft bloom. Default: 0 */
   blur?: number;
+  /** Whether the animation loop is paused. Default: false */
+  paused?: boolean;
   /** Optional wrapped children placed above the sparkles */
   children?: React.ReactNode;
 }
@@ -97,6 +99,7 @@ export const SparklesCore: React.FC<SparklesCoreProps> = ({
   clickPush = 6,
   opacity = 1,
   blur = 0,
+  paused = false,
   children,
   style,
   ...props
@@ -354,13 +357,43 @@ export const SparklesCore: React.FC<SparklesCoreProps> = ({
       }
 
       ctx.globalAlpha = 1;
+
+      if (!isIntersecting || paused || reducedMotion) {
+        rafId.current = null;
+        return;
+      }
+
       rafId.current = requestAnimationFrame(render);
     };
 
-    rafId.current = requestAnimationFrame(render);
+    let isIntersecting = true;
+    let intersectionObserver: IntersectionObserver | undefined;
+    if (typeof IntersectionObserver === 'function') {
+      intersectionObserver = new IntersectionObserver(
+        ([entry]) => {
+          const visible = entry ? (entry.isIntersecting || entry.intersectionRatio > 0) : true;
+          if (visible !== isIntersecting) {
+            isIntersecting = visible;
+            if (isIntersecting && !paused && !reducedMotion) {
+              if (!rafId.current) {
+                rafId.current = requestAnimationFrame(render);
+              }
+            } else if (!isIntersecting && rafId.current) {
+              cancelAnimationFrame(rafId.current);
+              rafId.current = null;
+            }
+          }
+        },
+        { rootMargin: '100px 0px' }
+      );
+      intersectionObserver.observe(container);
+    }
+
+    render();
 
     return () => {
       observer.disconnect();
+      intersectionObserver?.disconnect();
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
   }, [
@@ -374,6 +407,7 @@ export const SparklesCore: React.FC<SparklesCoreProps> = ({
     particleDensity,
     reducedMotion,
     twinkle,
+    paused,
   ]);
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {

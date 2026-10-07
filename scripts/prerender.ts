@@ -1,13 +1,21 @@
 import fs from 'fs';
 import path from 'path';
-import { PassThrough } from 'stream';
 import { fileURLToPath } from 'url';
 import React from 'react';
 (globalThis as any).React = React;
-import { renderToPipeableStream } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { MotionConfig } from 'framer-motion';
 import { ThemeProvider } from '../src/lib/theme/useTheme';
-import { App, type AppProps } from '../src/App';
+import {
+  App,
+  type AppProps,
+  HeroSection,
+  SpotlightSearch,
+  AllComponentsPage,
+  DocsPage,
+  ComponentDetailPage,
+} from '../src/App';
+import { preloadComponentDemo } from '../src/components/docs/ComponentDetailPage';
 import { EASY_COMPONENTS } from '../src/components/registry/components-data';
 import { ITEMS_PER_PAGE } from '../src/lib/components';
 import { SEO_CONFIG } from '../src/lib/seo/config';
@@ -42,25 +50,8 @@ interface RouteToPrerender {
   element: React.ReactElement;
 }
 
-function renderRouteElement(element: React.ReactElement): Promise<string> {
-  return new Promise((resolve, reject) => {
-    let html = '';
-    const output = new PassThrough();
-    output.on('data', (chunk: Buffer) => {
-      html += chunk.toString('utf8');
-    });
-    output.on('end', () => resolve(html));
-    output.on('error', reject);
-
-    const stream = renderToPipeableStream(element, {
-      onAllReady() {
-        stream.pipe(output);
-      },
-      onError(error) {
-        reject(error);
-      },
-    });
-  });
+function renderRouteElement(element: React.ReactElement): string {
+  return renderToString(element);
 }
 
 function escapeHtml(str: string): string {
@@ -169,6 +160,16 @@ export async function prerenderAllRoutes(): Promise<void> {
 
   const template = fs.readFileSync(TEMPLATE_PATH, 'utf-8');
   const routes: RouteToPrerender[] = [];
+
+  console.log('Preloading route components and component demos for static HTML prerender...');
+  await Promise.all([
+    HeroSection.preload(),
+    SpotlightSearch.preload(),
+    AllComponentsPage.preload(),
+    DocsPage.preload(),
+    ComponentDetailPage.preload(),
+    ...EASY_COMPONENTS.map((comp) => preloadComponentDemo(comp.id)),
+  ]);
 
   const makePrerenderElement = (routePath: string) =>
     React.createElement(
@@ -298,7 +299,7 @@ export async function prerenderAllRoutes(): Promise<void> {
   }));
   const successCount = routes.length;
 
-  console.log(`\n Successfully pre-rendered ${successCount} routes with React streaming SSR:`);
+  console.log(`\n Successfully pre-rendered ${successCount} routes with complete static HTML:`);
   console.log(`  - 1 Homepage (/)`);
   console.log(`  - ${totalComponentPages} Components catalog pages (/components[/page/*])`);
   console.log(`  - ${docTopicIds.length} Documentation topics (/docs/*)`);

@@ -1,10 +1,12 @@
+'use client';
+
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { motionTransitions } from '../../lib/motion-tokens';
 import { GITHUB_URL } from '../../lib/constants';
-import { EASY_COMPONENTS } from '../registry/components-data';
+import { CATALOG_INDEX } from '../registry/catalog-index';
 
 export interface SpotlightSearchItem {
   id: string;
@@ -120,7 +122,7 @@ export const SpotlightSearch: React.FC<SpotlightSearchProps> = ({
   const items = useMemo<SpotlightSearchItem[]>(() => {
     if (customItems) return customItems;
 
-    const componentEntries: SpotlightSearchItem[] = EASY_COMPONENTS.map((comp) => ({
+    const componentEntries: SpotlightSearchItem[] = CATALOG_INDEX.map((comp) => ({
       id: `comp-${comp.id}`,
       title: comp.name,
       category: 'Components',

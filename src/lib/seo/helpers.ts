@@ -1,5 +1,5 @@
 import { SEO_CONFIG } from './config';
-import type { EasyComponentMeta } from '../../types/component';
+import type { ComponentCatalogIndex } from '../../types/component';
 
 export interface PageSEOMeta {
   title: string;
@@ -121,8 +121,10 @@ export function getDocTopicSEO(topicId = 'introduction'): PageSEOMeta {
 
 /**
  * Generates SEO metadata for any EasyUI component.
+ * Accepts the lightweight ComponentCatalogIndex type so that
+ * metadata can be computed without loading the full component catalog.
  */
-export function getComponentSEO(component: EasyComponentMeta): PageSEOMeta {
+export function getComponentSEO(component: ComponentCatalogIndex): PageSEOMeta {
   const compTitle = `${component.name} Component for React — EasyUI`;
   const canonical = getCanonicalUrl(`components/${component.id}`);
   const description =
@@ -135,7 +137,6 @@ export function getComponentSEO(component: EasyComponentMeta): PageSEOMeta {
       `React ${component.name.toLowerCase()}`,
       `${component.category} component`,
       ...component.badges,
-      ...(component.features || []),
       'Framer Motion',
       'Tailwind CSS',
       'EasyUI',
@@ -163,10 +164,10 @@ export function getComponentSEO(component: EasyComponentMeta): PageSEOMeta {
  * Uses category matching, complementary interaction pairs, and catalog proximity.
  */
 export function getRelatedComponents(
-  currentComponent: EasyComponentMeta,
-  allComponents: EasyComponentMeta[],
+  currentComponent: ComponentCatalogIndex,
+  allComponents: ComponentCatalogIndex[],
   limit = 4
-): EasyComponentMeta[] {
+): ComponentCatalogIndex[] {
   if (!currentComponent || !allComponents || allComponents.length === 0) return [];
 
   // Complementary pairings map for rich contextual suggestions

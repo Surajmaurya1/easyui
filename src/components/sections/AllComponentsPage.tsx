@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Container } from '../layout/Container';
-import { EASY_COMPONENTS } from '../registry/components-data';
+import { CATALOG_INDEX } from '../registry/catalog-index';
 import type { ComponentCategory } from '../../types/component';
 import { Search } from 'lucide-react';
 import { ComponentCard } from '../common/ComponentCard';
@@ -69,7 +69,7 @@ export const AllComponentsPage: React.FC<AllComponentsPageProps> = ({
 
   // 1. Sort all components by createdAt DESC
   const allSortedComponents = useMemo(() => {
-    return getSortedComponents(EASY_COMPONENTS);
+    return getSortedComponents(CATALOG_INDEX);
   }, []);
 
   // 2. Filter by category & search query
@@ -136,7 +136,7 @@ export const AllComponentsPage: React.FC<AllComponentsPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-background text-text-primary pt-12 sm:pt-20 pb-24">
+    <main className="min-h-screen bg-background text-text-primary pt-12 sm:pt-20 pb-24">
       <Container size="xl">
         {/* Breadcrumb — quiet, no border */}
         <div className="flex items-center gap-2 mb-10 sm:mb-14 text-[12px] text-text-muted">
@@ -267,6 +267,6 @@ export const AllComponentsPage: React.FC<AllComponentsPageProps> = ({
           </>
         )}
       </Container>
-    </div>
+    </main>
   );
 };

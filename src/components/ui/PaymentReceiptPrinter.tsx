@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Check, RotateCcw, Copy, CheckCircle2, Store, CreditCard, Printer } from 'lucide-react';

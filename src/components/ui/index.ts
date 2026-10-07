@@ -135,7 +135,7 @@ export { MorphingButton } from './MorphingButton';
 export type { MorphingButtonProps, ButtonStatusState, MorphingButtonVariant } from './MorphingButton';
 
 export { DragToConfirm } from './DragToConfirm';
-export type { DragToConfirmProps, DragConfirmActionType } from './DragToConfirm';
+export type { DragToConfirmProps, DragConfirmActionType, DragConfirmVariant, DragConfirmSize } from './DragToConfirm';
 
 export { PeekCard } from './PeekCard';
 export type { PeekCardProps, PeekCardData } from './PeekCard';

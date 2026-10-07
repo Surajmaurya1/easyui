@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Minus, Search, Sparkles, Filter, ChevronDown, Info } from 'lucide-react';

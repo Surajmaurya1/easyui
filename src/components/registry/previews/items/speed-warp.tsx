@@ -2,12 +2,16 @@ import React from 'react';
 import { SpeedWarp } from '../../../ui/SpeedWarp';
 import type { ComponentPreviewProps } from '../types';
 
-const SpeedWarpCardPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered = false }) => {
+const SpeedWarpCardPreview: React.FC<{ isHovered?: boolean; isInViewport?: boolean }> = ({
+  isHovered = false,
+  isInViewport = true,
+}) => {
   return (
     <div className="relative h-52 w-full overflow-hidden rounded-xl bg-[#050505]">
       <SpeedWarp
         speed={isHovered ? 45 : 20}
         starCount={300}
+        paused={!isInViewport}
         className="absolute inset-0 h-full w-full"
       />
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center p-2 pointer-events-none">
@@ -19,9 +23,7 @@ const SpeedWarpCardPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered = f
   );
 };
 
-
-
-export default function Preview({ isHovered = false }: ComponentPreviewProps) {
+export default function Preview({ isHovered = false, isInViewport = true }: ComponentPreviewProps) {
   const hovered = isHovered;
-  return <SpeedWarpCardPreview isHovered={hovered} />;
+  return <SpeedWarpCardPreview isHovered={hovered} isInViewport={isInViewport} />;
 }

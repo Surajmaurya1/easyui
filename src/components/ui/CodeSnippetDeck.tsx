@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo, useId } from 'react';
 import { motion } from 'framer-motion';
 import { Copy, Check, Terminal, SlidersHorizontal, Sparkles } from 'lucide-react';

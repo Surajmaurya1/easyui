@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef, memo, useCallback } from 'react';
 
 const TWO_PI = Math.PI * 2;

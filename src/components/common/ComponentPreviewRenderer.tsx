@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
-import type { EasyComponentMeta } from '../../types/component';
+import type { ComponentCatalogIndex } from '../../types/component';
 import { getComponentPreview, getLazyPreviewComponent } from '../registry/previews';
 import { PreviewSkeleton } from './PreviewSkeleton';
 import { PreviewErrorBoundary } from './PreviewErrorBoundary';
 
 export interface ComponentPreviewRendererProps {
-  component: EasyComponentMeta;
+  component: ComponentCatalogIndex;
   isHovered?: boolean;
   className?: string;
 }
@@ -13,7 +13,7 @@ export interface ComponentPreviewRendererProps {
 /**
  * Fallback display shown when a component does not have a registered interactive preview.
  */
-function DefaultPreviewFallback({ component }: { component: EasyComponentMeta }) {
+function DefaultPreviewFallback({ component }: { component: ComponentCatalogIndex }) {
   return (
     <div
       data-testid="default-preview-fallback"
@@ -56,24 +56,25 @@ export const ComponentPreviewRenderer: React.FC<ComponentPreviewRendererProps> =
       return;
     }
 
-    if (hasEnteredViewport) return;
-
     const el = containerRef.current;
     if (!el) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        if (entry && (entry.isIntersecting || entry.intersectionRatio > 0)) {
+        if (!entry) return;
+
+        const isIntersecting = entry.isIntersecting || entry.intersectionRatio > 0;
+        if (isIntersecting) {
           setHasEnteredViewport(true);
           setIsInViewport(true);
-          // Once loaded into memory, we can disconnect viewport loading observer
-          observer.disconnect();
+        } else {
+          setIsInViewport(false);
         }
       },
       {
-        rootMargin: '200px 0px', // Preload when card is within 200px of viewport
-        threshold: 0.01,
+        rootMargin: '120px 0px', // Smooth preload and resume slightly ahead of viewport
+        threshold: 0,
       }
     );
 
@@ -82,7 +83,7 @@ export const ComponentPreviewRenderer: React.FC<ComponentPreviewRendererProps> =
     return () => {
       observer.disconnect();
     };
-  }, [hasEnteredViewport]);
+  }, []);
 
   const definition = getComponentPreview(component.id);
   const LazyComponent = definition ? getLazyPreviewComponent(component.id) : null;

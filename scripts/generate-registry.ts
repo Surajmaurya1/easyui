@@ -11,6 +11,7 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const UI_DIR = path.join(ROOT_DIR, 'src', 'components', 'ui');
 const REGISTRY_PATH = path.join(ROOT_DIR, 'registry.json');
 const COMPONENTS_DATA_PATH = path.join(ROOT_DIR, 'src', 'components', 'registry', 'components-data.ts');
+const CATALOG_INDEX_PATH = path.join(ROOT_DIR, 'src', 'components', 'registry', 'catalog-index.ts');
 const SOURCE_DIR = path.join(ROOT_DIR, 'public', 'source');
 const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
 
@@ -407,6 +408,55 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = ${JSON.stringify(componentCa
   console.log(`✓ Generated ${normalizeRelativePath(path.relative(ROOT_DIR, COMPONENTS_DATA_PATH))} (${components.length} components)`);
 }
 
+/**
+ * Generates a lightweight catalog index containing only the fields required by
+ * the initial app-shell bundle: id, name, tagline, description, category,
+ * badges, cliCommand, createdAt, and featured.
+ *
+ * Heavy fields (usageCode, props, accessibility, features, files, sourceCode)
+ * are deliberately excluded so that this file stays small and Vite does not
+ * pull the full 386 KB components-data.ts into the entry chunk.
+ */
+function generateCatalogIndex(components: DiscoveredComponent[]): void {
+  const entries = components.map((comp) => {
+    const cliCommand = `npx shadcn@latest add ${REPO_SLUG}/${comp.slug}`;
+    const category = comp.meta.category || 'Motion';
+    const badges = comp.meta.badges || [category];
+    const tagline = comp.meta.tagline || comp.meta.description;
+    const createdAt = comp.meta.createdAt || '2026-08-01';
+
+    const entry: Record<string, any> = {
+      id: comp.slug,
+      name: comp.meta.title,
+      tagline,
+      description: comp.meta.description,
+      category,
+      badges,
+      cliCommand,
+      createdAt,
+    };
+
+    if (comp.meta.featured === true) {
+      entry.featured = true;
+    }
+
+    return entry;
+  });
+
+  const content = `// AUTO-GENERATED — DO NOT EDIT MANUALLY.
+// Run "npm run component:sync" to regenerate this file.
+// This is a LIGHTWEIGHT index containing only initial-bundle fields.
+// For the full catalog (usageCode, props, etc.), see components-data.ts.
+
+import type { ComponentCatalogIndex } from '../../types/component';
+
+export const CATALOG_INDEX: ComponentCatalogIndex[] = ${JSON.stringify(entries, null, 2)};
+`;
+
+  fs.writeFileSync(CATALOG_INDEX_PATH, content, 'utf-8');
+  console.log(`✓ Generated ${normalizeRelativePath(path.relative(ROOT_DIR, CATALOG_INDEX_PATH))} (${components.length} index entries)`);
+}
+
 async function main() {
   console.log('🚀 EasyUI Registry & Catalog Generator');
   console.log('----------------------------------------');
@@ -420,6 +470,7 @@ async function main() {
 
     generateRegistryJson(components);
     generateComponentsData(components);
+    generateCatalogIndex(components);
 
     // Automatically synchronize sitemap.xml with newly discovered components
     generateSitemap();

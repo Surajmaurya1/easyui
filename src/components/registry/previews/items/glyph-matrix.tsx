@@ -2,7 +2,10 @@ import React from 'react';
 import { GlyphMatrix } from '../../../ui/GlyphMatrix';
 import type { ComponentPreviewProps } from '../types';
 
-const GlyphMatrixCardPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered = false }) => {
+const GlyphMatrixCardPreview: React.FC<{ isHovered?: boolean; isInViewport?: boolean }> = ({
+  isHovered = false,
+  isInViewport = true,
+}) => {
   return (
     <div className="relative h-52 w-full overflow-hidden rounded-xl bg-[#050505]">
       <GlyphMatrix
@@ -10,6 +13,7 @@ const GlyphMatrixCardPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered =
         color={isHovered ? '#22c55e' : '#10b981'}
         speed={isHovered ? 1.4 : 0.85}
         interactive={false}
+        paused={!isInViewport}
         className="absolute inset-0 h-full w-full"
       />
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center p-2 pointer-events-none">
@@ -21,9 +25,7 @@ const GlyphMatrixCardPreview: React.FC<{ isHovered?: boolean }> = ({ isHovered =
   );
 };
 
-
-
-export default function Preview({ isHovered = false }: ComponentPreviewProps) {
+export default function Preview({ isHovered = false, isInViewport = true }: ComponentPreviewProps) {
   const hovered = isHovered;
-  return <GlyphMatrixCardPreview isHovered={hovered} />;
+  return <GlyphMatrixCardPreview isHovered={hovered} isInViewport={isInViewport} />;
 }

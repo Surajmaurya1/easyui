@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useCallback, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 import { Home, ArrowLeft } from 'lucide-react';

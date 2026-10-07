@@ -68,7 +68,7 @@
       ]
     },
     {
-      "source": "/og-image.(png|webp|jpg)",
+      "source": "/(og-image|easyui-og-concept-v3).(png|webp|jpg)",
       "headers": [
         {
           "key": "Cache-Control",

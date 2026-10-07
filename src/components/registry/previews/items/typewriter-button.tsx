@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import type { ComponentPreviewProps } from '../types';
 
-export default function Preview({ isHovered = false }: ComponentPreviewProps) {
+export default function Preview({ isHovered = false, isInViewport = true }: ComponentPreviewProps) {
   const hovered = isHovered;
   return (
           <div className="h-52 flex items-center justify-center p-4">
@@ -11,8 +11,8 @@ export default function Preview({ isHovered = false }: ComponentPreviewProps) {
             >
               <span>{hovered ? 'npx easyui add' : 'easyui deploy'}</span>
               <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.6 }}
+                animate={isInViewport ? { opacity: [1, 0] } : { opacity: 1 }}
+                transition={{ repeat: isInViewport ? Infinity : 0, duration: 0.6 }}
                 className="w-1.5 h-3.5 bg-black"
               />
             </motion.div>

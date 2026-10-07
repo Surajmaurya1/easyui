@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { EasyComponentMeta } from '../../types/component';
+import type { ComponentCatalogIndex } from '../../types/component';
 import { Copy, Check, ArrowUpRight } from 'lucide-react';
 import { NewBadge } from './NewBadge';
 import { isComponentNew } from '../../lib/components';
@@ -8,7 +8,7 @@ import { trackTracwellEvent } from '../../lib/tracwell-client';
 import { ComponentPreviewRenderer } from './ComponentPreviewRenderer';
 
 export interface ComponentCardProps {
-  component: EasyComponentMeta;
+  component: ComponentCatalogIndex;
   isNew?: boolean;
   onSelect: (id: string) => void;
   className?: string;

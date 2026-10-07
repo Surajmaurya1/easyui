@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Sparkles, Layout, BookOpen, Terminal, CornerDownLeft, Cpu, GitPullRequest, Sliders } from 'lucide-react';
@@ -5,7 +7,7 @@ import { GithubIcon } from '../icons/GithubIcon';
 import { cn, copyToClipboard } from '../../lib/utils';
 import { motionTransitions } from '../../lib/motion-tokens';
 import { GITHUB_URL } from '../../lib/constants';
-import { EASY_COMPONENTS } from '../registry/components-data';
+import { CATALOG_INDEX } from '../registry/catalog-index';
 
 export interface CommandItem {
   id: string;
@@ -34,7 +36,7 @@ export const CommandMenu: React.FC<CommandMenuProps> = ({
 
   const commandItems: CommandItem[] = useMemo(() => {
     // Dynamic component entries derived from generated catalog
-    const componentEntries: CommandItem[] = EASY_COMPONENTS.map((comp) => ({
+    const componentEntries: CommandItem[] = CATALOG_INDEX.map((comp) => ({
       id: comp.id,
       title: comp.name,
       category: 'Components',
