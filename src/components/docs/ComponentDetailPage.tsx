@@ -9,14 +9,10 @@ import {
   ShieldCheck,
   Maximize2,
   ChevronRight,
-  RefreshCw,
+  ChevronDown,
   Search,
   X,
-  Sliders,
-  Cpu,
-  Home,
-  Grid,
-  Menu,
+  PanelLeft,
   Bookmark,
   BookmarkCheck,
   Volume2,
@@ -1646,40 +1642,44 @@ export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
   // in this chunk, so this lookup adds no extra bundle cost.
   const component = EASY_COMPONENTS.find((c) => c.id === componentId);
 
-  // Guard: if the component doesn't exist (e.g., stale link), show a fallback.
-  // This should not occur in normal operation since routing validates the ID first.
-  if (!component) {
-    return (
-      <main className="min-h-[70vh] flex items-center justify-center p-6">
-        <p className="text-text-secondary text-sm">Component not found.</p>
-      </main>
-    );
-  }
-
   const [activeTab, setActiveTab] = useState<MainTab>('preview');
-  const { sourceCode: loadedSourceCode } = useComponentSource(component.id, activeTab === 'code');
-  const effectiveSourceCode = loadedSourceCode || component.sourceCode || '';
+  const { sourceCode: loadedSourceCode } = useComponentSource(component?.id || '', activeTab === 'code');
+  const effectiveSourceCode = loadedSourceCode || component?.sourceCode || '';
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [pkgManager, setPkgManager] = useState<PkgManager>('pnpm');
   const [installMode, setInstallMode] = useState<'cli' | 'manual'>('cli');
   const [isFullscreenPreview, setIsFullscreenPreview] = useState(false);
   const [sidebarFilter, setSidebarFilter] = useState('');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [demoKey, setDemoKey] = useState(0);
-  const [isCopiedCli, setIsCopiedCli] = useState(false);
+  const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
+  const [demoKey] = useState(0);
+  const [previewMenuOpen, setPreviewMenuOpen] = useState(false);
+  const previewMenuRef = React.useRef<HTMLDivElement>(null);
   // Preview surface follows the global page theme (no local toggle).
   const { theme } = useTheme();
-
 
   // Reset tab and scroll top on component change
   useEffect(() => {
     setActiveTab('preview');
     setIsFullscreenPreview(false);
     setMobileSidebarOpen(false);
+    setPreviewMenuOpen(false);
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-  }, [component.id]);
+  }, [component?.id]);
+
+  // Click outside to close preview options menu
+  useEffect(() => {
+    if (!previewMenuOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (previewMenuRef.current && !previewMenuRef.current.contains(e.target as Node)) {
+        setPreviewMenuOpen(false);
+      }
+    };
+    window.addEventListener('click', handleClickOutside);
+    return () => window.removeEventListener('click', handleClickOutside);
+  }, [previewMenuOpen]);
 
   // Handle ESC for fullscreen
   useEffect(() => {
@@ -1691,27 +1691,6 @@ export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isFullscreenPreview]);
-
-  const handleCopy = async (text: string, label: string) => {
-    const copied = await copyToClipboard(text);
-    if (!copied) return;
-    setCopiedCode(label);
-    setTimeout(() => setCopiedCode(null), 2000);
-    trackTracwellEvent('component_code_copied', {
-      component_id: component.id,
-      code_type: label,
-    });
-  };
-
-  const handleCopyCli = async () => {
-    const copied = await copyToClipboard(component.cliCommand);
-    if (!copied) return;
-    setIsCopiedCli(true);
-    setTimeout(() => setIsCopiedCli(false), 2000);
-    trackTracwellEvent('component_install_command_copied', {
-      component_id: component.id,
-    });
-  };
 
   // Filtered components list for the sidebar
   const filteredComponents = useMemo(() => {
@@ -1725,10 +1704,32 @@ export const ComponentDetailPage: React.FC<ComponentDetailPageProps> = ({
 
   // Related components from same or other categories
   const relatedComponents = useMemo(() => {
+    if (!component) return [];
     return EASY_COMPONENTS.filter(
       (c) => c.id !== component.id && c.category === component.category
     ).slice(0, 3);
   }, [component]);
+
+  // Guard: if the component doesn't exist (e.g., stale link), show a fallback.
+  // This should not occur in normal operation since routing validates the ID first.
+  if (!component) {
+    return (
+      <main className="min-h-[70vh] flex items-center justify-center p-6">
+        <p className="text-text-secondary text-sm">Component not found.</p>
+      </main>
+    );
+  }
+
+  const handleCopy = async (text: string, label: string) => {
+    const copied = await copyToClipboard(text);
+    if (!copied) return;
+    setCopiedCode(label);
+    setTimeout(() => setCopiedCode(null), 2000);
+    trackTracwellEvent('component_code_copied', {
+      component_id: component.id,
+      code_type: label,
+    });
+  };
 
   const getInstallDepCommand = () => {
     const deps = component.dependencies || [];
@@ -3241,26 +3242,49 @@ const completion = await client.completions.create({
     <div className="min-h-screen bg-background text-text-primary selection:bg-[#3B82F6]/25 selection:text-text-primary">
       {/* Documentation Container */}
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Mobile Header Bar */}
-        <div className="lg:hidden flex items-center justify-between gap-3 pb-4 mb-4 border-b border-border">
-          <button
-            type="button"
-            onClick={() => setMobileSidebarOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-raised border border-border text-xs font-medium text-text-primary hover:bg-surface-hover transition-colors"
-          >
-            <Menu className="w-4 h-4 text-text-muted" />
-            <span>Components Menu</span>
-          </button>
-
-          <div className="flex items-center gap-2">
+        {/* Top Navigation & Breadcrumb Bar with PanelLeft Icon */}
+        <div className="flex items-center justify-between gap-3 pb-5 mb-5 border-b border-black/[0.05] dark:border-white/[0.08]">
+          {/* Left: PanelLeft Icon + Breadcrumb */}
+          <div className="flex items-center gap-2.5 min-w-0">
             <button
               type="button"
-              onClick={handleCopyCli}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-raised border border-border text-xs text-text-secondary hover:text-text-primary"
+              onClick={() => {
+                if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+                  setMobileSidebarOpen((prev) => !prev);
+                } else {
+                  setIsDesktopSidebarOpen((prev) => !prev);
+                }
+              }}
+              className="p-1 -ml-1 text-text-muted hover:text-text-primary transition-colors cursor-pointer flex items-center justify-center shrink-0"
+              title={isDesktopSidebarOpen ? 'Toggle sidebar' : 'Expand sidebar'}
+              aria-label="Toggle sidebar"
             >
-              {isCopiedCli ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Terminal className="w-3.5 h-3.5" />}
-              <span>{isCopiedCli ? 'Copied CLI' : 'Copy CLI'}</span>
+              <PanelLeft className="w-4 h-4" />
             </button>
+
+            {/* Breadcrumb Trail */}
+            <nav aria-label="Breadcrumb" className="text-xs text-text-muted min-w-0">
+              <ol className="flex items-center gap-1.5 list-none p-0 m-0 truncate">
+                <li>
+                  <a
+                    href="/components"
+                    onClick={(e) => {
+                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                        e.preventDefault();
+                        onNavigateComponents();
+                      }
+                    }}
+                    className="hover:text-text-primary transition-colors cursor-pointer"
+                  >
+                    Components
+                  </a>
+                </li>
+                <li aria-hidden className="text-text-subtle"><ChevronRight className="w-3 h-3 text-text-muted" /></li>
+                <li aria-current="page" className="text-text-primary font-medium truncate">
+                  {component.name}
+                </li>
+              </ol>
+            </nav>
           </div>
         </div>
 
@@ -3286,13 +3310,13 @@ const completion = await client.completions.create({
                   damping: 32,
                   mass: 0.8,
                 }}
-                className="relative w-80 max-w-[85vw] bg-surface border-r border-border h-full p-5 overflow-y-auto z-10 flex flex-col gap-4 shadow-2xl"
+                className="relative w-80 max-w-[85vw] bg-background border-r border-black/[0.06] dark:border-white/[0.08] h-full p-5 overflow-y-auto z-10 flex flex-col gap-4 shadow-2xl"
               >
-                <div className="flex items-center justify-between border-b border-border pb-3">
+                <div className="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                   <span className="text-xs font-mono text-text-muted uppercase tracking-wider">Components Catalog</span>
                   <button
                     onClick={() => setMobileSidebarOpen(false)}
-                    className="p-1.5 rounded-lg text-text-secondary hover:text-text-primary bg-surface-raised hover:bg-surface-hover border border-border transition-colors cursor-pointer"
+                    className="p-1.5 rounded-lg text-text-secondary hover:text-text-primary bg-[#F1F1F2] dark:bg-[#18181B] border border-black/[0.04] dark:border-white/[0.06] transition-colors cursor-pointer"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -3306,11 +3330,11 @@ const completion = await client.completions.create({
                     value={sidebarFilter}
                     onChange={(e) => setSidebarFilter(e.target.value)}
                     placeholder="Filter components..."
-                    className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-surface-raised border border-border text-[16px] text-text-primary placeholder-text-muted focus:outline-none focus:border-text-subtle transition-colors"
+                    className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-[#F1F1F2] dark:bg-[#18181B] border border-black/[0.04] dark:border-white/[0.06] text-[16px] text-text-primary placeholder-text-muted focus:outline-none focus:border-text-subtle transition-colors"
                   />
                 </div>
                 {/* Items */}
-                <div className="space-y-1 overflow-y-auto">
+                <div className="space-y-1">
                   <h4 className="text-[11px] font-bold text-text-muted uppercase tracking-widest px-2 mb-1.5">
                     Components
                   </h4>
@@ -3326,10 +3350,10 @@ const completion = await client.completions.create({
                             setMobileSidebarOpen(false);
                           }}
                           className={cn(
-                            'w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all text-left cursor-pointer',
+                            'w-full flex items-center justify-between px-3 py-2 rounded-xl text-[13px] sm:text-sm transition-all text-left cursor-pointer',
                             isActive
-                              ? 'bg-surface-hover text-text-primary font-medium border border-border'
-                              : 'text-text-secondary hover:text-text-primary hover:bg-surface'
+                              ? 'bg-white dark:bg-[#27272A] text-text-primary font-medium border border-black/[0.04] dark:border-white/[0.08] shadow-xs'
+                              : 'text-text-secondary hover:text-text-primary hover:bg-black/[0.03] dark:hover:bg-white/[0.04]'
                           )}
                         >
                           <span className="truncate">{item.name}</span>
@@ -3344,180 +3368,139 @@ const completion = await client.completions.create({
           )}
         </AnimatePresence>
 
-        {/* 3-Column Layout */}
-        <div className="flex gap-8 lg:gap-12 items-start">
+        {/* 2-Column Responsive Layout */}
+        <div className="flex gap-6 lg:gap-8 items-start">
           {/* ========================================================================= */}
           {/* 1. LEFT SIDEBAR: Clean minimalist documentation navigation                 */}
           {/* ========================================================================= */}
-          <aside className="hidden lg:block w-64 shrink-0 sticky top-20 self-start max-h-[calc(100vh-6rem)] overflow-y-auto select-none pr-3 scrollbar-thin">
-            {/* Filter Search Box */}
-            <div className="relative mb-6">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-text-subtle pointer-events-none" />
-              <input
-                type="text"
-                value={sidebarFilter}
-                onChange={(e) => setSidebarFilter(e.target.value)}
-                placeholder="Search..."
-                className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-surface-raised border border-border text-[16px] text-text-primary placeholder-text-muted focus:outline-none focus:border-text-subtle transition-colors"
-              />
-              {sidebarFilter && (
-                <button
-                  onClick={() => setSidebarFilter('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-text-subtle hover:text-text-primary"
-                  aria-label="Clear filter"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              )}
-            </div>
-
-            {/* INTRO Section */}
-            <div className="space-y-6">
-              <div className="space-y-1">
-                <h4 className="text-[11px] font-bold text-text-muted uppercase tracking-widest px-2.5 mb-1.5">
-                  Intro
-                </h4>
-                <button
-                  onClick={onNavigateHome}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-text-secondary hover:text-text-primary hover:bg-surface transition-colors text-left cursor-pointer"
-                >
-                  <Home className="w-3.5 h-3.5 text-text-subtle" />
-                  <span>Home</span>
-                </button>
-                <button
-                  onClick={onNavigateComponents}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-text-secondary hover:text-text-primary hover:bg-surface transition-colors text-left cursor-pointer"
-                >
-                  <Grid className="w-3.5 h-3.5 text-text-subtle" />
-                  <span>Components</span>
-                </button>
+          {isDesktopSidebarOpen && (
+            <aside className="hidden lg:block w-60 shrink-0 sticky top-20 self-start max-h-[calc(100vh-6rem)] overflow-y-auto select-none pr-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {/* Filter Search Box */}
+              <div className="relative mb-5">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-text-subtle pointer-events-none" />
+                <input
+                  type="text"
+                  value={sidebarFilter}
+                  onChange={(e) => setSidebarFilter(e.target.value)}
+                  placeholder="Search..."
+                  className="w-full pl-8 pr-7 py-1.5 rounded-xl bg-[#F1F1F2] dark:bg-[#18181B] border border-black/[0.04] dark:border-white/[0.06] text-[13px] text-text-primary placeholder-text-muted focus:outline-none focus:border-text-subtle transition-colors"
+                />
+                {sidebarFilter && (
+                  <button
+                    onClick={() => setSidebarFilter('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-text-subtle hover:text-text-primary"
+                    aria-label="Clear filter"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
               </div>
 
-              {/* GUIDES Section */}
-              <div className="space-y-1">
-                <h4 className="text-[11px] font-bold text-text-muted uppercase tracking-widest px-2.5 mb-1.5">
-                  Guides
-                </h4>
-                <button
-                  onClick={() => onNavigateDocs('quick-start')}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-text-secondary hover:text-text-primary hover:bg-surface transition-colors text-left cursor-pointer"
-                >
-                  <Terminal className="w-3.5 h-3.5 text-text-subtle" />
-                  <span>Quick Start</span>
-                </button>
-                <button
-                  onClick={() => onNavigateDocs('motion')}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-text-secondary hover:text-text-primary hover:bg-surface transition-colors text-left cursor-pointer"
-                >
-                  <Sliders className="w-3.5 h-3.5 text-text-subtle" />
-                  <span>Motion Tokens</span>
-                </button>
-                <button
-                  onClick={() => onNavigateDocs('architecture')}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-text-secondary hover:text-text-primary hover:bg-surface transition-colors text-left cursor-pointer"
-                >
-                  <Cpu className="w-3.5 h-3.5 text-text-subtle" />
-                  <span>Architecture</span>
-                </button>
-              </div>
-
-              {/* COMPONENTS Section */}
-              <div className="space-y-1">
-                <h4 className="text-[11px] font-bold text-text-muted uppercase tracking-widest px-2.5 mb-1.5">
-                  Components
-                </h4>
+              {/* Navigation Sections */}
+              <div className="space-y-5">
+                {/* INTRO Section */}
                 <div className="space-y-0.5">
-                  {filteredComponents.map((item) => {
-                    const isActive = item.id === component.id;
-                    const isNew = isComponentNew(item);
-                    return (
-                      <a
-                        key={item.id}
-                        href={`/components/${item.id}`}
-                        onClick={(e) => {
-                          if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                            e.preventDefault();
-                            onSelectComponent(item.id);
-                          }
-                        }}
-                        aria-current={isActive ? 'page' : undefined}
-                        className={cn(
-                          'w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all text-left group cursor-pointer',
-                          isActive
-                            ? 'bg-surface-hover text-text-primary font-medium border border-border shadow-xs'
-                            : 'text-text-secondary hover:text-text-primary hover:bg-surface'
-                        )}
-                      >
-                        <span className="truncate">{item.name}</span>
-                        <div className="flex items-center gap-1.5 shrink-0">
-                          {isNew && <NewBadge size="xs" />}
-                          {isActive && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-text-primary shrink-0" />
+                  <h4 className="text-[11px] font-semibold text-text-muted uppercase tracking-wider px-2.5 mb-1.5">
+                    Intro
+                  </h4>
+                  <button
+                    onClick={onNavigateHome}
+                    className="w-full flex items-center px-2.5 py-1.5 rounded-lg text-[13px] sm:text-sm text-text-secondary hover:text-text-primary hover:bg-[#F1F1F2] dark:hover:bg-[#18181B] transition-colors text-left cursor-pointer"
+                  >
+                    <span>Home</span>
+                  </button>
+                  <button
+                    onClick={onNavigateComponents}
+                    className="w-full flex items-center px-2.5 py-1.5 rounded-lg text-[13px] sm:text-sm text-text-secondary hover:text-text-primary hover:bg-[#F1F1F2] dark:hover:bg-[#18181B] transition-colors text-left cursor-pointer"
+                  >
+                    <span>Components</span>
+                  </button>
+                </div>
+
+                {/* GUIDES Section */}
+                <div className="space-y-0.5">
+                  <h4 className="text-[11px] font-semibold text-text-muted uppercase tracking-wider px-2.5 mb-1.5">
+                    Guides
+                  </h4>
+                  <button
+                    onClick={() => onNavigateDocs('quick-start')}
+                    className="w-full flex items-center px-2.5 py-1.5 rounded-lg text-[13px] sm:text-sm text-text-secondary hover:text-text-primary hover:bg-[#F1F1F2] dark:hover:bg-[#18181B] transition-colors text-left cursor-pointer"
+                  >
+                    <span>Quick Start</span>
+                  </button>
+                  <button
+                    onClick={() => onNavigateDocs('motion')}
+                    className="w-full flex items-center px-2.5 py-1.5 rounded-lg text-[13px] sm:text-sm text-text-secondary hover:text-text-primary hover:bg-[#F1F1F2] dark:hover:bg-[#18181B] transition-colors text-left cursor-pointer"
+                  >
+                    <span>Motion Tokens</span>
+                  </button>
+                  <button
+                    onClick={() => onNavigateDocs('architecture')}
+                    className="w-full flex items-center px-2.5 py-1.5 rounded-lg text-[13px] sm:text-sm text-text-secondary hover:text-text-primary hover:bg-[#F1F1F2] dark:hover:bg-[#18181B] transition-colors text-left cursor-pointer"
+                  >
+                    <span>Architecture</span>
+                  </button>
+                </div>
+
+                {/* COMPONENTS Section */}
+                <div className="space-y-0.5">
+                  <h4 className="text-[11px] font-semibold text-text-muted uppercase tracking-wider px-2.5 mb-1.5">
+                    Components
+                  </h4>
+                  <div className="space-y-0.5">
+                    {filteredComponents.map((item) => {
+                      const isActive = item.id === component.id;
+                      const isNew = isComponentNew(item);
+                      return (
+                        <a
+                          key={item.id}
+                          href={`/components/${item.id}`}
+                          onClick={(e) => {
+                            if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                              e.preventDefault();
+                              onSelectComponent(item.id);
+                            }
+                          }}
+                          aria-current={isActive ? 'page' : undefined}
+                          className={cn(
+                            'w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[13px] sm:text-sm transition-all text-left group cursor-pointer',
+                            isActive
+                              ? 'bg-[#F1F1F2] dark:bg-[#18181B] text-text-primary font-medium border border-black/[0.04] dark:border-white/[0.06] shadow-2xs'
+                              : 'text-text-secondary hover:text-text-primary hover:bg-[#F1F1F2]/60 dark:hover:bg-[#18181B]/60'
                           )}
-                        </div>
-                      </a>
-                    );
-                  })}
+                        >
+                          <span className="truncate">{item.name}</span>
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            {isNew && <NewBadge size="xs" />}
+                            {isActive && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-text-primary shrink-0" />
+                            )}
+                          </div>
+                        </a>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          </aside>
+            </aside>
+          )}
 
           {/* ========================================================================= */}
           {/* 2. CENTER COLUMN: Dedicated Component Documentation Surface               */}
           {/* ========================================================================= */}
           <main className="flex-1 min-w-0 pb-20">
             <article className="space-y-8">
-              {/* Breadcrumb & Header */}
-              <div id="overview-section" className="space-y-3 pt-1">
-                {/* Breadcrumb */}
-                <nav aria-label="Breadcrumb" className="text-xs text-text-muted">
-                  <ol className="flex items-center gap-1.5 list-none p-0 m-0">
-                    <li>
-                      <a
-                        href="/"
-                        onClick={(e) => {
-                          if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                            e.preventDefault();
-                            onNavigateHome();
-                          }
-                        }}
-                        className="hover:text-text-primary transition-colors cursor-pointer"
-                      >
-                        EasyUI
-                      </a>
-                    </li>
-                    <li aria-hidden className="text-text-subtle"><ChevronRight className="w-3 h-3 text-text-muted" /></li>
-                    <li>
-                      <a
-                        href="/components"
-                        onClick={(e) => {
-                          if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                            e.preventDefault();
-                            onNavigateComponents();
-                          }
-                        }}
-                        className="hover:text-text-primary transition-colors cursor-pointer"
-                      >
-                        Components
-                      </a>
-                    </li>
-                    <li aria-hidden className="text-text-subtle"><ChevronRight className="w-3 h-3 text-text-muted" /></li>
-                    <li aria-current="page" className="text-text-primary font-medium truncate">
-                      {component.name}
-                    </li>
-                  </ol>
-                </nav>
-
-                {/* Title */}
-                <div className="pt-1">
+              {/* Header: Title and Description in the Dollar-Cost Averaging minimal card aesthetic */}
+              <div id="overview-section" className="space-y-2 pt-1">
+                <div className="flex items-center gap-3 flex-wrap">
                   <h1 className="text-3xl sm:text-4xl font-bold text-text-primary tracking-tight">
                     {component.name}
                   </h1>
+                  {isComponentNew(component) && <NewBadge size="sm" />}
                 </div>
 
-                {/* Description Paragraph */}
-                <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-3xl pt-1">
+                {/* Subtitle / Description */}
+                <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-3xl pt-0.5">
                   {component.description || component.tagline}
                 </p>
               </div>
@@ -3541,65 +3524,83 @@ const completion = await client.completions.create({
               </div>
 
               {/* ========================================================================= */}
-              {/* TAB VIEW 1: PREVIEW (Interactive Surface Box + Floating Dock)             */}
+              {/* TAB VIEW 1: PREVIEW (Interactive Surface Box in #F1F1F2 / #18181B)        */}
               {/* ========================================================================= */}
               {activeTab === 'preview' && (
                 <div id="preview-section" className="space-y-6">
-                  {/* Main Interactive Stage Box */}
-                  <div className="relative rounded-2xl border border-border bg-surface overflow-hidden shadow-elevated flex flex-col">
+                  {/* Main Interactive Stage Box — matching frontpage card aesthetic */}
+                  <div className="relative rounded-[26px] bg-[#F1F1F2] dark:bg-[#18181B] p-2.5 sm:p-3 border border-black/[0.04] dark:border-white/[0.06] shadow-xs flex flex-col">
                     {/* Top Bar inside the preview card */}
-                    <div className="px-4 py-2.5 border-b border-border bg-surface-raised/90 backdrop-blur-md flex items-center justify-end gap-3 text-xs">
-                      {/* Stage Controls */}
-                      <div className="flex items-center gap-1.5">
+                    <div className="px-3 py-2 flex items-center justify-end text-xs relative">
+                      {/* Box Structure: [ Copy CLI | ▼ ] */}
+                      <div ref={previewMenuRef} className="relative inline-flex items-center">
+                        <div className="inline-flex items-center rounded-lg bg-white dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.1] shadow-2xs text-xs font-sans text-text-secondary overflow-hidden">
+                          {/* Copy CLI action */}
+                          <button
+                            type="button"
+                            onClick={() => handleCopy(component.cliCommand, 'cli-top')}
+                            className="px-2 py-1 sm:pl-2.5 sm:pr-2 flex items-center gap-1.5 hover:text-text-primary hover:bg-black/[0.03] dark:hover:bg-white/[0.04] rounded-l-lg transition-colors cursor-pointer"
+                            title="Copy CLI command"
+                            aria-label="Copy CLI command"
+                          >
+                            {copiedCode === 'cli-top' ? (
+                              <Check className="w-3.5 h-3.5 text-emerald-500" />
+                            ) : (
+                              <Copy className="w-3.5 h-3.5 text-text-muted" />
+                            )}
+                            <span className="hidden sm:inline text-xs font-medium font-sans">
+                              {copiedCode === 'cli-top' ? 'Copied' : 'Copy CLI'}
+                            </span>
+                          </button>
 
-                        {/* Reset Demo */}
-                        <button
-                          type="button"
-                          onClick={() => setDemoKey((k) => k + 1)}
-                          className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                          title="Reset interactive demo"
-                          aria-label="Reset demo"
-                        >
-                          <RefreshCw className="w-3.5 h-3.5" />
-                        </button>
+                          {/* Split Divider */}
+                          <div className="w-px h-3 bg-black/[0.08] dark:bg-white/[0.1]" />
 
-                        {/* Copy CLI Command */}
-                        <button
-                          type="button"
-                          onClick={() => handleCopy(component.cliCommand, 'cli-top')}
-                          className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                          title="Copy CLI command"
-                          aria-label="Copy CLI command"
-                        >
-                          {copiedCode === 'cli-top' ? (
-                            <Check className="w-3.5 h-3.5 text-emerald-400" />
-                          ) : (
-                            <Copy className="w-3.5 h-3.5" />
+                          {/* Dropdown toggle arrow */}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setPreviewMenuOpen((prev) => !prev);
+                            }}
+                            className="px-1.5 py-1 flex items-center justify-center hover:text-text-primary hover:bg-black/[0.03] dark:hover:bg-white/[0.04] rounded-r-lg transition-colors cursor-pointer text-text-secondary"
+                            title="More options"
+                            aria-label="Preview options"
+                            aria-expanded={previewMenuOpen}
+                          >
+                            <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-150', previewMenuOpen && 'rotate-180 text-text-primary')} />
+                          </button>
+                        </div>
+
+                        {/* Dropdown Menu */}
+                        <AnimatePresence>
+                          {previewMenuOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -4, scale: 0.96 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: -4, scale: 0.96 }}
+                              transition={{ duration: 0.15 }}
+                              className="absolute right-0 top-full mt-1.5 z-30 min-w-[120px] rounded-lg bg-white dark:bg-[#18181B] border border-black/[0.08] dark:border-white/[0.1] shadow-xl p-1"
+                            >
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsFullscreenPreview(true);
+                                  setPreviewMenuOpen(false);
+                                }}
+                                className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-sans text-text-secondary hover:text-text-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors text-left cursor-pointer"
+                              >
+                                <Maximize2 className="w-3.5 h-3.5 text-text-muted" />
+                                <span className="text-xs font-medium">Full screen</span>
+                              </button>
+                            </motion.div>
                           )}
-                        </button>
-
-                        {/* Fullscreen Preview */}
-                        <button
-                          type="button"
-                          onClick={() => setIsFullscreenPreview(true)}
-                          className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                          title="Fullscreen preview"
-                          aria-label="Fullscreen preview"
-                        >
-                          <Maximize2 className="w-3.5 h-3.5" />
-                        </button>
+                        </AnimatePresence>
                       </div>
                     </div>
 
-                    {/* Component Render Canvas — backdrop follows the global theme.
-                      The component demo itself follows the page theme too; components
-                      that are not yet light/dark aware keep their original styling. */}
-                    <div
-                      className={cn(
-                        'relative min-h-[360px] sm:min-h-[420px] p-2.5 sm:p-10 flex items-center justify-center overflow-hidden transition-colors duration-200',
-                        theme === 'dark' ? 'bg-[#050505] text-text-primary' : 'bg-[#FAFAFA] text-[#0A0A0A]'
-                      )}
-                    >
+                    {/* Component Render Canvas — seamless unified stage matching card background */}
+                    <div className="relative min-h-[360px] sm:min-h-[440px] p-3 sm:p-8 flex items-center justify-center overflow-hidden text-text-primary">
                       <div className="w-full flex items-center justify-center">
                         {!isFullscreenPreview && (
                           <Suspense fallback={<div className="min-h-48 w-full flex items-center justify-center text-xs text-text-muted">Loading preview…</div>}>
@@ -3617,51 +3618,53 @@ const completion = await client.completions.create({
               {/* ========================================================================= */}
               {activeTab === 'usage' && (
                 <div id="usage-section" className="space-y-6">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-text-secondary font-medium">Import Component</span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const importStmt = `import { ${component.name.replace(/[\s-]+/g, '')} } from "@/components/ui/${component.id}";`;
-                          handleCopy(importStmt, 'import');
-                        }}
-                        className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                        title={copiedCode === 'import' ? 'Copied' : 'Copy Import Statement'}
-                        aria-label={copiedCode === 'import' ? 'Copied import statement' : 'Copy import statement'}
-                      >
-                        {copiedCode === 'import' ? (
-                          <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        ) : (
-                          <Copy className="w-3.5 h-3.5" />
-                        )}
-                      </button>
+                  <div className="rounded-[26px] bg-[#F1F1F2] dark:bg-[#18181B] p-4 sm:p-6 border border-black/[0.04] dark:border-white/[0.06] space-y-6 shadow-xs">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs px-1">
+                        <span className="text-text-primary font-medium">Import Component</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const importStmt = `import { ${component.name.replace(/[\s-]+/g, '')} } from "@/components/ui/${component.id}";`;
+                            handleCopy(importStmt, 'import');
+                          }}
+                          className="p-1.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.04] dark:border-white/[0.06] text-text-subtle hover:text-text-primary transition-colors cursor-pointer"
+                          title={copiedCode === 'import' ? 'Copied' : 'Copy Import Statement'}
+                          aria-label={copiedCode === 'import' ? 'Copied import statement' : 'Copy import statement'}
+                        >
+                          {copiedCode === 'import' ? (
+                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5" />
+                          )}
+                        </button>
+                      </div>
+                      <pre className="p-4 rounded-[18px] border border-black/[0.06] dark:border-white/[0.06] bg-transparent font-mono text-xs text-text-primary overflow-x-auto">
+                        <code>{`import { ${component.name.replace(/[\s-]+/g, '')} } from "@/components/ui/${component.id}";`}</code>
+                      </pre>
                     </div>
-                    <pre className="p-4 rounded-xl border border-border bg-surface-raised font-mono text-xs text-text-primary overflow-x-auto">
-                      <code>{`import { ${component.name.replace(/[\s-]+/g, '')} } from "@/components/ui/${component.id}";`}</code>
-                    </pre>
-                  </div>
 
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-text-secondary font-medium">Example Code</span>
-                      <button
-                        type="button"
-                        onClick={() => handleCopy(component.usageCode, 'usage')}
-                        className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                        title={copiedCode === 'usage' ? 'Copied' : 'Copy Example Code'}
-                        aria-label={copiedCode === 'usage' ? 'Copied example code' : 'Copy example code'}
-                      >
-                        {copiedCode === 'usage' ? (
-                          <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        ) : (
-                          <Copy className="w-3.5 h-3.5" />
-                        )}
-                      </button>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs px-1">
+                        <span className="text-text-primary font-medium">Example Code</span>
+                        <button
+                          type="button"
+                          onClick={() => handleCopy(component.usageCode, 'usage')}
+                          className="p-1.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.04] dark:border-white/[0.06] text-text-subtle hover:text-text-primary transition-colors cursor-pointer"
+                          title={copiedCode === 'usage' ? 'Copied' : 'Copy Example Code'}
+                          aria-label={copiedCode === 'usage' ? 'Copied example code' : 'Copy example code'}
+                        >
+                          {copiedCode === 'usage' ? (
+                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5" />
+                          )}
+                        </button>
+                      </div>
+                      <pre className="p-4 rounded-[18px] border border-black/[0.06] dark:border-white/[0.06] bg-transparent font-mono text-xs text-text-secondary overflow-x-auto max-h-[460px] leading-relaxed scrollbar-thin">
+                        <code>{component.usageCode}</code>
+                      </pre>
                     </div>
-                    <pre className="p-4 rounded-xl border border-border bg-surface-raised font-mono text-xs text-text-secondary overflow-x-auto max-h-[460px] leading-relaxed scrollbar-thin">
-                      <code>{component.usageCode}</code>
-                    </pre>
                   </div>
                 </div>
               )}
@@ -3671,45 +3674,47 @@ const completion = await client.completions.create({
               {/* ========================================================================= */}
               {activeTab === 'code' && (
                 <div id="code-section" className="space-y-3">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-text-secondary font-medium font-mono">
-                      src/components/ui/{component.id}.tsx
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => handleCopy(effectiveSourceCode, 'source')}
-                      className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary hover:bg-surface-hover border border-transparent hover:border-border transition-colors cursor-pointer"
-                      title={copiedCode === 'source' ? 'Copied' : 'Copy Source Code'}
-                      aria-label={copiedCode === 'source' ? 'Copied source code' : 'Copy source code'}
-                    >
-                      {copiedCode === 'source' ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                    </button>
+                  <div className="rounded-[26px] bg-[#F1F1F2] dark:bg-[#18181B] p-4 sm:p-6 border border-black/[0.04] dark:border-white/[0.06] space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between text-xs px-1">
+                      <span className="text-text-primary font-medium font-mono">
+                        src/components/ui/{component.id}.tsx
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(effectiveSourceCode, 'source')}
+                        className="p-1.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.04] dark:border-white/[0.06] text-text-subtle hover:text-text-primary transition-colors cursor-pointer"
+                        title={copiedCode === 'source' ? 'Copied' : 'Copy Source Code'}
+                        aria-label={copiedCode === 'source' ? 'Copied source code' : 'Copy source code'}
+                      >
+                        {copiedCode === 'source' ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+                    <pre className="p-4 rounded-[18px] border border-black/[0.06] dark:border-white/[0.06] bg-transparent font-mono text-xs text-text-secondary overflow-x-auto max-h-[520px] leading-relaxed scrollbar-thin">
+                      <code>{effectiveSourceCode}</code>
+                    </pre>
                   </div>
-                  <pre className="p-4 rounded-xl border border-border bg-surface-raised font-mono text-xs text-text-secondary overflow-x-auto max-h-[520px] leading-relaxed scrollbar-thin">
-                    <code>{effectiveSourceCode}</code>
-                  </pre>
                 </div>
               )}
 
               {/* ========================================================================= */}
               {/* SECTION: INSTALLATION                                                     */}
               {/* ========================================================================= */}
-              <section id="install-section" className="space-y-4 pt-4 border-t border-border">
+              <section id="install-section" className="rounded-[26px] bg-[#F1F1F2] dark:bg-[#18181B] p-5 sm:p-6 border border-black/[0.04] dark:border-white/[0.06] space-y-4 shadow-xs">
                 <div className="flex items-center justify-between">
                   <h2 className="text-lg font-semibold text-text-primary tracking-tight">Installation</h2>
                   {/* CLI vs Manual Toggle */}
-                  <div className="flex items-center gap-1 p-0.5 rounded-lg bg-surface border border-border">
+                  <div className="flex items-center gap-1 p-1 rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
                     <button
                       type="button"
                       onClick={() => setInstallMode('cli')}
                       className={cn(
-                        'px-3 py-1 text-xs font-medium rounded-md transition-colors cursor-pointer',
+                        'px-3 py-1 text-xs font-medium rounded-lg transition-colors cursor-pointer',
                         installMode === 'cli'
-                          ? 'bg-surface-hover text-text-primary shadow-xs'
+                          ? 'bg-white dark:bg-[#27272A] text-text-primary shadow-xs'
                           : 'text-text-muted hover:text-text-primary'
                       )}
                     >
@@ -3719,9 +3724,9 @@ const completion = await client.completions.create({
                       type="button"
                       onClick={() => setInstallMode('manual')}
                       className={cn(
-                        'px-3 py-1 text-xs font-medium rounded-md transition-colors cursor-pointer',
+                        'px-3 py-1 text-xs font-medium rounded-lg transition-colors cursor-pointer',
                         installMode === 'manual'
-                          ? 'bg-surface-hover text-text-primary shadow-xs'
+                          ? 'bg-white dark:bg-[#27272A] text-text-primary shadow-xs'
                           : 'text-text-muted hover:text-text-primary'
                       )}
                     >
@@ -3735,12 +3740,12 @@ const completion = await client.completions.create({
                     <p className="text-xs text-text-secondary">
                       Add the component directly to your repository using shadcn CLI:
                     </p>
-                    <div className="rounded-xl border border-border bg-surface-raised p-3.5 sm:p-4 flex items-center justify-between gap-3 font-mono text-xs text-text-primary">
+                    <div className="p-2 sm:p-2.5 flex items-center justify-between gap-3 font-mono text-xs text-text-primary">
                       <span className="truncate">{component.cliCommand}</span>
                       <button
                         type="button"
                         onClick={() => handleCopy(component.cliCommand, 'cli')}
-                        className="p-1.5 rounded-md text-text-subtle hover:text-text-primary bg-surface hover:bg-surface-hover border border-border transition-colors cursor-pointer shrink-0"
+                        className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] transition-colors cursor-pointer shrink-0"
                       >
                         {copiedCode === 'cli' ? (
                           <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -3755,16 +3760,16 @@ const completion = await client.completions.create({
                     {/* Package Manager selector */}
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-text-secondary">1. Install dependencies</span>
-                      <div className="flex items-center gap-1 font-mono text-[11px]">
+                      <div className="flex items-center gap-1 font-mono text-[11px] p-0.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.06]">
                         {(['pnpm', 'npm', 'yarn', 'bun'] as PkgManager[]).map((pm) => (
                           <button
                             key={pm}
                             type="button"
                             onClick={() => setPkgManager(pm)}
                             className={cn(
-                              'px-2 py-0.5 rounded transition-colors cursor-pointer',
+                              'px-2 py-0.5 rounded-md transition-colors cursor-pointer',
                               pkgManager === pm
-                                ? 'bg-surface-hover text-text-primary'
+                                ? 'bg-white dark:bg-[#27272A] text-text-primary shadow-xs'
                                 : 'text-text-muted hover:text-text-secondary'
                             )}
                           >
@@ -3774,12 +3779,12 @@ const completion = await client.completions.create({
                       </div>
                     </div>
 
-                    <div className="rounded-xl border border-border bg-surface-raised p-3.5 flex items-center justify-between gap-3 font-mono text-xs text-text-primary">
+                    <div className="p-2 sm:p-2.5 flex items-center justify-between gap-3 font-mono text-xs text-text-primary">
                       <span className="truncate">{getInstallDepCommand()}</span>
                       <button
                         type="button"
                         onClick={() => handleCopy(getInstallDepCommand(), 'deps')}
-                        className="p-1.5 rounded-md text-text-subtle hover:text-text-primary bg-surface border border-border transition-colors cursor-pointer"
+                        className="p-1.5 rounded-lg text-text-subtle hover:text-text-primary bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] transition-colors cursor-pointer"
                       >
                         {copiedCode === 'deps' ? (
                           <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -3797,7 +3802,7 @@ const completion = await client.completions.create({
                       >
                         Code tab
                       </button>{' '}
-                      into your project at <code className="text-text-primary">components/ui/{component.id}.tsx</code>.
+                      into your project at <code className="text-text-primary font-mono">components/ui/{component.id}.tsx</code>.
                     </p>
                   </div>
                 )}
@@ -3806,32 +3811,32 @@ const completion = await client.completions.create({
               {/* ========================================================================= */}
               {/* SECTION: PROPS & API REFERENCE                                            */}
               {/* ========================================================================= */}
-              <section id="props-section" className="space-y-4 pt-4 border-t border-border">
+              <section id="props-section" className="rounded-[26px] bg-[#F1F1F2] dark:bg-[#18181B] p-5 sm:p-6 border border-black/[0.04] dark:border-white/[0.06] space-y-4 shadow-xs">
                 <h2 className="text-lg font-semibold text-text-primary tracking-tight">API Reference</h2>
                 {component.props && component.props.length > 0 ? (
-                  <div className="rounded-xl border border-border overflow-hidden bg-surface">
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs">
-                        <thead className="bg-surface-raised text-text-secondary border-b border-border">
-                          <tr>
-                            <th scope="col" className="py-3 px-4 font-mono font-medium">Prop</th>
-                            <th scope="col" className="py-3 px-4 font-mono font-medium">Type</th>
-                            <th scope="col" className="py-3 px-4 font-mono font-medium">Default</th>
-                            <th scope="col" className="py-3 px-4 font-medium">Description</th>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs">
+                      <thead className="text-text-secondary border-b border-black/[0.06] dark:border-white/[0.06]">
+                        <tr>
+                          <th scope="col" className="py-3 px-3 font-mono font-medium">Prop</th>
+                          <th scope="col" className="py-3 px-3 font-mono font-medium">Type</th>
+                          <th scope="col" className="py-3 px-3 font-mono font-medium">Default</th>
+                          <th scope="col" className="py-3 px-3 font-medium">Description</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+                        {component.props.map((p, i) => (
+                          <tr key={i} className="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                            <td className="py-3 px-3 font-mono text-text-primary font-medium">{p.name}</td>
+                            <td className="py-3 px-3 font-mono text-text-secondary">
+                              <span className="px-1.5 py-0.5 rounded bg-black/[0.04] dark:bg-white/[0.06]">{p.type}</span>
+                            </td>
+                            <td className="py-3 px-3 font-mono text-text-muted">{p.default || '—'}</td>
+                            <td className="py-3 px-3 text-text-secondary leading-relaxed">{p.description}</td>
                           </tr>
-                        </thead>
-                        <tbody className="divide-y divide-border">
-                          {component.props.map((p, i) => (
-                            <tr key={i} className="hover:bg-surface-hover transition-colors">
-                              <td className="py-3 px-4 font-mono text-text-primary font-medium">{p.name}</td>
-                              <td className="py-3 px-4 font-mono text-text-secondary">{p.type}</td>
-                              <td className="py-3 px-4 font-mono text-text-muted">{p.default || '—'}</td>
-                              <td className="py-3 px-4 text-text-secondary leading-relaxed">{p.description}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 ) : (
                   <p className="text-xs text-text-muted">Standard React HTML element attributes supported.</p>
@@ -3842,7 +3847,7 @@ const completion = await client.completions.create({
               {/* SECTION: RELATED COMPONENTS                                               */}
               {/* ========================================================================= */}
               {relatedComponents.length > 0 && (
-                <section id="related-section" className="space-y-4 pt-4 border-t border-border">
+                <section id="related-section" className="space-y-4 pt-2">
                   <h2 className="text-lg font-semibold text-text-primary tracking-tight">Related Components</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {relatedComponents.map((rel) => (
@@ -3855,7 +3860,7 @@ const completion = await client.completions.create({
                             onSelectComponent(rel.id);
                           }
                         }}
-                        className="p-4 rounded-xl border border-border bg-surface hover:border-border-hover hover:bg-surface-hover transition-all text-left group cursor-pointer block"
+                        className="p-4 rounded-[22px] border border-black/[0.04] dark:border-white/[0.06] bg-[#F1F1F2] dark:bg-[#18181B] hover:scale-[1.01] hover:border-black/[0.08] dark:hover:border-white/[0.12] transition-all text-left group cursor-pointer block shadow-xs"
                       >
                         <span className="text-[10px] font-mono text-text-muted uppercase tracking-wider block mb-1">
                           {rel.category}
