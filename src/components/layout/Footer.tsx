@@ -130,7 +130,7 @@ export const Footer: React.FC<FooterProps> = ({
                     height="24"
                     className="h-6 w-6 object-contain invert dark:invert-0 transition-transform duration-300 group-hover:scale-105"
                   />
-                  <span className="font-mono text-sm font-medium tracking-tight text-text-primary transition-colors group-hover:text-text-secondary">
+                  <span className="font-mono text-sm font-medium tracking-tight text-text-primary group-hover:text-black dark:group-hover:text-white transition-colors">
                     easyui
                   </span>
                 </a>
