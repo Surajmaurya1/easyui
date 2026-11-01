@@ -12,7 +12,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 131 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 133 animated React components.
 
 ### Component Index
 
@@ -54,6 +54,7 @@
 - [DrawCheckbox](https://easyui.site/components/draw-checkbox): A checkbox whose checkmark draws itself (path length animation) and settles with a tiny overshoot. The box scales from 0.9 -> 1.04 -> 1.0 for a tactile snap feel.
 - [Dynamic Island](https://easyui.site/components/dynamic-island): A physical morphing island component that smoothly transitions between a compact indicator, interactive summary, profile card, and social dock with spring physics.
 - [Evil Eye](https://easyui.site/components/evil-eye): A hanging navy amulet disc with concentric sky-blue and white rings that swings with realistic inertia in response to the pointer, painted as a layered SVG and driven by a single spring pipeline.
+- [Expandable Action Bar](https://easyui.site/components/expandable-action-bar): A compact icon-only action bar that expands on hover or focus to reveal a label next to each icon. Built with React, Tailwind CSS and Framer Motion.
 - [Expandable Data Row](https://easyui.site/components/expandable-data-row): A polished table component with fluid accordion row unfolding, revealing deep metadata, audit activity feeds, and quick actions, with automatic card restructuring on mobile viewports.
 - [Expandable Search](https://easyui.site/components/expandable-search): A compact search pill that smoothly widens on focus with shortcut hint pills and clear button.
 - [FAQ](https://easyui.site/components/faq): An expandable accordion FAQ component with smooth spring height calculation, single/multi-open modes, category filtering, search, and full ARIA keyboard accessibility.
@@ -94,6 +95,7 @@
 - [Notification Bell](https://easyui.site/components/notification-bell): An interactive notification trigger with animated badge counter, arrival shake feedback, and dropdown panel.
 - [Notification Stack](https://easyui.site/components/notification-stack): A stacked notification card system with physical spring stacking elevation, swipe-to-dismiss drag, and simulation triggers.
 - [Orbital Loading Ring](https://easyui.site/components/orbital-loading-ring): A lightweight loading indicator with layered rings and orbiting particles that communicate active processing.
+- [Orbital Menu](https://easyui.site/components/orbital-menu): A circular button that opens an orbit ring around itself on click, with menu items spreading out along the ring. Built with React, Tailwind CSS and Framer Motion.
 - [OriginDropdown](https://easyui.site/components/origin-dropdown): A dropdown with origin-aware expansion — the menu materializes from the chosen side with a slight scale and an inward translation, so its perceived origin is the trigger edge closest to the menu.
 - [OTP Input](https://easyui.site/components/otp-input): An accessible one-time-passcode input made of auto-advancing digit boxes, each with a spring-driven pop animation on entry, built with Framer Motion and Tailwind CSS.
 - [Package Box](https://easyui.site/components/package-box): A pure CSS 3D cardboard package box featuring interactive tape-splitting physics, flap-folding choreography, and an animated packing slip that rises out and turns to face the viewer.

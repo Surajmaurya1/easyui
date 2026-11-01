@@ -3591,6 +3591,91 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "expandable-action-bar",
+    "name": "Expandable Action Bar",
+    "tagline": "Icon bar that expands to show labels on hover",
+    "description": "A compact icon-only action bar that expands on hover or focus to reveal a label next to each icon. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/expandable-action-bar",
+    "features": [
+      "Shows only icons at rest, then expands to reveal labels on hover or keyboard focus",
+      "Smooth spring-based layout animations as the bar grows and shrinks",
+      "Each item takes an icon, a label and an onClick handler",
+      "Customizable appearance with standard Tailwind utility classes"
+    ],
+    "props": [
+      {
+        "name": "items",
+        "type": "ActionBarItem[]",
+        "default": "required",
+        "description": "Actions to render, each as { icon, label, onClick }"
+      },
+      {
+        "name": "items[].icon",
+        "type": "ReactNode",
+        "default": "required",
+        "description": "Icon shown at all times"
+      },
+      {
+        "name": "items[].label",
+        "type": "string",
+        "default": "required",
+        "description": "Text revealed on hover or focus, also used as the accessible name"
+      },
+      {
+        "name": "items[].onClick",
+        "type": "() => void",
+        "default": "required",
+        "description": "Called when the item is clicked"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional custom Tailwind styling for the bar"
+      },
+      {
+        "name": "...props",
+        "type": "HTMLMotionProps<'div'>",
+        "default": "undefined",
+        "description": "Any other Framer Motion div props are passed to the container"
+      }
+    ],
+    "accessibility": [
+      "Respects prefers-reduced-motion media query",
+      "Every button keeps an aria-label, so labels are available to screen readers while hidden",
+      "Tabbing into the bar expands it, matching the hover behavior",
+      "Container uses role=\"toolbar\" with visible focus rings on each action"
+    ],
+    "createdAt": "2026-11-01T22:17:23.342Z",
+    "usageCode": "import { Copy, Share2, Trash2 } from \"lucide-react\";\nimport { ExpandableActionBar } from \"@/components/ui/expandable-action-bar\";\n\nexport function Demo() {\n  return (\n    <ExpandableActionBar\n      items={[\n        { icon: <Share2 size={16} />, label: 'Share', onClick: () => { } },\n        { icon: <Copy size={16} />, label: 'Copy', onClick: () => { } },\n        { icon: <Download size={16} />, label: 'Export', onClick: () => { } },\n        { icon: <Save size={16} />, label: 'Save', onClick: () => { } },\n        { icon: <Trash2 size={16} />, label: 'Delete', onClick: () => { } },\n      ]}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/ExpandableActionBar.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/expandable-action-bar.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      },
+      {
+        "path": "src/lib/motion-tokens.ts",
+        "type": "registry:lib",
+        "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
     "id": "expandable-data-row",
     "name": "Expandable Data Row",
     "tagline": "Smooth unfolding table row with deep metadata and responsive mobile conversion",
@@ -7027,6 +7112,123 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/utils.ts",
         "type": "registry:lib",
         "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
+    "id": "orbital-menu",
+    "name": "Orbital Menu",
+    "tagline": "Circle button that opens into an orbiting menu",
+    "description": "A circular button that opens an orbit ring around itself on click, with menu items spreading out along the ring. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/orbital-menu",
+    "features": [
+      "Circular trigger button that draws an orbit ring outward when opened",
+      "Items swirl out from the center and settle at evenly spaced angles on the ring",
+      "Full circle or partial arc layouts using startAngle and sweep",
+      "Closes on outside click, Escape, or after selecting an item",
+      "Customizable appearance with standard Tailwind utility classes"
+    ],
+    "props": [
+      {
+        "name": "items",
+        "type": "OrbitalMenuItem[]",
+        "default": "required",
+        "description": "Menu items, each as { icon, label, onClick }"
+      },
+      {
+        "name": "triggerIcon",
+        "type": "ReactNode",
+        "default": "plus icon",
+        "description": "Icon inside the center button. It rotates when the menu opens"
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "88",
+        "description": "Distance in px from the center button to each item"
+      },
+      {
+        "name": "triggerSize",
+        "type": "number",
+        "default": "56",
+        "description": "Diameter in px of the center button"
+      },
+      {
+        "name": "itemSize",
+        "type": "number",
+        "default": "44",
+        "description": "Diameter in px of each item"
+      },
+      {
+        "name": "startAngle",
+        "type": "number",
+        "default": "-90",
+        "description": "Angle in degrees of the first item. -90 is straight up"
+      },
+      {
+        "name": "sweep",
+        "type": "number",
+        "default": "360",
+        "description": "Total arc in degrees the items spread across"
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether the menu starts open"
+      },
+      {
+        "name": "closeOnSelect",
+        "type": "boolean",
+        "default": "true",
+        "description": "Close the menu after an item is clicked"
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "default": "undefined",
+        "description": "Called whenever the menu opens or closes"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional custom Tailwind styling for the container"
+      }
+    ],
+    "accessibility": [
+      "Respects prefers-reduced-motion media query",
+      "Trigger exposes aria-expanded, aria-haspopup and aria-controls",
+      "Items use role=\"menuitem\" with an aria-label and are removed from tab order while closed",
+      "Escape closes the menu and returns focus to the trigger",
+      "Visible focus rings and label tooltips on hover and keyboard focus"
+    ],
+    "createdAt": "2026-11-02T00:00:00.000Z",
+    "usageCode": "import { Copy, Share2, Pencil, Trash2 } from \"lucide-react\";\nimport { OrbitalMenu } from \"@/components/ui/orbital-menu\";\n\nexport function Demo() {\n  return (\n    <OrbitalMenu\n      items={[\n        { icon: <Pencil size={16} />, label: \"Edit\", onClick: () => console.log(\"edit\") },\n        { icon: <Copy size={16} />, label: \"Copy\", onClick: () => console.log(\"copy\") },\n        { icon: <Share2 size={16} />, label: \"Share\", onClick: () => console.log(\"share\") },\n        { icon: <Trash2 size={16} />, label: \"Delete\", onClick: () => console.log(\"delete\") },\n      ]}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/OrbitalMenu.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/orbital-menu.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      },
+      {
+        "path": "src/lib/motion-tokens.ts",
+        "type": "registry:lib",
+        "target": "lib/motion-tokens.ts"
       }
     ]
   },

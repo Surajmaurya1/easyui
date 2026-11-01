@@ -569,6 +569,20 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-31"
   },
   {
+    "id": "expandable-action-bar",
+    "name": "Expandable Action Bar",
+    "tagline": "Icon bar that expands to show labels on hover",
+    "description": "A compact icon-only action bar that expands on hover or focus to reveal a label next to each icon. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/expandable-action-bar",
+    "createdAt": "2026-11-01T22:17:23.342Z"
+  },
+  {
     "id": "expandable-data-row",
     "name": "Expandable Data Row",
     "tagline": "Smooth unfolding table row with deep metadata and responsive mobile conversion",
@@ -1163,6 +1177,20 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/orbital-loading-ring",
     "createdAt": "2026-08-28"
+  },
+  {
+    "id": "orbital-menu",
+    "name": "Orbital Menu",
+    "tagline": "Circle button that opens into an orbiting menu",
+    "description": "A circular button that opens an orbit ring around itself on click, with menu items spreading out along the ring. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/orbital-menu",
+    "createdAt": "2026-11-02T00:00:00.000Z"
   },
   {
     "id": "origin-dropdown",
