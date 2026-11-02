@@ -147,6 +147,7 @@ export const DEMO_COMPONENTS = {
   DonutChart: lazyNamed(() => import('../../ui/DonutChart'), 'DonutChart'),
   StatCard: lazyNamed(() => import('../../ui/StatCard'), 'StatCard'),
   StatGrid: lazyNamed(() => import('../../ui/StatCard'), 'StatGrid'),
+  Earnings: lazyNamed(() => import('../../ui/Earnings'), 'Earnings'),
   FunnelChart: lazyNamed(() => import('../../ui/FunnelChart'), 'FunnelChart'),
   LiveLineChart: lazyNamed(() => import('../../ui/LiveLineChart'), 'LiveLineChart'),
   ActivityHeatmap: lazyNamed(() => import('../../ui/ActivityHeatmap'), 'ActivityHeatmap'),

@@ -554,6 +554,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-10-05"
   },
   {
+    "id": "earnings",
+    "name": "Earnings",
+    "tagline": "Earnings summary card with count-up total, scrubable trend, and source breakdown",
+    "description": "An earnings summary card that counts up the total, plots a scrubable trend line, and breaks income down by source with a hoverable split bar and a 7D / 30D / 12M period switcher. Light and dark themes, fully responsive.",
+    "category": "Feedback",
+    "badges": [
+      "Data Visualization",
+      "Earnings",
+      "SVG",
+      "Split Bar",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/earnings",
+    "createdAt": "2026-11-02"
+  },
+  {
     "id": "evil-eye",
     "name": "Evil Eye",
     "tagline": "Pointer-driven hanging amulet with layered spring physics",

@@ -760,6 +760,12 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/stat-card'),
     metadata: { type: 'interactive' },
   },
+  'earnings': {
+    id: 'earnings',
+    componentId: 'earnings',
+    load: () => import('./items/earnings'),
+    metadata: { type: 'interactive' },
+  },
   'funnel-chart': {
     id: 'funnel-chart',
     componentId: 'funnel-chart',

@@ -75,7 +75,7 @@ describe('sponsor UI', () => {
   it('renders the home sponsor row with the placeholder when there are no sponsors', () => {
     render(<SponsoredBy />);
 
-    expect(screen.getByText('Supported by')).toBeInTheDocument();
+    expect(screen.getByText('Sponsored by')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Visit Tracwell/ })).toHaveAttribute(
       'href',
       'https://tracwell.app/?utm_source=easyui&utm_medium=referral&utm_campaign=analytics_sponsor'

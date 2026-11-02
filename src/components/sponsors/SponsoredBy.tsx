@@ -56,7 +56,7 @@ export const SponsoredBy: React.FC<SponsoredByProps> = ({ onNavigateSponsors }) 
             variants={shouldReduceMotion ? undefined : itemVariants}
             className="text-[10px] uppercase tracking-[0.18em] text-text-muted"
           >
-            Supported by
+            Sponsored by
           </motion.span>
 
           <ul className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5" aria-label="Analytics provider and sponsors">
