@@ -32,9 +32,9 @@ export const ExpandableActionBar: React.FC<ExpandableActionBarProps> = ({
     ? { duration: 0 }
     : motionTransitions.springSnappy;
 
-  function onActionClick(action) {
+  function onActionClick(action: () => void) {
     setIsExpanded(false);
-    action()
+    action();
   }
 
   return (
