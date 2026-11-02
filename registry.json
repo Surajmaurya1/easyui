@@ -874,6 +874,22 @@
       ]
     },
     {
+      "name": "earnings",
+      "type": "registry:ui",
+      "title": "Earnings",
+      "description": "An earnings summary card that counts up the total, plots a scrubable trend line, and breaks income down by source with a hoverable split bar and a 7D / 30D / 12M period switcher. Light and dark themes, fully responsive.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Earnings.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/earnings.tsx"
+        }
+      ]
+    },
+    {
       "name": "evil-eye",
       "type": "registry:ui",
       "title": "Evil Eye",

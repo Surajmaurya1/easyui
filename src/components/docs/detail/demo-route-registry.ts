@@ -40,6 +40,7 @@ export const DEMO_ROUTE_MODULES = {
   'drag-to-confirm': { aliases: [], load: () => import('./demos/items/drag-to-confirm.demo') },
   'draw-checkbox': { aliases: [], load: () => import('./demos/items/draw-checkbox.demo') },
   'dynamic-island': { aliases: [], load: () => import('./demos/items/dynamic-island.demo') },
+  'earnings': { aliases: [], load: () => import('./demos/items/earnings.demo') },
   'evil-eye': { aliases: [], load: () => import('./demos/items/evil-eye.demo') },
   'expandable-data-row': { aliases: [], load: () => import('./demos/items/expandable-data-row.demo') },
   'expandable-search': { aliases: [], load: () => import('./demos/items/expandable-search.demo') },

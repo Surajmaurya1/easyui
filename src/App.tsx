@@ -358,7 +358,7 @@ export function App({ initialPath }: AppProps = {}) {
         >
           <a
             href="/sponsors"
-            aria-label="Launch offer: Sponsor EasyUI for $49"
+            aria-label="Launch offer: Sponsor EasyUI for $49 per month"
             onClick={(event) => {
               trackSponsorCta({ placement: 'home' });
               if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -367,7 +367,7 @@ export function App({ initialPath }: AppProps = {}) {
             }}
             className="flex items-center justify-center gap-2 transition-colors hover:text-white/75 focus-ring"
           >
-            <span>Launch offer: Sponsor EasyUI for $49</span>
+            <span>Launch offer: Sponsor EasyUI for $49 / month</span>
             <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
           </a>
           <button
