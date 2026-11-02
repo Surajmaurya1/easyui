@@ -42,6 +42,12 @@ export function generateSitemap(): void {
       changefreq: 'weekly',
       priority: '0.85',
     },
+    {
+      loc: `${SITE_URL}/sponsors`,
+      lastmod: today,
+      changefreq: 'monthly',
+      priority: '0.70',
+    },
     // 3. Documentation Topics
     {
       loc: `${SITE_URL}/docs/introduction`,

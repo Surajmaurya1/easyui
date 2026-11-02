@@ -12,7 +12,8 @@ export interface NavbarProps {
   onNavigateComponents: () => void;
   onNavigateDocs: () => void;
   onNavigateHome?: () => void;
-  activeView?: 'showcase' | 'components' | 'docs' | 'component-detail';
+  onNavigateSponsors?: () => void;
+  activeView?: 'showcase' | 'components' | 'docs' | 'component-detail' | 'sponsors' | 'sponsor-success';
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -20,6 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigateComponents,
   onNavigateDocs,
   onNavigateHome,
+  onNavigateSponsors,
   activeView = 'showcase',
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -43,25 +45,15 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
-  // The pill colors come from CSS variables that are themed (light / dark).
-  // Reading them here keeps the framer animation in sync with the active
-  // theme. Subscribing to `theme` from the shared ThemeContext guarantees
-  // the framer `animate` target is rebuilt whenever the user toggles the
-  // theme from anywhere in the app.
-  const cssVar = (name: string) => {
-    if (typeof window === 'undefined') return '';
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  };
-
   const pillMotion = {
     initial: false,
     animate: {
       y: isScrolled ? 14 : 0,
       height: isScrolled ? 44 : 56,
       borderRadius: 9999,
-      backgroundColor: isScrolled ? cssVar('--pill-bg-scrolled') : cssVar('--pill-bg-idle'),
-      borderColor: isScrolled ? cssVar('--pill-border-scrolled') : cssVar('--pill-border-idle'),
-      boxShadow: isScrolled ? cssVar('--pill-shadow-scrolled') : cssVar('--pill-shadow-idle'),
+      backgroundColor: isScrolled ? 'var(--pill-bg-scrolled)' : 'var(--pill-bg-idle)',
+      borderColor: isScrolled ? 'var(--pill-border-scrolled)' : 'var(--pill-border-idle)',
+      boxShadow: isScrolled ? 'var(--pill-shadow-scrolled)' : 'var(--pill-shadow-idle)',
     },
     transition: {
       type: 'spring' as const,
@@ -70,9 +62,6 @@ export const Navbar: React.FC<NavbarProps> = ({
       mass: 0.8,
     },
   };
-  // Reference `theme` so React re-evaluates the object above on every toggle.
-  void theme;
-
   return (
     <header className="sticky top-0 z-40 w-full pointer-events-none">
       {/* Top dock — three independent pills, side by side, evenly distributed */}
@@ -95,13 +84,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               height="22"
               className="w-[22px] h-[22px] object-contain group-hover:scale-105 transition-transform duration-200 invert dark:invert-0"
             />
-            <span className="hidden sm:inline text-sm font-medium text-text-primary font-mono group-hover:text-accent transition-colors">
+            <span
+              style={activeView === 'sponsors' || activeView === 'sponsor-success' ? { fontFamily: 'var(--font-body)' } : undefined}
+              className="hidden sm:inline text-sm font-medium text-text-primary font-mono group-hover:text-accent transition-colors"
+            >
               easyui
             </span>
           </a>
         </motion.div>
 
-        {/* Pill 2 — Center navigation (Home, Components, Docs) */}
+        {/* Pill 2 — Center navigation (Home, Components, Sponsors) */}
         <motion.nav
           {...pillMotion}
           aria-label="Main Navigation"
@@ -130,15 +122,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             Components
           </a>
           <a
-            href="/docs/introduction"
-            onClick={(e) => handleLinkClick(e, onNavigateDocs)}
+            href="/sponsors"
+            onClick={(e) => handleLinkClick(e, onNavigateSponsors)}
             className={`px-3 py-1.5 text-[13px] font-medium rounded-full transition-colors cursor-pointer ${
-              activeView === 'docs'
+              activeView === 'sponsors'
                 ? 'bg-surface-hover text-text-primary'
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
-            Docs
+            Sponsors
           </a>
         </motion.nav>
 
@@ -231,6 +223,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }`}
                 >
                   Docs
+                </a>
+                <a
+                  href="/sponsors"
+                  onClick={(e) => handleLinkClick(e, onNavigateSponsors)}
+                  className={`block w-full text-left px-3.5 py-2.5 text-xs rounded-xl transition-colors cursor-pointer ${
+                    activeView === 'sponsors'
+                      ? 'bg-surface-hover text-text-primary font-medium'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover/70'
+                  }`}
+                >
+                  Sponsors
                 </a>
                 <a
                   href={GITHUB_URL}

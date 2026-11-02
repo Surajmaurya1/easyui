@@ -75,4 +75,15 @@ describe('App Routing and Navigation', () => {
       invalidRoutePath: '/does-not-exist',
     });
   });
+
+  it('parses the sponsorship routes', () => {
+    expect(parseRouteFromUrl('/sponsors')).toMatchObject({
+      activeView: 'sponsors',
+      invalidRoutePath: null,
+    });
+    expect(parseRouteFromUrl('/sponsor/success')).toMatchObject({
+      activeView: 'sponsor-success',
+      invalidRoutePath: null,
+    });
+  });
 });
