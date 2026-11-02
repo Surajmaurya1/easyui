@@ -50,6 +50,8 @@ export const SEO_CONFIG = {
     docsArchitecture: '/docs/architecture',
     docsCollaboration: '/docs/collaboration',
     docsSEO: '/docs/seo',
+    sponsors: '/sponsors',
+    sponsorSuccess: '/sponsor/success',
   }
 } as const;
 

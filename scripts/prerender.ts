@@ -14,6 +14,8 @@ import {
   AllComponentsPage,
   DocsPage,
   ComponentDetailPage,
+  SponsorsPage,
+  SponsorSuccessPage,
 } from '../src/App';
 import { preloadComponentDemo } from '../src/components/docs/ComponentDetailPage';
 import { EASY_COMPONENTS } from '../src/components/registry/components-data';
@@ -23,6 +25,8 @@ import {
   getCanonicalUrl,
   getComponentSEO,
   getDocTopicSEO,
+  getSponsorSuccessSEO,
+  getSponsorsPageSEO,
 } from '../src/lib/seo/helpers';
 import {
   generateWebSiteSchema,
@@ -46,6 +50,7 @@ interface RouteToPrerender {
   canonical: string;
   ogType?: string;
   keywords?: string[];
+  noindex?: boolean;
   structuredData?: Record<string, any> | Array<Record<string, any>>;
   element: React.ReactElement;
 }
@@ -86,6 +91,16 @@ function buildHtml(
   // Replace or inject canonical link
   if (html.includes('rel="canonical"')) {
     html = html.replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${route.canonical}" />`);
+  }
+
+  // Replace robots for pages that must stay out of search results.
+  if (route.noindex) {
+    const robotsTag = '<meta name="robots" content="noindex, nofollow" />';
+    if (html.includes('name="robots"')) {
+      html = html.replace(/<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/i, robotsTag);
+    } else {
+      html = html.replace('</head>', `    ${robotsTag}\n  </head>`);
+    }
   }
 
   // Replace or inject og:title
@@ -168,6 +183,8 @@ export async function prerenderAllRoutes(): Promise<void> {
     AllComponentsPage.preload(),
     DocsPage.preload(),
     ComponentDetailPage.preload(),
+    SponsorsPage.preload(),
+    SponsorSuccessPage.preload(),
     ...EASY_COMPONENTS.map((comp) => preloadComponentDemo(comp.id)),
   ]);
 
@@ -276,6 +293,29 @@ export async function prerenderAllRoutes(): Promise<void> {
       });
     }
 
+    // 4. Sponsorship pages
+    const sponsorsSEO = getSponsorsPageSEO();
+    routes.push({
+      path: '/sponsors',
+      outputPath: path.join(DIST_DIR, 'sponsors', 'index.html'),
+      title: sponsorsSEO.title,
+      description: sponsorsSEO.description,
+      canonical: sponsorsSEO.canonical,
+      keywords: sponsorsSEO.keywords,
+      element: makePrerenderElement('/sponsors'),
+    });
+
+    const sponsorSuccessSEO = getSponsorSuccessSEO();
+    routes.push({
+      path: '/sponsor/success',
+      outputPath: path.join(DIST_DIR, 'sponsor', 'success', 'index.html'),
+      title: sponsorSuccessSEO.title,
+      description: sponsorSuccessSEO.description,
+      canonical: sponsorSuccessSEO.canonical,
+      noindex: true,
+      element: makePrerenderElement('/sponsor/success'),
+    });
+
     // Each catalog page gets one canonical directory output. Keeping the
     // pagination routes explicit prevents the server from serving page 1's
     // HTML for every page number.
@@ -348,6 +388,8 @@ export async function prerenderAllRoutes(): Promise<void> {
   console.log(`  - 1 Homepage (/)`);
   console.log(`  - ${totalComponentPages} Components catalog pages (/components[/page/*])`);
   console.log(`  - ${docTopicIds.length} Documentation topics (/docs/*)`);
+  console.log(`  - 1 Sponsors page (/sponsors)`);
+  console.log(`  - 1 Sponsor success page (/sponsor/success, noindex)`);
   console.log(`  - ${EASY_COMPONENTS.length} Component detail pages (/components/*)`);
   console.log('========================================================\n');
 }

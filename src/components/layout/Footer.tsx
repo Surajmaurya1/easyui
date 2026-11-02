@@ -7,12 +7,14 @@ export interface FooterProps {
   onNavigateHome?: () => void;
   onNavigateComponents?: () => void;
   onNavigateDocs?: () => void;
+  onNavigateSponsors?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onNavigateHome,
   onNavigateComponents,
   onNavigateDocs,
+  onNavigateSponsors,
 }) => {
   const handleInternalNavigation =
     (callback?: () => void) =>
@@ -72,10 +74,6 @@ export const Footer: React.FC<FooterProps> = ({
           align-items: center;
           column-gap: 22px;
           row-gap: 12px;
-          font-family: 'Geist', sans-serif;
-        }
-
-        .easyui-footer-sponsor {
           font-family: 'Geist', sans-serif;
         }
 
@@ -146,26 +144,13 @@ export const Footer: React.FC<FooterProps> = ({
               >
                 <a href="/components" onClick={handleInternalNavigation(onNavigateComponents)} className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">Components</a>
                 <a href="/docs/introduction" onClick={handleInternalNavigation(onNavigateDocs)} className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">Docs</a>
+                <a href="/sponsors" onClick={handleInternalNavigation(onNavigateSponsors)} className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">Sponsors</a>
                 <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">GitHub</a>
                 <a href="/llms.txt" className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">LLMs</a>
               </nav>
             </div>
 
             <div className="mt-6 flex flex-col gap-3 border-t border-border-subtle pt-4 text-xs sm:flex-row sm:items-center sm:justify-between">
-              <a
-                href="https://tracwell.app/"
-                aria-label="Tracwell — analytics sponsor"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="easyui-footer-sponsor group inline-flex w-fit items-center gap-2 rounded focus-ring"
-              >
-                <img src="/tracwell-icon-dark.svg" alt="" width="18" height="18" className="h-[18px] w-[18px] object-contain" />
-                <span className="flex flex-col leading-tight">
-                  <span className="text-xs font-medium text-text-secondary transition-colors group-hover:text-text-primary">Tracwell</span>
-                  <span className="mt-0.5 text-[9px] uppercase tracking-[0.12em] text-text-muted">Analytics sponsor</span>
-                </span>
-              </a>
-
               <p className="text-text-muted sm:text-right">
                 © {new Date().getFullYear()} EasyUI <span className="px-1.5 text-text-subtle">·</span> Built by{' '}
                 <a href="https://x.com/surajmaurya_m" target="_blank" rel="noopener noreferrer" className="text-text-secondary transition-colors hover:text-text-primary">Suraj</a>

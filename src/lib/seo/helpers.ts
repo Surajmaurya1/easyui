@@ -110,6 +110,56 @@ export function getDocTopicSEO(topicId = 'introduction'): PageSEOMeta {
 }
 
 /**
+ * Generates SEO metadata for the sponsorship page.
+ */
+export function getSponsorsPageSEO(): PageSEOMeta {
+  const title = 'Sponsor EasyUI — Reach React Developers';
+  const description =
+    'Put your logo in front of developers actively browsing animated React components. One sponsor slot, one month, one-time payment.';
+  const canonical = getCanonicalUrl('sponsors');
+
+  return {
+    title,
+    description,
+    canonical,
+    ogTitle: title,
+    ogDescription: description,
+    ogType: 'website',
+    keywords: [
+      'sponsor EasyUI',
+      'React component sponsorship',
+      'developer audience',
+      'open source sponsorship',
+      ...SEO_CONFIG.keywords,
+    ],
+    breadcrumbs: [
+      { name: 'EasyUI', item: SEO_CONFIG.siteUrl },
+      { name: 'Sponsors', item: canonical },
+    ],
+  };
+}
+
+/**
+ * Generates metadata for the Dodo redirect target. This page is deliberately
+ * excluded from search results.
+ */
+export function getSponsorSuccessSEO(): PageSEOMeta {
+  const title = 'Thanks for sponsoring EasyUI';
+  const description = 'One last step: send us your sponsor details.';
+  const canonical = getCanonicalUrl('sponsor/success');
+
+  return {
+    title,
+    description,
+    canonical,
+    ogTitle: title,
+    ogDescription: description,
+    ogType: 'website',
+    noindex: true,
+  };
+}
+
+/**
  * Generates SEO metadata for any EasyUI component.
  * Accepts the lightweight ComponentCatalogIndex type so that
  * metadata can be computed without loading the full component catalog.

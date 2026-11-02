@@ -4,6 +4,8 @@ import {
   getCanonicalUrl,
   getComponentSEO,
   getDocTopicSEO,
+  getSponsorSuccessSEO,
+  getSponsorsPageSEO,
   type PageSEOMeta,
 } from './helpers';
 import {
@@ -17,7 +19,15 @@ import { updatePageMetadata } from './metadata';
 import type { ComponentCatalogIndex } from '../../types/component';
 
 interface UseSEOProps {
-  activeView: 'showcase' | 'components' | 'docs' | 'component-detail' | 'component-not-found' | 'route-not-found';
+  activeView:
+    | 'showcase'
+    | 'components'
+    | 'docs'
+    | 'component-detail'
+    | 'component-not-found'
+    | 'route-not-found'
+    | 'sponsors'
+    | 'sponsor-success';
   componentPage?: number;
   activeDocTopic?: string;
   selectedModalComponent?: ComponentCatalogIndex | null;
@@ -50,7 +60,19 @@ export function useSEO({
       });
       return;
     }
-    // 1. If viewing dedicated component page or component detail, apply component-specific SEO
+
+    // 1. Sponsorship pages
+    if (activeView === 'sponsors') {
+      updatePageMetadata(getSponsorsPageSEO());
+      return;
+    }
+
+    if (activeView === 'sponsor-success') {
+      updatePageMetadata(getSponsorSuccessSEO());
+      return;
+    }
+
+    // 2. If viewing dedicated component page or component detail, apply component-specific SEO
     if (activeComponent) {
       const compSEO = getComponentSEO(activeComponent);
       const structuredData = generateComponentSchema(activeComponent);

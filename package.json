@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run component:sync && tsc -b && vite build && npm run prerender && npm run seo:audit",
-    "prerender": "tsx scripts/prerender.ts",
+    "prerender": "tsx scripts/prerender-bootstrap.ts",
     "registry:generate": "tsx scripts/generate-registry.ts",
     "registry:validate": "tsx scripts/validate-registry.ts",
     "component:sync": "tsx scripts/generate-registry.ts && tsx scripts/validate-registry.ts",

@@ -7,14 +7,18 @@ import type { ComponentCatalogIndex } from './types/component';
 import { useAnalyticsTracker } from './lib/analytics';
 import { useSEO } from './lib/seo';
 import { scrollToTop } from './lib/utils';
-import { AlertCircle, ArrowLeft, Grid } from 'lucide-react';
+import { AlertCircle, ArrowLeft, ArrowRight, Grid, X } from 'lucide-react';
 import { lazyWithPreload } from './lib/lazy-preload';
 
 import { HeroSection as HeroSectionComponent } from './components/sections/HeroSection';
+import { SponsoredBy } from './components/sponsors/SponsoredBy';
+import { trackSponsorCta } from './lib/sponsor-tracking';
 
 export const ComponentDetailPage = lazyWithPreload(() => import('./components/docs/ComponentDetailPage'));
 export const DocsPage = lazyWithPreload(() => import('./components/docs/DocsPage'));
 export const AllComponentsPage = lazyWithPreload(() => import('./components/sections/AllComponentsPage'), 'AllComponentsPage');
+export const SponsorsPage = lazyWithPreload(() => import('./components/sponsors/SponsorsPage'), 'SponsorsPage');
+export const SponsorSuccessPage = lazyWithPreload(() => import('./components/sponsors/SponsorSuccessPage'), 'SponsorSuccessPage');
 export const SpotlightSearch = lazyWithPreload(() => import('./components/ui/SpotlightSearch'), 'SpotlightSearch');
 export const HeroSection = HeroSectionComponent;
 (HeroSection as any).preload = () => Promise.resolve(HeroSection);
@@ -26,7 +30,15 @@ const COMPONENT_MAP = new Map<string, ComponentCatalogIndex>(
 );
 
 export interface RouteState {
-  activeView: 'showcase' | 'components' | 'docs' | 'component-detail' | 'component-not-found' | 'route-not-found';
+  activeView:
+    | 'showcase'
+    | 'components'
+    | 'docs'
+    | 'component-detail'
+    | 'component-not-found'
+    | 'route-not-found'
+    | 'sponsors'
+    | 'sponsor-success';
   selectedComponent: ComponentCatalogIndex | null;
   invalidComponentSlug: string | null;
   invalidRoutePath: string | null;
@@ -155,7 +167,30 @@ export function parseRouteFromUrl(pathname?: string, search?: string): RouteStat
     };
   }
 
-  // 4. Default: showcase / homepage (/); every other path is invalid.
+  // 4. Sponsorship pages
+  if (cleanPath === 'sponsors') {
+    return {
+      activeView: 'sponsors',
+      selectedComponent: null,
+      invalidComponentSlug: null,
+      invalidRoutePath: null,
+      activeDocTopic: 'introduction',
+      componentPage: 1,
+    };
+  }
+
+  if (cleanPath === 'sponsor/success') {
+    return {
+      activeView: 'sponsor-success',
+      selectedComponent: null,
+      invalidComponentSlug: null,
+      invalidRoutePath: null,
+      activeDocTopic: 'introduction',
+      componentPage: 1,
+    };
+  }
+
+  // 5. Default: showcase / homepage (/); every other path is invalid.
   if (cleanPath !== '') {
     return {
       activeView: 'route-not-found',
@@ -183,6 +218,7 @@ export interface AppProps {
 
 export function App({ initialPath }: AppProps = {}) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLaunchOfferVisible, setIsLaunchOfferVisible] = useState(true);
   const [routeState, setRouteState] = useState<RouteState>(() => {
     return parseRouteFromUrl(initialPath);
   });
@@ -283,6 +319,11 @@ export function App({ initialPath }: AppProps = {}) {
     scrollToTop();
   }, [navigate]);
 
+  const handleNavigateSponsors = useCallback(() => {
+    navigate('/sponsors');
+    scrollToTop();
+  }, [navigate]);
+
   const handleNavigateDocs = useCallback(
     (topicId?: string) => {
       const topic = topicId || 'introduction';
@@ -306,13 +347,48 @@ export function App({ initialPath }: AppProps = {}) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-text-primary font-sans selection:bg-accent/25 selection:text-text-primary">
+    <div
+      className="min-h-screen bg-background text-text-primary font-sans selection:bg-accent/25 selection:text-text-primary"
+      style={activeView === 'sponsors' || activeView === 'sponsor-success' ? { fontFamily: 'var(--font-body)' } : undefined}
+    >
+      {activeView === 'showcase' && isLaunchOfferVisible && (
+        <div
+          style={{ fontFamily: 'var(--font-body)' }}
+          className="relative flex min-h-9 items-center justify-center bg-[#050505] px-12 text-center text-[11px] font-medium text-white sm:text-[12px]"
+        >
+          <a
+            href="/sponsors"
+            aria-label="Launch offer: Sponsor EasyUI for $49"
+            onClick={(event) => {
+              trackSponsorCta({ placement: 'home' });
+              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+              event.preventDefault();
+              handleNavigateSponsors();
+            }}
+            className="flex items-center justify-center gap-2 transition-colors hover:text-white/75 focus-ring"
+          >
+            <span>Launch offer: Sponsor EasyUI for $49</span>
+            <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          </a>
+          <button
+            type="button"
+            aria-label="Hide launch offer"
+            title="Hide launch offer"
+            onClick={() => setIsLaunchOfferVisible(false)}
+            className="absolute right-2 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-white/75 transition-colors hover:bg-white/10 hover:text-white focus-ring"
+          >
+            <X className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      )}
+
       {/* Navigation */}
       <Navbar
         onOpenSearch={handleOpenSearch}
         onNavigateComponents={handleNavigateComponents}
         onNavigateDocs={() => handleNavigateDocs('introduction')}
         onNavigateHome={handleNavigateHome}
+        onNavigateSponsors={handleNavigateSponsors}
         activeView={activeView === 'component-not-found' || activeView === 'route-not-found' ? 'components' : activeView}
       />
 
@@ -324,6 +400,7 @@ export function App({ initialPath }: AppProps = {}) {
             onExplore={handleNavigateComponents}
             onSelectComponent={handleSelectComponentById}
           />
+          <SponsoredBy onNavigateSponsors={handleNavigateSponsors} />
           {/* Component Directory */}
           <ComponentDirectory
             onSelectComponent={handleSelectComponentById}
@@ -411,6 +488,10 @@ export function App({ initialPath }: AppProps = {}) {
               onNavigateHome={handleNavigateHome}
               onNavigateComponents={handleNavigateComponents}
             />
+          ) : activeView === 'sponsors' ? (
+            <SponsorsPage />
+          ) : activeView === 'sponsor-success' ? (
+            <SponsorSuccessPage onNavigateHome={handleNavigateHome} />
           ) : activeView === 'components' ? (
             <AllComponentsPage
               currentPage={componentPage}
@@ -428,6 +509,7 @@ export function App({ initialPath }: AppProps = {}) {
         onNavigateHome={handleNavigateHome}
         onNavigateComponents={handleNavigateComponents}
         onNavigateDocs={() => handleNavigateDocs('introduction')}
+        onNavigateSponsors={handleNavigateSponsors}
       />
 
       {/* Global Spotlight Search (⌘K) */}
