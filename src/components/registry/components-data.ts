@@ -963,6 +963,68 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "aura-mic",
+    "name": "Aura Mic",
+    "tagline": "A mic button with a monochrome, living aura",
+    "description": "A black and white microphone toggle that surrounds itself with a unique animated aura while listening. Six styles are included: halftone, moire, thread, ink, eclipse and ridgeline. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive",
+      "SVG"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/aura-mic",
+    "features": [
+      "Six distinct monochrome aura animations: halftone, moire, thread, ink, eclipse and ridgeline",
+      "Strictly black and white. Everything is drawn with currentColor, so it flips automatically between light and dark mode",
+      "Outlined button when idle, inverted solid button when listening, so the state is clear without colour",
+      "Vector SVG auras that stay sharp at any size",
+      "Animated icon swap between Mic and MicOff",
+      "Fades the aura in and out smoothly when listening starts or stops"
+    ],
+    "props": [
+      {
+        "name": "animation",
+        "type": "\"halftone\" | \"moire\" | \"thread\" | \"ink\" | \"eclipse\" | \"ridgeline\"",
+        "default": "\"halftone\"",
+        "description": "Which aura animation plays while listening"
+      },
+      {
+        "name": "size",
+        "type": "number",
+        "default": "76",
+        "description": "Diameter of the mic button in pixels. The aura scales around it inside a 220px stage"
+      },
+      {
+        "name": "onListeningChange",
+        "type": "(listening: boolean) => void",
+        "default": "undefined",
+        "description": "Called once each time the mic is toggled, with the new listening state"
+      }
+    ],
+    "accessibility": [
+      "Respects prefers-reduced-motion: the aura is skipped and only the button toggles",
+      "Native button element with Enter and Space keyboard support",
+      "Visible focus-visible outline in both light and dark mode",
+      "aria-pressed and a dynamic aria-label (\"Start listening\" / \"Stop listening\") announce the state",
+      "Aura graphics are marked aria-hidden so screen readers ignore the decoration"
+    ],
+    "createdAt": "2026-11-03T09:07:41.127Z",
+    "usageCode": "import { useState } from \"react\";\nimport { AuraMic } from \"@/components/ui/aura-mic\";\n\nexport function Demo() {\n  const [listening, setListening] = useState(false);\n\n  return (\n    <div className=\"flex flex-col items-center gap-4\">\n      <AuraMic\n        animation=\"ink\"\n        size={76}\n        onListeningChange={setListening}\n      />\n      <p className=\"text-sm text-zinc-500\">\n        {listening ? \"Listening...\" : \"Tap to speak\"}\n      </p>\n    </div>\n  );\n}",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/AuraMic.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/aura-mic.tsx"
+      }
+    ]
+  },
+  {
     "id": "avatar-stack",
     "name": "Avatar Stack",
     "tagline": "Overlapping avatar pile with spring-animated hover elevation and tooltips.",
@@ -3760,6 +3822,91 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "expandable-action-bar",
+    "name": "Expandable Action Bar",
+    "tagline": "Icon bar that expands to show labels on hover",
+    "description": "A compact icon-only action bar that expands on hover or focus to reveal a label next to each icon. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/expandable-action-bar",
+    "features": [
+      "Shows only icons at rest, then expands to reveal labels on hover or keyboard focus",
+      "Smooth spring-based layout animations as the bar grows and shrinks",
+      "Each item takes an icon, a label and an onClick handler",
+      "Customizable appearance with standard Tailwind utility classes"
+    ],
+    "props": [
+      {
+        "name": "items",
+        "type": "ActionBarItem[]",
+        "default": "required",
+        "description": "Actions to render, each as { icon, label, onClick }"
+      },
+      {
+        "name": "items[].icon",
+        "type": "ReactNode",
+        "default": "required",
+        "description": "Icon shown at all times"
+      },
+      {
+        "name": "items[].label",
+        "type": "string",
+        "default": "required",
+        "description": "Text revealed on hover or focus, also used as the accessible name"
+      },
+      {
+        "name": "items[].onClick",
+        "type": "() => void",
+        "default": "required",
+        "description": "Called when the item is clicked"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional custom Tailwind styling for the bar"
+      },
+      {
+        "name": "...props",
+        "type": "HTMLMotionProps<'div'>",
+        "default": "undefined",
+        "description": "Any other Framer Motion div props are passed to the container"
+      }
+    ],
+    "accessibility": [
+      "Respects prefers-reduced-motion media query",
+      "Every button keeps an aria-label, so labels are available to screen readers while hidden",
+      "Tabbing into the bar expands it, matching the hover behavior",
+      "Container uses role=\"toolbar\" with visible focus rings on each action"
+    ],
+    "createdAt": "2026-11-01T22:17:23.342Z",
+    "usageCode": "import { Copy, Share2, Trash2 } from \"lucide-react\";\nimport { ExpandableActionBar } from \"@/components/ui/expandable-action-bar\";\n\nexport function Demo() {\n  return (\n    <ExpandableActionBar\n      items={[\n        { icon: <Share2 size={16} />, label: 'Share', onClick: () => { } },\n        { icon: <Copy size={16} />, label: 'Copy', onClick: () => { } },\n        { icon: <Download size={16} />, label: 'Export', onClick: () => { } },\n        { icon: <Save size={16} />, label: 'Save', onClick: () => { } },\n        { icon: <Trash2 size={16} />, label: 'Delete', onClick: () => { } },\n      ]}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/ExpandableActionBar.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/expandable-action-bar.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      },
+      {
+        "path": "src/lib/motion-tokens.ts",
+        "type": "registry:lib",
+        "target": "lib/motion-tokens.ts"
+      }
+    ]
+  },
+  {
     "id": "expandable-data-row",
     "name": "Expandable Data Row",
     "tagline": "Smooth unfolding table row with deep metadata and responsive mobile conversion",
@@ -4006,6 +4153,87 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
       }
     ],
     "featured": true
+  },
+  {
+    "id": "file-drop-zone",
+    "name": "File Drop Zone",
+    "tagline": "A folder that opens, fills up and confirms your upload",
+    "description": "An illustrated file upload card built around an animated folder. The folder opens when you drag a file over it, the paper sinks in as the upload progresses, and a green check pops on when it finishes. Includes a built-in simulated upload and a simple hook for real uploads. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive",
+      "SVG"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/file-drop-zone",
+    "features": [
+      "Five clear states: idle, dragging, uploading, done and error, each with its own folder animation and copy",
+      "Folder flap lowers and the paper rises out when a file is dragged over the card",
+      "Upload progress traces the card border while the paper sinks into the folder",
+      "Success check badge that springs in and draws itself",
+      "Drag and drop, click to browse, and keyboard activation all supported",
+      "Works out of the box with a simulated upload, or pass onUpload to connect a real one",
+      "Vector SVG folder that stays sharp at any size, with light and dark mode styles"
+    ],
+    "props": [
+      {
+        "name": "onUpload",
+        "type": "(files: File[], onProgress: (loadedBytes: number) => void, signal: AbortSignal) => Promise<void>",
+        "default": "undefined",
+        "description": "Performs the real upload. Call onProgress with bytes sent as it proceeds, resolve when done, or reject to show the error state. When omitted, a simulated upload runs instead"
+      },
+      {
+        "name": "accept",
+        "type": "string",
+        "default": "undefined",
+        "description": "Passed to the native file input to filter the browse dialog, for example \"image/*,.pdf\""
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "default": "true",
+        "description": "Allow more than one file per drop or selection. When false, only the first file is used"
+      },
+      {
+        "name": "showSamples",
+        "type": "boolean",
+        "default": "true",
+        "description": "Shows the \"or try sample files\" link under the card, which runs a demo upload"
+      },
+      {
+        "name": "resetAfter",
+        "type": "number",
+        "default": "2500",
+        "description": "Milliseconds to stay on the success state before returning to idle. Use 0 to keep it"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "\"\"",
+        "description": "Optional Tailwind classes applied to the outer wrapper"
+      }
+    ],
+    "accessibility": [
+      "Respects prefers-reduced-motion: transitions and the check animation become instant",
+      "The card is a focusable role=\"button\" that opens the file browser with Enter or Space",
+      "Visible focus-visible ring on the card and on the sample files link",
+      "Status text is announced politely to screen readers through aria-live",
+      "aria-disabled is set while an upload is in progress, and drops are ignored",
+      "Decorative folder and progress graphics are marked aria-hidden"
+    ],
+    "createdAt": "2026-11-03T09:20:38.546Z",
+    "usageCode": "import { useState } from \"react\";\nimport { FileDropZone } from \"@/components/ui/file-drop-zone\";\n\nexport function Demo() {\n  const [log, setLog] = useState<string[]>([]);\n\n  return (\n    <FileDropZone\n      accept=\"image/*,.pdf\"\n      onUpload={async (files, onProgress, signal) => {\n        const total = files.reduce((sum, f) => sum + f.size, 0);\n        // Replace with your real upload (fetch, XHR, S3, etc.)\n        for (let sent = 0; sent < total; sent += total / 20) {\n          if (signal.aborted) return;\n          await new Promise((r) => setTimeout(r, 100));\n          onProgress(Math.min(total, Math.round(sent)));\n        }\n        setLog((prev) => [...prev, ...files.map((f) => f.name)]);\n      }}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/FileDropZone.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/file-drop-zone.tsx"
+      }
+    ]
   },
   {
     "id": "floating-action-dock",
@@ -4427,6 +4655,66 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
       }
     ],
     "featured": true
+  },
+  {
+    "id": "glide-dock",
+    "name": "Glide Dock",
+    "tagline": "Floating navigation with a natural glide",
+    "description": "A floating, animated navigation dock for React that intelligently hides while scrolling down and reappears when scrolling up. Features smooth spring animations, active item indicators, and a sleek glassmorphism design powered by Framer Motion and Tailwind CSS.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Navigation",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/glide-dock",
+    "features": [
+      "Automatically hides when scrolling down and reappears when scrolling up",
+      "Remains visible when the page is near the top",
+      "Smooth spring-based entrance and exit animations using Framer Motion",
+      "Animated active navigation indicator with shared layout transitions",
+      "Responsive navigation labels that adapt to smaller screens",
+      "Modern glassmorphism design with backdrop blur and subtle borders",
+      "Customizable navigation items with icons and click handlers",
+      "Fixed floating positioning at the bottom center of the viewport"
+    ],
+    "props": [
+      {
+        "name": "items",
+        "type": "GlideDockItem[]",
+        "default": "defaultItems",
+        "description": "Array of navigation items, each containing a name, Lucide React icon component, and onClick handler."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "\"\"",
+        "description": "Optional Tailwind CSS classes for customizing the floating navigation container."
+      }
+    ],
+    "accessibility": [
+      "Uses semantic nav and button elements for accessible navigation",
+      "Provides native keyboard interaction through button elements",
+      "Supports descriptive navigation labels alongside icons on larger screens"
+    ],
+    "createdAt": "2026-11-03T08:24:28.944Z",
+    "usageCode": "import GlideDock, { type GlideDockItem } from \"@/components/ui/GlideDock\";\nimport { Home, Search, LayoutGrid, User } from \"lucide-react\";\n\nconst items: GlideDockItem[] = [\n  {\n    name: \"Home\",\n    icon: Home,\n    onClick: () => console.log(\"Home clicked\"),\n  },\n  {\n    name: \"Explore\",\n    icon: Search,\n    onClick: () => console.log(\"Explore clicked\"),\n  },\n  {\n    name: \"Projects\",\n    icon: LayoutGrid,\n    onClick: () => console.log(\"Projects clicked\"),\n  },\n  {\n    name: \"Profile\",\n    icon: User,\n    onClick: () => console.log(\"Profile clicked\"),\n  },\n];\n\nexport function Demo() {\n  return <GlideDock items={items} />;\n}",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/GlideDock.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/glide-dock.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      }
+    ]
   },
   {
     "id": "glitch-text",
@@ -7196,6 +7484,123 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/utils.ts",
         "type": "registry:lib",
         "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
+    "id": "orbital-menu",
+    "name": "Orbital Menu",
+    "tagline": "Circle button that opens into an orbiting menu",
+    "description": "A circular button that opens an orbit ring around itself on click, with menu items spreading out along the ring. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/orbital-menu",
+    "features": [
+      "Circular trigger button that draws an orbit ring outward when opened",
+      "Items swirl out from the center and settle at evenly spaced angles on the ring",
+      "Full circle or partial arc layouts using startAngle and sweep",
+      "Closes on outside click, Escape, or after selecting an item",
+      "Customizable appearance with standard Tailwind utility classes"
+    ],
+    "props": [
+      {
+        "name": "items",
+        "type": "OrbitalMenuItem[]",
+        "default": "required",
+        "description": "Menu items, each as { icon, label, onClick }"
+      },
+      {
+        "name": "triggerIcon",
+        "type": "ReactNode",
+        "default": "plus icon",
+        "description": "Icon inside the center button. It rotates when the menu opens"
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "default": "88",
+        "description": "Distance in px from the center button to each item"
+      },
+      {
+        "name": "triggerSize",
+        "type": "number",
+        "default": "56",
+        "description": "Diameter in px of the center button"
+      },
+      {
+        "name": "itemSize",
+        "type": "number",
+        "default": "44",
+        "description": "Diameter in px of each item"
+      },
+      {
+        "name": "startAngle",
+        "type": "number",
+        "default": "-90",
+        "description": "Angle in degrees of the first item. -90 is straight up"
+      },
+      {
+        "name": "sweep",
+        "type": "number",
+        "default": "360",
+        "description": "Total arc in degrees the items spread across"
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether the menu starts open"
+      },
+      {
+        "name": "closeOnSelect",
+        "type": "boolean",
+        "default": "true",
+        "description": "Close the menu after an item is clicked"
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "default": "undefined",
+        "description": "Called whenever the menu opens or closes"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Optional custom Tailwind styling for the container"
+      }
+    ],
+    "accessibility": [
+      "Respects prefers-reduced-motion media query",
+      "Trigger exposes aria-expanded, aria-haspopup and aria-controls",
+      "Items use role=\"menuitem\" with an aria-label and are removed from tab order while closed",
+      "Escape closes the menu and returns focus to the trigger",
+      "Visible focus rings and label tooltips on hover and keyboard focus"
+    ],
+    "createdAt": "2026-11-02T00:00:00.000Z",
+    "usageCode": "import { Copy, Share2, Pencil, Trash2 } from \"lucide-react\";\nimport { OrbitalMenu } from \"@/components/ui/orbital-menu\";\n\nexport function Demo() {\n  return (\n    <OrbitalMenu\n      items={[\n        { icon: <Pencil size={16} />, label: \"Edit\", onClick: () => console.log(\"edit\") },\n        { icon: <Copy size={16} />, label: \"Copy\", onClick: () => console.log(\"copy\") },\n        { icon: <Share2 size={16} />, label: \"Share\", onClick: () => console.log(\"share\") },\n        { icon: <Trash2 size={16} />, label: \"Delete\", onClick: () => console.log(\"delete\") },\n      ]}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/OrbitalMenu.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/orbital-menu.tsx"
+      },
+      {
+        "path": "src/lib/utils.ts",
+        "type": "registry:lib",
+        "target": "lib/utils.ts"
+      },
+      {
+        "path": "src/lib/motion-tokens.ts",
+        "type": "registry:lib",
+        "target": "lib/motion-tokens.ts"
       }
     ]
   },

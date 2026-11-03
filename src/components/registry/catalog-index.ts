@@ -153,6 +153,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-10"
   },
   {
+    "id": "aura-mic",
+    "name": "Aura Mic",
+    "tagline": "A mic button with a monochrome, living aura",
+    "description": "A black and white microphone toggle that surrounds itself with a unique animated aura while listening. Six styles are included: halftone, moire, thread, ink, eclipse and ridgeline. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive",
+      "SVG"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/aura-mic",
+    "createdAt": "2026-11-03T09:07:41.127Z"
+  },
+  {
     "id": "avatar-stack",
     "name": "Avatar Stack",
     "tagline": "Overlapping avatar pile with spring-animated hover elevation and tooltips.",
@@ -585,6 +600,20 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-31"
   },
   {
+    "id": "expandable-action-bar",
+    "name": "Expandable Action Bar",
+    "tagline": "Icon bar that expands to show labels on hover",
+    "description": "A compact icon-only action bar that expands on hover or focus to reveal a label next to each icon. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/expandable-action-bar",
+    "createdAt": "2026-11-01T22:17:23.342Z"
+  },
+  {
     "id": "expandable-data-row",
     "name": "Expandable Data Row",
     "tagline": "Smooth unfolding table row with deep metadata and responsive mobile conversion",
@@ -628,6 +657,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/faq",
     "createdAt": "2026-08-19",
     "featured": true
+  },
+  {
+    "id": "file-drop-zone",
+    "name": "File Drop Zone",
+    "tagline": "A folder that opens, fills up and confirms your upload",
+    "description": "An illustrated file upload card built around an animated folder. The folder opens when you drag a file over it, the paper sinks in as the upload progresses, and a green check pops on when it finishes. Includes a built-in simulated upload and a simple hook for real uploads. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive",
+      "SVG"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/file-drop-zone",
+    "createdAt": "2026-11-03T09:20:38.546Z"
   },
   {
     "id": "floating-action-dock",
@@ -704,6 +748,20 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/glass-navbar",
     "createdAt": "2026-08-19",
     "featured": true
+  },
+  {
+    "id": "glide-dock",
+    "name": "Glide Dock",
+    "tagline": "Floating navigation with a natural glide",
+    "description": "A floating, animated navigation dock for React that intelligently hides while scrolling down and reappears when scrolling up. Features smooth spring animations, active item indicators, and a sleek glassmorphism design powered by Framer Motion and Tailwind CSS.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Navigation",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/glide-dock",
+    "createdAt": "2026-11-03T08:24:28.944Z"
   },
   {
     "id": "glitch-text",
@@ -1179,6 +1237,20 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/orbital-loading-ring",
     "createdAt": "2026-08-28"
+  },
+  {
+    "id": "orbital-menu",
+    "name": "Orbital Menu",
+    "tagline": "Circle button that opens into an orbiting menu",
+    "description": "A circular button that opens an orbit ring around itself on click, with menu items spreading out along the ring. Built with React, Tailwind CSS and Framer Motion.",
+    "category": "Motion",
+    "badges": [
+      "Motion",
+      "Tailwind",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/orbital-menu",
+    "createdAt": "2026-11-02T00:00:00.000Z"
   },
   {
     "id": "origin-dropdown",
