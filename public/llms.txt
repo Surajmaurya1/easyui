@@ -12,7 +12,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 132 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 137 animated React components.
 
 ### Component Index
 
@@ -26,6 +26,7 @@
 - [Animated File Upload](https://easyui.site/components/animated-file-upload): A minimal, physical drag-and-drop file uploader with smooth drop reaction, independent file upload tracking, progressive state morphing, and accessible retry flows.
 - [Animated Number Morph](https://easyui.site/components/animated-number): An Apple-grade smooth rolling digit counter that independently morphs individual numerical columns with physics-based springs, locale commas, currencies, and compact notation.
 - [Animated Tabs](https://easyui.site/components/animated-tabs): A tabbed switcher with physical pill indicator sliding smoothly between active items with content cross-fades.
+- [Aura Mic](https://easyui.site/components/aura-mic): A black and white microphone toggle that surrounds itself with a unique animated aura while listening. Six styles are included: halftone, moire, thread, ink, eclipse and ridgeline. Built with React, Tailwind CSS and Framer Motion.
 - [Avatar Stack](https://easyui.site/components/avatar-stack): An interactive, stacked facepile of overlapping avatars that smoothly elevates and scales the hovered avatar to the front with spring physics, revealing the full image and name tooltip.
 - [Badge](https://easyui.site/components/badge): An animated status badge where numbers and strings roll on value change, with live status pulse dot, removable chip actions, and rich tone variants.
 - [Bar Chart](https://easyui.site/components/bar-chart): A hand-written, dependency-free SVG bar chart with grouped and stacked layouts, morphing bar transitions, interactive legend toggles, and accessible hover and keyboard tooltips.
@@ -55,14 +56,17 @@
 - [Dynamic Island](https://easyui.site/components/dynamic-island): A physical morphing island component that smoothly transitions between a compact indicator, interactive summary, profile card, and social dock with spring physics.
 - [Earnings](https://easyui.site/components/earnings): An earnings summary card that counts up the total, plots a scrubable trend line, and breaks income down by source with a hoverable split bar and a 7D / 30D / 12M period switcher. Light and dark themes, fully responsive.
 - [Evil Eye](https://easyui.site/components/evil-eye): A hanging navy amulet disc with concentric sky-blue and white rings that swings with realistic inertia in response to the pointer, painted as a layered SVG and driven by a single spring pipeline.
+- [Expandable Action Bar](https://easyui.site/components/expandable-action-bar): A compact icon-only action bar that expands on hover or focus to reveal a label next to each icon. Built with React, Tailwind CSS and Framer Motion.
 - [Expandable Data Row](https://easyui.site/components/expandable-data-row): A polished table component with fluid accordion row unfolding, revealing deep metadata, audit activity feeds, and quick actions, with automatic card restructuring on mobile viewports.
 - [Expandable Search](https://easyui.site/components/expandable-search): A compact search pill that smoothly widens on focus with shortcut hint pills and clear button.
 - [FAQ](https://easyui.site/components/faq): An expandable accordion FAQ component with smooth spring height calculation, single/multi-open modes, category filtering, search, and full ARIA keyboard accessibility.
+- [File Drop Zone](https://easyui.site/components/file-drop-zone): An illustrated file upload card built around an animated folder. The folder opens when you drag a file over it, the paper sinks in as the upload progresses, and a green check pops on when it finishes. Includes a built-in simulated upload and a simple hook for real uploads. Built with React, Tailwind CSS and Framer Motion.
 - [Floating Action Dock](https://easyui.site/components/floating-action-dock): A floating quick-action toolbar inspired by macOS dock physics with smooth magnification and subtle tooltips.
 - [Focus Mode](https://easyui.site/components/focus-mode): An atmospheric focus-mode interaction that isolates selected cards or sections by smoothly dimming surrounding distractions with zero layout shift, tactile spring scaling, and Escape key dismissal.
 - [Form](https://easyui.site/components/form): A modular, composable form system with accessible inputs, textareas, custom selects, checkboxes, radio groups, switches, and animated validation messages.
 - [Funnel Chart](https://easyui.site/components/funnel-chart): A conversion funnel with per-stage widths, curved drop-off bridges, and a loss chip between every stage. An optional summary line reports overall conversion and the single biggest drop-off, all in hand-written SVG.
 - [Glass Navbar](https://easyui.site/components/glass-navbar): A modern, responsive glassmorphic navbar with smooth spring navigation pills, mobile menu drawer, and keyboard accessibility.
+- [Glide Dock](https://easyui.site/components/glide-dock): A floating, animated navigation dock for React that intelligently hides while scrolling down and reappears when scrolling up. Features smooth spring animations, active item indicators, and a sleek glassmorphism design powered by Framer Motion and Tailwind CSS.
 - [Glitch Text](https://easyui.site/components/glitch-text): A multi-modal cybernetic glitch typography component featuring 5 distinct animation variants (RGB split chromatic aberration, cyberpunk clip-slicing, analog VHS tracking loss, matrix rune scramble decode, and electrical voltage surge).
 - [Glyph Matrix](https://easyui.site/components/glyph-matrix): A high-performance, canvas-driven Matrix digital rain background effect featuring streaming Katakana and numeric glyphs, glowing head highlights, decaying phosphor trails, and interactive cursor disturbances.
 - [Gooey Menu](https://easyui.site/components/gooey-menu): A tactile liquid dropdown menu with organic SVG metaball fusion filter and spring-driven extrusion animation.
@@ -95,6 +99,7 @@
 - [Notification Bell](https://easyui.site/components/notification-bell): An interactive notification trigger with animated badge counter, arrival shake feedback, and dropdown panel.
 - [Notification Stack](https://easyui.site/components/notification-stack): A stacked notification card system with physical spring stacking elevation, swipe-to-dismiss drag, and simulation triggers.
 - [Orbital Loading Ring](https://easyui.site/components/orbital-loading-ring): A lightweight loading indicator with layered rings and orbiting particles that communicate active processing.
+- [Orbital Menu](https://easyui.site/components/orbital-menu): A circular button that opens an orbit ring around itself on click, with menu items spreading out along the ring. Built with React, Tailwind CSS and Framer Motion.
 - [OriginDropdown](https://easyui.site/components/origin-dropdown): A dropdown with origin-aware expansion — the menu materializes from the chosen side with a slight scale and an inward translation, so its perceived origin is the trigger edge closest to the menu.
 - [OTP Input](https://easyui.site/components/otp-input): An accessible one-time-passcode input made of auto-advancing digit boxes, each with a spring-driven pop animation on entry, built with Framer Motion and Tailwind CSS.
 - [Package Box](https://easyui.site/components/package-box): A pure CSS 3D cardboard package box featuring interactive tape-splitting physics, flap-folding choreography, and an animated packing slip that rises out and turns to face the viewer.
