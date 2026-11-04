@@ -104,13 +104,16 @@ export function useSEO({
     if (activeView === 'components') {
       const pageTitle =
         componentPage > 1
-          ? `All React Components (Page ${componentPage}) — EasyUI`
-          : 'All React Components — EasyUI';
-      const canonical = getCanonicalUrl(
-        componentPage > 1 ? `components/page/${componentPage}` : 'components'
-      );
-      const description =
-        'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.';
+          ? `React UI Components (Page ${componentPage}) — EasyUI Component Library`
+          : SEO_CONFIG.componentsTitle;
+      // Query-driven catalog views are filtered/paginated variants of the
+      // directory, so keep them out of the canonical URL space. Clean
+      // /components/page/:n routes remain independently canonical.
+      const hasQueryString = typeof window !== 'undefined' && Boolean(window.location.search);
+      const canonical = hasQueryString
+        ? getCanonicalUrl('components')
+        : getCanonicalUrl(componentPage > 1 ? `components/page/${componentPage}` : 'components');
+      const description = SEO_CONFIG.componentsDescription;
 
       // Lazily import the full catalog only when generating the components-page
       // catalog schema. This keeps the initial app-shell bundle free of
