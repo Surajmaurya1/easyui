@@ -157,7 +157,8 @@ export const AllComponentsPage: React.FC<AllComponentsPageProps> = ({
               Directory
             </span>
             <h1 className="mt-3 text-4xl sm:text-[52px] font-semibold text-text-primary tracking-[-0.025em] leading-[1.05]">
-              React Component Library with Copy-Paste UI
+              <span className="md:block">React Component Library</span>{" "}
+              <span className="md:block">with Copy Paste UI</span>
             </h1>
             <p className="mt-4 text-[14px] text-text-secondary max-w-md leading-relaxed">
               {allSortedComponents.length} components to explore. Copy accessible, typed React UI into your project through the shadcn registry. Browse live demos, review Tailwind styles, and install only what you need.
