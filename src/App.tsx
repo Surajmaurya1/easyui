@@ -72,6 +72,15 @@ export function parseRouteFromUrl(pathname?: string, search?: string): RouteStat
         const [r, q] = rawHash.split('?');
         migratedPath = '/' + r + (q ? '?' + q : '');
       }
+      const [hashPath, query = ''] = migratedPath.slice(1).split('?');
+      const normalizedHashPath = hashPath.replace(/\/+$/, '');
+      const canonicalHashPath =
+        normalizedHashPath === 'all-components' || normalizedHashPath === 'components/page/1'
+          ? 'components'
+          : normalizedHashPath === 'docs/contributing'
+            ? 'docs/collaboration'
+            : normalizedHashPath;
+      migratedPath = `/${canonicalHashPath}${query ? `?${query}` : ''}`;
       try {
         window.history.replaceState(null, '', migratedPath);
         effectivePath = window.location.pathname;
