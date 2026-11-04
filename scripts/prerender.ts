@@ -9,7 +9,6 @@ import { ThemeProvider } from '../src/lib/theme/useTheme';
 import {
   App,
   type AppProps,
-  HeroSection,
   SpotlightSearch,
   AllComponentsPage,
   DocsPage,
@@ -178,7 +177,6 @@ export async function prerenderAllRoutes(): Promise<void> {
 
   console.log('Preloading route components and component demos for static HTML prerender...');
   await Promise.all([
-    HeroSection.preload(),
     SpotlightSearch.preload(),
     AllComponentsPage.preload(),
     DocsPage.preload(),

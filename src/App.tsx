@@ -21,7 +21,6 @@ export const SponsorsPage = lazyWithPreload(() => import('./components/sponsors/
 export const SponsorSuccessPage = lazyWithPreload(() => import('./components/sponsors/SponsorSuccessPage'), 'SponsorSuccessPage');
 export const SpotlightSearch = lazyWithPreload(() => import('./components/ui/SpotlightSearch'), 'SpotlightSearch');
 export const HeroSection = HeroSectionComponent;
-(HeroSection as any).preload = () => Promise.resolve(HeroSection);
 
 // Fast Map lookup for routing — uses the lightweight catalog index (catalog-index.ts)
 // so the full 386 KB components-data.ts is NOT included in the initial entry bundle.
