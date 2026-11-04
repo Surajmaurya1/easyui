@@ -104,13 +104,12 @@ export function useSEO({
     if (activeView === 'components') {
       const pageTitle =
         componentPage > 1
-          ? `All React Components (Page ${componentPage}) — EasyUI`
-          : 'All React Components — EasyUI';
+          ? `React UI Components (Page ${componentPage}) — EasyUI Component Library`
+          : SEO_CONFIG.componentsTitle;
       const canonical = getCanonicalUrl(
         componentPage > 1 ? `components/page/${componentPage}` : 'components'
       );
-      const description =
-        'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.';
+      const description = SEO_CONFIG.componentsDescription;
 
       // Lazily import the full catalog only when generating the components-page
       // catalog schema. This keeps the initial app-shell bundle free of

@@ -224,9 +224,8 @@ export async function prerenderAllRoutes(): Promise<void> {
   routes.push({
     path: '/components',
     outputPath: path.join(DIST_DIR, 'components', 'index.html'),
-    title: 'All React Components — EasyUI',
-    description:
-      'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
+    title: SEO_CONFIG.componentsTitle,
+    description: SEO_CONFIG.componentsDescription,
     canonical: componentsCanonical,
     structuredData: catalogSchema,
     element: catalogElement,
@@ -236,9 +235,8 @@ export async function prerenderAllRoutes(): Promise<void> {
   routes.push({
     path: '/all-components',
     outputPath: path.join(DIST_DIR, 'all-components', 'index.html'),
-    title: 'All React Components — EasyUI',
-    description:
-      'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
+    title: SEO_CONFIG.componentsTitle,
+    description: SEO_CONFIG.componentsDescription,
     canonical: componentsCanonical,
     structuredData: catalogSchema,
     element: makePrerenderElement('/all-components'),
@@ -246,9 +244,8 @@ export async function prerenderAllRoutes(): Promise<void> {
   routes.push({
     path: '/components/page/1',
     outputPath: path.join(DIST_DIR, 'components', 'page', '1', 'index.html'),
-    title: 'All React Components — EasyUI',
-    description:
-      'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
+    title: SEO_CONFIG.componentsTitle,
+    description: SEO_CONFIG.componentsDescription,
     canonical: componentsCanonical,
     structuredData: catalogSchema,
     element: makePrerenderElement('/components/page/1'),
@@ -325,9 +322,8 @@ export async function prerenderAllRoutes(): Promise<void> {
       routes.push({
         path: routePath,
         outputPath: path.join(DIST_DIR, 'components', 'page', String(page), 'index.html'),
-        title: `All React Components (Page ${page}) — EasyUI`,
-        description:
-          'Explore EasyUI production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
+        title: `React UI Components (Page ${page}) — EasyUI Component Library`,
+        description: SEO_CONFIG.componentsDescription,
         canonical: getCanonicalUrl(`components/page/${page}`),
         structuredData: generateComponentCatalogSchema(EASY_COMPONENTS, page),
         element: makePrerenderElement(routePath),

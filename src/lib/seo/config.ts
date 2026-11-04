@@ -9,6 +9,9 @@ export const SEO_CONFIG = {
   defaultTitle: 'EasyUI: Open-Source Animated React UI Library for Tailwind',
   defaultDescription:
     'An open-source React UI library with copy-paste Tailwind components, Framer Motion animations, live demos, and TypeScript source for modern apps.',
+  componentsTitle: 'React Component Library: Tailwind UI Components | EasyUI',
+  componentsDescription:
+    "Explore EasyUI's open-source React component library with copy-paste Tailwind components, live demos, TypeScript source, and shadcn registry installs.",
   siteUrl: 'https://easyui.site',
   ogImage: 'https://easyui.site/og-image.webp',
   ogImageType: 'image/webp',

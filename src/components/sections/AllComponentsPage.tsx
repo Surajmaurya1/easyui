@@ -150,17 +150,17 @@ export const AllComponentsPage: React.FC<AllComponentsPageProps> = ({
           <span className="text-text-secondary">All components</span>
         </div>
 
-        {/* Section header — eyebrow + headline + count, no supporting paragraph */}
+        {/* Section header — eyebrow + headline + short directory introduction */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div>
             <span className="text-[11px] font-mono text-text-muted uppercase tracking-[0.18em]">
               Directory
             </span>
             <h1 className="mt-3 text-4xl sm:text-[52px] font-semibold text-text-primary tracking-[-0.025em] leading-[1.05]">
-              All components
+              React Component Library with Copy-Paste UI
             </h1>
             <p className="mt-4 text-[14px] text-text-secondary max-w-md leading-relaxed">
-              {allSortedComponents.length} components. Crafted with spring physics, copy-paste ownership, zero configuration.
+              {allSortedComponents.length} components to explore. Copy accessible, typed React UI into your project through the shadcn registry. Browse live demos, review Tailwind styles, and install only what you need.
             </p>
           </div>
 
