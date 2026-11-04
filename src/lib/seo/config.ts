@@ -6,9 +6,9 @@
 export const SEO_CONFIG = {
   siteName: 'EasyUI',
   titleTemplate: '%s — EasyUI',
-  defaultTitle: 'EasyUI — Beautiful UI. Made easy.',
+  defaultTitle: 'EasyUI: Open-Source Animated React UI Library for Tailwind',
   defaultDescription:
-    'Production-ready animated UI components built with React, Tailwind CSS, and Framer Motion for modern web apps.',
+    'An open-source React UI library with copy-paste Tailwind components, Framer Motion animations, live demos, and TypeScript source for modern apps.',
   siteUrl: 'https://easyui.site',
   ogImage: 'https://easyui.site/og-image.webp',
   ogImageType: 'image/webp',
