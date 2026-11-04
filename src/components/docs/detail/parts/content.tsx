@@ -40,6 +40,16 @@ export const OverviewSection: React.FC<DetailPartProps> = (props) => {
                 <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-3xl pt-0.5">
                   {component.description || component.tagline}
                 </p>
+                {component.usageCode && (
+                  <details className="mt-4 rounded-[18px] border border-black/[0.06] dark:border-white/[0.06] p-4">
+                    <summary className="cursor-pointer text-sm font-medium text-text-primary">
+                      Quick usage example
+                    </summary>
+                    <pre className="mt-3 overflow-x-auto font-mono text-xs leading-relaxed text-text-secondary">
+                      <code>{component.usageCode}</code>
+                    </pre>
+                  </details>
+                )}
               </div>
   );
 };
