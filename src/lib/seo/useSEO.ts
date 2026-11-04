@@ -106,9 +106,13 @@ export function useSEO({
         componentPage > 1
           ? `React UI Components (Page ${componentPage}) — EasyUI Component Library`
           : SEO_CONFIG.componentsTitle;
-      const canonical = getCanonicalUrl(
-        componentPage > 1 ? `components/page/${componentPage}` : 'components'
-      );
+      // Query-driven catalog views are filtered/paginated variants of the
+      // directory, so keep them out of the canonical URL space. Clean
+      // /components/page/:n routes remain independently canonical.
+      const hasQueryString = typeof window !== 'undefined' && Boolean(window.location.search);
+      const canonical = hasQueryString
+        ? getCanonicalUrl('components')
+        : getCanonicalUrl(componentPage > 1 ? `components/page/${componentPage}` : 'components');
       const description = SEO_CONFIG.componentsDescription;
 
       // Lazily import the full catalog only when generating the components-page
