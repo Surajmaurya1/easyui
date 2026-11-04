@@ -231,25 +231,6 @@ export async function prerenderAllRoutes(): Promise<void> {
     element: catalogElement,
   });
 
-  // Keep the legacy catalog URL available on hard loads and refreshes.
-  routes.push({
-    path: '/all-components',
-    outputPath: path.join(DIST_DIR, 'all-components', 'index.html'),
-    title: SEO_CONFIG.componentsTitle,
-    description: SEO_CONFIG.componentsDescription,
-    canonical: componentsCanonical,
-    structuredData: catalogSchema,
-    element: makePrerenderElement('/all-components'),
-  });
-  routes.push({
-    path: '/components/page/1',
-    outputPath: path.join(DIST_DIR, 'components', 'page', '1', 'index.html'),
-    title: SEO_CONFIG.componentsTitle,
-    description: SEO_CONFIG.componentsDescription,
-    canonical: componentsCanonical,
-    structuredData: catalogSchema,
-    element: makePrerenderElement('/components/page/1'),
-  });
 
     // 3. Documentation Topics
     const docTopicIds = ['introduction', 'quick-start', 'architecture', 'collaboration', 'seo'];
@@ -264,15 +245,12 @@ export async function prerenderAllRoutes(): Promise<void> {
       structuredData: generateDocArticleSchema({ id: 'introduction', title: 'Documentation — EasyUI', description: 'Comprehensive documentation and guides for EasyUI.' }),
       element: docsElement,
     });
-    const docPaths = [
-      ...docTopicIds.flatMap((topicId) => [
-        { path: `/docs/${topicId}`, topicId },
-        { path: `/doc/${topicId}`, topicId },
-      ]),
-      { path: '/docs/contributing', topicId: 'collaboration' },
-      { path: '/doc', topicId: 'introduction' },
-      { path: '/doc/contributing', topicId: 'collaboration' },
-    ];
+    // Legacy documentation aliases are redirected in public/_redirects. Only
+    // write the canonical /docs/:topic pages so duplicate HTML is never emitted.
+    const docPaths = docTopicIds.map((topicId) => ({
+      path: `/docs/${topicId}`,
+      topicId,
+    }));
     for (const { path: routePath, topicId } of docPaths) {
       const docSEO = getDocTopicSEO(topicId);
       routes.push({

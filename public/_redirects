@@ -1,3 +1,28 @@
 /docs/motion-system /docs/architecture 301
 /docs/motion-tokens /docs/architecture 301
 /docs/motion /docs/architecture 301
+/docs/motion-system/ /docs/architecture 301
+/docs/motion-tokens/ /docs/architecture 301
+/docs/motion/ /docs/architecture 301
+
+# Retire duplicate catalog and documentation aliases.
+/all-components /components 301
+/all-components/ /components 301
+/components/page/1 /components 301
+/components/page/1/ /components 301
+/doc /docs/introduction 301
+/doc/ /docs/introduction 301
+/doc/contributing /docs/collaboration 301
+/doc/contributing/ /docs/collaboration 301
+/docs/contributing /docs/collaboration 301
+/docs/contributing/ /docs/collaboration 301
+/doc/* /docs/:splat 301
+/doc/*/ /docs/:splat 301
+
+# Keep the slash-free path form canonical for prerendered HTML routes.
+/components/ /components 301
+/components/*/ /components/:splat 301
+/docs/ /docs 301
+/docs/*/ /docs/:splat 301
+/sponsors/ /sponsors 301
+/sponsor/success/ /sponsor/success 301
