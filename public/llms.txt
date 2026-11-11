@@ -12,7 +12,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 132 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 134 animated React components.
 
 ### Component Index
 
@@ -42,6 +42,7 @@
 - [Combobox](https://easyui.site/components/combobox): A searchable select where one highlight glides between options as you move (keyboard or mouse), the match underlines as you type, and the check pops in on selection.
 - [Command Menu](https://easyui.site/components/command-menu): A global keyboard-first command palette with fuzzy filtering, category badges, and keyboard arrow controls.
 - [Cursor Follower](https://easyui.site/components/cursor-follower): A smooth spring-based cursor follower with customizable physics, velocity scaling, and custom child icons or badges.
+- [Data Table](https://easyui.site/components/data-table): A sortable, searchable data table with sticky headers, row selection and range selection, animated bulk actions, paging, responsive stacked cards, and ready-made sparkline and delta cells.
 - [Date Picker](https://easyui.site/components/date-picker): A date picker (and date range picker) whose popover pops from the trigger edge with a spring, flips above when there is no room below, lands the selection pill, then closes and hands focus back to the trigger.
 - [Density Lens](https://easyui.site/components/density-lens): An interactive floating lens that tracks pointer movement to reveal high-density data, magnified details, or alternative views.
 - [Dependency Trace](https://easyui.site/components/dependency-trace): An interactive SVG node graph that maps and dynamically traces relationship connections with directional bezier curves.
@@ -108,6 +109,7 @@
 - [Pricing](https://easyui.site/components/pricing): A minimal two-tier pricing component for EasyUI. Native to the existing design system, fully theme-aware, with a quiet Free tier and a slightly more attractive Pro tier — without resorting to SaaS marketing tropes.
 - [Product Tour](https://easyui.site/components/product-tour): An interactive product walkthrough with spring-animated spotlight cutout, auto-scrolling targets, responsive bottom-sheet docking, and keyboard navigation.
 - [Profile Card](https://easyui.site/components/profile-card): A premium dark social profile card with a painted blue cover-art panel, action row, and a detail panel with avatar, verified name, bio, follower stats, and outbound website link.
+- [Prompt Input](https://easyui.site/components/prompt-input): A production-ready AI chat composer with an auto-growing textarea, streaming stop control, attachment chips with drag-and-drop and paste, an accessible model picker, prompt history, and keyboard-first send behavior.
 - [Pull to Refresh](https://easyui.site/components/pull-to-refresh): A physical pull-to-refresh component and container featuring realistic elastic resistance curves, smooth cubic bezier line chart visualization with interactive point scrubbing, high/low metrics, and seamless light & dark mode compatibility.
 - [Rainbow Button](https://easyui.site/components/rainbow-button): A vibrant button featuring an animated chromatic rainbow gradient border, dynamic 3D surface reflections, and an ambient blurred rainbow underglow.
 - [Recovery Ledger](https://easyui.site/components/recovery-ledger): An archival audit timeline and state recovery ledger with chronological snapshot markers, diff inspection, and one-click rollback triggers.

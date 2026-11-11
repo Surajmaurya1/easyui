@@ -389,6 +389,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-09-09"
   },
   {
+    "id": "data-table",
+    "name": "Data Table",
+    "tagline": "Sortable, searchable table that becomes stacked cards on mobile",
+    "description": "A sortable, searchable data table with sticky headers, row selection and range selection, animated bulk actions, paging, responsive stacked cards, and ready-made sparkline and delta cells.",
+    "category": "Forms",
+    "badges": [
+      "Table",
+      "Data",
+      "Responsive",
+      "Accessible"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/data-table",
+    "createdAt": "2026-11-11"
+  },
+  {
     "id": "date-picker",
     "name": "Date Picker",
     "tagline": "Origin-aware popover with a spring landing",
@@ -1374,6 +1389,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/profile-card",
     "createdAt": "2026-08-31"
+  },
+  {
+    "id": "prompt-input",
+    "name": "Prompt Input",
+    "tagline": "Chat composer with streaming stop, attachments, model picker, and prompt history",
+    "description": "A production-ready AI chat composer with an auto-growing textarea, streaming stop control, attachment chips with drag-and-drop and paste, an accessible model picker, prompt history, and keyboard-first send behavior.",
+    "category": "Forms",
+    "badges": [
+      "AI",
+      "Composer",
+      "Attachments",
+      "Accessible"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/prompt-input",
+    "createdAt": "2026-11-11"
   },
   {
     "id": "pull-to-refresh",
