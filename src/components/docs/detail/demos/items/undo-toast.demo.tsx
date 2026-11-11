@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import type { DemoProps } from '../../demo-types';
 import { DEMO_COMPONENTS } from '../../demo-components';
 
@@ -12,15 +13,25 @@ export async function preload(): Promise<void> {
 
 export default function ComponentDemo(props: DemoProps) {
   const { demoKey } = props;
+  const [open, setOpen] = useState(false);
+
 return (
-        <div className="py-8 w-full max-w-md mx-auto">
+        <div className="flex flex-col items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="px-4 py-2 rounded-lg bg-[var(--text-primary)] text-[var(--bg)] text-xs font-medium cursor-pointer"
+          >
+            Show toast
+          </button>
           <UndoToast
             key={demoKey}
-            open={true}
+            open={open}
             title="Project archived"
             description="5 seconds remaining to restore project"
             duration={8000}
-            onUndo={() => console.log('Undone')}
+            onUndo={() => setOpen(false)}
+            onDismiss={() => setOpen(false)}
           />
         </div>
       );
