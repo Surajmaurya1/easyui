@@ -615,6 +615,22 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "A sortable, searchable data table with sticky headers, row selection and range selection, animated bulk actions, paging, responsive stacked cards, and ready-made sparkline and delta cells.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/DataTable.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/data-table.tsx"
+        }
+      ]
+    },
+    {
       "name": "date-picker",
       "type": "registry:ui",
       "title": "Date Picker",
@@ -2166,6 +2182,22 @@
           "path": "src/lib/utils.ts",
           "type": "registry:lib",
           "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "prompt-input",
+      "type": "registry:ui",
+      "title": "Prompt Input",
+      "description": "A production-ready AI chat composer with an auto-growing textarea, streaming stop control, attachment chips with drag-and-drop and paste, an accessible model picker, prompt history, and keyboard-first send behavior.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/PromptInput.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/prompt-input.tsx"
         }
       ]
     },

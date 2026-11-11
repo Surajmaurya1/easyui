@@ -25,10 +25,22 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/advanced-data-table'),
     metadata: { type: 'interactive' },
   },
+  'data-table': {
+    id: 'data-table',
+    componentId: 'data-table',
+    load: () => import('./items/data-table'),
+    metadata: { type: 'interactive' },
+  },
   'chat': {
     id: 'chat',
     componentId: 'chat',
     load: () => import('./items/chat'),
+    metadata: { type: 'interactive' },
+  },
+  'prompt-input': {
+    id: 'prompt-input',
+    componentId: 'prompt-input',
+    load: () => import('./items/prompt-input'),
     metadata: { type: 'interactive' },
   },
   'ai-agent-activity': {
