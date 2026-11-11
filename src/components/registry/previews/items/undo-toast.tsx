@@ -10,7 +10,7 @@ export default function Preview({ isHovered = false }: ComponentPreviewProps) {
               className="w-full max-w-[250px] p-2.5 rounded-xl bg-[#0E0E0E] border border-[#1F1F1F] shadow-lg pointer-events-none scale-100 sm:scale-100"
             >
               <div className="flex items-center justify-between gap-2 mb-1.5">
-                <span className="text-[11px] font-medium text-[#FAFAFA]">asdasda</span>
+                <span className="text-[11px] font-medium text-[#FAFAFA]">Project archived</span>
                 <span className="px-2 py-0.5 rounded bg-[#FAFAFA] text-[#050505] text-[9px] font-medium">Undo</span>
               </div>
               <div className="h-0.5 w-full bg-[#141414] rounded-full overflow-hidden">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { DemoProps } from '../../demo-types';
 import { DEMO_COMPONENTS } from '../../demo-components';
 
@@ -29,8 +29,7 @@ return (
             open={open}
             title="Project archived"
             description="5 seconds remaining to restore project"
-            duration={8000}
-            onUndo={() => setOpen(false)}
+            duration={5000}
             onDismiss={() => setOpen(false)}
           />
         </div>
