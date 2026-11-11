@@ -50,7 +50,7 @@ export const UnfoldAccordion: React.FC<UnfoldAccordionProps> = ({
   return (
     <div
       className={cn(
-        'flex flex-col divide-y divide-[var(--border)] rounded-xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden',
+        'w-full flex flex-col divide-y divide-[var(--border)] rounded-xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden',
         className
       )}
     >
