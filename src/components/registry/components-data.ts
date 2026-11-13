@@ -4835,7 +4835,9 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
       "Choreographed staggered dropdown items with fast exit transitions",
       "Complete keyboard accessibility (Arrow keys, Enter, Space, Escape) and ARIA listbox semantics",
       "Click-outside listener and controlled/uncontrolled state support",
-      "Respects prefers-reduced-motion: automatically disables intense blur filters"
+      "Optional custom triggers: the panel animates from the measured button dimensions and corner shape without resizing the button",
+      "Start, center, and end panel alignment with RTL support and independent IDs for multiple instances",
+      "Respects prefers-reduced-motion: disables spring movement, stagger, and the blur filter"
     ],
     "props": [
       {
@@ -4884,7 +4886,43 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "name": "width",
         "type": "number",
         "default": "306",
-        "description": "Pixel width of the menu pill and container"
+        "description": "Pixel width of the dropdown panel and default pill; custom triggers keep their own size"
+      },
+      {
+        "name": "trigger",
+        "type": "ReactNode",
+        "default": "undefined",
+        "description": "Optional non-interactive content inside the trigger button, such as an avatar. Do not pass a nested button or link."
+      },
+      {
+        "name": "triggerLabel",
+        "type": "string",
+        "default": "\"Toggle menu\" for custom triggers",
+        "description": "Accessible name for the trigger and its options"
+      },
+      {
+        "name": "triggerClassName",
+        "type": "string",
+        "default": "undefined",
+        "description": "Classes for the trigger button, including dimensions and border radius"
+      },
+      {
+        "name": "triggerStyle",
+        "type": "CSSProperties",
+        "default": "undefined",
+        "description": "Inline trigger styles; size and corner radii are measured automatically"
+      },
+      {
+        "name": "align",
+        "type": "\"start\" | \"center\" | \"end\"",
+        "default": "\"start\"",
+        "description": "Logical alignment of the panel relative to the trigger. Start and end follow the inherited text direction."
+      },
+      {
+        "name": "optionClassName",
+        "type": "string | ((option: string, index: number) => string | undefined)",
+        "default": "undefined",
+        "description": "Additional classes for all options or individual actions, such as a red logout option"
       },
       {
         "name": "className",
@@ -4896,10 +4934,13 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     "accessibility": [
       "role=\"listbox\" with role=\"option\" and aria-selected for assistive technologies",
       "Full keyboard navigation: ArrowUp, ArrowDown, Enter, Space, and Escape",
-      "prefers-reduced-motion turns off heavy blur/goo filter for optimal rendering"
+      "Keyboard opening focuses the listbox; Escape and selection return focus to the trigger",
+      "Closed options are inert and hidden from assistive technology while the exit animation finishes",
+      "Give avatar or icon triggers an accessible name with triggerLabel",
+      "prefers-reduced-motion disables the goo filter, springs, and item stagger"
     ],
     "createdAt": "2026-08-31",
-    "usageCode": "import { GooeyMenu } from \"@/components/ui/gooey-menu\";\n\nexport function Demo() {\n  return (\n    <GooeyMenu\n      options={[\"Dashboard\", \"Analytics\", \"Settings\", \"Billing\", \"Logout\"]}\n      onSelect={(opt) => console.log(\"Selected:\", opt)}\n    />\n  );\n}",
+    "usageCode": "import { GooeyMenu } from \"@/components/ui/gooey-menu\";\n\nexport function Demo() {\n  return (\n    <GooeyMenu\n      options={[\"Dashboard\", \"Analytics\", \"Settings\", \"Billing\", \"Logout\"]}\n      onSelect={(opt) => console.log(\"Selected:\", opt)}\n    />\n  );\n}\n\nexport function ProfileMenu() {\n  return (\n    <GooeyMenu\n      width={232}\n      options={[\"Profile\", \"Settings\", \"Privacy and Security\", \"Notifications\", \"Log out\"]}\n      optionClassName={(option) => option === \"Log out\" ? \"text-red-400 hover:text-red-300\" : undefined}\n      triggerLabel=\"Open profile menu\"\n      triggerStyle={{ width: 44, height: 44, borderRadius: \"50%\", padding: 0 }}\n      trigger={\n        <span aria-hidden=\"true\" className=\"flex h-full w-full items-center justify-center rounded-full bg-black text-sm font-medium text-white\">\n          SM\n        </span>\n      }\n      onSelect={(option) => console.log(\"Profile action:\", option)}\n    />\n  );\n}",
     "dependencies": [
       "framer-motion"
     ],
