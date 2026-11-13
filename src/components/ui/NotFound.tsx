@@ -55,6 +55,10 @@ export interface NotFoundProps {
   LinkComponent?: ElementType;
   /** Browser tab title (React 19 hoists it into <head>) */
   documentTitle?: string;
+  /** Heading level when the component is embedded inside another page. */
+  headingLevel?: 1 | 2;
+  /** Emit page-level title and noindex metadata (enabled for standalone 404 pages). */
+  includeDocumentMetadata?: boolean;
   /** Pointer parallax on the illustration (desktop, default true) */
   parallax?: boolean;
   footer?: ReactNode;
@@ -341,12 +345,15 @@ export function NotFound({
   suggestions,
   LinkComponent,
   documentTitle,
+  headingLevel = 1,
+  includeDocumentMetadata = true,
   parallax = true,
   footer,
   className = "",
 }: NotFoundProps) {
   const reduce = useReducedMotion();
   const Anchor: ElementType = LinkComponent ?? "a";
+  const Heading = headingLevel === 1 ? motion.h1 : motion.h2;
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const [detected, setDetected] = useState<string | null>(null);
@@ -377,8 +384,12 @@ export function NotFound({
       className={`relative isolate flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-5 py-14 text-center text-neutral-100 antialiased sm:px-8 ${className}`}
       style={{ minHeight: "100dvh" }}
     >
-      <title>{effectiveDocumentTitle}</title>
-      <meta name="robots" content="noindex" />
+      {includeDocumentMetadata && (
+        <>
+          <title>{effectiveDocumentTitle}</title>
+          <meta name="robots" content="noindex" />
+        </>
+      )}
 
       {/* ambient light */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -394,14 +405,14 @@ export function NotFound({
           {badgeLabel ?? `Error ${errorCode}`}
         </motion.p>
 
-        <motion.h1
+        <Heading
           ref={headingRef}
           tabIndex={-1}
           {...rise(0.22)}
           className="mt-3 bg-gradient-to-b from-white to-neutral-400 bg-clip-text text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] text-transparent outline-none sm:text-[44px]"
         >
           {title}
-        </motion.h1>
+        </Heading>
 
         <motion.p {...rise(0.3)} className="mt-4 max-w-md text-[15px] leading-relaxed text-neutral-400 sm:text-[16px]">
           {description}

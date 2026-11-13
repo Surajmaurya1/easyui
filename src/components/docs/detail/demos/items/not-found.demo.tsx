@@ -18,6 +18,8 @@ return (
             key={demoKey}
             errorCode="404"
             title="This page took a wrong turn."
+            headingLevel={2}
+            includeDocumentMetadata={false}
             description="The requested page doesn't exist or may have moved."
             actionLabel="Go back home"
           />

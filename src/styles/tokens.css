@@ -43,7 +43,7 @@
   --accent-ring: rgba(10, 10, 10, 0.15);
   --indicator-active: #3B82F6;
 
-  /* Navbar pill tokens (light) — used by framer-motion animate props in Navbar */
+  /* Navbar pill tokens (light) — read live by Framer Motion in Navbar */
   --pill-bg-scrolled: rgba(255, 255, 255, 0.85);
   --pill-bg-idle: rgba(255, 255, 255, 0);
   --pill-border-scrolled: rgba(228, 228, 231, 1);

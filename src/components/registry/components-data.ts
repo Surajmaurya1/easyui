@@ -2422,6 +2422,183 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "data-table",
+    "name": "Data Table",
+    "tagline": "Sortable, searchable table that becomes stacked cards on mobile",
+    "description": "A sortable, searchable data table with sticky headers, row selection and range selection, animated bulk actions, paging, responsive stacked cards, and ready-made sparkline and delta cells.",
+    "category": "Forms",
+    "badges": [
+      "Table",
+      "Data",
+      "Responsive",
+      "Accessible"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/data-table",
+    "features": [
+      "Three-state column sorting (ascending, descending, off) with natural string comparison and nulls last",
+      "Sticky header with a subtle elevation shadow once the table is scrolled",
+      "Row selection with select-all, indeterminate state, shift-click ranges, and an animated bulk-action bar",
+      "Animated row reordering on sort using Framer Motion layout transitions",
+      "Search across every column accessor, or supply extra searchable text per row",
+      "Show-more paging, an informative empty state, and a clear-search action",
+      "Responsive layout: below the card breakpoint rows become stacked cards with a dedicated sort menu",
+      "Sparkline and DeltaPill cell helpers for trend and percentage-change columns"
+    ],
+    "props": [
+      {
+        "name": "rows",
+        "type": "T[]",
+        "default": "required",
+        "description": "Rows to render. Each row must include a stable id"
+      },
+      {
+        "name": "columns",
+        "type": "DataTableColumn<T>[]",
+        "default": "required",
+        "description": "Column definitions with headers, accessors, custom cells, alignment, widths, and mobile behavior"
+      },
+      {
+        "name": "getRowLabel",
+        "type": "(row: T) => string",
+        "default": "String(row.id)",
+        "description": "Readable row name used by checkbox labels and screen readers"
+      },
+      {
+        "name": "selectable",
+        "type": "boolean",
+        "default": "true",
+        "description": "Enables row selection, select-all, and the bulk-action bar"
+      },
+      {
+        "name": "searchable",
+        "type": "boolean",
+        "default": "true",
+        "description": "Shows the search field that filters rows"
+      },
+      {
+        "name": "searchPlaceholder",
+        "type": "string",
+        "default": "'Search…'",
+        "description": "Placeholder text for the search field"
+      },
+      {
+        "name": "searchText",
+        "type": "(row: T) => string",
+        "default": "undefined",
+        "description": "Extra text to match when searching beyond the column accessors"
+      },
+      {
+        "name": "defaultSort",
+        "type": "SortState",
+        "default": "null",
+        "description": "Initial sort used when the sort prop is not controlled"
+      },
+      {
+        "name": "sort",
+        "type": "SortState",
+        "default": "undefined",
+        "description": "Controlled sort state"
+      },
+      {
+        "name": "onSortChange",
+        "type": "(sort: SortState) => void",
+        "default": "undefined",
+        "description": "Callback fired whenever the sort changes"
+      },
+      {
+        "name": "selected",
+        "type": "Id[]",
+        "default": "undefined",
+        "description": "Controlled selection state"
+      },
+      {
+        "name": "onSelectionChange",
+        "type": "(ids: Id[]) => void",
+        "default": "undefined",
+        "description": "Callback fired whenever the selection changes"
+      },
+      {
+        "name": "bulkActions",
+        "type": "(selectedIds: Id[]) => ReactNode",
+        "default": "undefined",
+        "description": "Buttons rendered in the bar while rows are selected"
+      },
+      {
+        "name": "toolbar",
+        "type": "ReactNode",
+        "default": "undefined",
+        "description": "Extra controls rendered on the right side of the toolbar"
+      },
+      {
+        "name": "pageSize",
+        "type": "number",
+        "default": "20",
+        "description": "Rows shown initially and revealed per \"Show more\" click. Infinity shows all rows"
+      },
+      {
+        "name": "maxHeight",
+        "type": "number",
+        "default": "520",
+        "description": "Table scroll height in pixels before the header sticks"
+      },
+      {
+        "name": "density",
+        "type": "'comfortable' | 'compact'",
+        "default": "'comfortable'",
+        "description": "Row padding and minimum height"
+      },
+      {
+        "name": "cardBreakpoint",
+        "type": "number",
+        "default": "640",
+        "description": "Width below which rows render as stacked cards"
+      },
+      {
+        "name": "onRowClick",
+        "type": "(row: T) => void",
+        "default": "undefined",
+        "description": "Makes rows interactive and keyboard-activatable"
+      },
+      {
+        "name": "emptyState",
+        "type": "ReactNode",
+        "default": "undefined",
+        "description": "Custom content shown when no rows match"
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "default": "'Data table'",
+        "description": "Accessible name for the table region"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Custom Tailwind class names for the outer wrapper"
+      }
+    ],
+    "accessibility": [
+      "Uses table, row, columnheader, and cell roles with aria-rowcount, aria-colcount, aria-rowindex, and aria-sort",
+      "Select-all checkbox exposes a mixed aria-checked state and every row checkbox names its row",
+      "Sortable headers are real buttons with visible focus rings and announced sort direction through a live status region",
+      "On mobile the sort control is a labelled native select that keeps keyboard and screen-reader support",
+      "Reduced motion disables row layout animation while preserving all functionality"
+    ],
+    "createdAt": "2026-11-11",
+    "usageCode": "import { DataTable, Sparkline, DeltaPill, type DataTableColumn } from \"@/components/ui/data-table\";\n\ninterface Product {\n  id: number;\n  name: string;\n  revenue: number;\n  trend: number[];\n  change: number;\n}\n\nconst columns: DataTableColumn<Product>[] = [\n  { key: \"name\", header: \"Product\", primary: true },\n  {\n    key: \"revenue\",\n    header: \"Revenue\",\n    align: \"right\",\n    cell: (row) => <span className=\"tabular-nums\">${row.revenue.toLocaleString()}</span>,\n  },\n  { key: \"trend\", header: \"Trend\", sortable: false, cell: (row) => <Sparkline data={row.trend} /> },\n  { key: \"change\", header: \"Change\", align: \"right\", cell: (row) => <DeltaPill value={row.change} /> },\n];\n\nexport function Demo() {\n  return (\n    <DataTable\n      rows={rows}\n      columns={columns}\n      getRowLabel={(row) => row.name}\n      defaultSort={{ key: \"revenue\", dir: \"desc\" }}\n      bulkActions={(ids) => <button type=\"button\">Export {ids.length}</button>}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/DataTable.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/data-table.tsx"
+      }
+    ]
+  },
+  {
     "id": "date-picker",
     "name": "Date Picker",
     "tagline": "Origin-aware popover with a spring landing",
@@ -3503,6 +3680,175 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/utils.ts",
         "type": "registry:lib",
         "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
+    "id": "earnings",
+    "name": "Earnings",
+    "tagline": "Earnings summary card with count-up total, scrubable trend, and source breakdown",
+    "description": "An earnings summary card that counts up the total, plots a scrubable trend line, and breaks income down by source with a hoverable split bar and a 7D / 30D / 12M period switcher. Light and dark themes, fully responsive.",
+    "category": "Feedback",
+    "badges": [
+      "Data Visualization",
+      "Earnings",
+      "SVG",
+      "Split Bar",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/earnings",
+    "features": [
+      "Count-up headline total with a direction-aware delta pill against the previous period",
+      "Hand-drawn monotone cubic trend line that resamples and morphs smoothly between periods",
+      "Pointer, touch, and keyboard scrubbing with a spring-tracked crosshair and per-point labels",
+      "Single split bar plus a row per income source, each with a share bar and optional change badge",
+      "Hover, tap, or focus a source to promote it to the headline readout and dim the rest",
+      "Segmented 7D / 30D / 12M switcher with layout-animated selection and an onPeriodChange callback",
+      "Optional next-payout footer with a formatted amount",
+      "Intl currency and locale formatting, light and dark themes, and prefers-reduced-motion support"
+    ],
+    "props": [
+      {
+        "name": "periods",
+        "type": "EarningsPeriod[]",
+        "description": "Period datasets, each with its trend, optional previous total, and income sources"
+      },
+      {
+        "name": "defaultPeriod",
+        "type": "string",
+        "default": "second period when 3+ exist",
+        "description": "ID of the period shown first"
+      },
+      {
+        "name": "onPeriodChange",
+        "type": "(id: string) => void",
+        "default": "undefined",
+        "description": "Called when the active period changes"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'Earnings'",
+        "description": "Card heading and default readout label"
+      },
+      {
+        "name": "currency",
+        "type": "string",
+        "default": "'USD'",
+        "description": "ISO currency code passed to Intl.NumberFormat"
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "default": "'en-US'",
+        "description": "Locale used for currency formatting"
+      },
+      {
+        "name": "payout",
+        "type": "{ label?: string; date: string; amount?: number }",
+        "default": "undefined",
+        "description": "Optional footer line for the next payout"
+      },
+      {
+        "name": "animated",
+        "type": "boolean",
+        "default": "true",
+        "description": "Counts numbers up and animates the chart on mount; reduced motion always wins"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "''",
+        "description": "Additional CSS classes for the card root"
+      },
+      {
+        "name": "EarningsPeriod.id",
+        "type": "string",
+        "description": "Unique period identifier used by the switcher"
+      },
+      {
+        "name": "EarningsPeriod.label",
+        "type": "string",
+        "description": "Segmented-control label such as \"30D\""
+      },
+      {
+        "name": "EarningsPeriod.comparison",
+        "type": "string",
+        "description": "Caption under the delta, e.g. \"vs previous 30 days\""
+      },
+      {
+        "name": "EarningsPeriod.total",
+        "type": "number",
+        "description": "Headline total; defaults to the sum of the sources"
+      },
+      {
+        "name": "EarningsPeriod.previous",
+        "type": "number",
+        "description": "Previous-period total used to compute the delta"
+      },
+      {
+        "name": "EarningsPeriod.trend",
+        "type": "number[]",
+        "description": "Earnings per point, ordered oldest to newest"
+      },
+      {
+        "name": "EarningsPeriod.trendLabels",
+        "type": "string[]",
+        "description": "Names for each trend point, shown while scrubbing"
+      },
+      {
+        "name": "EarningsPeriod.sources",
+        "type": "EarningsSource[]",
+        "description": "Income sources with amount, optional change, color, and icon"
+      },
+      {
+        "name": "EarningsSource.id",
+        "type": "string",
+        "description": "Unique source identifier"
+      },
+      {
+        "name": "EarningsSource.label",
+        "type": "string",
+        "description": "Source name used in the list and readout"
+      },
+      {
+        "name": "EarningsSource.amount",
+        "type": "number",
+        "description": "Amount earned from this source in the period"
+      },
+      {
+        "name": "EarningsSource.change",
+        "type": "number",
+        "description": "Percent change versus the previous period"
+      },
+      {
+        "name": "EarningsSource.color",
+        "type": "string",
+        "description": "Any CSS color; defaults to a palette entry"
+      },
+      {
+        "name": "EarningsSource.icon",
+        "type": "ReactNode",
+        "description": "Optional icon; defaults to a colored initial"
+      }
+    ],
+    "accessibility": [
+      "The card is a labelled section with an aria-live readout for totals, sources, and scrubbed points",
+      "The trend SVG is focusable and supports ArrowLeft, ArrowRight, and Escape for keyboard scrubbing",
+      "Source rows are native buttons with aria-pressed and visible focus rings",
+      "A visually hidden table mirrors every source amount and share for screen readers",
+      "prefers-reduced-motion disables count-ups, line draw, and spring transitions"
+    ],
+    "createdAt": "2026-11-02",
+    "usageCode": "import { Earnings, type EarningsPeriod } from \"@/components/ui/earnings\";\n\nconst periods: EarningsPeriod[] = [\n  {\n    id: \"30d\",\n    label: \"30D\",\n    comparison: \"vs previous 30 days\",\n    previous: 9800,\n    trend: [240, 310, 280, 390, 420, 380, 510],\n    trendLabels: [\"Oct 1\", \"Oct 6\", \"Oct 11\", \"Oct 16\", \"Oct 21\", \"Oct 26\", \"Oct 31\"],\n    sources: [\n      { id: \"sponsors\", label: \"Sponsors\", amount: 4200, change: 8.2 },\n      { id: \"pro\", label: \"Pro licenses\", amount: 3100, change: 14.6 },\n      { id: \"affiliate\", label: \"Affiliate\", amount: 1250, change: -3.1 },\n    ],\n  },\n];\n\nexport function Demo() {\n  return (\n    <div className=\"w-full max-w-[520px]\">\n      <Earnings\n        periods={periods}\n        payout={{ date: \"Nov 5\", amount: 1240 }}\n        onPeriodChange={(id) => console.log(id)}\n      />\n    </div>\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/Earnings.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/earnings.tsx"
       }
     ]
   },
@@ -8366,6 +8712,177 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
         "path": "src/lib/utils.ts",
         "type": "registry:lib",
         "target": "lib/utils.ts"
+      }
+    ]
+  },
+  {
+    "id": "prompt-input",
+    "name": "Prompt Input",
+    "tagline": "Chat composer with streaming stop, attachments, model picker, and prompt history",
+    "description": "A production-ready AI chat composer with an auto-growing textarea, streaming stop control, attachment chips with drag-and-drop and paste, an accessible model picker, prompt history, and keyboard-first send behavior.",
+    "category": "Forms",
+    "badges": [
+      "AI",
+      "Composer",
+      "Attachments",
+      "Accessible"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/prompt-input",
+    "features": [
+      "Auto-growing textarea measured by a hidden mirror so it glides open and closed",
+      "Send button morphs into a Stop button with an orbital progress ring while streaming",
+      "Attachment button, drag-and-drop zone, and paste handling with chips, previews, and size/type limits",
+      "Accessible model picker listbox with typeahead, keyboard navigation, and automatic drop-up/down placement",
+      "Enter to send, Shift+Enter for a new line, Cmd/Ctrl+Enter always sends, and Escape stops a reply",
+      "Arrow-up prompt history recall with draft restoration when moving back down",
+      "IME-safe key handling, iOS zoom-safe 16px input text, safe-area padding, and light/dark styling",
+      "Imperative handle for focus, clear, setValue, and attaching files from outside the composer"
+    ],
+    "props": [
+      {
+        "name": "onSend",
+        "type": "(payload: PromptSubmit) => void | Promise<void>",
+        "default": "undefined",
+        "description": "Called when the user sends. Throw or reject to put the message back in the box"
+      },
+      {
+        "name": "streaming",
+        "type": "boolean",
+        "default": "false",
+        "description": "While true the send button becomes a Stop button and Escape stops the reply"
+      },
+      {
+        "name": "onStop",
+        "type": "() => void",
+        "default": "undefined",
+        "description": "Callback fired when the user stops a streaming response"
+      },
+      {
+        "name": "models",
+        "type": "PromptModel[]",
+        "default": "DEFAULT_MODELS",
+        "description": "Models rendered in the accessible model picker listbox"
+      },
+      {
+        "name": "model",
+        "type": "string",
+        "default": "undefined",
+        "description": "Controlled model id"
+      },
+      {
+        "name": "defaultModel",
+        "type": "string",
+        "default": "undefined",
+        "description": "Initial model id when uncontrolled (defaults to the first model)"
+      },
+      {
+        "name": "onModelChange",
+        "type": "(id: string) => void",
+        "default": "undefined",
+        "description": "Callback fired when the selected model changes"
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "default": "'Message the assistant…'",
+        "description": "Placeholder text for the textarea"
+      },
+      {
+        "name": "maxLength",
+        "type": "number",
+        "default": "8000",
+        "description": "Maximum character count before the message is flagged as over the limit"
+      },
+      {
+        "name": "maxHeight",
+        "type": "number",
+        "default": "224",
+        "description": "Tallest the textarea grows in pixels before it starts scrolling"
+      },
+      {
+        "name": "allowAttachments",
+        "type": "boolean",
+        "default": "true",
+        "description": "Enables the attach button, drag-and-drop, and paste file handling"
+      },
+      {
+        "name": "maxFiles",
+        "type": "number",
+        "default": "5",
+        "description": "Maximum number of attachments allowed at once"
+      },
+      {
+        "name": "maxFileSizeMB",
+        "type": "number",
+        "default": "10",
+        "description": "Maximum size per attachment in megabytes"
+      },
+      {
+        "name": "accept",
+        "type": "string",
+        "default": "undefined",
+        "description": "Accepted file types using the same format as an input accept attribute"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "default": "false",
+        "description": "Disables the composer and all of its controls"
+      },
+      {
+        "name": "autoFocus",
+        "type": "boolean",
+        "default": "false",
+        "description": "Focuses the textarea when the component mounts"
+      },
+      {
+        "name": "enterToSend",
+        "type": "boolean",
+        "default": "desktop only",
+        "description": "Enter sends and Shift+Enter adds a line. Defaults to true on fine pointers and false on touch devices. Cmd/Ctrl+Enter always sends"
+      },
+      {
+        "name": "actions",
+        "type": "ReactNode",
+        "default": "undefined",
+        "description": "Extra buttons rendered next to the model picker"
+      },
+      {
+        "name": "hint",
+        "type": "ReactNode | false",
+        "default": "keyboard hint",
+        "description": "Footer line under the box. Pass false to hide it"
+      },
+      {
+        "name": "safeArea",
+        "type": "boolean",
+        "default": "false",
+        "description": "Pads the bottom for the iPhone home indicator when pinned to the screen bottom"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "default": "undefined",
+        "description": "Custom Tailwind class names for the outer wrapper"
+      }
+    ],
+    "accessibility": [
+      "The textarea exposes an aria-label plus an aria-describedby hint and reports errors through role=\"alert\" and aria-live",
+      "The model picker is a focusable listbox with aria-activedescendant, Home/End, arrow, typeahead, and Escape handling",
+      "Send and Stop share one labelled button and report the character count through aria-live near the limit",
+      "Attachment removal buttons include the file name in their aria-label, and drag-and-drop has a visible drop overlay",
+      "All motion respects prefers-reduced-motion, including the textarea growth, chips, and streaming glow"
+    ],
+    "createdAt": "2026-11-11",
+    "usageCode": "import { PromptInput, type PromptSubmit } from \"@/components/ui/prompt-input\";\n\nexport function Demo() {\n  const models = [\n    { id: \"fast\", name: \"Fast\", description: \"Quick answers\", badge: \"Fast\" },\n    { id: \"reasoning\", name: \"Reasoning\", description: \"Thinks longer\", badge: \"Deep\" },\n  ];\n\n  const handleSend = async ({ text, files, model }: PromptSubmit) => {\n    await fetch(\"/api/chat\", {\n      method: \"POST\",\n      body: JSON.stringify({ text, files: files.map((f) => f.name), model: model?.id }),\n    });\n  };\n\n  return (\n    <PromptInput\n      onSend={handleSend}\n      models={models}\n      streaming={false}\n      onStop={() => {}}\n      placeholder=\"Message the assistant…\"\n      safeArea\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/PromptInput.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/prompt-input.tsx"
       }
     ]
   },

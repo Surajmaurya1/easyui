@@ -110,16 +110,113 @@ export function getDocTopicSEO(topicId = 'introduction'): PageSEOMeta {
 }
 
 /**
+ * Generates SEO metadata for the sponsorship page.
+ */
+export function getSponsorsPageSEO(): PageSEOMeta {
+  const title = 'Sponsor EasyUI — Reach React Developers';
+  const description =
+    'Put your logo in front of developers actively browsing animated React components. One sponsor slot, one month, one-time payment.';
+  const canonical = getCanonicalUrl('sponsors');
+
+  return {
+    title,
+    description,
+    canonical,
+    ogTitle: title,
+    ogDescription: description,
+    ogType: 'website',
+    keywords: [
+      'sponsor EasyUI',
+      'React component sponsorship',
+      'developer audience',
+      'open source sponsorship',
+      ...SEO_CONFIG.keywords,
+    ],
+    breadcrumbs: [
+      { name: 'EasyUI', item: SEO_CONFIG.siteUrl },
+      { name: 'Sponsors', item: canonical },
+    ],
+  };
+}
+
+/**
+ * Generates metadata for the Dodo redirect target. This page is deliberately
+ * excluded from search results.
+ */
+export function getSponsorSuccessSEO(): PageSEOMeta {
+  const title = 'Thanks for sponsoring EasyUI';
+  const description = 'One last step: send us your sponsor details.';
+  const canonical = getCanonicalUrl('sponsor/success');
+
+  return {
+    title,
+    description,
+    canonical,
+    ogTitle: title,
+    ogDescription: description,
+    ogType: 'website',
+    noindex: true,
+  };
+}
+
+function getComponentSEOTitle(componentName: string): string {
+  const candidates = [
+    `${componentName} React Component Library for Tailwind CSS | EasyUI`,
+    `${componentName} React Component Library for Tailwind UI | EasyUI`,
+    `${componentName} React Component for Tailwind CSS | EasyUI`,
+    `${componentName} React Component for Tailwind UI | EasyUI`,
+    `${componentName} Component for React Apps with Tailwind CSS | EasyUI`,
+    `${componentName} Component for React Apps | EasyUI`,
+    `${componentName} Component for Tailwind UI | EasyUI`,
+    `${componentName} React UI Component | Tailwind CSS | EasyUI`,
+    `${componentName} React UI Component for Apps | EasyUI`,
+    `${componentName} React UI Component | EasyUI`,
+    `${componentName} Component | Tailwind UI | EasyUI`,
+  ];
+
+  const title = candidates.find((candidate) => candidate.length >= 50 && candidate.length <= 60);
+  if (title) return title;
+
+  const suffix = ' React UI Component | EasyUI';
+  const availableNameLength = 60 - suffix.length;
+  const shortenedName = `${componentName.slice(0, availableNameLength - 1).trimEnd()}…`;
+  return `${shortenedName}${suffix}`;
+}
+
+function getComponentSEODescription(description: string): string {
+  let normalized = description.replace(/\s+/g, ' ').trim();
+
+  const usefulAdditions = [
+    ' Live preview.',
+    ' Copy-ready React source.',
+    ' Built for React apps.',
+  ];
+  let additionIndex = 0;
+  while (normalized.length < 140 && additionIndex < usefulAdditions.length) {
+    normalized += usefulAdditions[additionIndex];
+    additionIndex += 1;
+  }
+
+  if (normalized.length <= 160) return normalized;
+
+  const maxContentLength = 159;
+  const lastWordBoundary = normalized.lastIndexOf(' ', maxContentLength);
+  const cutAt = lastWordBoundary >= 140 ? lastWordBoundary : maxContentLength;
+  return `${normalized.slice(0, cutAt).trimEnd()}…`;
+}
+
+/**
  * Generates SEO metadata for any EasyUI component.
  * Accepts the lightweight ComponentCatalogIndex type so that
  * metadata can be computed without loading the full component catalog.
  */
 export function getComponentSEO(component: ComponentCatalogIndex): PageSEOMeta {
-  const compTitle = `${component.name} Component for React — EasyUI`;
+  const compTitle = getComponentSEOTitle(component.name);
   const canonical = getCanonicalUrl(`components/${component.id}`);
-  const description =
+  const sourceDescription =
     component.description ||
     `A responsive, accessible React ${component.name.toLowerCase()} component from EasyUI with customizable styles, states, and spring physics animations.`;
+  const description = getComponentSEODescription(sourceDescription);
 
   const keywords = Array.from(
     new Set([

@@ -9,11 +9,12 @@ import { ThemeProvider } from '../src/lib/theme/useTheme';
 import {
   App,
   type AppProps,
-  HeroSection,
   SpotlightSearch,
   AllComponentsPage,
   DocsPage,
   ComponentDetailPage,
+  SponsorsPage,
+  SponsorSuccessPage,
 } from '../src/App';
 import { preloadComponentDemo } from '../src/components/docs/ComponentDetailPage';
 import { EASY_COMPONENTS } from '../src/components/registry/components-data';
@@ -23,6 +24,8 @@ import {
   getCanonicalUrl,
   getComponentSEO,
   getDocTopicSEO,
+  getSponsorSuccessSEO,
+  getSponsorsPageSEO,
 } from '../src/lib/seo/helpers';
 import {
   generateWebSiteSchema,
@@ -46,6 +49,7 @@ interface RouteToPrerender {
   canonical: string;
   ogType?: string;
   keywords?: string[];
+  noindex?: boolean;
   structuredData?: Record<string, any> | Array<Record<string, any>>;
   element: React.ReactElement;
 }
@@ -86,6 +90,16 @@ function buildHtml(
   // Replace or inject canonical link
   if (html.includes('rel="canonical"')) {
     html = html.replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${route.canonical}" />`);
+  }
+
+  // Replace robots for pages that must stay out of search results.
+  if (route.noindex) {
+    const robotsTag = '<meta name="robots" content="noindex, nofollow" />';
+    if (html.includes('name="robots"')) {
+      html = html.replace(/<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/i, robotsTag);
+    } else {
+      html = html.replace('</head>', `    ${robotsTag}\n  </head>`);
+    }
   }
 
   // Replace or inject og:title
@@ -163,11 +177,12 @@ export async function prerenderAllRoutes(): Promise<void> {
 
   console.log('Preloading route components and component demos for static HTML prerender...');
   await Promise.all([
-    HeroSection.preload(),
     SpotlightSearch.preload(),
     AllComponentsPage.preload(),
     DocsPage.preload(),
     ComponentDetailPage.preload(),
+    SponsorsPage.preload(),
+    SponsorSuccessPage.preload(),
     ...EASY_COMPONENTS.map((comp) => preloadComponentDemo(comp.id)),
   ]);
 
@@ -207,35 +222,13 @@ export async function prerenderAllRoutes(): Promise<void> {
   routes.push({
     path: '/components',
     outputPath: path.join(DIST_DIR, 'components', 'index.html'),
-    title: 'All React Components — EasyUI',
-    description:
-      'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
+    title: SEO_CONFIG.componentsTitle,
+    description: SEO_CONFIG.componentsDescription,
     canonical: componentsCanonical,
     structuredData: catalogSchema,
     element: catalogElement,
   });
 
-  // Keep the legacy catalog URL available on hard loads and refreshes.
-  routes.push({
-    path: '/all-components',
-    outputPath: path.join(DIST_DIR, 'all-components', 'index.html'),
-    title: 'All React Components — EasyUI',
-    description:
-      'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
-    canonical: componentsCanonical,
-    structuredData: catalogSchema,
-    element: makePrerenderElement('/all-components'),
-  });
-  routes.push({
-    path: '/components/page/1',
-    outputPath: path.join(DIST_DIR, 'components', 'page', '1', 'index.html'),
-    title: 'All React Components — EasyUI',
-    description:
-      'Explore EasyUI complete collection of production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
-    canonical: componentsCanonical,
-    structuredData: catalogSchema,
-    element: makePrerenderElement('/components/page/1'),
-  });
 
     // 3. Documentation Topics
     const docTopicIds = ['introduction', 'quick-start', 'architecture', 'collaboration', 'seo'];
@@ -250,15 +243,12 @@ export async function prerenderAllRoutes(): Promise<void> {
       structuredData: generateDocArticleSchema({ id: 'introduction', title: 'Documentation — EasyUI', description: 'Comprehensive documentation and guides for EasyUI.' }),
       element: docsElement,
     });
-    const docPaths = [
-      ...docTopicIds.flatMap((topicId) => [
-        { path: `/docs/${topicId}`, topicId },
-        { path: `/doc/${topicId}`, topicId },
-      ]),
-      { path: '/docs/contributing', topicId: 'collaboration' },
-      { path: '/doc', topicId: 'introduction' },
-      { path: '/doc/contributing', topicId: 'collaboration' },
-    ];
+    // Legacy documentation aliases are redirected in public/_redirects. Only
+    // write the canonical /docs/:topic pages so duplicate HTML is never emitted.
+    const docPaths = docTopicIds.map((topicId) => ({
+      path: `/docs/${topicId}`,
+      topicId,
+    }));
     for (const { path: routePath, topicId } of docPaths) {
       const docSEO = getDocTopicSEO(topicId);
       routes.push({
@@ -276,6 +266,29 @@ export async function prerenderAllRoutes(): Promise<void> {
       });
     }
 
+    // 4. Sponsorship pages
+    const sponsorsSEO = getSponsorsPageSEO();
+    routes.push({
+      path: '/sponsors',
+      outputPath: path.join(DIST_DIR, 'sponsors', 'index.html'),
+      title: sponsorsSEO.title,
+      description: sponsorsSEO.description,
+      canonical: sponsorsSEO.canonical,
+      keywords: sponsorsSEO.keywords,
+      element: makePrerenderElement('/sponsors'),
+    });
+
+    const sponsorSuccessSEO = getSponsorSuccessSEO();
+    routes.push({
+      path: '/sponsor/success',
+      outputPath: path.join(DIST_DIR, 'sponsor', 'success', 'index.html'),
+      title: sponsorSuccessSEO.title,
+      description: sponsorSuccessSEO.description,
+      canonical: sponsorSuccessSEO.canonical,
+      noindex: true,
+      element: makePrerenderElement('/sponsor/success'),
+    });
+
     // Each catalog page gets one canonical directory output. Keeping the
     // pagination routes explicit prevents the server from serving page 1's
     // HTML for every page number.
@@ -285,9 +298,8 @@ export async function prerenderAllRoutes(): Promise<void> {
       routes.push({
         path: routePath,
         outputPath: path.join(DIST_DIR, 'components', 'page', String(page), 'index.html'),
-        title: `All React Components (Page ${page}) — EasyUI`,
-        description:
-          'Explore EasyUI production-ready, beautifully animated React components built with Tailwind CSS and Framer Motion.',
+        title: `React UI Components (Page ${page}) — EasyUI Component Library`,
+        description: SEO_CONFIG.componentsDescription,
         canonical: getCanonicalUrl(`components/page/${page}`),
         structuredData: generateComponentCatalogSchema(EASY_COMPONENTS, page),
         element: makePrerenderElement(routePath),
@@ -348,6 +360,8 @@ export async function prerenderAllRoutes(): Promise<void> {
   console.log(`  - 1 Homepage (/)`);
   console.log(`  - ${totalComponentPages} Components catalog pages (/components[/page/*])`);
   console.log(`  - ${docTopicIds.length} Documentation topics (/docs/*)`);
+  console.log(`  - 1 Sponsors page (/sponsors)`);
+  console.log(`  - 1 Sponsor success page (/sponsor/success, noindex)`);
   console.log(`  - ${EASY_COMPONENTS.length} Component detail pages (/components/*)`);
   console.log('========================================================\n');
 }
