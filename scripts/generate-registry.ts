@@ -344,7 +344,7 @@ function generateRegistryJson(components: DiscoveredComponent[]): void {
   const registry = {
     $schema: 'https://ui.shadcn.com/schema/registry.json',
     name: 'easyui',
-    homepage: `https://github.com/${REPO_SLUG}`,
+    homepage: 'https://easyui.site',
     items,
   };
 

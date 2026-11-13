@@ -11,6 +11,7 @@ const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
 const UI_DIR = path.join(ROOT_DIR, 'src', 'components', 'ui');
 
 const REPO_SLUG = 'Surajmaurya1/easyui';
+const REGISTRY_HOMEPAGE = 'https://easyui.site';
 
 interface RegistryFile {
   path: string;
@@ -79,8 +80,8 @@ function validateRegistry(): void {
     errors.push(`Invalid registry "name". Expected "easyui", got "${registry.name}"`);
   }
 
-  if (!registry.homepage || !registry.homepage.includes(REPO_SLUG)) {
-    warnings.push(`Registry homepage does not point to expected repository "${REPO_SLUG}": got "${registry.homepage}"`);
+  if (registry.homepage !== REGISTRY_HOMEPAGE) {
+    warnings.push(`Registry homepage should point to "${REGISTRY_HOMEPAGE}": got "${registry.homepage}"`);
   }
 
   if (!Array.isArray(registry.items) || registry.items.length === 0) {

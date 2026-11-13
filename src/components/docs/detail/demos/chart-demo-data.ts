@@ -2,6 +2,7 @@ import type { BarDatum, BarSeries } from '../../../ui/BarChart';
 import type { DonutDatum } from '../../../ui/DonutChart';
 import type { HeatDay } from '../../../ui/ActivityHeatmap';
 import type { FunnelStage } from '../../../ui/FunnelChart';
+import type { EarningsPeriod } from '../../../ui/Earnings';
 
 function rng(seed: number) {
   return () => {
@@ -106,3 +107,44 @@ export const DASHBOARD_LIVE_INITIAL = (() => {
     (v = clamp(v + (r() - 0.5) * 90 + Math.sin(i / 7) * 18, 700, 1900)),
   ).map(Math.round);
 })();
+
+/* ------------------------------ Earnings data ------------------------------ */
+
+const EARNINGS_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function makeEarningsPeriod(
+  id: string,
+  label: string,
+  comparison: string,
+  seed: number,
+  n: number,
+  base: number,
+  labels: (i: number) => string,
+  prevFactor: number,
+): EarningsPeriod {
+  const r = rng(seed);
+  const trend = Array.from({ length: n }, (_, i) =>
+    Math.round((base * (0.8 + (i / n) * 0.5) + (r() - 0.5) * base * 0.7) * 100) / 100,
+  );
+  const total = Math.round(trend.reduce((a, b) => a + b, 0) * 100) / 100;
+  const shares: [string, string, number, number][] = [
+    ['sponsors', 'Sponsors', 0.38, 8.2],
+    ['pro', 'Pro licenses', 0.34, 14.6],
+    ['affiliate', 'Affiliate', 0.14, -3.1],
+    ['donations', 'Donations', 0.09, 5.4],
+    ['courses', 'Courses', 0.05, 0],
+  ];
+  let left = total;
+  const sources = shares.map(([sid, name, share, change], i) => {
+    const amount = i === shares.length - 1 ? Math.round(left * 100) / 100 : Math.round(total * share * 100) / 100;
+    left -= amount;
+    return { id: sid, label: name, amount, change };
+  });
+  return { id, label, comparison, total, previous: total * prevFactor, trend, trendLabels: trend.map((_, i) => labels(i)), sources };
+}
+
+export const EARNINGS_PERIODS: EarningsPeriod[] = [
+  makeEarningsPeriod('7d', '7D', 'vs previous 7 days', 11, 7, 190, (i) => `Oct ${15 + i}`, 0.93),
+  makeEarningsPeriod('30d', '30D', 'vs previous 30 days', 23, 30, 210, (i) => `Oct ${i + 1}`, 0.88),
+  makeEarningsPeriod('12m', '12M', 'vs previous 12 months', 37, 12, 6100, (i) => `${EARNINGS_MONTHS[i]}`, 0.71),
+];
