@@ -13,7 +13,7 @@ export async function preload(): Promise<void> {
 export default function ComponentDemo(props: DemoProps) {
   const { demoKey } = props;
 return (
-        <div className="py-8 flex justify-center w-full">
+        <div className="py-8 flex min-h-[360px] items-start justify-center w-full">
           <BranchingSubmenu key={demoKey} />
         </div>
       );
