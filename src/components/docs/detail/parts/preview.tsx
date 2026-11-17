@@ -1,13 +1,46 @@
 import React from 'react';
 import type { DetailPartProps } from '../types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Suspense } from 'react';
 import { Copy, Check, Maximize2, ChevronDown, X } from 'lucide-react';
 import { cn } from '../../../../lib/utils';
 import { InteractiveDemoRenderer } from '../demo-renderer';
+import { Menu } from '@base-ui/react/menu';
 
 export const PreviewSection: React.FC<DetailPartProps> = (props) => {
-  const { component, activeTab, copiedCode, isFullscreenPreview, setIsFullscreenPreview, demoKey, previewMenuOpen, setPreviewMenuOpen, previewMenuRef, handleCopy, inlineDemos } = props;
+  const { component, activeTab, copiedCode, isFullscreenPreview, setIsFullscreenPreview, demoKey, handleCopy, inlineDemos } = props;
+  const [promptStatus, setPromptStatus] = React.useState<'idle' | 'copied' | 'error'>('idle');
+  const [copyingPrompt, setCopyingPrompt] = React.useState(false);
+  const handleCopyPrompt = async () => {
+    const prompt = component.installPrompt;
+    if (copyingPrompt || !prompt?.trim()) return;
+    setCopyingPrompt(true);
+    try {
+      let copied = false;
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(prompt);
+          copied = true;
+        }
+      } catch { /* use the legacy fallback below */ }
+      if (!copied) {
+        const textarea = document.createElement('textarea');
+        textarea.value = prompt;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        copied = document.execCommand('copy');
+        textarea.remove();
+      }
+      setPromptStatus(copied ? 'copied' : 'error');
+    } catch {
+      setPromptStatus('error');
+    } finally {
+      setCopyingPrompt(false);
+      window.setTimeout(() => setPromptStatus('idle'), 2200);
+    }
+  };
   return (
 activeTab === 'preview' && (
                 <div id="preview-section" className="space-y-6">
@@ -16,70 +49,26 @@ activeTab === 'preview' && (
                     {/* Top Bar inside the preview card */}
                     <div className="px-3 py-2 flex items-center justify-end text-xs relative">
                       {/* Box Structure: [ Copy CLI | ▼ ] */}
-                      <div ref={previewMenuRef} className="relative inline-flex items-center">
+                      <Menu.Root>
+                        <div className="relative inline-flex items-center">
                         <div className="inline-flex items-center rounded-lg bg-white dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.1] shadow-2xs text-xs font-sans text-text-secondary overflow-hidden">
-                          {/* Copy CLI action */}
-                          <button
-                            type="button"
-                            onClick={() => handleCopy(component.cliCommand, 'cli-top')}
-                            className="px-2 py-1 sm:pl-2.5 sm:pr-2 flex items-center gap-1.5 hover:text-text-primary hover:bg-black/[0.03] dark:hover:bg-white/[0.04] rounded-l-lg transition-colors cursor-pointer"
-                            title="Copy CLI command"
-                            aria-label="Copy CLI command"
-                          >
-                            {copiedCode === 'cli-top' ? (
-                              <Check className="w-3.5 h-3.5 text-emerald-500" />
-                            ) : (
-                              <Copy className="w-3.5 h-3.5 text-text-muted" />
-                            )}
-                            <span className="hidden sm:inline text-xs font-medium font-sans">
-                              {copiedCode === 'cli-top' ? 'Copied' : 'Copy CLI'}
-                            </span>
-                          </button>
-
-                          {/* Split Divider */}
-                          <div className="w-px h-3 bg-black/[0.08] dark:bg-white/[0.1]" />
-
-                          {/* Dropdown toggle arrow */}
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setPreviewMenuOpen((prev) => !prev);
-                            }}
-                            className="px-1.5 py-1 flex items-center justify-center hover:text-text-primary hover:bg-black/[0.03] dark:hover:bg-white/[0.04] rounded-r-lg transition-colors cursor-pointer text-text-secondary"
-                            title="More options"
-                            aria-label="Preview options"
-                            aria-expanded={previewMenuOpen}
-                          >
-                            <ChevronDown className={cn('w-3.5 h-3.5 transition-transform duration-150', previewMenuOpen && 'rotate-180 text-text-primary')} />
-                          </button>
-                        </div>
-
-                        {/* Dropdown Menu */}
-                        <AnimatePresence>
-                          {previewMenuOpen && (
-                            <motion.div
-                              initial={{ opacity: 0, y: -4, scale: 0.96 }}
-                              animate={{ opacity: 1, y: 0, scale: 1 }}
-                              exit={{ opacity: 0, y: -4, scale: 0.96 }}
-                              transition={{ duration: 0.15 }}
-                              className="absolute right-0 top-full mt-1.5 z-30 min-w-[120px] rounded-lg bg-white dark:bg-[#18181B] border border-black/[0.08] dark:border-white/[0.1] shadow-xl p-1"
-                            >
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setIsFullscreenPreview(true);
-                                  setPreviewMenuOpen(false);
-                                }}
-                                className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-xs font-sans text-text-secondary hover:text-text-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors text-left cursor-pointer"
-                              >
-                                <Maximize2 className="w-3.5 h-3.5 text-text-muted" />
-                                <span className="text-xs font-medium">Full screen</span>
-                              </button>
-                            </motion.div>
+                          {component.installPrompt && (
+                            <button type="button" onClick={(event) => { event.stopPropagation(); void handleCopyPrompt(); }} disabled={copyingPrompt} className="px-2 py-1 sm:pl-2.5 sm:pr-2 flex items-center gap-1.5 hover:text-text-primary hover:bg-black/[0.03] dark:hover:bg-white/[0.04] rounded-l-lg transition-colors disabled:opacity-50" aria-label="Copy install prompt">
+                              {promptStatus === 'copied' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5 text-text-muted" />}
+                              <span className="text-xs font-medium">{promptStatus === 'copied' ? 'Copied!' : promptStatus === 'error' ? 'Copy failed' : 'Copy Prompt'}</span>
+                            </button>
                           )}
-                        </AnimatePresence>
-                      </div>
+                          {/* Copy CLI action remains available in the menu */}
+                          <div className="w-px h-3 bg-black/[0.08] dark:bg-white/[0.1]" />
+                          <Menu.Trigger className="px-1.5 py-1 flex items-center justify-center hover:text-text-primary hover:bg-black/[0.03] dark:hover:bg-white/[0.04] rounded-r-lg transition-colors text-text-secondary" title="More options" aria-label="Preview options"><ChevronDown className="w-3.5 h-3.5" /></Menu.Trigger>
+                        </div>
+                        <Menu.Portal><Menu.Positioner side="bottom" align="end" sideOffset={5} className="z-30"><Menu.Popup className="w-[138px] min-w-[138px] rounded-lg bg-white dark:bg-[#18181B] border border-black/[0.08] dark:border-white/[0.1] shadow-xl p-1 outline-none">
+                          <Menu.Item onClick={() => handleCopy(component.cliCommand, 'cli-top')} className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-xs text-text-secondary hover:text-text-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06] outline-none cursor-pointer"><Copy className="w-3.5 h-3.5 text-text-muted" /><span>{copiedCode === 'cli-top' ? 'Copied' : 'Copy CLI'}</span></Menu.Item>
+                          <Menu.Item onClick={() => setIsFullscreenPreview(true)} className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-xs text-text-secondary hover:text-text-primary hover:bg-black/[0.04] dark:hover:bg-white/[0.06] outline-none cursor-pointer"><Maximize2 className="w-3.5 h-3.5 text-text-muted" /><span>Full screen</span></Menu.Item>
+                        </Menu.Popup></Menu.Positioner></Menu.Portal>
+                        </div>
+                      </Menu.Root>
+                      <span className="sr-only" aria-live="polite">{promptStatus === 'copied' ? 'Prompt copied to clipboard' : promptStatus === 'error' ? 'Could not copy prompt' : ''}</span>
                     </div>
 
                     {/* Component Render Canvas — seamless unified stage matching card background */}
