@@ -3,6 +3,7 @@ import type { DonutDatum } from '../../../ui/DonutChart';
 import type { HeatDay } from '../../../ui/ActivityHeatmap';
 import type { FunnelStage } from '../../../ui/FunnelChart';
 import type { EarningsPeriod } from '../../../ui/Earnings';
+import type { TrafficChannel, TrafficRange } from '../../../ui/TrafficCard';
 
 function rng(seed: number) {
   return () => {
@@ -147,4 +148,59 @@ export const EARNINGS_PERIODS: EarningsPeriod[] = [
   makeEarningsPeriod('7d', '7D', 'vs previous 7 days', 11, 7, 190, (i) => `Oct ${15 + i}`, 0.93),
   makeEarningsPeriod('30d', '30D', 'vs previous 30 days', 23, 30, 210, (i) => `Oct ${i + 1}`, 0.88),
   makeEarningsPeriod('12m', '12M', 'vs previous 12 months', 37, 12, 6100, (i) => `${EARNINGS_MONTHS[i]}`, 0.71),
+];
+
+/* ------------------------------ Traffic data ------------------------------- */
+
+export const TRAFFIC_CHANNELS: TrafficChannel[] = [
+  { id: 'direct', label: 'Direct' },
+  { id: 'referral', label: 'Referral' },
+  { id: 'social', label: 'Social' },
+  { id: 'search', label: 'Search' },
+  { id: 'paid', label: 'Paid' },
+];
+
+function createTrafficRange(
+  id: string,
+  label: string,
+  caption: string,
+  seed: number,
+  count: number,
+  base: number,
+  labels: (i: number) => string,
+): TrafficRange {
+  const r = rng(seed);
+  const points = Array.from({ length: count }, (_, i) => {
+    const wave = 0.86 + 0.24 * Math.sin(i / 2.7) + 0.1 * Math.cos(i / 1.2);
+    const visits = Math.round(base * wave * (0.88 + r() * 0.28));
+    const split = (share: number) => Math.max(1, Math.round(visits * share * (0.86 + r() * 0.34)));
+    return {
+      label: labels(i),
+      values: {
+        direct: split(0.14),
+        referral: split(0.22),
+        social: split(0.26),
+        search: split(0.18),
+        paid: split(0.17),
+      },
+    };
+  });
+  return { id, label, caption, points };
+}
+
+const TRAFFIC_DAY_END = Date.UTC(2026, 10, 17); // Nov 17, 2026 — today
+const TRAFFIC_WEEK_END = Date.UTC(2026, 10, 16); // Monday, Nov 16, 2026
+
+const fmtTrafficDate = (ms: number) => {
+  const date = new Date(ms);
+  return `${MONTHS[date.getUTCMonth()]} ${String(date.getUTCDate()).padStart(2, '0')}`;
+};
+
+export const TRAFFIC_RANGES: TrafficRange[] = [
+  createTrafficRange('day', 'Day', 'Last 22 days', 41, 22, 1560, (i) =>
+    fmtTrafficDate(TRAFFIC_DAY_END - (21 - i) * DAY_MS),
+  ),
+  createTrafficRange('week', 'Week', 'Last 22 weeks', 53, 22, 5900, (i) =>
+    fmtTrafficDate(TRAFFIC_WEEK_END - (21 - i) * 7 * DAY_MS),
+  ),
 ];

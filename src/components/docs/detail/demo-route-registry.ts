@@ -131,6 +131,7 @@ export const DEMO_ROUTE_MODULES = {
   'text-scramble-decoder': { aliases: [], load: () => import('./demos/items/text-scramble-decoder.demo') },
   'thinking-orb': { aliases: [], load: () => import('./demos/items/thinking-orb.demo') },
   'torque-dial': { aliases: [], load: () => import('./demos/items/torque-dial.demo') },
+  'traffic-card': { aliases: [], load: () => import('./demos/items/traffic-card.demo') },
   'typewriter-button': { aliases: [], load: () => import('./demos/items/typewriter-button.demo') },
   'undo-toast': { aliases: [], load: () => import('./demos/items/undo-toast.demo') },
   'unfold-accordion': { aliases: [], load: () => import('./demos/items/unfold-accordion.demo') },

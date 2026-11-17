@@ -12,7 +12,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 134 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 135 animated React components.
 
 ### Component Index
 
@@ -144,6 +144,7 @@
 - [Text Scramble Decoder](https://easyui.site/components/text-scramble-decoder): A controlled text reveal that resolves scrambled glyphs into readable copy without changing the text semantics.
 - [Thinking Orb](https://easyui.site/components/thinking-orb): Minimalist monochrome spherical particle vortex with orbital physics, pure black-and-white luminous styling, and 9 cognitive state deformations.
 - [Torque Dial](https://easyui.site/components/torque-dial): A rotational control dial with realistic physical angular momentum, velocity tracking, and exponential friction deceleration.
+- [Traffic Card](https://easyui.site/components/traffic-card): A compact traffic block with a count-up visit total, a Day / Week switcher, and a stacked column chart where every channel is its own rounded capsule. Built with hand-written SVG, light and dark themes, and full keyboard support.
 - [Typewriter Button](https://easyui.site/components/typewriter-button): An interactive button that reveals its label character-by-character with optional synthesized mechanical audio feedback.
 - [Undo Toast](https://easyui.site/components/undo-toast): An advanced undo notification toast featuring an interactive progress countdown, pause-on-hover mechanics, action reversal animation, and versatile position anchoring.
 - [UnfoldAccordion](https://easyui.site/components/unfold-accordion): An accordion whose content unfolds with the chevron and spacing moving together. The chevron rotates 180° while the content height expands and the inner content slides up to close the gap, producing a single, fluid motion.
