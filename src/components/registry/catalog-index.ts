@@ -1909,6 +1909,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-24"
   },
   {
+    "id": "traffic-card",
+    "name": "Traffic Card",
+    "tagline": "Traffic total with a Day / Week switcher and stacked capsule columns",
+    "description": "A compact traffic block with a count-up visit total, a Day / Week switcher, and a stacked column chart where every channel is its own rounded capsule. Built with hand-written SVG, light and dark themes, and full keyboard support.",
+    "category": "Feedback",
+    "badges": [
+      "KPI",
+      "Stacked Chart",
+      "Data Visualization",
+      "Interactive",
+      "SVG"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/traffic-card",
+    "createdAt": "2026-11-17"
+  },
+  {
     "id": "typewriter-button",
     "name": "Typewriter Button",
     "tagline": "Character-by-character reveal with mechanical sound feedback",

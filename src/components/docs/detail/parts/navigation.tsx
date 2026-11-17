@@ -127,7 +127,7 @@ export const MobileSidebarDrawer: React.FC<NavigationProps> = ({ component, mobi
                             setMobileSidebarOpen(false);
                           }}
                           className={cn(
-                            'w-full flex items-center justify-between px-3 py-2 rounded-xl text-[13px] sm:text-sm transition-all text-left cursor-pointer',
+                            'w-full flex items-center justify-between px-3 py-2 rounded-xl text-[15px] lg:text-[13px] transition-all text-left cursor-pointer',
                             isActive
                               ? 'bg-white dark:bg-[#27272A] text-text-primary font-medium border border-black/[0.04] dark:border-white/[0.08] shadow-xs'
                               : 'text-text-secondary hover:text-text-primary hover:bg-black/[0.03] dark:hover:bg-white/[0.04]'

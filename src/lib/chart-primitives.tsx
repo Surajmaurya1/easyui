@@ -96,9 +96,32 @@ export function Tooltip({
     }
     const w = ref.current?.offsetWidth ?? 130;
     const h = ref.current?.offsetHeight ?? 60;
-    const tx = clamp(pos.x - w / 2, 0, Math.max(0, boundsWidth - w));
+
+    // Stay inside the chart, then nudge back inside the viewport so the
+    // tooltip never gets clipped when the card sits near a screen edge.
+    let tx = clamp(pos.x - w / 2, 0, Math.max(0, boundsWidth - w));
+
+    // Prefer above the anchor, flip below when the top is cramped, and clamp
+    // to the viewport when neither side has enough room.
     let ty = pos.y - h - 12;
-    if (ty < 0) ty = pos.y + 18;
+
+    const host = ref.current?.offsetParent as HTMLElement | null;
+    const box = host?.getBoundingClientRect();
+    if (box && typeof window !== "undefined") {
+      const pad = 8;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      tx = clamp(tx, pad - box.left, Math.max(pad - box.left, vw - pad - w - box.left));
+
+      const anchorY = box.top + pos.y;
+      const spaceAbove = anchorY - pad;
+      const spaceBelow = vh - pad - anchorY;
+      if (spaceAbove < h + 12 && spaceBelow > spaceAbove) ty = pos.y + 18;
+      ty = clamp(ty, pad - box.top, Math.max(pad - box.top, vh - pad - h - box.top));
+    } else if (ty < 0) {
+      ty = pos.y + 18;
+    }
+
     if (!seen.current) {
       x.jump(tx);
       y.jump(ty);

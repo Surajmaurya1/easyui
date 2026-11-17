@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import type { EasyUIComponentMeta } from '../src/types/component';
 import { generateSitemap } from './generate-sitemap';
 import { generateLlmsTxt } from './generate-llms';
+import { generatePrompt, promptInputHash, type PromptData } from './generate-prompt';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -382,6 +383,20 @@ function generateComponentsData(components: DiscoveredComponent[]): void {
     const accessibility = comp.meta.accessibility || [];
     const createdAt = comp.meta.createdAt || '2026-08-01';
     const usageCode = comp.meta.usageCode || `import { ${comp.componentName} } from "@/components/ui/${comp.slug}";\n\nexport function Demo() {\n  return <${comp.componentName} />;\n}`;
+    const install = `npx shadcn@latest add ${REPO_SLUG}/${comp.slug}`;
+    const promptData: PromptData = {
+      name: comp.meta.title,
+      slug: comp.slug,
+      description: comp.meta.description,
+      category,
+      install,
+      dependencies: comp.dependencies,
+      registryUrl: `https://easyui.site/r/${comp.slug}.json`,
+      usageCode: comp.meta.usageCode,
+      props: comp.meta.props,
+      sourceCode: [comp.sourceCode, ...comp.additionalFiles.map((file) => fs.readFileSync(file, 'utf-8').replace(/\r\n/g, '\n'))].join('\n'),
+      meta: comp.meta,
+    };
 
     const entry: Record<string, any> = {
       id: comp.slug,
@@ -391,6 +406,8 @@ function generateComponentsData(components: DiscoveredComponent[]): void {
       category,
       badges,
       cliCommand,
+      installPrompt: generatePrompt(promptData),
+      installPromptHash: promptInputHash(promptData),
       features,
       props,
       accessibility,

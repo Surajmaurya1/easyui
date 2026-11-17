@@ -778,6 +778,12 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/earnings'),
     metadata: { type: 'interactive' },
   },
+  'traffic-card': {
+    id: 'traffic-card',
+    componentId: 'traffic-card',
+    load: () => import('./items/traffic-card'),
+    metadata: { type: 'interactive' },
+  },
   'funnel-chart': {
     id: 'funnel-chart',
     componentId: 'funnel-chart',

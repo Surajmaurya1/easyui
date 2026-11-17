@@ -3012,6 +3012,27 @@
       ]
     },
     {
+      "name": "traffic-card",
+      "type": "registry:ui",
+      "title": "Traffic Card",
+      "description": "A compact traffic block with a count-up visit total, a Day / Week switcher, and a stacked column chart where every channel is its own rounded capsule. Built with hand-written SVG, light and dark themes, and full keyboard support.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/TrafficCard.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/traffic-card.tsx"
+        },
+        {
+          "path": "src/lib/chart-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/chart-primitives.tsx"
+        }
+      ]
+    },
+    {
       "name": "typewriter-button",
       "type": "registry:ui",
       "title": "Typewriter Button",
