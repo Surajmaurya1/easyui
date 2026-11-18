@@ -3175,6 +3175,27 @@
           "target": "lib/utils.ts"
         }
       ]
+    },
+    {
+      "name": "wave-transition",
+      "type": "registry:ui",
+      "title": "Wave Transition",
+      "description": "A source-aware view transition with a soft rainbow light wave, refracted color, and theme-friendly edge glow.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/WaveTransition.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/wave-transition.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
     }
   ]
 }

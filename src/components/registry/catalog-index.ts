@@ -2012,5 +2012,19 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/wallet-card",
     "createdAt": "2026-08-31"
+  },
+  {
+    "id": "wave-transition",
+    "name": "Wave Transition",
+    "tagline": "Carry the interface forward on a smooth wave of color",
+    "description": "A source-aware view transition with a soft rainbow light wave, refracted color, and theme-friendly edge glow.",
+    "category": "Motion",
+    "badges": [
+      "View Transition",
+      "Motion",
+      "Reduced Motion"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/wave-transition",
+    "createdAt": "2026-11-18"
   }
 ];

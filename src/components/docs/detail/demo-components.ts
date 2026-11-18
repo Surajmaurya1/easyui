@@ -56,6 +56,7 @@ export const DEMO_COMPONENTS = {
   PeekCard: lazyNamed(() => import('../../ui/PeekCard'), 'PeekCard'),
   SelectionBasket: lazyNamed(() => import('../../ui/SelectionBasket'), 'SelectionBasket'),
   FocusMode: lazyNamed(() => import('../../ui/FocusMode'), 'FocusMode'),
+  WaveTransition: lazyNamed(() => import('../../ui/WaveTransition'), 'WaveTransition'),
   Loader: lazyNamed(() => import('../../ui/Loader'), 'Loader'),
   SmallFloatingDock: lazyNamed(() => import('../../ui/SmallFloatingDock'), 'SmallFloatingDock'),
   HamburgerMenu: lazyNamed(() => import('../../ui/HamburgerMenu'), 'HamburgerMenu'),

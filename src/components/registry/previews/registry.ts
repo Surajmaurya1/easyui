@@ -836,6 +836,12 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     metadata: { type: 'interactive' },
     aliases: ['packagebox', 'package-boxes'],
   },
+  'wave-transition': {
+    id: 'wave-transition',
+    componentId: 'wave-transition',
+    load: () => import('./items/wave-transition'),
+    metadata: { type: 'static', description: 'Minimal Wave Transition catalog preview' },
+  },
 };
 
 // Fast lookup map supporting both primary slugs and aliases

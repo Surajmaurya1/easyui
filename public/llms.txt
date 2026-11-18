@@ -12,7 +12,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 135 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 136 animated React components.
 
 ### Component Index
 
@@ -151,6 +151,7 @@
 - [VelocityToast](https://easyui.site/components/velocity-toast): A toast that enters with velocity and settles, with a progress indicator that responds naturally — pauses on hover, resumes with no jump, and eases slightly in the final 10% so dismissal feels intentional.
 - [Wallet Balance](https://easyui.site/components/wallet-balance): An interactive wallet balance component where branded cards tuck neatly into an embossed leather pouch with spring physics. Tap the eye button to reveal or mask balances with smooth blur-crossfade transitions.
 - [Wallet Card](https://easyui.site/components/wallet-card): A premium dark wallet card with a blue radial-gradient surface, live balance display, iOS-style toggle, and a primary action button. The card surface responds to the pointer with a soft cyan shine driven entirely by MotionValues.
+- [Wave Transition](https://easyui.site/components/wave-transition): A source-aware view transition with a soft rainbow light wave, refracted color, and theme-friendly edge glow.
 
 ## Resources
 

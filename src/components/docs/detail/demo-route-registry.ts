@@ -138,6 +138,7 @@ export const DEMO_ROUTE_MODULES = {
   'velocity-toast': { aliases: [], load: () => import('./demos/items/velocity-toast.demo') },
   'wallet-balance': { aliases: [], load: () => import('./demos/items/wallet-balance.demo') },
   'wallet-card': { aliases: [], load: () => import('./demos/items/wallet-card.demo') },
+  'wave-transition': { aliases: [], load: () => import('./demos/items/wave-transition.demo') },
 } satisfies Record<string, { aliases: readonly string[]; load: () => Promise<{ default: React.ComponentType<DemoProps>; preload: () => Promise<void> }> }>;
 
 export const DEMO_ALIASES: Record<string, string> = Object.fromEntries(
