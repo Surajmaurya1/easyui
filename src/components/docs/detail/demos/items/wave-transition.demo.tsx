@@ -53,7 +53,7 @@ export default function ComponentDemo(props: DemoProps) {
               ref={confirmRef}
               type="button"
               onClick={() => setPaid((value) => !value)}
-              className="w-full rounded-full bg-[#F7F7F8] px-5 py-[13px] text-sm font-medium text-[#111114] transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B82F6] dark:bg-[#F7F7F8] dark:text-[#111114] dark:hover:bg-white"
+              className="w-full rounded-full bg-black px-5 py-[13px] text-sm font-medium text-white transition-colors hover:bg-black/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B82F6] dark:bg-[#F7F7F8] dark:text-[#111114] dark:hover:bg-white"
             >
               {paid ? 'Done' : 'Confirm'}
             </button>
