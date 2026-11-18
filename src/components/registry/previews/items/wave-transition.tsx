@@ -11,9 +11,9 @@ export default function Preview(_props: ComponentPreviewProps) {
   return (
     <div
       aria-hidden="true"
-      className="flex min-h-[300px] w-full items-center justify-center p-3 sm:p-4"
+      className="relative flex h-52 w-full items-center justify-center overflow-hidden"
     >
-      <div className="flex min-h-[320px] w-full max-w-[310px] flex-col items-center rounded-[26px] border border-black/[0.07] bg-white p-4 text-[#171719] shadow-[0_12px_32px_-24px_rgba(0,0,0,0.35)] dark:border-white/[0.09] dark:bg-[#202020] dark:text-white dark:shadow-[0_12px_32px_-24px_rgba(0,0,0,0.8)]">
+      <div className="absolute left-1/2 top-1/2 flex min-h-[320px] w-[310px] max-w-none -translate-x-1/2 -translate-y-1/2 scale-[0.62] flex-col items-center rounded-[26px] border border-black/[0.07] bg-white p-4 text-[#171719] shadow-[0_12px_32px_-24px_rgba(0,0,0,0.35)] dark:border-white/[0.09] dark:bg-[#202020] dark:text-white dark:shadow-[0_12px_32px_-24px_rgba(0,0,0,0.8)]">
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#202024] text-xs font-semibold text-white dark:bg-white dark:text-[#202024]">
           E
         </div>
