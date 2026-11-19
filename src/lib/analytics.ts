@@ -155,6 +155,10 @@ export function useAnalyticsTracker(state?: {
       pageTitle = `Documentation - ${state.activeDocTopic || 'Introduction'} | EasyUI`;
     } else if (state?.activeView === 'components') {
       pageTitle = `Components (Page ${state.componentPage || 1}) | EasyUI`;
+    } else if (state?.activeView === 'sponsors') {
+      pageTitle = 'Sponsor EasyUI — EasyUI';
+    } else if (state?.activeView === 'sponsor-success') {
+      pageTitle = 'Thanks for sponsoring EasyUI — EasyUI';
     }
 
     trackPageView(computedPath, pageTitle);

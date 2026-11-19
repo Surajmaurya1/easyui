@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Sparkles, Layout, BookOpen, Terminal, CornerDownLeft, Cpu, GitPullRequest, Sliders } from 'lucide-react';
+import { Search, Sparkles, Layout, BookOpen, Terminal, CornerDownLeft, Cpu, GitPullRequest } from 'lucide-react';
 import { GithubIcon } from '../icons/GithubIcon';
 import { cn, copyToClipboard } from '../../lib/utils';
 import { motionTransitions } from '../../lib/motion-tokens';
@@ -90,17 +90,6 @@ export const CommandMenu: React.FC<CommandMenuProps> = ({
         shortcut: 'D',
         onSelect: () => {
           onNavigateDocs?.('collaboration');
-          onClose();
-        },
-      },
-      {
-        id: 'doc-motion',
-        title: 'Docs: Motion Tokens & Physics Curves',
-        category: 'Documentation',
-        icon: <Sliders className="w-4 h-4 text-[#ECECEC]" />,
-        shortcut: 'D',
-        onSelect: () => {
-          onNavigateDocs?.('motion');
           onClose();
         },
       },

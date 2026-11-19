@@ -84,6 +84,8 @@ import { TextScrambleDecoder } from '../ui/TextScrambleDecoder';
 import { MacOSFolderCards } from '../ui/MacOSFolderCards';
 import { IntroLoader } from '../ui/IntroLoader';
 import { ThinkingOrb } from '../ui/ThinkingOrb';
+import { PhotoBox } from '../ui/PhotoBox';
+import { PackageBox } from '../ui/PackageBox';
 import { StackedCards } from '../ui/StackedCards';
 import { StoryCards } from '../ui/StoryCard';
 import { AvatarStack } from '../ui/AvatarStack';
@@ -2010,6 +2012,20 @@ func main() {
       case 'stickypages':
       case 'sticky-stacking-pages':
         return <StickyPagesLiveShowcase />;
+      case 'photo-box':
+      case 'photobox':
+        return (
+          <div className="py-4 w-full max-w-xl mx-auto flex flex-col items-center justify-center">
+            <PhotoBox />
+          </div>
+        );
+      case 'package-box':
+      case 'packagebox':
+        return (
+          <div className="py-4 w-full max-w-xl mx-auto flex flex-col items-center justify-center">
+            <PackageBox maxWidth={440} />
+          </div>
+        );
       default:
         return (
           <div className="py-12 text-center text-xs text-[#808080]">

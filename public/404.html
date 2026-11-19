@@ -4,21 +4,223 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, follow" />
-    <title>Page Not Found — EasyUI</title>
+    <meta name="theme-color" content="#101014" />
+    <title>404 · This page took a wrong turn — EasyUI</title>
     <style>
-      :root { color-scheme: dark; font-family: Geist, Inter, system-ui, sans-serif; background: #111113; color: #f2f2f3; }
-      body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 24px; box-sizing: border-box; }
-      main { width: min(100%, 420px); padding: 32px; text-align: center; border: 1px solid #29292c; border-radius: 20px; background: #1c1c1f; box-shadow: 0 10px 25px -8px rgba(0, 0, 0, .22); }
-      h1 { margin: 0 0 8px; font-size: 20px; letter-spacing: -.035em; }
-      p { margin: 0 0 24px; color: #a1a1a6; font-size: 13px; line-height: 1.6; }
-      a { display: inline-block; padding: 9px 16px; border-radius: 10px; background: #f2f2f3; color: #111113; font-size: 12px; font-weight: 600; text-decoration: none; }
+      :root {
+        color-scheme: dark;
+        font-family: Geist, Inter, ui-sans-serif, system-ui, sans-serif;
+        background: #101014;
+        color: #fafaff;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        min-height: 100svh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        overflow-x: hidden;
+        padding: 48px 20px;
+      }
+
+      main {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        width: min(100%, 680px);
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .glow {
+        position: absolute;
+        z-index: -1;
+        top: 12%;
+        left: 50%;
+        width: min(560px, 120vw);
+        height: 420px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: radial-gradient(closest-side, rgb(254 85 16 / 15%), transparent);
+        filter: blur(30px);
+        pointer-events: none;
+      }
+
+      .art {
+        display: block;
+        width: min(100%, 460px);
+        height: auto;
+        overflow: visible;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .error-code {
+        margin: 4px 0 0;
+        color: #85858f;
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 100%;
+        margin: 12px 0 0;
+        background: linear-gradient(180deg, #fff 10%, #a7a7b2 100%);
+        background-clip: text;
+        color: transparent;
+        font-size: clamp(32px, 6vw, 44px);
+        font-weight: 650;
+        letter-spacing: -.04em;
+        line-height: 1.08;
+        text-wrap: balance;
+      }
+
+      .description {
+        max-width: 430px;
+        margin: 16px 0 0;
+        color: #a3a3ad;
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .missing-path {
+        max-width: 100%;
+        margin: 20px 0 0;
+        overflow: hidden;
+        padding: 7px 14px;
+        border: 1px solid rgb(255 255 255 / 10%);
+        border-radius: 999px;
+        background: rgb(255 255 255 / 4%);
+        color: #a3a3ad;
+        font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      .action {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 0 22px;
+        border: 1px solid rgb(255 255 255 / 12%);
+        border-radius: 999px;
+        background: rgb(255 255 255 / 5%);
+        color: #e5e5ec;
+        font-size: 14px;
+        font-weight: 550;
+        text-decoration: none;
+        transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
+      }
+
+      .action:hover { transform: translateY(-1px); background: rgb(255 255 255 / 9%); border-color: rgb(255 255 255 / 20%); }
+      .action:active { transform: scale(.98); }
+      .action-primary { border-color: #fff; background: #fff; color: #111114; }
+      .action-primary:hover { background: #ececf0; border-color: #ececf0; }
+      .action:focus-visible { outline: 2px solid #fe5510; outline-offset: 3px; }
+
+      @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+      @media (max-width: 480px) {
+        body { padding: 36px 20px; }
+        .art { width: 100%; }
+        .description { font-size: 14px; }
+        .actions { width: 100%; flex-direction: column; }
+        .action { width: 100%; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      }
     </style>
   </head>
   <body>
     <main>
-      <h1>Page Not Found</h1>
-      <p>The requested EasyUI page could not be found.</p>
-      <a href="/">Go home</a>
+      <div class="glow" aria-hidden="true"></div>
+      <svg class="art" viewBox="0 0 460 360" role="img" aria-labelledby="art-title art-description">
+        <title id="art-title">404 page not found</title>
+        <desc id="art-description">A frosted glass folder covers the number 404.</desc>
+        <defs>
+          <linearGradient id="panel" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fe5510" />
+            <stop offset=".72" stop-color="#fe5510" />
+            <stop offset="1" stop-color="#cf4a12" />
+          </linearGradient>
+          <linearGradient id="digits" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" />
+            <stop offset="1" stop-color="#eef0ff" />
+          </linearGradient>
+          <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity=".78" />
+            <stop offset=".32" stop-color="#e9eaff" stop-opacity=".58" />
+            <stop offset=".62" stop-color="#8276e8" stop-opacity=".68" />
+            <stop offset="1" stop-color="#3b46cf" stop-opacity=".88" />
+          </linearGradient>
+          <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity=".9" />
+            <stop offset=".45" stop-color="#fff" stop-opacity=".28" />
+            <stop offset="1" stop-color="#fff" stop-opacity=".14" />
+          </linearGradient>
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+            <feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#24124d" flood-opacity=".4" />
+          </filter>
+          <filter id="glow-shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="12" />
+          </filter>
+        </defs>
+        <ellipse cx="230" cy="260" rx="135" ry="25" fill="#3544bb" opacity=".5" filter="url(#glow-shadow)" />
+        <g transform="translate(230 185) rotate(8)" filter="url(#shadow)">
+          <rect x="-140" y="-63" width="285" height="168" rx="9" fill="url(#panel)" />
+          <g fill="url(#digits)" stroke="url(#digits)" stroke-width="6" stroke-linejoin="round">
+            <path fill-rule="evenodd" d="M76 0H110V102H124V134H110V154H76V134H0V102ZM76 46V102H36Z" transform="translate(-177 -117)" />
+            <path fill-rule="evenodd" d="M-69 -40a63 77 0 1 0 126 0a63 77 0 1 0 -126 0ZM-43 -40a37 49 0 1 1 74 0a37 49 0 1 1 -74 0Z" />
+            <path fill-rule="evenodd" d="M76 0H110V102H124V134H110V154H76V134H0V102ZM76 46V102H36Z" transform="translate(45 -117)" />
+          </g>
+          <path d="M-139 -31H-87Q-79 -31-73-25L-61-11Q-57-5-49-5H125Q137-5 137 7V99Q137 111 125 111H-139Q-151 111-151 99V-19Q-151-31-139-31Z" fill="url(#glass)" stroke="url(#rim)" stroke-width="2" />
+        </g>
+        <g transform="translate(225 292) rotate(8)" fill="#fafbff" filter="url(#shadow)">
+          <rect x="-23" y="-5.5" width="46" height="11" rx="5.5" transform="rotate(45)" />
+          <rect x="-23" y="-5.5" width="46" height="11" rx="5.5" transform="rotate(-45)" />
+        </g>
+      </svg>
+
+      <p class="error-code">Error 404</p>
+      <h1>This page took a wrong turn.</h1>
+      <p class="description">The requested page doesn't exist or may have moved.</p>
+      <code class="missing-path" id="missing-path" aria-label="Missing page path"></code>
+      <nav class="actions" aria-label="404 page actions">
+        <a class="action action-primary" href="/" aria-label="Go back home">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg>
+          Go back home
+        </a>
+        <a class="action" href="/components">Browse components</a>
+      </nav>
     </main>
+    <script>
+      const path = document.getElementById('missing-path');
+      if (path && window.location.pathname !== '/404') {
+        path.textContent = window.location.pathname;
+      } else if (path) {
+        path.textContent = '/404';
+      }
+    </script>
   </body>
 </html>

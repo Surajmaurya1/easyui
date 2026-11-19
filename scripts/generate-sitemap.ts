@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { ITEMS_PER_PAGE } from '../src/lib/components';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -9,7 +10,6 @@ const SITEMAP_PATH = path.join(ROOT_DIR, 'public', 'sitemap.xml');
 const REGISTRY_PATH = path.join(ROOT_DIR, 'registry.json');
 
 const SITE_URL = 'https://easyui.site';
-const ITEMS_PER_PAGE = 12;
 
 interface SitemapEntry {
   loc: string;
@@ -36,6 +36,18 @@ export function generateSitemap(): void {
       changefreq: 'daily',
       priority: '0.9',
     },
+    {
+      loc: `${SITE_URL}/docs`,
+      lastmod: today,
+      changefreq: 'weekly',
+      priority: '0.85',
+    },
+    {
+      loc: `${SITE_URL}/sponsors`,
+      lastmod: today,
+      changefreq: 'monthly',
+      priority: '0.70',
+    },
     // 3. Documentation Topics
     {
       loc: `${SITE_URL}/docs/introduction`,
@@ -51,12 +63,6 @@ export function generateSitemap(): void {
     },
     {
       loc: `${SITE_URL}/docs/architecture`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: '0.80',
-    },
-    {
-      loc: `${SITE_URL}/docs/motion-system`,
       lastmod: today,
       changefreq: 'weekly',
       priority: '0.80',

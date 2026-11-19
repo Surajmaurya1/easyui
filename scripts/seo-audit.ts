@@ -12,7 +12,6 @@ const SITEMAP_PATH = path.join(ROOT_DIR, 'public', 'sitemap.xml');
 const ROBOTS_PATH = path.join(ROOT_DIR, 'public', 'robots.txt');
 const MANIFEST_PATH = path.join(ROOT_DIR, 'public', 'site.webmanifest');
 const INDEX_HTML_PATH = path.join(ROOT_DIR, 'index.html');
-const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, 'vercel.json');
 const LOGO_PATH = path.join(ROOT_DIR, 'public', 'logo.png');
 const OG_IMAGE_PATH = path.join(ROOT_DIR, 'public', 'og-image.webp');
 const UI_DIR = path.join(ROOT_DIR, 'src', 'components', 'ui');
@@ -97,7 +96,14 @@ export function runSEOAudit(): AuditReport {
     check('Technical SEO', sitemap.includes(`${SITE_URL}/`), 'CRITICAL', 'sitemap.xml contains homepage URL', 'sitemap.xml missing homepage URL', 'public/sitemap.xml');
     check('Technical SEO', sitemap.includes(`${SITE_URL}/components`), 'CRITICAL', 'sitemap.xml contains components catalog URL', 'sitemap.xml missing components catalog URL', 'public/sitemap.xml');
     check('Technical SEO', sitemap.includes(`${SITE_URL}/docs/introduction`), 'WARNING', 'sitemap.xml contains documentation topic URLs', 'sitemap.xml missing documentation URLs', 'public/sitemap.xml');
-    check('Technical SEO', sitemap.includes(`${SITE_URL}/docs/motion-system`), 'CRITICAL', 'sitemap.xml contains canonical /docs/motion-system URL', 'sitemap.xml missing canonical /docs/motion-system URL', 'public/sitemap.xml');
+    check(
+      'Technical SEO',
+      !/\/docs\/(?:motion|motion-system|motion-tokens)(?:\/|<)/.test(sitemap),
+      'CRITICAL',
+      'sitemap.xml excludes the removed motion documentation page',
+      'sitemap.xml still lists the removed motion documentation page',
+      'public/sitemap.xml'
+    );
     check('Technical SEO', !sitemap.includes('?page='), 'CRITICAL', 'sitemap.xml has no client pagination noise (?page=)', 'sitemap.xml contains noisy pagination query URLs', 'public/sitemap.xml');
   }
 
@@ -131,25 +137,6 @@ export function runSEOAudit(): AuditReport {
     check('Metadata', indexHtml.includes('name="robots"'), 'WARNING', 'index.html contains robots meta directive', 'index.html missing robots meta tag', 'index.html');
     check('Metadata', indexHtml.includes('name="viewport"'), 'CRITICAL', 'index.html contains viewport meta tag', 'index.html missing viewport meta tag', 'index.html');
     check('Metadata', indexHtml.includes('name="theme-color"'), 'INFO', 'index.html contains theme-color meta tag', 'index.html missing theme-color', 'index.html');
-  }
-
-  if (fs.existsSync(VERCEL_CONFIG_PATH)) {
-    try {
-      const vercel = JSON.parse(fs.readFileSync(VERCEL_CONFIG_PATH, 'utf-8'));
-      const hasCatchAllRewrite = Array.isArray(vercel.rewrites) && vercel.rewrites.some(
-        (rewrite: { source?: string; destination?: string }) => rewrite.source === '/(.*)' && rewrite.destination === '/index.html'
-      );
-      check(
-        'Technical SEO',
-        !hasCatchAllRewrite,
-        'CRITICAL',
-        'Vercel serves unknown paths through the platform 404 handler',
-        'Vercel catch-all rewrite masks unknown paths as SPA HTTP 200 responses',
-        'vercel.json'
-      );
-    } catch {
-      check('Technical SEO', false, 'CRITICAL', '', 'vercel.json is not valid JSON', 'vercel.json');
-    }
   }
 
   // Filesystem Discovery of Components
@@ -195,14 +182,14 @@ export function runSEOAudit(): AuditReport {
   check('Content', shortDescriptions === 0, 'WARNING', 'All component descriptions provide substantive content (> 25 chars)', `${shortDescriptions} components have thin descriptions (< 25 chars)`, 'registry.json');
 
   // Check doc topics completeness
-  const docFiles = ['DocIntroduction.tsx', 'DocQuickStart.tsx', 'DocArchitecture.tsx', 'DocMotionSystem.tsx', 'DocCollaboration.tsx', 'DocSEO.tsx'];
+  const docFiles = ['DocIntroduction.tsx', 'DocQuickStart.tsx', 'DocArchitecture.tsx', 'DocCollaboration.tsx', 'DocSEO.tsx'];
   let missingDocFiles = 0;
   for (const df of docFiles) {
     if (!fs.existsSync(path.join(ROOT_DIR, 'src', 'components', 'docs', 'sections', df))) {
       missingDocFiles++;
     }
   }
-  check('Content', missingDocFiles === 0, 'CRITICAL', 'All 6 core documentation topic pages exist and are populated', `${missingDocFiles} documentation section files are missing`, 'src/components/docs/sections');
+  check('Content', missingDocFiles === 0, 'CRITICAL', 'All 5 remaining documentation topic pages exist and are populated', `${missingDocFiles} documentation section files are missing`, 'src/components/docs/sections');
 
   // ==========================================
   // 4. Links & Navigation Checks
@@ -332,11 +319,18 @@ export function runSEOAudit(): AuditReport {
       check('Content', advContent.includes('Advanced Data Table') && advContent.includes('API Reference'), 'CRITICAL', 'Pre-rendered component page exposes H1, description, and API reference in initial HTML', 'dist/components/advanced-data-table/index.html missing initial content', 'dist/components/advanced-data-table/index.html');
     }
 
-    const distMotionDoc = path.join(distDir, 'docs', 'motion-system', 'index.html');
-    if (fs.existsSync(distMotionDoc)) {
-      const motionContent = fs.readFileSync(distMotionDoc, 'utf-8');
-      check('Content', motionContent.includes('Motion Tokens') || motionContent.includes('Motion System'), 'CRITICAL', 'Pre-rendered /docs/motion-system exposes motion documentation initial content', 'dist/docs/motion-system/index.html missing motion documentation content', 'dist/docs/motion-system/index.html');
-    }
+    const motionDocPaths = ['motion', 'motion-system', 'motion-tokens'];
+    const staleMotionDocs = motionDocPaths.some((topic) =>
+      fs.existsSync(path.join(distDir, 'docs', topic, 'index.html'))
+    );
+    check(
+      'Content',
+      !staleMotionDocs,
+      'CRITICAL',
+      'Motion documentation routes are absent from the prerendered site',
+      'A removed motion documentation route is still present in dist',
+      'dist/docs'
+    );
 
     for (const item of registryItems) {
       if (!item.name) continue;

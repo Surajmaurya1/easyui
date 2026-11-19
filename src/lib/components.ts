@@ -14,7 +14,7 @@ export const FEATURED_COMPONENT_LIMIT = 9;
  * The order here determines display order on the homepage.
  */
 export const FEATURED_COMPONENT_IDS: readonly string[] = [
-  'draw-checkbox',
+  'interactive-area-chart',
   'lock-input',
   'origin-dropdown',
   'slide-pagination',

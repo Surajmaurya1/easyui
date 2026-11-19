@@ -59,6 +59,8 @@ export interface EasyComponentMeta {
   cliCommand: string;
   usageCode: string;
   sourceCode?: string;
+  installPrompt?: string;
+  installPromptHash?: string;
   props: ComponentProp[];
   accessibility: string[];
   features: string[];

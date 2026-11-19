@@ -99,6 +99,8 @@ export const PreviewSkeleton: React.FC<PreviewSkeletonProps> = ({ componentId })
       case 'reveal-card':
       case 'peek-card':
       case 'wallet-card':
+      case 'wallet-balance':
+      case 'money-card':
       case 'stacked-cards':
       case 'story-card':
       case 'pricing':
@@ -107,6 +109,7 @@ export const PreviewSkeleton: React.FC<PreviewSkeletonProps> = ({ componentId })
       case 'sign-up':
       case 'profile-card':
       case 'payment-receipt-printer':
+      case 'package-box':
         return (
           <div className="flex flex-col gap-3 w-full max-w-64 p-4 rounded-xl border border-border/50">
             <div className={`h-32 w-full rounded-lg ${shimmer}`} />

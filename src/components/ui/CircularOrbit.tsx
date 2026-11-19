@@ -174,7 +174,7 @@ export const CircularOrbit: React.FC<CircularOrbitProps> = ({
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-1/2 z-[120] -translate-x-1/2 -translate-y-1/2 select-none"
         >
-          <h1
+          <div
             className={cn(
               'whitespace-nowrap font-normal leading-none tracking-[-0.065em]',
               'text-5xl sm:text-7xl md:text-8xl',
@@ -183,7 +183,7 @@ export const CircularOrbit: React.FC<CircularOrbitProps> = ({
             )}
           >
             {title}
-          </h1>
+          </div>
         </div>
       </div>
     </section>

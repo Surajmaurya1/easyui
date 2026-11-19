@@ -89,7 +89,7 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({
           id: randomId,
           type: 'deploy',
           status: 'success',
-          title: 'Vercel Edge function deployed',
+          title: 'Cloudflare Worker deployed',
           timestamp: 'Just now',
           description: 'Production branch merged into main. SSL cert auto-renewed.',
           duration: '412ms',

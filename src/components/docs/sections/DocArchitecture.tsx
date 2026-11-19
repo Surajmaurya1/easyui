@@ -81,7 +81,7 @@ export const DocArchitecture: React.FC<DocArchitectureProps> = ({ onNavigateSect
             </div>
             <ul className="space-y-1 font-mono text-text-subtle text-[11px]">
               <li>
-                • <code className="text-text-primary text-[11px]">public/r/*.json</code>
+                • <code className="text-text-primary text-[11px]">/registry.json</code> and <code className="text-text-primary text-[11px]">/source/*.json</code>
               </li>
               <li>• shadcn CLI install targets</li>
               <li>• ⌘K search index</li>

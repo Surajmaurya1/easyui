@@ -39,7 +39,6 @@ export function generateLlmsTxt(): void {
 - [Introduction](${SITE_URL}/docs/introduction): Core architecture, design philosophy, and component model.
 - [Quick Start](${SITE_URL}/docs/quick-start): Installation, dependencies setup, and shadcn CLI integration.
 - [Registry Architecture](${SITE_URL}/docs/architecture): Design tokens, monochrome color system, elevation surfaces, and registry sync engine.
-- [Motion System](${SITE_URL}/docs/motion-system): Spring physics parameters, transition tokens, and reduced-motion accessibility guidelines.
 - [Contributing Guide](${SITE_URL}/docs/collaboration): Building, validating, documenting, and publishing new components.
 - [Automated SEO System](${SITE_URL}/docs/seo): Single source of truth metadata, dynamic sitemaps, JSON-LD schemas, and health audit engine.
 

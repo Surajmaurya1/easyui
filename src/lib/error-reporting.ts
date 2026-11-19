@@ -1,4 +1,4 @@
-import { track } from '@vercel/analytics';
+import { initializeTracwell, trackTracwellEvent } from './tracwell-client';
 
 const truncate = (value: string, maxLength: number) =>
   value.length > maxLength ? `${value.slice(0, maxLength - 1)}…` : value;
@@ -7,12 +7,17 @@ export function reportClientError(error: unknown, source: string, details?: stri
   if (typeof window === 'undefined') return;
 
   const normalized = error instanceof Error ? error : new Error(String(error));
-  track('client_error', {
-    source,
-    error_name: normalized.name,
-    error_message: truncate(normalized.message || 'Unknown client error', 180),
-    ...(details ? { details: truncate(details, 260) } : {}),
-  });
+  try {
+    initializeTracwell();
+    trackTracwellEvent('client_error', {
+      source,
+      error_name: normalized.name,
+      error_message: truncate(normalized.message || 'Unknown client error', 180),
+      ...(details ? { details: truncate(details, 260) } : {}),
+    });
+  } catch {
+    // Error reporting must never create another application error.
+  }
 }
 
 export function installGlobalErrorReporting(): () => void {

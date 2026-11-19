@@ -15,7 +15,6 @@ interface DocNavEntry {
 const DOC_ORDER: DocNavEntry[] = [
   { id: 'introduction', title: 'Introduction & Vision', category: 'Getting Started' },
   { id: 'quick-start', title: 'Quick Start & Setup', category: 'Getting Started' },
-  { id: 'motion', title: 'Motion Tokens & Physics', category: 'Getting Started' },
   { id: 'architecture', title: 'Registry Architecture', category: 'Architecture & Engine' },
   { id: 'seo', title: 'Automated SEO System', category: 'Architecture & Engine' },
   { id: 'collaboration', title: 'Contributing Guide', category: 'Architecture & Engine' },

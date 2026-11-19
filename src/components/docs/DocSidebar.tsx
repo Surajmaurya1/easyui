@@ -4,7 +4,6 @@ import {
   Terminal,
   Cpu,
   GitPullRequest,
-  Sliders,
   Search,
   type LucideIcon,
 } from 'lucide-react';
@@ -35,7 +34,6 @@ export const DocSidebar: React.FC<DocSidebarProps> = ({
       items: [
         { id: 'introduction', label: 'Introduction', icon: BookOpen },
         { id: 'quick-start', label: 'Quick Start', icon: Terminal },
-        { id: 'motion', label: 'Motion Tokens', icon: Sliders },
       ],
     },
     {

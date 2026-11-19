@@ -21,6 +21,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-19"
   },
   {
+    "id": "activity-heatmap",
+    "name": "Activity Heatmap",
+    "tagline": "Responsive contribution calendar and weekday-by-hour activity grid",
+    "description": "A GitHub-style contribution calendar and weekday-by-hour activity grid with automatic column fitting, quarterly color levels, hover tooltips, and keyboard navigation.",
+    "category": "Feedback",
+    "badges": [
+      "SVG",
+      "Heatmap",
+      "Data Visualization",
+      "Calendar",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/activity-heatmap",
+    "createdAt": "2026-10-23"
+  },
+  {
     "id": "advanced-data-table",
     "name": "Advanced Data Table",
     "tagline": "Enterprise-grade data table with sorting, filtering, selection, and expandable rows",
@@ -164,6 +180,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/badge",
     "createdAt": "2026-10-11"
+  },
+  {
+    "id": "bar-chart",
+    "name": "Bar Chart",
+    "tagline": "Animated grouped and stacked SVG bar chart with legend filtering",
+    "description": "A hand-written, dependency-free SVG bar chart with grouped and stacked layouts, morphing bar transitions, interactive legend toggles, and accessible hover and keyboard tooltips.",
+    "category": "Feedback",
+    "badges": [
+      "SVG",
+      "Bar Chart",
+      "Data Visualization",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/bar-chart",
+    "createdAt": "2026-10-23"
   },
   {
     "id": "batch-gesture-tray",
@@ -358,6 +389,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-09-09"
   },
   {
+    "id": "data-table",
+    "name": "Data Table",
+    "tagline": "Sortable, searchable table that becomes stacked cards on mobile",
+    "description": "A sortable, searchable data table with sticky headers, row selection and range selection, animated bulk actions, paging, responsive stacked cards, and ready-made sparkline and delta cells.",
+    "category": "Forms",
+    "badges": [
+      "Table",
+      "Data",
+      "Responsive",
+      "Accessible"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/data-table",
+    "createdAt": "2026-11-11"
+  },
+  {
     "id": "date-picker",
     "name": "Date Picker",
     "tagline": "Origin-aware popover with a spring landing",
@@ -433,6 +479,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-09-03"
   },
   {
+    "id": "donut-chart",
+    "name": "Donut Chart",
+    "tagline": "Animated SVG donut and gauge chart with a live center value",
+    "description": "A hand-written SVG donut and half-ring gauge with animated arcs, a live center readout, hover highlighting, and a legend that filters slices without collapsing the ring.",
+    "category": "Feedback",
+    "badges": [
+      "SVG",
+      "Donut Chart",
+      "Gauge",
+      "Data Visualization",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/donut-chart",
+    "createdAt": "2026-10-23"
+  },
+  {
     "id": "dot-field",
     "name": "Dot Field",
     "tagline": "Lightweight static Canvas particle matrix background",
@@ -489,8 +551,7 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
       "Light & Dark"
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/draw-checkbox",
-    "createdAt": "2026-09-03",
-    "featured": true
+    "createdAt": "2026-09-03"
   },
   {
     "id": "dynamic-island",
@@ -506,6 +567,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/dynamic-island",
     "createdAt": "2026-10-05"
+  },
+  {
+    "id": "earnings",
+    "name": "Earnings",
+    "tagline": "Earnings summary card with count-up total, scrubable trend, and source breakdown",
+    "description": "An earnings summary card that counts up the total, plots a scrubable trend line, and breaks income down by source with a hoverable split bar and a 7D / 30D / 12M period switcher. Light and dark themes, fully responsive.",
+    "category": "Feedback",
+    "badges": [
+      "Data Visualization",
+      "Earnings",
+      "SVG",
+      "Split Bar",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/earnings",
+    "createdAt": "2026-11-02"
   },
   {
     "id": "evil-eye",
@@ -612,6 +689,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "featured": true
   },
   {
+    "id": "funnel-chart",
+    "name": "Funnel Chart",
+    "tagline": "Conversion funnel with per-stage drop-off and a loss summary",
+    "description": "A conversion funnel with per-stage widths, curved drop-off bridges, and a loss chip between every stage. An optional summary line reports overall conversion and the single biggest drop-off, all in hand-written SVG.",
+    "category": "Feedback",
+    "badges": [
+      "SVG",
+      "Funnel Chart",
+      "Data Visualization",
+      "Conversion",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/funnel-chart",
+    "createdAt": "2026-10-23"
+  },
+  {
     "id": "glass-navbar",
     "name": "Glass Navbar",
     "tagline": "Refined glass navigation with spring physics",
@@ -702,6 +795,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-24"
   },
   {
+    "id": "interactive-area-chart",
+    "name": "Interactive Area Chart",
+    "tagline": "Zero-dependency interactive SVG area chart with range morphing and scrubbing",
+    "description": "A hand-written, dependency-free interactive SVG area chart with interruptible dataset morphing, Catmull-Rom spline resampling, scrubbing tooltip, and keyboard accessibility.",
+    "category": "Feedback",
+    "badges": [
+      "SVG",
+      "Area Chart",
+      "Data Visualization",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/interactive-area-chart",
+    "createdAt": "2026-10-13",
+    "featured": true
+  },
+  {
     "id": "interactive-timeline",
     "name": "Interactive Timeline",
     "tagline": "Milestone & pipeline tracker with spring progress physics",
@@ -774,6 +883,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/liquid-toggle",
     "createdAt": "2026-09-02",
     "featured": true
+  },
+  {
+    "id": "live-line-chart",
+    "name": "Live Line Chart",
+    "tagline": "Scrolling real-time line chart with pause, scrub, and live readout",
+    "description": "A real-time line chart that scrolls right-to-left, with a large current-value readout, a live delta, and a pause control. Hover or touch the chart to freeze the stream and scrub it with a crosshair tooltip.",
+    "category": "Feedback",
+    "badges": [
+      "SVG",
+      "Live Data",
+      "Line Chart",
+      "Data Visualization",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/live-line-chart",
+    "createdAt": "2026-10-23"
   },
   {
     "id": "loader",
@@ -882,6 +1007,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-19"
   },
   {
+    "id": "money-card",
+    "name": "Money Card",
+    "tagline": "Interactive financial wallet card with quick-send contacts and animated transfer sheets",
+    "description": "An interactive financial wallet card featuring animated live balance updates, quick-send contact shortcuts, recent transaction history, and responsive modal sheets for sending, receiving, and viewing activity.",
+    "category": "Motion",
+    "badges": [
+      "Financial Card",
+      "Quick Send",
+      "Interactive Sheet",
+      "Motion"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/money-card",
+    "createdAt": "2026-10-14"
+  },
+  {
     "id": "morphing-blob",
     "name": "Morphing Blob",
     "tagline": "Fluid spring-physics blob with cursor interaction",
@@ -936,6 +1076,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/morphing-icon",
     "createdAt": "2026-09-16"
+  },
+  {
+    "id": "morphing-mega-menu",
+    "name": "Morphing Mega Menu",
+    "tagline": "Stripe-style morphing navigation panel with spring physics and cursor tracking",
+    "description": "A Stripe-inspired mega menu with a single continuous morphing panel that smoothly adapts its size, position, and arrow to any trigger.",
+    "category": "Navigation",
+    "badges": [
+      "Mega Menu",
+      "Morphing Panel",
+      "Spring Physics",
+      "Keyboard Nav"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/morphing-mega-menu",
+    "createdAt": "2026-10-13"
   },
   {
     "id": "morphing-shape-loader",
@@ -1071,6 +1226,20 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-09-09T12:15:29.957Z"
   },
   {
+    "id": "package-box",
+    "name": "Package Box",
+    "tagline": "Interactive 3D package box with flap folding and rising document motion",
+    "description": "A pure CSS 3D cardboard package box featuring interactive tape-splitting physics, flap-folding choreography, and an animated packing slip that rises out and turns to face the viewer.",
+    "category": "Motion",
+    "badges": [
+      "3D Physics",
+      "Motion",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/package-box",
+    "createdAt": "2026-10-15"
+  },
+  {
     "id": "particle-delete",
     "name": "Particle Delete",
     "tagline": "Physics-driven pixel particle dissolution delete animation",
@@ -1128,6 +1297,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-21"
   },
   {
+    "id": "photo-box",
+    "name": "Photo Box",
+    "tagline": "Frosted paper box with fanning polaroids and tactile zoom inspection",
+    "description": "Tactile Japanese stationery-inspired photo box featuring frosted glass translucency, sliding paper box mechanics, fanning polaroid prints, and full-bleed image zoom.",
+    "category": "Motion",
+    "badges": [
+      "Polaroid",
+      "Stationery",
+      "Glassmorphism",
+      "Motion",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/photo-box",
+    "createdAt": "2026-10-14"
+  },
+  {
     "id": "pill-navigation",
     "name": "Pill Navigation",
     "tagline": "Minimal shared-pill navigation continuity with fluid submenus",
@@ -1175,6 +1360,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-09-03"
   },
   {
+    "id": "product-tour",
+    "name": "Product Tour",
+    "tagline": "Interactive walkthrough with spring spotlight cutout and responsive docking",
+    "description": "An interactive product walkthrough with spring-animated spotlight cutout, auto-scrolling targets, responsive bottom-sheet docking, and keyboard navigation.",
+    "category": "Feedback",
+    "badges": [
+      "Walkthrough",
+      "Spotlight",
+      "Spring Physics",
+      "Keyboard Nav",
+      "Portal"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/product-tour",
+    "createdAt": "2026-10-13"
+  },
+  {
     "id": "profile-card",
     "name": "Profile Card",
     "tagline": "Dark social profile card with painted blue cover art",
@@ -1188,6 +1389,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/profile-card",
     "createdAt": "2026-08-31"
+  },
+  {
+    "id": "prompt-input",
+    "name": "Prompt Input",
+    "tagline": "Chat composer with streaming stop, attachments, model picker, and prompt history",
+    "description": "A production-ready AI chat composer with an auto-growing textarea, streaming stop control, attachment chips with drag-and-drop and paste, an accessible model picker, prompt history, and keyboard-first send behavior.",
+    "category": "Forms",
+    "badges": [
+      "AI",
+      "Composer",
+      "Attachments",
+      "Accessible"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/prompt-input",
+    "createdAt": "2026-11-11"
   },
   {
     "id": "pull-to-refresh",
@@ -1573,6 +1789,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-09-12T11:29:47.829Z"
   },
   {
+    "id": "stat-card",
+    "name": "Stat Card",
+    "tagline": "KPI tile with count-up, delta pill, and scrubable sparkline",
+    "description": "A KPI tile with a count-up headline number, a direction-aware delta pill, and a scrubable sparkline. Pair several with StatGrid for a responsive metrics row that works from phones to wide dashboards.",
+    "category": "Feedback",
+    "badges": [
+      "KPI",
+      "Sparkline",
+      "Data Visualization",
+      "Interactive",
+      "SVG"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/stat-card",
+    "createdAt": "2026-10-23"
+  },
+  {
     "id": "stepper",
     "name": "Stepper",
     "tagline": "Animated connector line, gliding focus ring, and step panels",
@@ -1677,6 +1909,22 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-24"
   },
   {
+    "id": "traffic-card",
+    "name": "Traffic Card",
+    "tagline": "Traffic total with a Day / Week switcher and stacked capsule columns",
+    "description": "A compact traffic block with a count-up visit total, a Day / Week switcher, and a stacked column chart where every channel is its own rounded capsule. Built with hand-written SVG, light and dark themes, and full keyboard support.",
+    "category": "Feedback",
+    "badges": [
+      "KPI",
+      "Stacked Chart",
+      "Data Visualization",
+      "Interactive",
+      "SVG"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/traffic-card",
+    "createdAt": "2026-11-17"
+  },
+  {
     "id": "typewriter-button",
     "name": "Typewriter Button",
     "tagline": "Character-by-character reveal with mechanical sound feedback",
@@ -1735,6 +1983,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/velocity-toast",
     "createdAt": "2026-09-03"
+  },
+  {
+    "id": "wallet-balance",
+    "name": "Wallet Balance",
+    "tagline": "Interactive payment cards tucked into a leather pouch with eye-toggle balance obscuring",
+    "description": "An interactive wallet balance component where branded cards tuck neatly into an embossed leather pouch with spring physics. Tap the eye button to reveal or mask balances with smooth blur-crossfade transitions.",
+    "category": "Motion",
+    "badges": [
+      "Wallet",
+      "Spring Physics",
+      "Privacy Eye",
+      "Motion"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/wallet-balance",
+    "createdAt": "2026-10-14"
   },
   {
     "id": "wallet-card",

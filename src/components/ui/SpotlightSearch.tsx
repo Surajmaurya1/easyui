@@ -161,15 +161,6 @@ export const SpotlightSearch: React.FC<SpotlightSearchProps> = ({
         },
       },
       {
-        id: 'doc-motion',
-        title: 'Motion Tokens & Physics Curves',
-        category: 'Documentation',
-        action: () => {
-          onNavigateDocs?.('motion-tokens');
-          handleClose();
-        },
-      },
-      {
         id: 'doc-collaboration',
         title: 'Contributing & Collaboration Guide',
         category: 'Documentation',

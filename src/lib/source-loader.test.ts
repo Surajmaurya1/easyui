@@ -16,7 +16,9 @@ describe('fetchComponentSource', () => {
 
     const code = await fetchComponentSource('test-comp');
     expect(code).toBe(mockPayload.sourceCode);
-    expect(fetchMock).toHaveBeenCalledWith('/source/test-comp.json');
+    expect(fetchMock).toHaveBeenCalledWith('/source/test-comp.json', {
+      signal: expect.any(AbortSignal),
+    });
 
     // Second call should return cached without re-fetching
     const cachedCode = await fetchComponentSource('test-comp');

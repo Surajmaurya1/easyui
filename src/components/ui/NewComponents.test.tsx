@@ -45,12 +45,12 @@ describe('AIResponse component', () => {
 
   it('renders loading state when generating', () => {
     render(<AIResponse status="generating" content="" />);
-    expect(screen.getByText('Synthesizing response...')).toBeInTheDocument();
+    expect(screen.getByText('Thinking')).toBeInTheDocument();
   });
 
   it('renders error state when status is error', () => {
     render(<AIResponse status="error" content="Connection timeout" />);
-    expect(screen.getByText('Unable to complete response generation')).toBeInTheDocument();
+    expect(screen.getByText('Couldn’t finish this response')).toBeInTheDocument();
     expect(screen.getByText('Connection timeout')).toBeInTheDocument();
   });
 });

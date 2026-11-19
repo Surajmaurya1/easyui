@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "easyui",
-  "homepage": "https://github.com/Surajmaurya1/easyui",
+  "homepage": "https://easyui.site",
   "items": [
     {
       "name": "activity-feed",
@@ -27,6 +27,27 @@
           "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib",
           "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "activity-heatmap",
+      "type": "registry:ui",
+      "title": "Activity Heatmap",
+      "description": "A GitHub-style contribution calendar and weekday-by-hour activity grid with automatic column fitting, quarterly color levels, hover tooltips, and keyboard navigation.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/ActivityHeatmap.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/activity-heatmap.tsx"
+        },
+        {
+          "path": "src/lib/chart-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/chart-primitives.tsx"
         }
       ]
     },
@@ -80,19 +101,13 @@
       "title": "AI Response",
       "description": "A production-ready, accessible AI response component supporting streaming markdown, syntax-styled code blocks, citations, feedback actions, and tool execution status.",
       "dependencies": [
-        "framer-motion",
-        "lucide-react"
+        "framer-motion"
       ],
       "files": [
         {
           "path": "src/components/ui/AIResponse.tsx",
           "type": "registry:ui",
           "target": "components/ui/ai-response.tsx"
-        },
-        {
-          "path": "src/lib/utils.ts",
-          "type": "registry:lib",
-          "target": "lib/utils.ts"
         }
       ]
     },
@@ -253,6 +268,27 @@
           "path": "src/lib/utils.ts",
           "type": "registry:lib",
           "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "bar-chart",
+      "type": "registry:ui",
+      "title": "Bar Chart",
+      "description": "A hand-written, dependency-free SVG bar chart with grouped and stacked layouts, morphing bar transitions, interactive legend toggles, and accessible hover and keyboard tooltips.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/BarChart.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/bar-chart.tsx"
+        },
+        {
+          "path": "src/lib/chart-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/chart-primitives.tsx"
         }
       ]
     },
@@ -579,6 +615,22 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "A sortable, searchable data table with sticky headers, row selection and range selection, animated bulk actions, paging, responsive stacked cards, and ready-made sparkline and delta cells.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/DataTable.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/data-table.tsx"
+        }
+      ]
+    },
+    {
       "name": "date-picker",
       "type": "registry:ui",
       "title": "Date Picker",
@@ -706,6 +758,27 @@
       ]
     },
     {
+      "name": "donut-chart",
+      "type": "registry:ui",
+      "title": "Donut Chart",
+      "description": "A hand-written SVG donut and half-ring gauge with animated arcs, a live center readout, hover highlighting, and a legend that filters slices without collapsing the ring.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/DonutChart.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/donut-chart.tsx"
+        },
+        {
+          "path": "src/lib/chart-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/chart-primitives.tsx"
+        }
+      ]
+    },
+    {
       "name": "dot-field",
       "type": "registry:ui",
       "title": "Dot Field",
@@ -813,6 +886,22 @@
           "path": "src/lib/utils.ts",
           "type": "registry:lib",
           "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "earnings",
+      "type": "registry:ui",
+      "title": "Earnings",
+      "description": "An earnings summary card that counts up the total, plots a scrubable trend line, and breaks income down by source with a hoverable split bar and a 7D / 30D / 12M period switcher. Light and dark themes, fully responsive.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Earnings.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/earnings.tsx"
         }
       ]
     },
@@ -999,6 +1088,32 @@
       ]
     },
     {
+      "name": "funnel-chart",
+      "type": "registry:ui",
+      "title": "Funnel Chart",
+      "description": "A conversion funnel with per-stage widths, curved drop-off bridges, and a loss chip between every stage. An optional summary line reports overall conversion and the single biggest drop-off, all in hand-written SVG.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/FunnelChart.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/funnel-chart.tsx"
+        },
+        {
+          "path": "src/lib/chart-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/chart-primitives.tsx"
+        },
+        {
+          "path": "src/lib/dashboard-chart-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/dashboard-chart-utils.ts"
+        }
+      ]
+    },
+    {
       "name": "glass-navbar",
       "type": "registry:ui",
       "title": "Glass Navbar",
@@ -1133,6 +1248,22 @@
       ]
     },
     {
+      "name": "interactive-area-chart",
+      "type": "registry:ui",
+      "title": "Interactive Area Chart",
+      "description": "A hand-written, dependency-free interactive SVG area chart with interruptible dataset morphing, Catmull-Rom spline resampling, scrubbing tooltip, and keyboard accessibility.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/InteractiveAreaChart.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/interactive-area-chart.tsx"
+        }
+      ]
+    },
+    {
       "name": "interactive-timeline",
       "type": "registry:ui",
       "title": "Interactive Timeline",
@@ -1263,6 +1394,32 @@
           "path": "src/lib/theme/useTheme.tsx",
           "type": "registry:lib",
           "target": "lib/theme/useTheme.tsx"
+        }
+      ]
+    },
+    {
+      "name": "live-line-chart",
+      "type": "registry:ui",
+      "title": "Live Line Chart",
+      "description": "A real-time line chart that scrolls right-to-left, with a large current-value readout, a live delta, and a pause control. Hover or touch the chart to freeze the stream and scrub it with a crosshair tooltip.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/LiveLineChart.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/live-line-chart.tsx"
+        },
+        {
+          "path": "src/lib/chart-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/chart-primitives.tsx"
+        },
+        {
+          "path": "src/lib/dashboard-chart-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/dashboard-chart-utils.ts"
         }
       ]
     },
@@ -1449,6 +1606,23 @@
       ]
     },
     {
+      "name": "money-card",
+      "type": "registry:ui",
+      "title": "Money Card",
+      "description": "An interactive financial wallet card featuring animated live balance updates, quick-send contact shortcuts, recent transaction history, and responsive modal sheets for sending, receiving, and viewing activity.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/MoneyCard.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/money-card.tsx"
+        }
+      ]
+    },
+    {
       "name": "morphing-blob",
       "type": "registry:ui",
       "title": "Morphing Blob",
@@ -1545,6 +1719,22 @@
       ]
     },
     {
+      "name": "morphing-mega-menu",
+      "type": "registry:ui",
+      "title": "Morphing Mega Menu",
+      "description": "A Stripe-inspired mega menu with a single continuous morphing panel that smoothly adapts its size, position, and arrow to any trigger.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/MorphingMegaMenu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/morphing-mega-menu.tsx"
+        }
+      ]
+    },
+    {
       "name": "morphing-shape-loader",
       "type": "registry:ui",
       "title": "Morphing Shape Loader",
@@ -1618,29 +1808,13 @@
       "title": "Not Found",
       "description": "A minimal, production-ready 404 / route error component featuring floating spring-physics proximity displacement on individual glyphs, clear typography hierarchy, and accessible recovery actions.",
       "dependencies": [
-        "framer-motion",
-        "lucide-react"
+        "framer-motion"
       ],
       "files": [
         {
           "path": "src/components/ui/NotFound.tsx",
           "type": "registry:ui",
           "target": "components/ui/not-found.tsx"
-        },
-        {
-          "path": "src/lib/utils.ts",
-          "type": "registry:lib",
-          "target": "lib/utils.ts"
-        },
-        {
-          "path": "src/lib/motion-tokens.ts",
-          "type": "registry:lib",
-          "target": "lib/motion-tokens.ts"
-        },
-        {
-          "path": "src/components/ui/Button.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/button.tsx"
         }
       ]
     },
@@ -1765,28 +1939,34 @@
       ]
     },
     {
+      "name": "package-box",
+      "type": "registry:ui",
+      "title": "Package Box",
+      "description": "A pure CSS 3D cardboard package box featuring interactive tape-splitting physics, flap-folding choreography, and an animated packing slip that rises out and turns to face the viewer.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/PackageBox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/package-box.tsx"
+        }
+      ]
+    },
+    {
       "name": "particle-delete",
       "type": "registry:ui",
       "title": "Particle Delete",
       "description": "Premium physics-driven particle dissolution delete animation that rasterizes components into thousands of authentic tiny pixels and disperses them smoothly before state removal.",
       "dependencies": [
-        "lucide-react"
+        "framer-motion"
       ],
       "files": [
         {
           "path": "src/components/ui/ParticleDelete.tsx",
           "type": "registry:ui",
           "target": "components/ui/particle-delete.tsx"
-        },
-        {
-          "path": "src/lib/utils.ts",
-          "type": "registry:lib",
-          "target": "lib/utils.ts"
-        },
-        {
-          "path": "src/lib/particle-delete.ts",
-          "type": "registry:lib",
-          "target": "lib/particle-delete.ts"
         }
       ]
     },
@@ -1872,6 +2052,22 @@
       ]
     },
     {
+      "name": "photo-box",
+      "type": "registry:ui",
+      "title": "Photo Box",
+      "description": "Tactile Japanese stationery-inspired photo box featuring frosted glass translucency, sliding paper box mechanics, fanning polaroid prints, and full-bleed image zoom.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/PhotoBox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/photo-box.tsx"
+        }
+      ]
+    },
+    {
       "name": "pill-navigation",
       "type": "registry:ui",
       "title": "Pill Navigation",
@@ -1952,6 +2148,23 @@
       ]
     },
     {
+      "name": "product-tour",
+      "type": "registry:ui",
+      "title": "Product Tour",
+      "description": "An interactive product walkthrough with spring-animated spotlight cutout, auto-scrolling targets, responsive bottom-sheet docking, and keyboard navigation.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/ProductTour.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/product-tour.tsx"
+        }
+      ]
+    },
+    {
       "name": "profile-card",
       "type": "registry:ui",
       "title": "Profile Card",
@@ -1969,6 +2182,22 @@
           "path": "src/lib/utils.ts",
           "type": "registry:lib",
           "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "prompt-input",
+      "type": "registry:ui",
+      "title": "Prompt Input",
+      "description": "A production-ready AI chat composer with an auto-growing textarea, streaming stop control, attachment chips with drag-and-drop and paste, an accessible model picker, prompt history, and keyboard-first send behavior.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/PromptInput.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/prompt-input.tsx"
         }
       ]
     },
@@ -2611,6 +2840,32 @@
       ]
     },
     {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "Stat Card",
+      "description": "A KPI tile with a count-up headline number, a direction-aware delta pill, and a scrubable sparkline. Pair several with StatGrid for a responsive metrics row that works from phones to wide dashboards.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/StatCard.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/stat-card.tsx"
+        },
+        {
+          "path": "src/lib/chart-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/chart-primitives.tsx"
+        },
+        {
+          "path": "src/lib/dashboard-chart-utils.ts",
+          "type": "registry:lib",
+          "target": "lib/dashboard-chart-utils.ts"
+        }
+      ]
+    },
+    {
       "name": "stepper",
       "type": "registry:ui",
       "title": "Stepper",
@@ -2757,6 +3012,27 @@
       ]
     },
     {
+      "name": "traffic-card",
+      "type": "registry:ui",
+      "title": "Traffic Card",
+      "description": "A compact traffic block with a count-up visit total, a Day / Week switcher, and a stacked column chart where every channel is its own rounded capsule. Built with hand-written SVG, light and dark themes, and full keyboard support.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/TrafficCard.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/traffic-card.tsx"
+        },
+        {
+          "path": "src/lib/chart-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/chart-primitives.tsx"
+        }
+      ]
+    },
+    {
       "name": "typewriter-button",
       "type": "registry:ui",
       "title": "Typewriter Button",
@@ -2860,6 +3136,22 @@
           "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib",
           "target": "lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "wallet-balance",
+      "type": "registry:ui",
+      "title": "Wallet Balance",
+      "description": "An interactive wallet balance component where branded cards tuck neatly into an embossed leather pouch with spring physics. Tap the eye button to reveal or mask balances with smooth blur-crossfade transitions.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/WalletBalance.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/wallet-balance.tsx"
         }
       ]
     },

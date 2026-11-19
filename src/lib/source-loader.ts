@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 const sourceCache = new Map<string, string>();
 const inFlightRequests = new Map<string, Promise<string>>();
+const SOURCE_REQUEST_TIMEOUT_MS = 15_000;
 
 /**
  * Loads the source code for a given component slug from public/source/{slug}.json.
@@ -19,8 +20,10 @@ export async function fetchComponentSource(slug: string): Promise<string> {
   }
 
   const promise = (async () => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), SOURCE_REQUEST_TIMEOUT_MS);
     try {
-      const res = await fetch(`/source/${slug}.json`);
+      const res = await fetch(`/source/${slug}.json`, { signal: controller.signal });
       if (!res.ok) {
         throw new Error(`Failed to load source code for ${slug} (${res.status} ${res.statusText})`);
       }
@@ -28,7 +31,13 @@ export async function fetchComponentSource(slug: string): Promise<string> {
       const code = data.sourceCode || data.code || '';
       sourceCache.set(slug, code);
       return code;
+    } catch (error) {
+      if (controller.signal.aborted) {
+        throw new Error(`Timed out loading source code for ${slug} after ${SOURCE_REQUEST_TIMEOUT_MS / 1000} seconds`);
+      }
+      throw error;
     } finally {
+      clearTimeout(timeoutId);
       inFlightRequests.delete(slug);
     }
   })();

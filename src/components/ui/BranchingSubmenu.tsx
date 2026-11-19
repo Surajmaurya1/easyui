@@ -93,7 +93,7 @@ export const BranchingSubmenu: React.FC<BranchingSubmenuProps> = ({
 
   return (
     <motion.div
-      layout={!reducedMotion}
+      layout={!reducedMotion ? 'position' : false}
       transition={motionTransitions.springGentle}
       className={cn(
         'w-full max-w-xl rounded-2xl border border-[#1F1F1F] bg-[#0E0E0E] p-3 shadow-[0_12px_32px_rgba(0,0,0,0.35)] select-none',

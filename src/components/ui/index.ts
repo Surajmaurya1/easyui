@@ -512,3 +512,24 @@ export type { SkeletonProps, SkeletonTextProps, SkeletonAvatarProps, SkeletonRev
 export { Stepper, StepPanels } from './stepper';
 export type { StepperProps, StepPanelsProps, Step } from './stepper';
 
+export { MorphingMegaMenu } from './MorphingMegaMenu';
+export type { MorphingMegaMenuProps, MegaMenuItem } from './MorphingMegaMenu';
+
+export { InteractiveAreaChart } from './InteractiveAreaChart';
+export type { InteractiveAreaChartProps, AreaChartData, ChartPoint } from './InteractiveAreaChart';
+
+export { ProductTour, ProductTourDemo } from './ProductTour';
+export type { ProductTourProps, TourStep, TourPlacement, TourTarget, TourCloseReason } from './ProductTour';
+
+export { WalletBalance } from './WalletBalance';
+export type { WalletBalanceProps, WalletAccount } from './WalletBalance';
+
+export { MoneyCard, MoneyCardDemo } from './MoneyCard';
+export type { MoneyCardProps, Contact, Transaction, TransferRequest } from './MoneyCard';
+
+export { PhotoBox, PhotoBoxDemo, DEFAULT_PRINTS } from './PhotoBox';
+export type { PhotoBoxProps, PhotoPrint } from './PhotoBox';
+
+export { PackageBox, PackageBoxDemo } from './PackageBox';
+export type { PackageBoxProps, PackageSlip, PackageBoxColors } from './PackageBox';
+

@@ -30,7 +30,6 @@ const defaultCards: StackedCard[] = [
     image:
       'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=85',
     imageAlt: 'Modern office interior',
-    href: '/annual-letter',
     ctaLabel: 'Read the damage',
   },
   {
@@ -41,7 +40,6 @@ const defaultCards: StackedCard[] = [
     image:
       'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85',
     imageAlt: 'Team collaborating in an office',
-    href: '/stories/future',
     ctaLabel: 'See the chaos',
   },
   {
@@ -52,7 +50,6 @@ const defaultCards: StackedCard[] = [
     image:
       'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85',
     imageAlt: 'Person exploring a landscape',
-    href: '/stories/journey',
     ctaLabel: 'Join the adventure',
   },
   {
@@ -63,7 +60,6 @@ const defaultCards: StackedCard[] = [
     image:
       'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=85',
     imageAlt: 'Technology infrastructure',
-    href: '/stories/economy',
     ctaLabel: 'Make it make sense',
   },
 ];
@@ -134,10 +130,10 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, total, progress }) => 
                 {card.description}
               </p>
 
-              {card.ctaLabel && (
+              {card.ctaLabel && card.href && (
                 <div className="mt-6 sm:mt-8">
                   <a
-                    href={card.href || '#'}
+                    href={card.href}
                     className={cn(
                       'inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200',
                       isEven

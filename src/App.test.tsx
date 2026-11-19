@@ -58,10 +58,10 @@ describe('App Routing and Navigation', () => {
     expect(docHeading).toBeInTheDocument();
   }, 15000);
 
-  it('normalizes the canonical motion-system documentation route to the motion topic', () => {
-    expect(parseRouteFromUrl('/docs/motion-system')).toMatchObject({
-      activeView: 'docs',
-      activeDocTopic: 'motion',
+  it('treats the removed motion documentation route as not found', () => {
+    expect(parseRouteFromUrl('/docs/motion')).toMatchObject({
+      activeView: 'route-not-found',
+      invalidRoutePath: '/docs/motion',
     });
   });
 
@@ -73,6 +73,17 @@ describe('App Routing and Navigation', () => {
     expect(parseRouteFromUrl('/does-not-exist')).toMatchObject({
       activeView: 'route-not-found',
       invalidRoutePath: '/does-not-exist',
+    });
+  });
+
+  it('parses the sponsorship routes', () => {
+    expect(parseRouteFromUrl('/sponsors')).toMatchObject({
+      activeView: 'sponsors',
+      invalidRoutePath: null,
+    });
+    expect(parseRouteFromUrl('/sponsor/success')).toMatchObject({
+      activeView: 'sponsor-success',
+      invalidRoutePath: null,
     });
   });
 });
