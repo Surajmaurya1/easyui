@@ -72,6 +72,7 @@ export const UndoToast: React.FC<UndoToastProps> = ({
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(100);
 
+  const dismissTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startTimeRef = useRef<number>(Date.now());
   const remainingTimeRef = useRef<number>(duration);
   const requestRef = useRef<number | null>(null);
@@ -83,8 +84,23 @@ export const UndoToast: React.FC<UndoToastProps> = ({
       setProgress(100);
       startTimeRef.current = Date.now();
       remainingTimeRef.current = duration;
+
+      // clear the timeout when a new toast is opened,
+      // clear any lingering dismiss timeouts from previous undo actions
+      if (dismissTimeoutRef.current) {
+        clearTimeout(dismissTimeoutRef.current);
+      }
     }
   }, [open, duration]);
+
+  // cleans up pending timer on unmounts
+  useEffect(() => {
+    return () => {
+      if (dismissTimeoutRef.current) {
+        clearTimeout(dismissTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleDismiss = useCallback(() => {
     setIsVisible(false);
@@ -96,29 +112,31 @@ export const UndoToast: React.FC<UndoToastProps> = ({
     setIsRestored(true);
     if (requestRef.current) cancelAnimationFrame(requestRef.current);
     onUndo?.();
-    setTimeout(() => {
-      handleDismiss();
+
+    // Store the timeout so we can cancel it if needed
+    dismissTimeoutRef.current = setTimeout(() => {
+        handleDismiss();
     }, 1400);
   };
 
   useEffect(() => {
     if (!isVisible || isRestored || duration <= 0) return;
 
-    let localStartTime = Date.now();
-    const totalDuration = remainingTimeRef.current;
-
     const animate = () => {
-      if (isPaused) {
-        return;
-      }
+      if (isPaused) return;
 
-      const elapsed = Date.now() - localStartTime;
-      const fraction = Math.max(0, 1 - elapsed / totalDuration);
-      setProgress(fraction * 100);
+      // How much time has passed since we last started/unpaused?
+      const elapsedSinceStart = Date.now() - startTimeRef.current;
 
-      if (elapsed >= totalDuration) {
+      // Calculate exact remaining milliseconds
+      const currentRemaining = remainingTimeRef.current - elapsedSinceStart;
+
+      if (currentRemaining <= 0) {
+        setProgress(0);
         handleDismiss();
       } else {
+        // Calculate percentage based on the ORIGINAL total duration
+        setProgress((currentRemaining / duration) * 100);
         requestRef.current = requestAnimationFrame(animate);
       }
     };
@@ -238,9 +256,9 @@ export const UndoToast: React.FC<UndoToastProps> = ({
             {/* Live Progress Bar countdown indicator */}
             {showProgress && !isRestored && (
               <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#050505]">
-                <div
-                  className="h-full bg-[#FAFAFA] transition-all"
-                  style={{ width: `${progress}%`, transition: isPaused ? 'none' : 'width 50ms linear' }}
+                <motion.div
+                  className="h-full bg-[#FAFAFA] origin-left"
+                  style={{ scaleX: progress / 100 }}
                 />
               </div>
             )}
