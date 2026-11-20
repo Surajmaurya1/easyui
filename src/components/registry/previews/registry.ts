@@ -19,6 +19,12 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/ai-response'),
     metadata: { type: 'interactive' },
   },
+  'ai-image-reveal': {
+    id: 'ai-image-reveal',
+    componentId: 'ai-image-reveal',
+    load: () => import('./items/ai-image-reveal'),
+    metadata: { type: 'interactive', description: 'Particle mosaic image reveal' },
+  },
   'advanced-data-table': {
     id: 'advanced-data-table',
     componentId: 'advanced-data-table',
@@ -835,6 +841,12 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/package-box'),
     metadata: { type: 'interactive' },
     aliases: ['packagebox', 'package-boxes'],
+  },
+  'wave-transition': {
+    id: 'wave-transition',
+    componentId: 'wave-transition',
+    load: () => import('./items/wave-transition'),
+    metadata: { type: 'static', description: 'Minimal Wave Transition catalog preview' },
   },
 };
 

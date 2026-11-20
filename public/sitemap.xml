@@ -157,6 +157,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://easyui.site/components/ai-image-reveal</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://easyui.site/components/ai-response</loc>
     <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -938,6 +944,12 @@
   </url>
   <url>
     <loc>https://easyui.site/components/wallet-card</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://easyui.site/components/wave-transition</loc>
     <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>

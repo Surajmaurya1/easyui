@@ -7,6 +7,7 @@ export const DEMO_ROUTE_MODULES = {
   'activity-heatmap': { aliases: [], load: () => import('./demos/items/activity-heatmap.demo') },
   'advanced-data-table': { aliases: [], load: () => import('./demos/items/advanced-data-table.demo') },
   'ai-agent-activity': { aliases: [], load: () => import('./demos/items/ai-agent-activity.demo') },
+  'ai-image-reveal': { aliases: [], load: () => import('./demos/items/ai-image-reveal.demo') },
   'ai-response': { aliases: [], load: () => import('./demos/items/ai-response.demo') },
   'airport-matrix-clock': { aliases: [], load: () => import('./demos/items/airport-matrix-clock.demo') },
   'alert': { aliases: [], load: () => import('./demos/items/alert.demo') },
@@ -138,6 +139,7 @@ export const DEMO_ROUTE_MODULES = {
   'velocity-toast': { aliases: [], load: () => import('./demos/items/velocity-toast.demo') },
   'wallet-balance': { aliases: [], load: () => import('./demos/items/wallet-balance.demo') },
   'wallet-card': { aliases: [], load: () => import('./demos/items/wallet-card.demo') },
+  'wave-transition': { aliases: [], load: () => import('./demos/items/wave-transition.demo') },
 } satisfies Record<string, { aliases: readonly string[]; load: () => Promise<{ default: React.ComponentType<DemoProps>; preload: () => Promise<void> }> }>;
 
 export const DEMO_ALIASES: Record<string, string> = Object.fromEntries(

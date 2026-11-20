@@ -67,6 +67,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-09-21"
   },
   {
+    "id": "ai-image-reveal",
+    "name": "AI Image Reveal",
+    "tagline": "Reveal generated images through a particle mosaic",
+    "description": "A particle cloud gathers into a finished image, then resolves from a noisy mosaic into a sharp result.",
+    "category": "Motion",
+    "badges": [
+      "Canvas",
+      "Framer Motion",
+      "Reduced Motion",
+      "AI UI"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/ai-image-reveal",
+    "createdAt": "2026-11-20"
+  },
+  {
     "id": "ai-response",
     "name": "AI Response",
     "tagline": "Production-ready streaming AI response with sources and actions",
@@ -2012,5 +2027,19 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/wallet-card",
     "createdAt": "2026-08-31"
+  },
+  {
+    "id": "wave-transition",
+    "name": "Wave Transition",
+    "tagline": "Carry the interface forward on a smooth wave of color",
+    "description": "A source-aware view transition with a soft rainbow light wave, refracted color, and theme-friendly edge glow.",
+    "category": "Motion",
+    "badges": [
+      "View Transition",
+      "Motion",
+      "Reduced Motion"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/wave-transition",
+    "createdAt": "2026-11-18"
   }
 ];

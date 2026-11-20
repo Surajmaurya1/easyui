@@ -96,6 +96,23 @@
       ]
     },
     {
+      "name": "ai-image-reveal",
+      "type": "registry:ui",
+      "title": "AI Image Reveal",
+      "description": "A particle cloud gathers into a finished image, then resolves from a noisy mosaic into a sharp result.",
+      "dependencies": [
+        "framer-motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/AIImageReveal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ai-image-reveal.tsx"
+        }
+      ]
+    },
+    {
       "name": "ai-response",
       "type": "registry:ui",
       "title": "AI Response",
@@ -3168,6 +3185,27 @@
           "path": "src/components/ui/WalletCard.tsx",
           "type": "registry:ui",
           "target": "components/ui/wallet-card.tsx"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "wave-transition",
+      "type": "registry:ui",
+      "title": "Wave Transition",
+      "description": "A source-aware view transition with a soft rainbow light wave, refracted color, and theme-friendly edge glow.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/WaveTransition.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/wave-transition.tsx"
         },
         {
           "path": "src/lib/utils.ts",

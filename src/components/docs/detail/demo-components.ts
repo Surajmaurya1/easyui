@@ -11,6 +11,8 @@ function lazyNamed<T extends React.ComponentType<any>>(
 // Keep each implementation in its own dynamic import. Multiple exports from a
 // shared module still share Vite's module chunk and cache.
 export const DEMO_COMPONENTS = {
+  AIImageReveal: lazyNamed(() => import('../../ui/AIImageReveal'), 'AIImageReveal'),
+  AIImageRevealDemo: lazyNamed(() => import('../../ui/AIImageReveal'), 'AIImageRevealDemo'),
   DynamicIsland: lazyNamed(() => import('../../ui/DynamicIsland'), 'DynamicIsland'),
   MagneticButton: lazyNamed(() => import('../../ui/MagneticButton'), 'MagneticButton'),
   SpotlightCard: lazyNamed(() => import('../../ui/SpotlightCard'), 'SpotlightCard'),
@@ -56,6 +58,7 @@ export const DEMO_COMPONENTS = {
   PeekCard: lazyNamed(() => import('../../ui/PeekCard'), 'PeekCard'),
   SelectionBasket: lazyNamed(() => import('../../ui/SelectionBasket'), 'SelectionBasket'),
   FocusMode: lazyNamed(() => import('../../ui/FocusMode'), 'FocusMode'),
+  WaveTransition: lazyNamed(() => import('../../ui/WaveTransition'), 'WaveTransition'),
   Loader: lazyNamed(() => import('../../ui/Loader'), 'Loader'),
   SmallFloatingDock: lazyNamed(() => import('../../ui/SmallFloatingDock'), 'SmallFloatingDock'),
   HamburgerMenu: lazyNamed(() => import('../../ui/HamburgerMenu'), 'HamburgerMenu'),
