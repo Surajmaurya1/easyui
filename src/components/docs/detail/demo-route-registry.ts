@@ -7,6 +7,7 @@ export const DEMO_ROUTE_MODULES = {
   'activity-heatmap': { aliases: [], load: () => import('./demos/items/activity-heatmap.demo') },
   'advanced-data-table': { aliases: [], load: () => import('./demos/items/advanced-data-table.demo') },
   'ai-agent-activity': { aliases: [], load: () => import('./demos/items/ai-agent-activity.demo') },
+  'ai-image-reveal': { aliases: [], load: () => import('./demos/items/ai-image-reveal.demo') },
   'ai-response': { aliases: [], load: () => import('./demos/items/ai-response.demo') },
   'airport-matrix-clock': { aliases: [], load: () => import('./demos/items/airport-matrix-clock.demo') },
   'alert': { aliases: [], load: () => import('./demos/items/alert.demo') },

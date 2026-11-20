@@ -1,6 +1,9 @@
 export { AnimatedTabs } from './AnimatedTabs';
 export type { AnimatedTabsProps, TabItem } from './AnimatedTabs';
 
+export { AIImageReveal, createParticleField, averageCells } from './AIImageReveal';
+export type { AIImageRevealProps, AIImageRevealHandle, ParticleField } from './AIImageReveal';
+
 export { DynamicIsland } from './DynamicIsland';
 export type {
   DynamicIslandProps,

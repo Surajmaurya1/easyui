@@ -431,6 +431,122 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "ai-image-reveal",
+    "name": "AI Image Reveal",
+    "tagline": "Reveal generated images through a particle mosaic",
+    "description": "A particle cloud gathers into a finished image, then resolves from a noisy mosaic into a sharp result.",
+    "category": "Motion",
+    "badges": [
+      "Canvas",
+      "Framer Motion",
+      "Reduced Motion",
+      "AI UI"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/ai-image-reveal",
+    "installPrompt": "## Task\n\nInstall and integrate the EasyUI AI Image Reveal component into my project.\n\nA particle cloud gathers into a finished image, then resolves from a noisy mosaic into a sharp result.\n\nCategory: Motion.\n\n## Before you change anything\n\nInspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.\n\n## Compatibility check\n\nCompare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.\n\n## Install\n\nnpx shadcn@latest add Surajmaurya1/easyui/ai-image-reveal\n\nDependencies (install only those missing): framer-motion, lucide-react.\n\n## Usage\n\nImport path and example from component metadata:\n\n```tsx\nimport { AIImageReveal } from \"@/components/ui/AIImageReveal\";\n\nconst imageUrl = \"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=85\";\n\nexport function Demo() {\n  return (\n    <AIImageReveal\n      src={imageUrl}\n      alt=\"Mountain lake at sunset\"\n      prompt=\"A quiet lake beneath the mountains\"\n      aspectRatio={4 / 3}\n    />\n  );\n}\n```\n\nDeclared props:\n- `src` (string | null); default: undefined — Public image URL to reveal; omit while generating.\n- `alt` (string) — Alternative text for the finished image.\n- `generating` (boolean); default: derived from src — Force the generating state while an image URL is present.\n- `aspectRatio` (number); default: 1 — Width divided by height of the image frame.\n- `prompt` (string) — Optional caption displayed below the image.\n- `generatingLabel` (string); default: Generating… — Status pill label while waiting or gathering.\n- `colors` (string[]) — Optional particle palette as hex colors.\n- `density` (number); default: 1 — Particle density multiplier from 0.4 to 2.\n- `duration` (number); default: 3.2 — Reveal duration in seconds.\n- `crossOrigin` (\"anonymous\" | \"use-credentials\" | \"\"); default: \"anonymous\" — Cross-origin mode used when loading the image.\n- `onReveal` (() => void) — Called after the image reveal completes.\n- `onImageError` (() => void) — Called if the image URL cannot be loaded.\n- `ref` (AIImageRevealHandle) — Exposes replay() to play the reveal again.\n\n## Unverified items\n\nRequired setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/ai-image-reveal.json\n\n## Rules for you (the agent)\n\nKeep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.\n\n## Verify\n\nRun the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.\n\n## Report\n\nReport files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.\n",
+    "installPromptHash": "78c0fede832a4e68d19b760f4d2c9c04a49d093a51831f71e6eb051f08f23b27",
+    "features": [
+      "Animated idle particles while an image is generating",
+      "Particles gather into image colors before the image resolves",
+      "Handles cross-origin images with a graceful generic color fallback",
+      "Honors reduced-motion preferences and pauses offscreen rendering",
+      "Includes replay controls and accessible loading status"
+    ],
+    "props": [
+      {
+        "name": "src",
+        "type": "string | null",
+        "default": "undefined",
+        "description": "Public image URL to reveal; omit while generating."
+      },
+      {
+        "name": "alt",
+        "type": "string",
+        "description": "Alternative text for the finished image."
+      },
+      {
+        "name": "generating",
+        "type": "boolean",
+        "default": "derived from src",
+        "description": "Force the generating state while an image URL is present."
+      },
+      {
+        "name": "aspectRatio",
+        "type": "number",
+        "default": "1",
+        "description": "Width divided by height of the image frame."
+      },
+      {
+        "name": "prompt",
+        "type": "string",
+        "description": "Optional caption displayed below the image."
+      },
+      {
+        "name": "generatingLabel",
+        "type": "string",
+        "default": "Generating…",
+        "description": "Status pill label while waiting or gathering."
+      },
+      {
+        "name": "colors",
+        "type": "string[]",
+        "description": "Optional particle palette as hex colors."
+      },
+      {
+        "name": "density",
+        "type": "number",
+        "default": "1",
+        "description": "Particle density multiplier from 0.4 to 2."
+      },
+      {
+        "name": "duration",
+        "type": "number",
+        "default": "3.2",
+        "description": "Reveal duration in seconds."
+      },
+      {
+        "name": "crossOrigin",
+        "type": "\"anonymous\" | \"use-credentials\" | \"\"",
+        "default": "\"anonymous\"",
+        "description": "Cross-origin mode used when loading the image."
+      },
+      {
+        "name": "onReveal",
+        "type": "() => void",
+        "description": "Called after the image reveal completes."
+      },
+      {
+        "name": "onImageError",
+        "type": "() => void",
+        "description": "Called if the image URL cannot be loaded."
+      },
+      {
+        "name": "ref",
+        "type": "AIImageRevealHandle",
+        "description": "Exposes replay() to play the reveal again."
+      }
+    ],
+    "accessibility": [
+      "The finished image receives the supplied alt text.",
+      "A live status announces image generation and completion.",
+      "Canvas decoration is hidden from assistive technology.",
+      "Reduced-motion preferences replace particle animation with a calm fallback."
+    ],
+    "createdAt": "2026-11-20",
+    "usageCode": "import { AIImageReveal } from \"@/components/ui/AIImageReveal\";\n\nconst imageUrl = \"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=85\";\n\nexport function Demo() {\n  return (\n    <AIImageReveal\n      src={imageUrl}\n      alt=\"Mountain lake at sunset\"\n      prompt=\"A quiet lake beneath the mountains\"\n      aspectRatio={4 / 3}\n    />\n  );\n}",
+    "dependencies": [
+      "framer-motion",
+      "lucide-react"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/AIImageReveal.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/ai-image-reveal.tsx"
+      }
+    ]
+  },
+  {
     "id": "ai-response",
     "name": "AI Response",
     "tagline": "Production-ready streaming AI response with sources and actions",

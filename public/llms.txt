@@ -12,7 +12,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 136 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 137 animated React components.
 
 ### Component Index
 
@@ -20,6 +20,7 @@
 - [Activity Heatmap](https://easyui.site/components/activity-heatmap): A GitHub-style contribution calendar and weekday-by-hour activity grid with automatic column fitting, quarterly color levels, hover tooltips, and keyboard navigation.
 - [Advanced Data Table](https://easyui.site/components/advanced-data-table): A powerful, accessible data table component with multi-column sorting, faceted filters, global search, row selection, bulk actions, expandable sub-rows, and pagination.
 - [AI Agent Activity](https://easyui.site/components/ai-agent-activity): A timeline component for tracking AI agent reasoning, tool calls, API queries, database fetches, and execution states with inspectable parameters and results.
+- [AI Image Reveal](https://easyui.site/components/ai-image-reveal): A particle cloud gathers into a finished image, then resolves from a noisy mosaic into a sharp result.
 - [AI Response](https://easyui.site/components/ai-response): A production-ready, accessible AI response component supporting streaming markdown, syntax-styled code blocks, citations, feedback actions, and tool execution status.
 - [Airport Matrix Clock](https://easyui.site/components/airport-matrix-clock): A live world clock that renders local times and city names as crisp dot-matrix characters with restrained, character-level rolling transitions.
 - [Alert](https://easyui.site/components/alert): An alert component that collapses smoothly in height and opacity on dismissal, with tone-aware icons, action slot, and accessibility roles.

@@ -67,6 +67,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-09-21"
   },
   {
+    "id": "ai-image-reveal",
+    "name": "AI Image Reveal",
+    "tagline": "Reveal generated images through a particle mosaic",
+    "description": "A particle cloud gathers into a finished image, then resolves from a noisy mosaic into a sharp result.",
+    "category": "Motion",
+    "badges": [
+      "Canvas",
+      "Framer Motion",
+      "Reduced Motion",
+      "AI UI"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/ai-image-reveal",
+    "createdAt": "2026-11-20"
+  },
+  {
     "id": "ai-response",
     "name": "AI Response",
     "tagline": "Production-ready streaming AI response with sources and actions",
