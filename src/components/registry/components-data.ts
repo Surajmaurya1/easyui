@@ -6613,6 +6613,91 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = [
     ]
   },
   {
+    "id": "model-picker",
+    "name": "Model Picker",
+    "tagline": "A responsive, keyboard-friendly AI model selector",
+    "description": "A searchable AI model selector that adapts from a desktop popover to a mobile bottom sheet.",
+    "category": "Forms",
+    "badges": [
+      "Accessible",
+      "Responsive",
+      "Framer Motion"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/model-picker",
+    "installPrompt": "## Task\n\nInstall and integrate the EasyUI Model Picker component into my project.\n\nA searchable AI model selector that adapts from a desktop popover to a mobile bottom sheet.\n\nCategory: Forms.\n\n## Before you change anything\n\nInspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.\n\n## Compatibility check\n\nCompare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.\n\n## Install\n\nnpx shadcn@latest add Surajmaurya1/easyui/model-picker\n\nDependencies (install only those missing): framer-motion.\n\n## Usage\n\nImport path and example from component metadata:\n\n```tsx\nimport { ModelPicker, type AIModel } from \"@/components/ui/ModelPicker\";\n\nconst models: AIModel[] = [\n  { id: \"claude\", name: \"Claude\", speed: 3, intelligence: 5 },\n  { id: \"claude-haiku\", name: \"Claude Haiku\", speed: 5, intelligence: 2 },\n  { id: \"gemini-pro\", name: \"Gemini Pro\", speed: 4, intelligence: 5 },\n  { id: \"gemini-flash\", name: \"Gemini Flash\", speed: 5, intelligence: 3 },\n  { id: \"gpt\", name: \"GPT\", speed: 3, intelligence: 5 },\n  { id: \"gpt-mini\", name: \"GPT Mini\", speed: 5, intelligence: 2 },\n];\n\nexport function Demo() {\n  return <ModelPicker models={models} defaultValue=\"gpt\" />;\n}\n```\n\nDeclared props:\n- `models` (AIModel[]) — Models to display, optionally grouped by provider.\n- `value` (string) — Selected model ID for controlled usage.\n- `defaultValue` (string) — Initial model ID for uncontrolled usage.\n- `onChange` ((id: string, model: AIModel) => void) — Called when a model is selected.\n- `variant` (\"pill\" | \"field\"); default: \"pill\" — Compact composer chip or full-width labeled field.\n- `searchable` (boolean | \"auto\"); default: \"auto\" — Whether to show search; auto enables it for more than six models.\n- `footer` (ReactNode) — Optional content displayed beneath the model list.\n- `disabled` (boolean); default: false — Disables opening the picker.\n\n## Unverified items\n\nRequired setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/model-picker.json\n\n## Rules for you (the agent)\n\nKeep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.\n\n## Verify\n\nRun the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.\n\n## Report\n\nReport files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.\n",
+    "installPromptHash": "ba016a0a87b4354f7232c36724eeac5abd2dac2e3d9f6e8a7102dc6e7e0b1883",
+    "features": [
+      "Desktop popover and mobile bottom sheet layouts",
+      "Provider grouping, model search, tags, and capability indicators",
+      "Keyboard navigation, focus management, and screen-reader announcements",
+      "Controlled and uncontrolled selection modes",
+      "Honors reduced-motion preferences"
+    ],
+    "props": [
+      {
+        "name": "models",
+        "type": "AIModel[]",
+        "description": "Models to display, optionally grouped by provider."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "Selected model ID for controlled usage."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "description": "Initial model ID for uncontrolled usage."
+      },
+      {
+        "name": "onChange",
+        "type": "(id: string, model: AIModel) => void",
+        "description": "Called when a model is selected."
+      },
+      {
+        "name": "variant",
+        "type": "\"pill\" | \"field\"",
+        "default": "\"pill\"",
+        "description": "Compact composer chip or full-width labeled field."
+      },
+      {
+        "name": "searchable",
+        "type": "boolean | \"auto\"",
+        "default": "\"auto\"",
+        "description": "Whether to show search; auto enables it for more than six models."
+      },
+      {
+        "name": "footer",
+        "type": "ReactNode",
+        "description": "Optional content displayed beneath the model list."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "default": "false",
+        "description": "Disables opening the picker."
+      }
+    ],
+    "accessibility": [
+      "Supports arrow keys, Home, End, Enter, Escape, and type-to-select.",
+      "Returns focus to the trigger after closing and keeps keyboard focus inside the open dialog.",
+      "Exposes listbox, option, dialog, and live status semantics.",
+      "Honors reduced-motion preferences."
+    ],
+    "createdAt": "2026-11-23",
+    "usageCode": "import { ModelPicker, type AIModel } from \"@/components/ui/ModelPicker\";\n\nconst models: AIModel[] = [\n  { id: \"claude\", name: \"Claude\", speed: 3, intelligence: 5 },\n  { id: \"claude-haiku\", name: \"Claude Haiku\", speed: 5, intelligence: 2 },\n  { id: \"gemini-pro\", name: \"Gemini Pro\", speed: 4, intelligence: 5 },\n  { id: \"gemini-flash\", name: \"Gemini Flash\", speed: 5, intelligence: 3 },\n  { id: \"gpt\", name: \"GPT\", speed: 3, intelligence: 5 },\n  { id: \"gpt-mini\", name: \"GPT Mini\", speed: 5, intelligence: 2 },\n];\n\nexport function Demo() {\n  return <ModelPicker models={models} defaultValue=\"gpt\" />;\n}",
+    "dependencies": [
+      "framer-motion"
+    ],
+    "files": [
+      {
+        "path": "src/components/ui/ModelPicker.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/model-picker.tsx"
+      }
+    ]
+  },
+  {
     "id": "money-card",
     "name": "Money Card",
     "tagline": "Interactive financial wallet card with quick-send contacts and animated transfer sheets",

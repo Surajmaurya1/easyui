@@ -12,7 +12,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 137 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 138 animated React components.
 
 ### Component Index
 
@@ -84,6 +84,7 @@
 - [Magnetic Button](https://easyui.site/components/magnetic-button): A responsive button with subtle proximity-based physics that pulls towards the cursor on hover and snaps back on departure.
 - [Meteors](https://easyui.site/components/meteors): A lightweight, highly aesthetic animated meteor shower effect that streams diagonal glowing celestial light beams across cards, badges, hero containers, and call-to-action sections.
 - [Metric HUD](https://easyui.site/components/metric-hud): An interactive developer telemetry card featuring hardware-accelerated SVG sparklines, pointer-scrubbing point inspection, spring-animated time range morphing, and delta indicators.
+- [Model Picker](https://easyui.site/components/model-picker): A searchable AI model selector that adapts from a desktop popover to a mobile bottom sheet.
 - [Money Card](https://easyui.site/components/money-card): An interactive financial wallet card featuring animated live balance updates, quick-send contact shortcuts, recent transaction history, and responsive modal sheets for sending, receiving, and viewing activity.
 - [Morphing Blob](https://easyui.site/components/morphing-blob): An ambient, accessible SVG blob background that continuously morphs with spring physics and subtly follows the cursor for a fluid, interactive visual effect.
 - [Morphing Button](https://easyui.site/components/morphing-button): A layout-stable interactive action button that smoothly transitions between Idle, Loading, Success, and Error states without jarring jumps or dimension shifts.
