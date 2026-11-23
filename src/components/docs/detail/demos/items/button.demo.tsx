@@ -13,7 +13,7 @@ export async function preload(): Promise<void> {
 export default function ComponentDemo(props: DemoProps) {
   void props;
 return (
-        <div className="py-6 w-full space-y-6 max-w-xl mx-auto">
+        <div className="dark py-6 w-full space-y-6 max-w-xl mx-auto">
           <div className="p-5 rounded-xl bg-[#0E0E0E] border border-[#1F1F1F] space-y-4">
             <div className="text-xs font-semibold text-[#FAFAFA]">Visual Variants</div>
             <div className="flex flex-wrap items-center gap-2.5">
