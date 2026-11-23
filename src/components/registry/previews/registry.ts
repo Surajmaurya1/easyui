@@ -1,6 +1,12 @@
 import type { ComponentPreviewDefinition } from './types';
 
 export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
+  'model-picker': {
+    id: 'model-picker',
+    componentId: 'model-picker',
+    load: () => import('./items/model-picker'),
+    metadata: { type: 'interactive', description: 'Responsive AI model selector' },
+  },
   'dynamic-island': {
     id: 'dynamic-island',
     componentId: 'dynamic-island',

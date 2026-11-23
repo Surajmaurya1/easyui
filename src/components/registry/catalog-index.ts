@@ -1022,6 +1022,20 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-08-19"
   },
   {
+    "id": "model-picker",
+    "name": "Model Picker",
+    "tagline": "A responsive, keyboard-friendly AI model selector",
+    "description": "A searchable AI model selector that adapts from a desktop popover to a mobile bottom sheet.",
+    "category": "Forms",
+    "badges": [
+      "Accessible",
+      "Responsive",
+      "Framer Motion"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/model-picker",
+    "createdAt": "2026-11-23"
+  },
+  {
     "id": "money-card",
     "name": "Money Card",
     "tagline": "Interactive financial wallet card with quick-send contacts and animated transfer sheets",

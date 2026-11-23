@@ -1623,6 +1623,22 @@
       ]
     },
     {
+      "name": "model-picker",
+      "type": "registry:ui",
+      "title": "Model Picker",
+      "description": "A searchable AI model selector that adapts from a desktop popover to a mobile bottom sheet.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/ModelPicker.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/model-picker.tsx"
+        }
+      ]
+    },
+    {
       "name": "money-card",
       "type": "registry:ui",
       "title": "Money Card",

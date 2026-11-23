@@ -541,6 +541,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://easyui.site/components/model-picker</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://easyui.site/components/money-card</loc>
     <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>

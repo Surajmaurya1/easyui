@@ -71,6 +71,7 @@ export const DEMO_ROUTE_MODULES = {
   'magnetic-button': { aliases: [], load: () => import('./demos/items/magnetic-button.demo') },
   'meteors': { aliases: ['meteor-shower', 'meteor-card'], load: () => import('./demos/items/meteors.demo') },
   'metric-hud': { aliases: [], load: () => import('./demos/items/metric-hud.demo') },
+  'model-picker': { aliases: [], load: () => import('./demos/items/model-picker.demo') },
   'money-card': { aliases: [], load: () => import('./demos/items/money-card.demo') },
   'morphing-blob': { aliases: [], load: () => import('./demos/items/morphing-blob.demo') },
   'morphing-button': { aliases: [], load: () => import('./demos/items/morphing-button.demo') },
