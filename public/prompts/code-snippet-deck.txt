@@ -1,0 +1,91 @@
+## Task
+
+Install and integrate the EasyUI Code Snippet Deck component into my project.
+
+An interactive multi-runtime developer code snippet deck with runtime switching (cURL, TypeScript, Python, Go, Rust), live dynamic parameter customizations, and line highlighting.
+
+Category: Buttons.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/code-snippet-deck
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { CodeSnippetDeck } from "@/components/ui/code-snippet-deck";
+
+const snippets = [
+  {
+    language: "typescript",
+    label: "TypeScript",
+    filename: "client.ts",
+    highlightLines: [4, 5],
+    code: (p: any) => `import { EasyClient } from "@easyui/sdk";
+
+const client = new EasyClient({
+  apiKey: "${p.apiKey || "sk_live_9981"}",
+  streaming: ${p.stream ? "true" : "false"},
+});
+
+const response = await client.completions.create({
+  model: "easy-4o",
+  prompt: "Generate modern dark UI",
+});`,
+  },
+  {
+    language: "curl",
+    label: "cURL",
+    filename: "request.sh",
+    code: (p: any) => `curl https://api.easyui.dev/v1/completions \
+  -H "Authorization: Bearer ${p.apiKey || "sk_live_9981"}" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "easy-4o", "stream": ${p.stream ? "true" : "false"}}'`,
+  },
+];
+
+const parameters = [
+  { id: "stream", label: "Stream response", type: "boolean" as const, defaultValue: true },
+  { id: "apiKey", label: "API Key", type: "text" as const, defaultValue: "sk_live_demo" },
+];
+
+export function Demo() {
+  return <CodeSnippetDeck snippets={snippets} parameters={parameters} />;
+}
+```
+
+Declared props:
+- `snippets` (SnippetItem[]); default: [] — Collection of language snippets and generator functions
+- `parameters` (SnippetParameter[]); default: [] — Configurable runtime variables (checkboxes, dropdowns, inputs)
+- `defaultLanguage` (string); default: snippets[0]?.language — Initially selected language key
+- `showLineNumbers` (boolean); default: true — Whether to display code line numbering
+- `showWindowBar` (boolean); default: true — Whether to render macOS window bar header
+- `className` (string); default: undefined — Custom CSS container classes
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/code-snippet-deck.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

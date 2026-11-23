@@ -1,0 +1,93 @@
+## Task
+
+Install and integrate the EasyUI Prompt Input component into my project.
+
+A production-ready AI chat composer with an auto-growing textarea, streaming stop control, attachment chips with drag-and-drop and paste, an accessible model picker, prompt history, and keyboard-first send behavior.
+
+Category: Forms.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/prompt-input
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { PromptInput, type PromptSubmit } from "@/components/ui/prompt-input";
+
+export function Demo() {
+  const models = [
+    { id: "fast", name: "Fast", description: "Quick answers", badge: "Fast" },
+    { id: "reasoning", name: "Reasoning", description: "Thinks longer", badge: "Deep" },
+  ];
+
+  const handleSend = async ({ text, files, model }: PromptSubmit) => {
+    await fetch("/api/chat", {
+      method: "POST",
+      body: JSON.stringify({ text, files: files.map((f) => f.name), model: model?.id }),
+    });
+  };
+
+  return (
+    <PromptInput
+      onSend={handleSend}
+      models={models}
+      streaming={false}
+      onStop={() => {}}
+      placeholder="Message the assistant…"
+      safeArea
+    />
+  );
+}
+```
+
+Declared props:
+- `onSend` ((payload: PromptSubmit) => void | Promise<void>); default: undefined — Called when the user sends. Throw or reject to put the message back in the box
+- `streaming` (boolean); default: false — While true the send button becomes a Stop button and Escape stops the reply
+- `onStop` (() => void); default: undefined — Callback fired when the user stops a streaming response
+- `models` (PromptModel[]); default: DEFAULT_MODELS — Models rendered in the accessible model picker listbox
+- `model` (string); default: undefined — Controlled model id
+- `defaultModel` (string); default: undefined — Initial model id when uncontrolled (defaults to the first model)
+- `onModelChange` ((id: string) => void); default: undefined — Callback fired when the selected model changes
+- `placeholder` (string); default: 'Message the assistant…' — Placeholder text for the textarea
+- `maxLength` (number); default: 8000 — Maximum character count before the message is flagged as over the limit
+- `maxHeight` (number); default: 224 — Tallest the textarea grows in pixels before it starts scrolling
+- `allowAttachments` (boolean); default: true — Enables the attach button, drag-and-drop, and paste file handling
+- `maxFiles` (number); default: 5 — Maximum number of attachments allowed at once
+- `maxFileSizeMB` (number); default: 10 — Maximum size per attachment in megabytes
+- `accept` (string); default: undefined — Accepted file types using the same format as an input accept attribute
+- `disabled` (boolean); default: false — Disables the composer and all of its controls
+- `autoFocus` (boolean); default: false — Focuses the textarea when the component mounts
+- `enterToSend` (boolean); default: desktop only — Enter sends and Shift+Enter adds a line. Defaults to true on fine pointers and false on touch devices. Cmd/Ctrl+Enter always sends
+- `actions` (ReactNode); default: undefined — Extra buttons rendered next to the model picker
+- `hint` (ReactNode | false); default: keyboard hint — Footer line under the box. Pass false to hide it
+- `safeArea` (boolean); default: false — Pads the bottom for the iPhone home indicator when pinned to the screen bottom
+- `className` (string); default: undefined — Custom Tailwind class names for the outer wrapper
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/prompt-input.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

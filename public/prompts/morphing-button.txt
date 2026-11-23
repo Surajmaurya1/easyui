@@ -1,0 +1,75 @@
+## Task
+
+Install and integrate the EasyUI Morphing Button component into my project.
+
+A layout-stable interactive action button that smoothly transitions between Idle, Loading, Success, and Error states without jarring jumps or dimension shifts.
+
+Category: Buttons.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/morphing-button
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { MorphingButton } from "@/components/ui/morphing-button";
+
+export function Demo() {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+
+  const handleClick = () => {
+    setStatus('loading');
+    setTimeout(() => {
+      setStatus('success');
+      setTimeout(() => setStatus('idle'), 2000);
+    }, 1500);
+  };
+
+  return (
+    <MorphingButton
+      status={status}
+      idleText="Deploy Project"
+      loadingText="Building Edge..."
+      successText="Deployed ✓"
+      onClick={handleClick}
+    />
+  );
+}
+```
+
+Declared props:
+- `status` ('idle' | 'loading' | 'success' | 'error'); default: 'idle' — Current button lifecycle state
+- `idleText` (string); default: 'Save Changes' — Label shown in default resting state
+- `loadingText` (string); default: 'Saving...' — Label shown when operation is pending
+- `successText` (string); default: 'Saved' — Label shown upon successful completion
+- `errorText` (string); default: 'Failed' — Label shown when operation fails
+- `variant` ('primary' | 'secondary' | 'danger' | 'ghost'); default: 'primary' — Visual surface styling preset
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/morphing-button.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

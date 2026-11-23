@@ -125,7 +125,7 @@ npm run component:sync
 This single command:
 1. Computes the kebab-case slug (`aurora-card`).
 2. Detects imported npm dependencies (`framer-motion`, `lucide-react`) and shared utilities (`utils.ts`, `motion-tokens.ts`).
-3. Updates the root `registry.json` and `src/components/registry/components-data.ts`.
+3. Updates the root `registry.json`, lightweight catalog index, per-component detail modules, and on-demand prompt files.
 4. Updates `public/sitemap.xml` for SEO.
 5. Runs the full validation suite to verify there are no broken paths.
 
@@ -167,7 +167,7 @@ The registry generator will automatically discover the folder and include all co
 | `npm run dev` | Starts Vite local development server (`http://localhost:5173`) |
 | `npm run component:new <Name>` | Scaffolds a new component boilerplate (`.tsx` + `.meta.ts`) |
 | `npm run component:sync` | Syncs registry, website catalog, and sitemap, then validates |
-| `npm run registry:generate` | Regenerates `registry.json` and `components-data.ts` |
+| `npm run registry:generate` | Regenerates the registry, catalog index, per-component detail modules, and prompt assets |
 | `npm run registry:validate` | Validates schemas, unique slugs, file paths, and package dependencies |
 | `npm run seo:audit` | Runs the automated 7-category SEO health audit |
 | `npm run seo:sitemap` | Generates `public/sitemap.xml` with all component routes |

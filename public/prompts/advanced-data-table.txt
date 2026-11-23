@@ -1,0 +1,87 @@
+## Task
+
+Install and integrate the EasyUI Advanced Data Table component into my project.
+
+A powerful, accessible data table component with multi-column sorting, faceted filters, global search, row selection, bulk actions, expandable sub-rows, and pagination.
+
+Category: Forms.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/advanced-data-table
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { AdvancedDataTable, type ColumnDef } from "@/components/ui/advanced-data-table";
+
+interface UserRecord {
+  id: string;
+  name: string;
+  role: string;
+  status: 'active' | 'pending';
+}
+
+const columns: ColumnDef<UserRecord>[] = [
+  { id: 'name', header: 'User', accessorKey: 'name', sortable: true },
+  { id: 'role', header: 'Role', accessorKey: 'role', sortable: true },
+  { id: 'status', header: 'Status', accessorKey: 'status', filterable: true },
+];
+
+export function Demo() {
+  const data: UserRecord[] = [
+    { id: '1', name: 'Alex Chen', role: 'Engineer', status: 'active' },
+    { id: '2', name: 'Elena Rostova', role: 'Designer', status: 'pending' },
+  ];
+
+  return (
+    <AdvancedDataTable
+      title="Team Members"
+      data={data}
+      columns={columns}
+      onBulkDelete={(ids) => console.log('Delete:', ids)}
+    />
+  );
+}
+```
+
+Declared props:
+- `data` (T[]); default: [] — Array of data records to render in the table
+- `columns` (ColumnDef<T>[]); default: [] — Column configuration defining headers, accessors, sorting, filtering, and custom cell renderers
+- `title` (string); default: undefined — Optional table title displayed in the toolbar
+- `searchPlaceholder` (string); default: 'Search records...' — Placeholder text for the global search input
+- `defaultPageSize` (number); default: 10 — Initial number of records to show per page
+- `renderSubComponent` ((row: T) => ReactNode); default: undefined — Render prop function for expandable row sub-details
+- `onBulkDelete` ((selectedIds: string[]) => void); default: undefined — Callback fired when user executes bulk deletion
+- `onBulkExport` ((selectedIds: string[]) => void); default: undefined — Callback fired when user clicks bulk export
+- `isLoading` (boolean); default: false — Renders animated skeleton placeholders when true
+- `error` (string | null); default: null — Renders an error state banner when present
+- `className` (string); default: undefined — Custom Tailwind class names for styling overrides
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/advanced-data-table.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

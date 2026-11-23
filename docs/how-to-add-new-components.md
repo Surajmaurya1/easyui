@@ -14,7 +14,7 @@ This guide describes the current workflow after the `ComponentDetailPage` refact
 - Refactored page composition and sections: `src/components/docs/detail/`
 - Public component detail import path: `src/components/docs/ComponentDetailPage.tsx`
 
-`registry.json`, `src/components/registry/components-data.ts`, `src/components/registry/catalog-index.ts`, `public/source/`, the sitemap, and `public/llms.txt` are generated. Do not edit them by hand.
+`registry.json`, `src/components/registry/catalog-index.ts`, `src/components/registry/component-details.ts`, `src/components/registry/details/`, `public/source/`, `public/prompts/`, the sitemap, and `public/llms.txt` are generated. Do not edit them by hand.
 
 ## Workflow
 

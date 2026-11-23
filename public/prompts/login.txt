@@ -1,0 +1,73 @@
+## Task
+
+Install and integrate the EasyUI Login component into my project.
+
+A production-ready authentication card built with the EasyUI form system, featuring password show/hide, remember me, validation states, and social logins.
+
+Category: Auth.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/login
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { Login } from "@/components/ui/login";
+
+export function Demo() {
+  const handleLogin = async (data: { email: string; password: string; rememberMe: boolean }) => {
+    console.log("Authenticating:", data);
+  };
+
+  return (
+    <div className="py-8 flex justify-center">
+      <Login
+        onSubmit={handleLogin}
+        onForgotPassword={() => alert("Redirect to forgot password")}
+        onSignUpClick={() => alert("Redirect to sign up")}
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `title` (string); default: 'Welcome back' — Primary card title text
+- `description` (string); default: 'Sign in to access your EasyUI workspace' — Subtitle description below the title
+- `logo` (React.ReactNode); default: <SparklesIcon /> — Brand badge or logo displayed at the top
+- `error` (string | null); default: null — Server-side or authentication error banner message
+- `isLoading` (boolean); default: false — Submitting state displaying loader on submit button
+- `onSubmit` ((data: LoginFormData) => void); default: undefined — Form submission callback with email, password, rememberMe
+- `onForgotPassword` (() => void); default: undefined — Callback when forgot password link is clicked
+- `onSignUpClick` (() => void); default: undefined — Callback for secondary sign up switch action
+- `showSocialLogins` (boolean); default: true — Toggles GitHub and Google SSO buttons
+- `onSocialLogin` ((provider: 'github' | 'google' | 'apple') => void); default: undefined — Callback when social login button is pressed
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/login.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

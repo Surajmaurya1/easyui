@@ -1,0 +1,60 @@
+## Task
+
+Install and integrate the EasyUI Interactive Area Chart component into my project.
+
+A hand-written, dependency-free interactive SVG area chart with interruptible dataset morphing, Catmull-Rom spline resampling, scrubbing tooltip, and keyboard accessibility.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/interactive-area-chart
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { InteractiveAreaChart } from "@/components/ui/interactive-area-chart";
+
+export function Demo() {
+  return (
+    <div className="w-full max-w-2xl p-6 bg-white dark:bg-neutral-950 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+      <InteractiveAreaChart title="Monthly Recurring Revenue" />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `data` (AreaChartData); default: DEFAULT_AREA_CHART_DATA — Dictionary of time-series datasets keyed by range labels (e.g. 7D, 30D, 1Y)
+- `defaultRange` (string); default: "30D" — Initial active range key
+- `title` (string); default: "Revenue" — Chart title displayed in header
+- `height` (number); default: 280 — Fixed pixel height of the chart SVG area
+- `className` (string); default: "" — Additional CSS class names
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/interactive-area-chart.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

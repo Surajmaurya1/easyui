@@ -1,0 +1,106 @@
+## Task
+
+Install and integrate the EasyUI Story Cards component into my project.
+
+A responsive, accessible story cards carousel for React applications built with Tailwind CSS and Framer Motion.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/story-card
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { StoryCards } from "@/components/ui/StoryCard";
+
+export function Demo() {
+  return (
+    <StoryCards
+      cards={[
+        {
+          id: 1,
+          title: "Annual letter 2025",
+          description:
+            "We survived another year of meetings, deadlines, bugs, and pretending everything was part of the plan.",
+          image:
+            "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=85",
+          imageAlt: "Modern office interior",
+          ctaLabel: "Read the damage",
+        },
+        {
+          id: 2,
+          title: "Building for the future",
+          description:
+            "A deep dive into how we build things nobody asked for, then spend three weeks fixing them.",
+          image:
+            "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85",
+          imageAlt: "Team collaborating in an office",
+          ctaLabel: "See the chaos",
+        },
+        {
+          id: 3,
+          title: "Inside the journey",
+          description:
+            "One person's inspiring journey from 'this should be easy' to 47 browser tabs and a Stack Overflow account.",
+          image:
+            "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85",
+          imageAlt: "Person exploring a landscape",
+          ctaLabel: "Join the adventure",
+        },
+        {
+          id: 4,
+          title: "The internet economy",
+          description:
+            "An extremely serious investigation into why everything costs money, including things that used to be free.",
+          image:
+            "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=85",
+          imageAlt: "Technology infrastructure",
+          ctaLabel: "Understand capitalism",
+        }
+        }
+    />
+  );
+}
+```
+
+Declared props:
+- `cards` (StoryCard[]); default: undefined — Array of story cards containing title, image, description, and optional link information
+- `initialIndex` (number); default: 0 — Index of the story displayed initially
+- `loop` (boolean); default: true — Enables endless circular scrolling through the cards
+- `enableWheelScroll` (boolean); default: true — Allows trackpad or mouse wheel gestures to scroll through cards
+- `autoPlay` (boolean); default: false — Automatically advances through the story cards
+- `autoPlayInterval` (number); default: 5000 — Time in milliseconds between automatic story transitions
+- `showNavigation` (boolean); default: true — Controls whether previous and next navigation buttons are displayed
+- `title` (string); default: "What's happening" — Custom title heading for the story cards section
+- `subtitle` (string); default: "Discover the latest stories." — Custom subtitle for the story cards section
+- `className` (string); default: undefined — Optional custom Tailwind styling for the component wrapper
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/story-card.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

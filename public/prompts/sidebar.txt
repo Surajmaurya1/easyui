@@ -1,0 +1,99 @@
+## Task
+
+Install and integrate the EasyUI Sidebar component into my project.
+
+A collapsible application sidebar with a hover pill that follows the cursor and a shared-layout active pill that glides between items. Includes nested sections, icon-only mode with tooltips, ⌘B toggle, and a draggable mobile drawer.
+
+Category: Navigation.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/sidebar
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import * as React from "react";
+import { Bell, Folder, Home, Inbox, Settings, Users } from "lucide-react";
+import { Sidebar, SidebarTrigger, useSidebar, type SidebarSection } from "@/components/ui/sidebar";
+
+const sections: SidebarSection[] = [
+  {
+    items: [
+      { id: "home", label: "Home", icon: <Home /> },
+      { id: "inbox", label: "Inbox", icon: <Inbox />, badge: 4 },
+    ],
+  },
+  {
+    title: "Workspace",
+    items: [
+      {
+        id: "projects",
+        label: "Projects",
+        icon: <Folder />,
+        children: [
+          { id: "active", label: "Active", badge: 12 },
+          { id: "archived", label: "Archived" },
+        ],
+      },
+      { id: "team", label: "Team", icon: <Users /> },
+      { id: "alerts", label: "Alerts", icon: <Bell /> },
+      { id: "settings", label: "Settings", icon: <Settings /> },
+    ],
+  },
+];
+
+export default function Page() {
+  const [active, setActive] = React.useState("home");
+
+  return (
+    <div className="flex h-screen">
+      <Sidebar sections={sections} activeId={active} onActiveChange={setActive} />
+      <main className="flex-1 p-4">
+        <SidebarTrigger />
+      </main>
+    </div>
+  );
+}
+```
+
+Declared props:
+- `sections` (SidebarSection[]); default: undefined — Navigation sections with items, optional titles, badges, and nested children
+- `activeId` (string); default: undefined — ID of the active item
+- `onActiveChange` ((id: string) => void); default: undefined — Called when an item or child is selected
+- `header` (React.ReactNode); default: undefined — Brand/header slot (use useSidebar() to adapt when collapsed)
+- `footer` (React.ReactNode); default: undefined — Footer slot above the collapse toggle
+- `collapsed` (boolean); default: undefined — Controlled collapsed (icon-only) state
+- `defaultCollapsed` (boolean); default: false — Initial collapsed state (uncontrolled)
+- `onCollapsedChange` ((collapsed: boolean) => void); default: undefined — Collapse state change callback
+- `mobileOpen` (boolean); default: undefined — Controlled mobile drawer open state
+- `onMobileOpenChange` ((open: boolean) => void); default: undefined — Mobile drawer open state callback
+- `className` (string); default: undefined — Additional class for the aside
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/sidebar.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

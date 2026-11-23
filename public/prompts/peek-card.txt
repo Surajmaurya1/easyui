@@ -1,0 +1,69 @@
+## Task
+
+Install and integrate the EasyUI Peek Card component into my project.
+
+An origin-anchored contextual preview popover that emerges directly from target triggers on hover or tap with smart collision edge detection and rich metadata summaries.
+
+Category: Overlays.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/peek-card
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { PeekCard } from "@/components/ui/peek-card";
+
+export function Demo() {
+  return (
+    <PeekCard
+      data={{
+        title: "Payment #3948",
+        amount: "$249.00",
+        customer: { name: "Alexander Wright", email: "alex@acme.com" },
+        status: "Succeeded",
+      }}
+    >
+      <span className="underline decoration-dotted cursor-pointer">
+        Payment #3948
+      </span>
+    </PeekCard>
+  );
+}
+```
+
+Declared props:
+- `children` (ReactNode); default: undefined — Trigger target element wrapped by peek card
+- `data` (PeekCardData); default: [...] — Structured preview dataset
+- `delay` (number); default: 200 — Hover activation delay in milliseconds
+- `placement` ('top' | 'bottom' | 'auto'); default: 'auto' — Preferred emergence direction
+- `isLoading` (boolean); default: false — Renders skeleton placeholder during async lookup
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/peek-card.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

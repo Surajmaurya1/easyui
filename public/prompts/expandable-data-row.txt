@@ -1,0 +1,69 @@
+## Task
+
+Install and integrate the EasyUI Expandable Data Row component into my project.
+
+A polished table component with fluid accordion row unfolding, revealing deep metadata, audit activity feeds, and quick actions, with automatic card restructuring on mobile viewports.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/expandable-data-row
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { ExpandableDataRow } from "@/components/ui/expandable-data-row";
+
+export function Demo() {
+  return (
+    <ExpandableDataRow
+      items={[
+        {
+          id: "usr_01",
+          user: { name: "Sarah Connor", email: "sarah@cyberdyne.io" },
+          status: "active",
+          revenue: "$4,280",
+          date: "Oct 24, 2026",
+          metadata: { plan: "Enterprise Plus", sessions: 482 },
+        }
+      ]}
+    />
+  );
+}
+```
+
+Declared props:
+- `items` (DataRowItem[]); default: [...] — Data records with user, status, revenue, and metadata
+- `allowMultiple` (boolean); default: false — Permit multiple expanded rows concurrently
+- `defaultExpandedIds` (string[]); default: ['usr_01'] — Initially expanded row identifiers
+- `isLoading` (boolean); default: false — Displays pulse skeleton loaders during data fetch
+- `onRowAction` ((action: string, row: DataRowItem) => void); default: undefined — Callback fired on row action buttons
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/expandable-data-row.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

@@ -1,0 +1,65 @@
+## Task
+
+Install and integrate the EasyUI Breadcrumb component into my project.
+
+A navigation trail with a gliding hover pill, smooth expansion for collapsed trails with automatic focus transfer, and light/dark theme adaptation.
+
+Category: Navigation.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/breadcrumb
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import Link from "next/link";
+import { Home } from "lucide-react";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+
+<Breadcrumb
+  as={Link}
+  items={[
+    { label: "Home", href: "/", icon: <Home className="size-4" /> },
+    { label: "Projects", href: "/projects" },
+    { label: "EasyUI", href: "/projects/easyui" },
+    { label: "Components", href: "/projects/easyui/components" },
+    { label: "Breadcrumb" }, // Current page (no href needed)
+  ]}
+/>
+```
+
+Declared props:
+- `items` (BreadcrumbItem[]); default: undefined — Array of breadcrumb items with label, href, and optional icon
+- `separator` ('chevron' | 'slash'); default: 'chevron' — Separator style between breadcrumb items
+- `maxItems` (number); default: 4 — Collapse the middle items when length exceeds this number
+- `as` (React.ElementType); default: 'a' — Custom link component (e.g. Next.js Link)
+- `className` (string); default: undefined — Additional CSS classes for the nav container
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/breadcrumb.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

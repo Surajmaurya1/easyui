@@ -1,0 +1,82 @@
+## Task
+
+Install and integrate the EasyUI Package Box component into my project.
+
+A pure CSS 3D cardboard package box featuring interactive tape-splitting physics, flap-folding choreography, and an animated packing slip that rises out and turns to face the viewer.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/package-box
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { PackageBox } from "@/components/ui/package-box";
+
+export function Demo() {
+  return (
+    <PackageBox
+      colors={{ box: "#b07b4a", tape: "#d3c3aa" }}
+      slip={{
+        title: "Thank you, Ana.",
+        subtitle: "Your order is packed and on its way.",
+        recipient: "Ana Rivera",
+        items: [
+          { name: "Oak desk lamp", qty: 1, price: "$89.00" },
+          { name: "Linen pouch", qty: 2, price: "$36.00" },
+        ],
+        total: "$125.00",
+        stamp: "Packed",
+      }}
+    />
+  );
+}
+```
+
+Declared props:
+- `open` (boolean); default: undefined — Controlled open state of the package box
+- `defaultOpen` (boolean); default: false — Initial open state for uncontrolled usage
+- `onOpenChange` ((open: boolean) => void); default: undefined — Callback triggered when open state changes
+- `children` (ReactNode); default: undefined — Custom React elements to render inside the rising document paper
+- `slip` (PackageSlip); default: DEFAULT_SLIP — Structured metadata for the default shipping invoice / packing slip
+- `maxWidth` (number); default: 460 — Maximum width in px; the 3D scene scales down responsively
+- `colors` (PackageBoxColors); default: undefined — Color overrides for box cardboard, tape, paper, ink, and accent stamp
+- `label` (ReactNode | false); default: undefined — Custom shipping label or false to hide
+- `symbols` (ReactNode | false); default: undefined — Custom fragile/handling symbols or false to hide
+- `tape` (boolean); default: true — Whether packing tape across top and seam is rendered
+- `hint` (boolean); default: true — Whether to show the accessible toggle button below the box
+- `openLabel` (string); default: 'Click to open' — Accessible label when closed
+- `closeLabel` (string); default: 'Close' — Accessible label when open
+- `reserveSpace` (boolean); default: false — Whether to preserve full open height while closed to avoid layout shifts
+- `className` (string); default: '' — Optional CSS class names for outer wrapper
+- `paperClassName` (string); default: '' — Optional CSS class names for the document paper
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/package-box.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

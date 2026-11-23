@@ -1,0 +1,92 @@
+## Task
+
+Install and integrate the EasyUI Payment Receipt Printer component into my project.
+
+An animated payment and order receipt printer component for React featuring realistic thermal paper extrusion, chassis micro-vibration, customizable receipt itemization, and replay controls.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/payment-receipt-printer
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { PaymentReceiptPrinter } from "@/components/ui/payment-receipt-printer";
+
+export function Demo() {
+  return (
+    <PaymentReceiptPrinter
+      merchant="EasyUI Store"
+      orderNumber="#4821"
+      items={[
+        { name: "EasyUI Pro License", price: "$200.00", quantity: 1 },
+        { name: "Framer Motion Pack", price: "$20.00", quantity: 1 },
+      ]}
+      subtotal="$220.00"
+      total="$220.00"
+      paymentMethod="Apple Pay •••• 4242"
+      message="Thank you for your order!"
+    />
+  );
+}
+```
+
+Declared props:
+- `status` ('idle' | 'printing' | 'completed' | 'success'); default: 'idle' — Current lifecycle state of payment and printing
+- `merchant` (string); default: 'EasyUI Store' — Store or company name on receipt header
+- `merchantSubtext` (string); default: 'Official Component Registry' — Location or subtitle below merchant name
+- `merchantLogo` (ReactNode); default: undefined — Custom logo icon rendered in receipt header
+- `orderNumber` (string); default: '#4821' — Unique order or invoice tracking reference
+- `date` (string | Date); default: Current date — Transaction timestamp string or Date object
+- `items` (ReceiptItem[]); default: [] — List of purchased items with prices, quantities, and descriptions
+- `item` (ReceiptItem); default: undefined — Shorthand for single item receipt
+- `subtotal` (string | number); default: undefined — Subtotal price before tax and discounts
+- `tax` (string | number); default: undefined — Tax amount displayed on receipt
+- `discount` (string | number); default: undefined — Discount or coupon amount deducted
+- `total` (string | number); default: '$200.00' — Final total payment amount
+- `currency` (string); default: '$' — Currency symbol prepended to numeric prices
+- `paymentMethod` (string); default: 'Apple Pay •••• 4242' — Payment method or card description
+- `message` (string); default: 'Thank you for your order!' — Footer message printed at bottom of receipt
+- `autoPrint` (boolean); default: true — Whether to automatically begin printing extrusion on mount
+- `printDuration` (number); default: 2.4 — Extrusion animation duration in seconds
+- `showStatusCard` (boolean); default: true — Whether to display the top status card banner
+- `statusTitle` (string); default: 'Payment Complete' — Heading for the top status banner
+- `statusSubtitle` (string); default: 'Receipt has been issued' — Subtitle description for status banner
+- `showActions` (boolean); default: true — Whether to render Replay and Copy action buttons
+- `showBarcode` (boolean); default: true — Whether to render the thermal barcode block
+- `showCutEffect` (boolean); default: true — Whether to render jagged serrated paper edges
+- `paperTheme` ('light' | 'dark' | 'cream'); default: 'light' — Receipt paper visual theme styling
+- `onPrintStart` (() => void); default: undefined — Callback fired when paper printing begins
+- `onPrintComplete` (() => void); default: undefined — Callback fired when paper printing finishes
+- `onReplay` (() => void); default: undefined — Callback fired when animation replay is triggered
+- `className` (string); default: undefined — Custom CSS classes for outer container
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/payment-receipt-printer.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

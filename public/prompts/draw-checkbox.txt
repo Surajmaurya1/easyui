@@ -1,0 +1,63 @@
+## Task
+
+Install and integrate the EasyUI DrawCheckbox component into my project.
+
+A checkbox whose checkmark draws itself (path length animation) and settles with a tiny overshoot. The box scales from 0.9 -> 1.04 -> 1.0 for a tactile snap feel.
+
+Category: Forms.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/draw-checkbox
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { DrawCheckbox } from "@/components/ui/draw-checkbox";
+
+export function Demo() {
+  return (
+    <div className="space-y-3">
+      <DrawCheckbox label="Email me product updates" description="We send about one email per month." defaultChecked />
+      <DrawCheckbox label="Indeterminate option" indeterminate />
+      <DrawCheckbox label="Accept terms" />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `label` (React.ReactNode); default: undefined — Label text displayed next to the box
+- `description` (string); default: undefined — Helper text below the label
+- `indeterminate` (boolean); default: false — When true, renders a horizontal bar instead of a checkmark
+- `checked` (boolean); default: undefined — Controlled checked state
+- `defaultChecked` (boolean); default: false — Initial checked state (uncontrolled)
+- `disabled` (boolean); default: false — Prevents interaction
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/draw-checkbox.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

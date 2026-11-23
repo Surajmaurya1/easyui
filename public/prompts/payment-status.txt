@@ -1,0 +1,70 @@
+## Task
+
+Install and integrate the EasyUI Payment Status component into my project.
+
+A calm, Apple-grade payment confirmation card with animated SVG path checkmark drawing, staged verification lifecycle transitions, receipt inspection, and failure recovery.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/payment-status
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { PaymentStatus } from "@/components/ui/payment-status";
+
+export function Demo() {
+  return (
+    <PaymentStatus
+      status="success"
+      amount="$149.00"
+      transactionId="tx_8830192a"
+      paymentMethod="Apple Pay"
+      last4="4242"
+    />
+  );
+}
+```
+
+Declared props:
+- `status` ('processing' | 'verifying' | 'success' | 'failed' | 'refunded'); default: 'processing' — Current lifecycle state of payment
+- `amount` (string | number); default: '$149.00' — Transaction total amount formatted or numeric
+- `currency` (string); default: '$' — Currency symbol prepended to amount
+- `transactionId` (string); default: 'tx_9842a8d11c7f' — Unique transaction identifier
+- `date` (string | Date); default: 'Today at 3:42 PM' — Date/time timestamp of payment
+- `paymentMethod` (string); default: 'Apple Pay' — Payment gateway or card provider
+- `last4` (string); default: '4242' — Last 4 digits of card or account
+- `items` (PaymentReceiptItem[]); default: [...] — Itemized purchase items for detailed receipt view
+- `merchantName` (string); default: 'EasyUI Cloud' — Merchant or brand organization name
+- `onRetry` (() => void); default: undefined — Callback fired when user clicks Try Again
+- `onChangePaymentMethod` (() => void); default: undefined — Callback fired when user changes card method
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/payment-status.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

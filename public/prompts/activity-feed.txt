@@ -1,0 +1,81 @@
+## Task
+
+Install and integrate the EasyUI Activity Feed component into my project.
+
+A developer telemetry and audit log stream featuring category filtering, live real-time event simulation with Framer Motion slide insertions, and expandable JSON payloads.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/activity-feed
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { ActivityFeed } from "@/components/ui/activity-feed";
+
+const events = [
+  {
+    id: "evt-1",
+    type: "deploy" as const,
+    status: "success" as const,
+    title: "Edge Lambda function deployed",
+    timestamp: "2 mins ago",
+    description: "Release v2.4.0 deployed to us-east-1 and eu-central-1.",
+    duration: "240ms",
+    traceId: "trc_98fa2",
+    actor: { name: "DeployBot" },
+    payload: { version: "2.4.0", sha: "8f3b2a" },
+  },
+  {
+    id: "evt-2",
+    type: "security" as const,
+    status: "warning" as const,
+    title: "MFA challenge requested",
+    timestamp: "12 mins ago",
+    actor: { name: "alex@company.com" },
+  },
+];
+
+export function Demo() {
+  return <ActivityFeed events={events} enableLiveSimulation={true} />;
+}
+```
+
+Declared props:
+- `events` (ActivityEvent[]); default: [] — Array of audit or telemetry activity events
+- `enableLiveSimulation` (boolean); default: true — Whether to show the interactive simulated live stream toggle
+- `enableFilters` (boolean); default: true — Whether to display category filter pill buttons
+- `enableSearch` (boolean); default: true — Whether to show the trace search input
+- `maxEntries` (number); default: 20 — Maximum items retained in stream before pruning
+- `onEventReplay` ((event: ActivityEvent) => void); default: undefined — Optional callback to replay a logged event
+- `className` (string); default: undefined — Optional custom CSS class
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/activity-feed.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

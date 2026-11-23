@@ -1,0 +1,84 @@
+## Task
+
+Install and integrate the EasyUI Metric HUD component into my project.
+
+An interactive developer telemetry card featuring hardware-accelerated SVG sparklines, pointer-scrubbing point inspection, spring-animated time range morphing, and delta indicators.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/metric-hud
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { MetricHUD } from "@/components/ui/metric-hud";
+
+const metrics = [
+  {
+    id: "latency",
+    label: "p99 Latency",
+    value: "14.2",
+    unit: "ms",
+    delta: { value: "-18.4%", trend: "down" as const, isPositiveGood: true },
+    status: "normal" as const,
+    timeSeries: {
+      "1h": [18, 17, 16, 15, 14, 14.2],
+      "24h": [24, 21, 19, 18, 16, 14.2],
+      "7d": [32, 28, 22, 19, 15, 14.2],
+    },
+  },
+  {
+    id: "throughput",
+    label: "API Throughput",
+    value: "84.5k",
+    unit: "req/s",
+    delta: { value: "+12.1%", trend: "up" as const, isPositiveGood: true },
+    status: "normal" as const,
+    timeSeries: {
+      "1h": [60, 65, 72, 78, 81, 84.5],
+      "24h": [40, 52, 68, 74, 80, 84.5],
+      "7d": [30, 45, 60, 70, 80, 84.5],
+    },
+  },
+];
+
+export function Demo() {
+  return <MetricHUD metrics={metrics} defaultTimeRange="24h" />;
+}
+```
+
+Declared props:
+- `metrics` (MetricItem[]); default: [] — Array of telemetry metric definitions with time-series data
+- `timeRanges` (string[]); default: ['1h', '24h', '7d', '30d'] — Available time window filters
+- `defaultTimeRange` (string); default: '24h' — Initial active time range
+- `className` (string); default: undefined — Custom CSS container styling
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/metric-hud.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

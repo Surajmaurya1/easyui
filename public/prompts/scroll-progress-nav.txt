@@ -1,0 +1,65 @@
+## Task
+
+Install and integrate the EasyUI Scroll Progress Navigation component into my project.
+
+A floating table-of-contents navigation pill that tracks scroll depth, dynamically morphs between resting and floating states, highlights active sections, and enables smooth scrolling.
+
+Category: Navigation.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/scroll-progress-nav
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { ScrollProgressNav } from "@/components/ui/scroll-progress-nav";
+
+export function Demo() {
+  return (
+    <ScrollProgressNav
+      sections={[
+        { id: "overview", index: "01", label: "Overview" },
+        { id: "features", index: "02", label: "Features" },
+        { id: "components", index: "03", label: "Components" },
+        { id: "docs", index: "04", label: "Documentation" }
+      ]}
+    />
+  );
+}
+```
+
+Declared props:
+- `sections` (NavSectionItem[]); default: [...] — Navigation links with IDs, index numbers, and labels
+- `scrollThreshold` (number); default: 150 — Scroll distance in px before morphing into floating pill
+- `activeId` (string); default: undefined — Controlled active section ID override
+- `onSectionClick` ((id: string) => void); default: undefined — Callback fired when user selects a section
+- `position` ('top-center' | 'bottom-center' | 'top-right'); default: 'top-center' — Screen anchor position
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/scroll-progress-nav.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

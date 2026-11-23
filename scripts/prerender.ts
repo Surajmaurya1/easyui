@@ -17,7 +17,8 @@ import {
   SponsorSuccessPage,
 } from '../src/App';
 import { preloadComponentDemo } from '../src/components/docs/ComponentDetailPage';
-import { EASY_COMPONENTS } from '../src/components/registry/components-data';
+import { CATALOG_INDEX } from '../src/components/registry/catalog-index';
+import { preloadComponentMeta } from '../src/components/registry/component-details';
 import { ITEMS_PER_PAGE } from '../src/lib/components';
 import { SEO_CONFIG } from '../src/lib/seo/config';
 import {
@@ -176,6 +177,7 @@ export async function prerenderAllRoutes(): Promise<void> {
   const routes: RouteToPrerender[] = [];
 
   console.log('Preloading route components and component demos for static HTML prerender...');
+  const componentDetailsPromise = Promise.all(CATALOG_INDEX.map(({ id }) => preloadComponentMeta(id)));
   await Promise.all([
     SpotlightSearch.preload(),
     AllComponentsPage.preload(),
@@ -183,8 +185,10 @@ export async function prerenderAllRoutes(): Promise<void> {
     ComponentDetailPage.preload(),
     SponsorsPage.preload(),
     SponsorSuccessPage.preload(),
-    ...EASY_COMPONENTS.map((comp) => preloadComponentDemo(comp.id)),
+    ...CATALOG_INDEX.map((comp) => preloadComponentDemo(comp.id)),
+    componentDetailsPromise,
   ]);
+  const componentDetails = (await componentDetailsPromise).filter((comp) => comp !== undefined);
 
   const makePrerenderElement = (routePath: string) =>
     React.createElement(
@@ -216,7 +220,7 @@ export async function prerenderAllRoutes(): Promise<void> {
 
   // 2. All Components Directory (/components)
   const componentsCanonical = getCanonicalUrl('components');
-  const catalogSchema = generateComponentCatalogSchema(EASY_COMPONENTS, 1);
+  const catalogSchema = generateComponentCatalogSchema(CATALOG_INDEX, 1);
   const catalogElement = makePrerenderElement('/components');
 
   routes.push({
@@ -292,7 +296,7 @@ export async function prerenderAllRoutes(): Promise<void> {
     // Each catalog page gets one canonical directory output. Keeping the
     // pagination routes explicit prevents the server from serving page 1's
     // HTML for every page number.
-    const totalComponentPages = Math.ceil(EASY_COMPONENTS.length / ITEMS_PER_PAGE);
+    const totalComponentPages = Math.ceil(CATALOG_INDEX.length / ITEMS_PER_PAGE);
     for (let page = 2; page <= totalComponentPages; page++) {
       const routePath = `/components/page/${page}`;
       routes.push({
@@ -301,14 +305,14 @@ export async function prerenderAllRoutes(): Promise<void> {
         title: `React UI Components (Page ${page}) — EasyUI Component Library`,
         description: SEO_CONFIG.componentsDescription,
         canonical: getCanonicalUrl(`components/page/${page}`),
-        structuredData: generateComponentCatalogSchema(EASY_COMPONENTS, page),
+        structuredData: generateComponentCatalogSchema(CATALOG_INDEX, page),
         element: makePrerenderElement(routePath),
       });
     }
 
-    // 4. All Individual Components (dynamically discovered from EASY_COMPONENTS)
-    console.log(`Discovered ${EASY_COMPONENTS.length} components for static pre-rendering:`);
-    for (const comp of EASY_COMPONENTS) {
+    // 4. All Individual Components (details are preloaded by their canonical IDs)
+    console.log(`Discovered ${componentDetails.length} components for static pre-rendering:`);
+    for (const comp of componentDetails) {
       const compSEO = getComponentSEO(comp);
       const compSchema = generateComponentSchema(comp);
       const compElement = makePrerenderElement(`/components/${comp.id}`);
@@ -362,7 +366,7 @@ export async function prerenderAllRoutes(): Promise<void> {
   console.log(`  - ${docTopicIds.length} Documentation topics (/docs/*)`);
   console.log(`  - 1 Sponsors page (/sponsors)`);
   console.log(`  - 1 Sponsor success page (/sponsor/success, noindex)`);
-  console.log(`  - ${EASY_COMPONENTS.length} Component detail pages (/components/*)`);
+  console.log(`  - ${componentDetails.length} Component detail pages (/components/*)`);
   console.log('========================================================\n');
 }
 

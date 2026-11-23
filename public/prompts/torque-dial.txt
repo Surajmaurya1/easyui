@@ -1,0 +1,73 @@
+## Task
+
+Install and integrate the EasyUI Torque Dial component into my project.
+
+A rotational control dial with realistic physical angular momentum, velocity tracking, and exponential friction deceleration.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/torque-dial
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { useState } from "react";
+import { TorqueDial } from "@/components/ui/torque-dial";
+
+export function Demo() {
+  const [gain, setGain] = useState(48);
+
+  return (
+    <div className="p-8 flex items-center justify-center bg-[#090909] rounded-2xl border border-[#1F1F1F]">
+      <TorqueDial
+        value={gain}
+        onChange={setGain}
+        min={0}
+        max={100}
+        unit="%"
+        label="Gain Level"
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `value` (number) — Current numeric value
+- `min` (number); default: 0 — Minimum dial threshold
+- `max` (number); default: 100 — Maximum dial threshold
+- `step` (number); default: 1 — Step resolution increment
+- `onChange` ((val: number) => void) — Callback fired on rotation value updates
+- `momentum` (boolean); default: true — Enables velocity-based inertial spin after drag release
+- `size` (number); default: 120 — Diameter in pixels
+- `unit` (string); default: '' — Optional unit suffix (e.g. "%", "dB", "°")
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/torque-dial.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

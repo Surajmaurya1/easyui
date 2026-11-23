@@ -1,0 +1,87 @@
+## Task
+
+Install and integrate the EasyUI Sticky Pages component into my project.
+
+A pure static full-page sticky stacking scroll component where pages slide up and stack cleanly one over another without any tilting or distortion, before releasing smoothly into natural page scrolling.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/sticky-pages
+
+No additional package dependencies were detected by the registry sync.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { StickyPages, StickyPage } from "@/components/ui/sticky-pages";
+
+export function StickyPagesDemo() {
+  return (
+    <div className="w-full bg-slate-950">
+      {/* Intro content */}
+      <div className="h-96 flex items-center justify-center">
+        <p className="text-slate-400">Scroll down to see the sticky pages stack</p>
+      </div>
+
+      {/* Sticky Stacking Pages */}
+      <StickyPages>
+        <StickyPage className="bg-slate-900 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">01. Architected for Speed</h2>
+        </StickyPage>
+
+        <StickyPage className="bg-indigo-950 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">02. Modern Aesthetic System</h2>
+        </StickyPage>
+
+        <StickyPage className="bg-sky-950 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-white">03. Production Grade Components</h2>
+        </StickyPage>
+      </StickyPages>
+
+      {/* Subsequent normal page content */}
+      <div className="h-96 flex items-center justify-center bg-black">
+        <p className="text-slate-400">Normal scroll resumes seamlessly here.</p>
+      </div>
+    </div>
+  );
+}
+```
+
+Declared props:
+- `pages` (StickyPageItem[]) — Array of page data objects (title, subtitle, description, badge, content, bg)
+- `pageHeight` (string); default: '100vh' — CSS height of each sticky page (e.g. 100vh, 85vh, 600px)
+- `topOffset` (number); default: 0 — Distance from top of viewport in pixels when a page locks into sticky position
+- `stackOffset` (number); default: 0 — Progressive pixel offset between stacked cards (0 for clean cover, 24 for visible deck header tabs)
+- `rounded` (boolean); default: true — Whether pages have rounded top corners (rounded-t-3xl) as they stack over one another
+- `shadow` (boolean); default: true — Whether pages cast an elevated top drop shadow over the preceding page
+- `border` (boolean); default: true — Whether pages have a subtle top highlight border
+- `className` (string) — Additional CSS classes for outer container
+- `children` (ReactNode) — Optional <StickyPage> elements for JSX composition mode
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/sticky-pages.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

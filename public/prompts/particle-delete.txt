@@ -1,0 +1,91 @@
+## Task
+
+Install and integrate the EasyUI Particle Delete component into my project.
+
+Premium physics-driven particle dissolution delete animation that rasterizes components into thousands of authentic tiny pixels and disperses them smoothly before state removal.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/particle-delete
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { ParticleDeleteContainer, useParticleDelete, particleDelete } from "@/components/ui/particle-delete";
+import { Trash2 } from "lucide-react";
+
+export function Demo() {
+  const [items, setItems] = useState([
+    { id: '1', name: 'Database Snapshot #409' },
+    { id: '2', name: 'Redis Cache Layer' }
+  ]);
+
+  const handleDelete = (id: string) => {
+    setItems((prev) => prev.filter((i) => i.id !== id));
+  };
+
+  return (
+    <div className="space-y-3">
+      {items.map((item) => (
+        <ParticleDeleteContainer
+          key={item.id}
+          onDelete={() => handleDelete(item.id)}
+          className="p-4 rounded-xl bg-[#0D0D0D] border border-[#222222] flex items-center justify-between"
+        >
+          {({ isDeleting, handleDelete: triggerDelete }) => (
+            <>
+              <span className="text-sm font-medium text-white">{item.name}</span>
+              <button
+                type="button"
+                onClick={triggerDelete}
+                disabled={isDeleting}
+                className="p-2 rounded-lg bg-[#141414] hover:bg-rose-950/40 text-[#888888] hover:text-rose-400 border border-[#262626] transition-colors"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </>
+          )}
+        </ParticleDeleteContainer>
+      ))}
+    </div>
+  );
+}
+```
+
+Declared props:
+- `onDelete` (() => void) — Callback invoked after the particle dissolution finishes to remove state
+- `options.duration` (number); default: 850 — Animation duration in milliseconds
+- `options.force` (number); default: 1.0 — Outward velocity multiplier for particle dispersion
+- `options.particleSize` (number); default: 1.5 — Visual diameter of individual particles in pixels
+- `options.dissolvePattern` ('center-first' | 'edges-first' | 'uniform' | 'random'); default: 'center-first' — Dissolution spread delay algorithm
+- `options.sampleStep` (number); default: 2 (desktop) / 3 (mobile) — Pixel sampling step interval
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/particle-delete.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

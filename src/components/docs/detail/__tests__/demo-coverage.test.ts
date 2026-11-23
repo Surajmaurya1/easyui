@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { EASY_COMPONENTS } from '../../../registry/components-data';
+import { CATALOG_INDEX } from '../../../registry/catalog-index';
 import {
   DEMO_ALIASES,
   DEMO_ROUTE_MODULES,
@@ -12,14 +12,14 @@ describe('component detail demo registry', () => {
   it('covers each component or documents why its demo is intentionally missing', () => {
     const intentionallyMissing = new Set<string>(DEMOS_INTENTIONALLY_MISSING);
 
-    for (const component of EASY_COMPONENTS) {
+    for (const component of CATALOG_INDEX) {
       if (intentionallyMissing.has(component.id)) continue;
       expect(hasDemo(component.id), component.id).toBe(true);
     }
   });
 
   it('keeps aliases unique and pointed at registered canonical demos', () => {
-    const componentIds = new Set(EASY_COMPONENTS.map(({ id }) => id));
+    const componentIds = new Set(CATALOG_INDEX.map(({ id }) => id));
     const aliasNames = Object.values(DEMO_ROUTE_MODULES).flatMap(({ aliases }) => aliases);
     const registeredNames = new Set(Object.keys(DEMO_ROUTE_MODULES));
 

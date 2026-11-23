@@ -1,0 +1,70 @@
+## Task
+
+Install and integrate the EasyUI Chat component into my project.
+
+A production-grade conversational chat component with thread history sidebar, rich message rendering, status indicators, file attachments, and auto-expanding composer.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/chat
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { Chat, type ChatMessageItem } from "@/components/ui/chat";
+
+export function Demo() {
+  const messages: ChatMessageItem[] = [
+    { id: '1', role: 'user', content: 'Can you show me how to style EasyUI tables?', timestamp: '10:40 AM' },
+    { id: '2', role: 'assistant', content: 'Certainly! EasyUI tables use the semantic --border and --surface tokens.', timestamp: '10:41 AM' },
+  ];
+
+  return (
+    <Chat
+      messages={messages}
+      onSendMessage={(text) => console.log('Send:', text)}
+    />
+  );
+}
+```
+
+Declared props:
+- `messages` (ChatMessageItem[]); default: [] — Array of chat message records including role, content, author, and attachments
+- `onSendMessage` ((content: string, attachments?: ChatAttachment[]) => void); default: undefined — Callback fired when the user submits a message via composer
+- `isGenerating` (boolean); default: false — Disables composer and shows loading status while the assistant is synthesizing an answer
+- `threads` (ChatConversationThread[]); default: undefined — Optional list of historical conversations displayed in the sidebar
+- `activeThreadId` (string); default: undefined — ID of the currently selected conversation thread
+- `onSelectThread` ((threadId: string) => void); default: undefined — Callback fired when a user selects a thread from the history sidebar
+- `onNewChat` (() => void); default: undefined — Callback fired when the user clicks the New Conversation button
+- `onClearChat` (() => void); default: undefined — Callback fired when the user clicks the clear chat history button
+- `className` (string); default: undefined — Custom Tailwind class names for styling overrides
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/chat.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

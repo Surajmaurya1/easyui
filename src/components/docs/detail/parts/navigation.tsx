@@ -4,7 +4,7 @@ import { ChevronRight, PanelLeft, Search, X } from 'lucide-react';
 import { cn } from '../../../../lib/utils';
 import { isComponentNew } from '../../../../lib/components';
 import { NewBadge } from '../../../common/NewBadge';
-import type { EasyComponentMeta } from '../../../../types/component';
+import type { ComponentCatalogIndex, EasyComponentMeta } from '../../../../types/component';
 import type { ComponentDetailPageProps } from '../types';
 
 type NavigationProps = Pick<ComponentDetailPageProps, 'onSelectComponent' | 'onNavigateHome' | 'onNavigateComponents' | 'onNavigateDocs'> & {
@@ -15,7 +15,7 @@ type NavigationProps = Pick<ComponentDetailPageProps, 'onSelectComponent' | 'onN
   setMobileSidebarOpen: Dispatch<SetStateAction<boolean>>;
   sidebarFilter: string;
   setSidebarFilter: Dispatch<SetStateAction<string>>;
-  filteredComponents: EasyComponentMeta[];
+  filteredComponents: ComponentCatalogIndex[];
 };
 
 export const DetailHeader: React.FC<NavigationProps> = ({ component, onNavigateComponents, isDesktopSidebarOpen, setIsDesktopSidebarOpen, setMobileSidebarOpen }) => (

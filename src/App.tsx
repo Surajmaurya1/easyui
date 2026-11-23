@@ -22,8 +22,8 @@ export const SponsorSuccessPage = lazyWithPreload(() => import('./components/spo
 export const SpotlightSearch = lazyWithPreload(() => import('./components/ui/SpotlightSearch'), 'SpotlightSearch');
 export const HeroSection = HeroSectionComponent;
 
-// Fast Map lookup for routing — uses the lightweight catalog index (catalog-index.ts)
-// so the full 386 KB components-data.ts is NOT included in the initial entry bundle.
+// Fast route lookup uses the lightweight catalog index. Component detail metadata
+// loads separately, on demand, for the selected component only.
 const COMPONENT_MAP = new Map<string, ComponentCatalogIndex>(
   CATALOG_INDEX.map((c) => [c.id, c])
 );

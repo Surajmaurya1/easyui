@@ -1,0 +1,60 @@
+## Task
+
+Install and integrate the EasyUI Spotlight Card component into my project.
+
+A dark elevated surface that illuminates border and inner surfaces dynamically based on mouse pointer coordinates.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/spotlight-card
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { SpotlightCard } from "@/components/ui/spotlight-card";
+
+export function Demo() {
+  return (
+    <SpotlightCard className="max-w-sm">
+      <h3 className="text-base font-semibold text-white">Edge Computing</h3>
+      <p className="text-sm text-neutral-400 mt-2">
+        Deploy globally distributed stateful workloads in 35 regions.
+      </p>
+    </SpotlightCard>
+  );
+}
+```
+
+Declared props:
+- `spotlightColor` (string); default: 'rgba(56, 189, 248, 0.08)' — Inner ambient radial color
+- `spotlightSize` (number); default: 350 — Radius of spotlight effect in pixels
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/spotlight-card.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

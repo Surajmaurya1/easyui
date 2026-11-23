@@ -1,7 +1,7 @@
 // AUTO-GENERATED — DO NOT EDIT MANUALLY.
 // Run "npm run component:sync" to regenerate this file.
 // This is a LIGHTWEIGHT index containing only initial-bundle fields.
-// For the full catalog (usageCode, props, etc.), see components-data.ts.
+// Full detail metadata is generated into one lazily loaded module per component.
 
 import type { ComponentCatalogIndex } from '../../types/component';
 

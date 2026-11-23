@@ -1,0 +1,72 @@
+## Task
+
+Install and integrate the EasyUI Profile Card component into my project.
+
+A premium dark social profile card with a painted blue cover-art panel, action row, and a detail panel with avatar, verified name, bio, follower stats, and outbound website link.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/profile-card
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { ProfileCard } from "@/components/ui/profile-card";
+
+export function Demo() {
+  return (
+    <div className="w-full max-w-md mx-auto">
+      <ProfileCard
+        name="Suraj"
+        username="@surajmaurya_m"
+        description="Building EasyUI. Engineer."
+        followers="200K"
+        posts="72"
+        website="easyui.site"
+        onAction={() => console.log('Follow clicked')}
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `name` (string); default: 'Suraj' — Display name shown in the detail panel header
+- `username` (string); default: '@surajmaurya_m' — Handle rendered as the small caption under the name
+- `description` (string); default: 'Building EasyUI. Engineer.' — Biographical text shown under the name
+- `followers` (string); default: '200K' — Pre-formatted follower count
+- `posts` (string); default: '72' — Pre-formatted post count
+- `website` (string); default: 'easyui.site' — Website domain — link href is auto-prefixed with https://
+- `actionLabel` (string); default: 'Follow' — Label for the primary action button
+- `onAction` (() => void); default: undefined — Click handler for the primary action button
+- `className` (string); default: undefined — Additional Tailwind classes merged into the card root
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/profile-card.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

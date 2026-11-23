@@ -6,7 +6,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const REGISTRY_PATH = path.join(ROOT_DIR, 'registry.json');
-const COMPONENTS_DATA_PATH = path.join(ROOT_DIR, 'src', 'components', 'registry', 'components-data.ts');
+const COMPONENT_DETAILS_DIR = path.join(ROOT_DIR, 'src', 'components', 'registry', 'details');
+const COMPONENT_DETAIL_LOADERS_PATH = path.join(ROOT_DIR, 'src', 'components', 'registry', 'component-details.ts');
+const PROMPTS_DIR = path.join(ROOT_DIR, 'public', 'prompts');
 const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
 const UI_DIR = path.join(ROOT_DIR, 'src', 'components', 'ui');
 
@@ -196,16 +198,28 @@ function validateRegistry(): void {
     }
   }
 
-  // 6. Validate components-data.ts exists and matches registry count
-  if (!fs.existsSync(COMPONENTS_DATA_PATH)) {
-    errors.push(`components-data.ts does not exist at ${COMPONENTS_DATA_PATH}`);
-  } else {
-    const catalogRaw = fs.readFileSync(COMPONENTS_DATA_PATH, 'utf-8');
-    if (!catalogRaw.includes('export const EASY_COMPONENTS')) {
-      errors.push('components-data.ts does not export EASY_COMPONENTS.');
-    }
-    if (!catalogRaw.includes('"createdAt":')) {
-      errors.push('components-data.ts entries are missing the "createdAt" timestamp field.');
+  // 6. Validate per-component detail modules and on-demand prompt assets.
+  if (!fs.existsSync(COMPONENT_DETAILS_DIR)) {
+    errors.push(`Generated detail modules directory does not exist at ${COMPONENT_DETAILS_DIR}`);
+  }
+  if (!fs.existsSync(COMPONENT_DETAIL_LOADERS_PATH)) {
+    errors.push(`Generated detail loader does not exist at ${COMPONENT_DETAIL_LOADERS_PATH}`);
+  }
+  if (!fs.existsSync(PROMPTS_DIR)) {
+    errors.push(`Generated prompt assets directory does not exist at ${PROMPTS_DIR}`);
+  }
+
+  const detailLoadersRaw = fs.existsSync(COMPONENT_DETAIL_LOADERS_PATH)
+    ? fs.readFileSync(COMPONENT_DETAIL_LOADERS_PATH, 'utf-8')
+    : '';
+  for (const item of registry.items) {
+    const slug = item.name;
+    const detailPath = path.join(COMPONENT_DETAILS_DIR, `${slug}.ts`);
+    const promptPath = path.join(PROMPTS_DIR, `${slug}.txt`);
+    if (!fs.existsSync(detailPath)) errors.push(`Generated detail module is missing for "${slug}".`);
+    if (!fs.existsSync(promptPath)) errors.push(`Generated prompt asset is missing for "${slug}".`);
+    if (!detailLoadersRaw.includes(`"${slug}": () => import('./details/${slug}')`)) {
+      errors.push(`Generated detail loader is missing a lazy import for "${slug}".`);
     }
   }
 

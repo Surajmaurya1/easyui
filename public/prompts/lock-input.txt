@@ -1,0 +1,73 @@
+## Task
+
+Install and integrate the EasyUI LockInput component into my project.
+
+A text input whose focus state subtly "locks" into place — a focus ring scales in from the center and the border tweens to active, giving the impression that the input snaps closed on itself.
+
+Category: Forms.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/lock-input
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { LockInput } from "@/components/ui/lock-input";
+import { Mail } from "lucide-react";
+
+export function Demo() {
+  return (
+    <div className="space-y-4 max-w-sm">
+      <LockInput
+        label="Email"
+        type="email"
+        placeholder="you@studio.dev"
+        leftIcon={<Mail className="w-3.5 h-3.5" />}
+        description="We'll send a confirmation link here."
+      />
+      <LockInput
+        label="Workspace"
+        placeholder="acme"
+        error="That workspace is already taken."
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `label` (string); default: undefined — Visible label rendered above the input
+- `description` (string); default: undefined — Helper text below the input
+- `error` (string); default: undefined — Error message; presence triggers danger styling
+- `leftIcon` (React.ReactNode); default: undefined — Icon element placed before the input value
+- `rightIcon` (React.ReactNode); default: undefined — Icon element placed after the input value
+- `disabled` (boolean); default: false — Prevents interaction and applies 30% disabled opacity
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/lock-input.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

@@ -1,0 +1,74 @@
+## Task
+
+Install and integrate the EasyUI Money Card component into my project.
+
+An interactive financial wallet card featuring animated live balance updates, quick-send contact shortcuts, recent transaction history, and responsive modal sheets for sending, receiving, and viewing activity.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/money-card
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { MoneyCard } from "@/components/ui/money-card";
+
+export function Demo() {
+  return (
+    <div className="w-full py-12 flex justify-center">
+      <MoneyCard
+        balance={52002.5}
+        onSend={async ({ contact, amount }) => {
+          console.log(`Sent ${amount} to ${contact.name}`);
+        }}
+        onRequest={async ({ contact, amount }) => {
+          console.log(`Requested ${amount} from ${contact.name}`);
+        }}
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `user` ({ name: string; avatar: string }); default: DEFAULT_USER — User profile with display name and avatar icon
+- `balance` (number); default: 52002.5 — Headline account balance in major currency units
+- `contacts` (Contact[]); default: DEFAULT_CONTACTS — List of quick-send contacts with avatars and tints
+- `transactions` (Transaction[]); default: DEFAULT_TRANSACTIONS — List of recent transactions sorted newest first
+- `onSend` ((req: TransferRequest) => Promise<void>); default: undefined — Async handler called upon submitting a send transfer
+- `onRequest` ((req: TransferRequest) => Promise<void>); default: undefined — Async handler called upon submitting a request transfer
+- `onViewAll` (() => void); default: undefined — Optional callback overriding default activity list opening
+- `currency` (string); default: 'USD' — ISO currency symbol used for formatted monetary values
+- `locale` (string); default: 'en-US' — Locale string for number and date formatting
+- `paymentLink` (string); default: 'pay.example/ana' — Personal payment link displayed on receive and settings sheets
+- `className` (string); default: '' — Optional CSS class overrides for the outer container
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/money-card.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

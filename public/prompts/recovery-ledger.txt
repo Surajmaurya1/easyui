@@ -1,0 +1,71 @@
+## Task
+
+Install and integrate the EasyUI Recovery Ledger component into my project.
+
+An archival audit timeline and state recovery ledger with chronological snapshot markers, diff inspection, and one-click rollback triggers.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/recovery-ledger
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { useState } from "react";
+import { RecoveryLedger } from "@/components/ui/recovery-ledger";
+
+export function Demo() {
+  const [currentId, setCurrentId] = useState('v3');
+  const entries = [
+    { id: 'v3', timestamp: '2m ago', action: 'Schema Migration', description: 'Added tenant_id column to organization tables.', author: 'Alex W.', details: { diff: '+ ALTER TABLE org ADD COLUMN tenant_id UUID;' } },
+    { id: 'v2', timestamp: '1h ago', action: 'API Auth Refactor', description: 'Upgraded JWT verification to RS256 algorithm.', author: 'Sarah K.', details: { diff: '- alg: HS256
++ alg: RS256' } },
+    { id: 'v1', timestamp: 'Yesterday', action: 'Initial Release', description: 'Base schema initialized in primary region.', author: 'Alex W.' },
+  ];
+
+  return (
+    <RecoveryLedger
+      entries={entries}
+      currentEntryId={currentId}
+      onRestore={async (id) => setCurrentId(id)}
+    />
+  );
+}
+```
+
+Declared props:
+- `entries` (LedgerEntry[]) — Array of version history records (id, timestamp, action, description, author, details, restorable)
+- `currentEntryId` (string); default: undefined — Active head snapshot identifier
+- `onRestore` ((id: string) => Promise<void> | void); default: undefined — Callback fired on version revert action
+- `onSelect` ((id: string) => void); default: undefined — Callback when an entry is clicked
+- `variant` ('timeline' | 'compact'); default: 'timeline' — Display format
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/recovery-ledger.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

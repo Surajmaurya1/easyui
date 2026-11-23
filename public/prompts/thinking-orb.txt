@@ -1,0 +1,83 @@
+## Task
+
+Install and integrate the EasyUI Thinking Orb component into my project.
+
+Minimalist monochrome spherical particle vortex with orbital physics, pure black-and-white luminous styling, and 9 cognitive state deformations.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/thinking-orb
+
+No additional package dependencies were detected by the registry sync.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { ThinkingOrb } from "@/components/ui/thinking-orb";
+import { useState } from "react";
+
+export function Demo() {
+  const [state, setState] = useState<
+    "working" | "searching" | "solving" | "listening" | "connecting" | "weaving" | "composing" | "breathing" | "shaping"
+  >("working");
+
+  return (
+    <div className="flex flex-col items-center gap-6 p-8 rounded-2xl bg-[#09090b] border border-[#27272a]">
+      <ThinkingOrb state={state} size={72} speed={1} dark={true} />
+      <div className="flex flex-wrap justify-center gap-1.5">
+        {(["working", "searching", "solving", "listening", "connecting", "weaving", "composing", "breathing", "shaping"] as const).map((s) => (
+          <button
+            key={s}
+            onClick={() => setState(s)}
+            className={`px-3 py-1 text-xs rounded-lg transition-colors ${
+              state === s
+                ? "bg-white text-black font-semibold"
+                : "bg-[#18181b] text-neutral-400 hover:text-white"
+            }`}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+Declared props:
+- `state` ('working' | 'searching' | 'solving' | 'listening' | 'connecting' | 'weaving' | 'composing' | 'breathing' | 'shaping'); default: 'working' — Cognitive animation behavior preset and mathematical deformation pattern
+- `size` (number); default: 64 — Diameter of the canvas orb in pixels (e.g. 64 for avatar/assistant, 20 for inline text)
+- `speed` (number); default: 1 — Animation playback speed multiplier (1 = standard, 2 = 2x faster, 0.5 = slow)
+- `dark` (boolean); default: true — Dark mode tuning: true renders luminous white particles, false renders crisp dark graphite particles
+- `paused` (boolean); default: false — Freezes animation frame progression while preserving current particle positions
+- `className` (string); default: undefined — Optional CSS class string applied to the outer container
+- `style` (CSSProperties); default: undefined — Inline styles passed directly to the container span
+- `aria-label` (string); default: '${state} orb' — Accessible label for screen readers announcing the orb state
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/thinking-orb.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

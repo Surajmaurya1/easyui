@@ -1,0 +1,71 @@
+## Task
+
+Install and integrate the EasyUI Product Tour component into my project.
+
+An interactive product walkthrough with spring-animated spotlight cutout, auto-scrolling targets, responsive bottom-sheet docking, and keyboard navigation.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/product-tour
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { useState } from "react";
+import { ProductTour, type TourStep } from "@/components/ui/product-tour";
+
+export function Demo() {
+  const [open, setOpen] = useState(false);
+
+  const steps: TourStep[] = [
+    { title: "Welcome", body: "Let's take a quick tour around the interface." },
+    { target: "#search-input", title: "Global Search", body: "Quickly locate projects and assets.", placement: "bottom" },
+    { target: "#actions-panel", title: "Actions", body: "Create or import documents here.", placement: "left" },
+  ];
+
+  return (
+    <div>
+      <button onClick={() => setOpen(true)}>Start Tour</button>
+      <ProductTour open={open} steps={steps} onClose={() => setOpen(false)} />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `steps` (TourStep[]) — List of tour steps with target selector, title, body, and placement preference
+- `open` (boolean) — Controls whether the spotlight tour overlay is open
+- `onClose` ((reason: TourCloseReason) => void) — Callback triggered when tour completes, is skipped, or is dismissed
+- `onStepChange` ((index: number) => void); default: undefined — Optional callback invoked whenever the active step index changes
+- `startAt` (number); default: 0 — Zero-based initial step index when the tour opens
+- `closeOnOverlayClick` (boolean); default: false — Whether clicking the dim overlay dismisses the tour
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/product-tour.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

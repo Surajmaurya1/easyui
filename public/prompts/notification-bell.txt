@@ -1,0 +1,73 @@
+## Task
+
+Install and integrate the EasyUI Notification Bell component into my project.
+
+An interactive notification trigger with animated badge counter, arrival shake feedback, and dropdown panel.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/notification-bell
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { useState } from "react";
+import { NotificationBell } from "@/components/ui/notification-bell";
+
+export function Demo() {
+  const [items, setItems] = useState([
+    { id: '1', message: 'Edge build deployment finished in 38s.', timestamp: 'Just now', read: false },
+    { id: '2', message: 'New API token generated for production.', timestamp: '12m ago', read: false },
+  ]);
+
+  const handleMarkRead = (id: string) => {
+    setItems((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
+  };
+
+  return (
+    <NotificationBell
+      notifications={items}
+      onMarkAsRead={handleMarkRead}
+      onMarkAllAsRead={() => setItems((prev) => prev.map((n) => ({ ...n, read: true })))}
+    />
+  );
+}
+```
+
+Declared props:
+- `notifications` (Notification[]) — Array of notification objects (id, message, timestamp, read)
+- `onMarkAsRead` ((id: string) => void) — Handler fired when an individual notification is marked read
+- `onMarkAllAsRead` (() => void); default: undefined — Handler to clear all active badges
+- `isOpen` (boolean); default: undefined — Controlled open state of notification drawer
+- `onOpenChange` ((isOpen: boolean) => void); default: undefined — Callback on panel open/close
+- `showCount` (boolean); default: true — Displays numeric badge instead of minimal red dot
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/notification-bell.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

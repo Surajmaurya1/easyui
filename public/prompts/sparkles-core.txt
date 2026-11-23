@@ -1,0 +1,98 @@
+## Task
+
+Install and integrate the EasyUI Sparkles Core component into my project.
+
+A high-performance, zero-dependency particle sparkle canvas with multi-shape geometry (circles, radiant diamond stars, cross starlets), organic twinkling, interactive cursor repulsion/attraction, click particle bursts, and fluid SSR safety.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/sparkles-core
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { SparklesCore } from "@/components/ui/sparkles-core";
+
+export function SparklesDemo() {
+  return (
+    <div className="relative w-full h-80 rounded-2xl overflow-hidden bg-slate-950 flex flex-col items-center justify-center">
+      <SparklesCore
+        id="tsparticlesfullpage"
+        background="transparent"
+        minSize={0.6}
+        maxSize={2}
+        particleDensity={100}
+        className="w-full h-full"
+        particleColor="#FFFFFF"
+        particleShape="mixed"
+        particleColors={["#60A5FA", "#C084FC", "#F472B6", "#FFFFFF"]}
+        cursorMode="repulse"
+        clickPush={10}
+      >
+        <div className="flex flex-col items-center justify-center h-full px-4 text-center">
+          <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
+            Build Stunning Interfaces
+          </h1>
+          <p className="mt-3 text-sm text-slate-400 max-w-sm">
+            Zero-dependency canvas particle sparkle system with celestial stars and cursor dynamics.
+          </p>
+        </div>
+      </SparklesCore>
+    </div>
+  );
+}
+```
+
+Declared props:
+- `id` (string) — Optional unique HTML id attribute for the canvas element
+- `background` (string); default: 'transparent' — Background color of the sparkle container (CSS color, hex, rgba, or gradient)
+- `className` (string) — Additional CSS utility classes applied to the root container
+- `particleColor` (string); default: '#FFFFFF' — Primary color for single-tint particle sparkle fields
+- `particleColors` (string[]) — Array of colors distributed across sparkles for chromatic or starry night effects
+- `minSize` (number); default: 0.6 — Minimum radius/size in pixels for spawned sparkles
+- `maxSize` (number); default: 2.4 — Maximum radius/size in pixels for spawned sparkles
+- `particleSize` (number) — Uniform particle size override (locks both minSize and maxSize)
+- `speed` (number); default: 1 — Particle movement velocity multiplier
+- `particleDensity` (number); default: 120 — Particle density factor calculated relative to a 400x400 area
+- `particleCount` (number) — Exact particle count override ignoring density calculations
+- `particleShape` ('circle' | 'star' | 'cross' | 'mixed'); default: 'circle' — Geometry shape of particles: circle, 4-point radiant star, cross starlet, or mixed
+- `direction` ('none' | 'top' | 'bottom' | 'left' | 'right'); default: 'none' — Directional flow drift; none provides organic cosmic floating
+- `twinkle` (boolean); default: true — Enables dynamic sinusoidal twinkle opacity pulsation
+- `twinkleSpeed` (number); default: 1 — Frequency speed multiplier for twinkle pulsation
+- `interactive` (boolean); default: true — Enables mouse pointer tracking and interaction reactions
+- `cursorMode` ('repulse' | 'attract' | 'sparkle' | 'none'); default: 'repulse' — Cursor reaction: repulse away, attract toward cursor, or sparkle illuminate
+- `cursorRadius` (number); default: 140 — Influence radius in pixels around the pointer
+- `clickPush` (number); default: 6 — Number of spark particles burst on click/tap
+- `opacity` (number); default: 1 — Global master opacity scalar for the sparkle canvas
+- `blur` (number); default: 0 — CSS blur filter radius in pixels for soft glowing bloom
+- `children` (ReactNode) — Optional content rendered above the sparkles with full clickability and isolation
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/sparkles-core.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

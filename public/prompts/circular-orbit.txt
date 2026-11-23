@@ -1,0 +1,66 @@
+## Task
+
+Install and integrate the EasyUI Circular Orbit component into my project.
+
+A circular gallery of image tiles orbiting around a centered title. All motion runs on a single MotionValue driven by useAnimationFrame, so no React renders per frame.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/circular-orbit
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { CircularOrbit } from "@/components/ui/circular-orbit";
+
+export function Demo() {
+  return (
+    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-[#1F1F1F] overflow-hidden">
+      <CircularOrbit
+        title="Push"
+        speed={0.00022}
+        radius={240}
+        pauseOnHover
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `items` (OrbitItem[]); default: 14 Unsplash tiles — Tiles to place around the orbit
+- `title` (string); default: 'Push' — Centered headline rendered above the orbit
+- `speed` (number); default: 0.00022 — Radians per millisecond. Smaller = slower
+- `radius` (number); default: 270 — Pixel radius of the orbit on the desktop layout
+- `pauseOnHover` (boolean); default: true — Smoothly stop the orbit when the pointer enters the gallery
+- `className` (string); default: undefined — Additional Tailwind classes merged into the section root
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/circular-orbit.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

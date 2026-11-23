@@ -1,0 +1,77 @@
+## Task
+
+Install and integrate the EasyUI FAQ component into my project.
+
+An expandable accordion FAQ component with smooth spring height calculation, single/multi-open modes, category filtering, search, and full ARIA keyboard accessibility.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/faq
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { FAQ } from "@/components/ui/faq";
+
+export function Demo() {
+  return (
+    <FAQ
+      allowMultiple
+      searchable
+      items={[
+        {
+          id: "1",
+          question: "What makes EasyUI different?",
+          answer: "EasyUI is distributed directly into your codebase via the official shadcn CLI, powered by spring physics rather than rigid ease-in-out transitions."
+        },
+        {
+          id: "2",
+          question: "Can I customize the styling?",
+          answer: "Yes! All components are built with standard Tailwind CSS utility classes and clean React TypeScript code with zero proprietary wrappers."
+        }
+      ]}
+    />
+  );
+}
+```
+
+Declared props:
+- `items` (FAQItem[]); default: [] — Array of FAQ items with id, question, answer, category, badge, icon
+- `allowMultiple` (boolean); default: false — Allows multiple accordion items to remain open simultaneously
+- `defaultOpen` (string[] | string); default: undefined — Default expanded item ID(s) on initial mount
+- `openIds` (string[]); default: undefined — Controlled list of currently expanded item IDs
+- `onOpenChange` ((ids: string[]) => void); default: undefined — Callback fired when open item selection changes
+- `iconStyle` ('chevron' | 'plus-minus' | 'custom'); default: 'chevron' — Indicator icon style
+- `searchable` (boolean); default: false — Displays search filter bar above FAQ items
+- `showCategories` (boolean); default: false — Displays category filter pills above items
+- `variant` ('unified' | 'separated'); default: 'unified' — Visual presentation layout
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/faq.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.
