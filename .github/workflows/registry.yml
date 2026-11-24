@@ -29,9 +29,23 @@ jobs:
 
       - name: Verify generated registry files are committed and in sync
         run: |
-          git diff --exit-code registry.json src/components/registry/components-data.ts public/source || (
-            echo "::error::Generated registry files are out of sync with source files. Run 'npm run component:sync' locally and commit the changes." && exit 1
+          generated_paths=(
+            registry.json
+            public/registry.json
+            public/source
+            public/prompts
+            public/sitemap.xml
+            public/llms.txt
+            src/components/registry/catalog-index.ts
+            src/components/registry/component-details.ts
+            src/components/registry/details
           )
+
+          if [[ -n "$(git status --porcelain --untracked-files=all -- "${generated_paths[@]}")" ]]; then
+            git status --short --untracked-files=all -- "${generated_paths[@]}"
+            echo "::error::Generated registry files are out of sync with source files. Run 'npm run component:sync' locally and commit the changes."
+            exit 1
+          fi
 
       - name: Run linter
         run: npm run lint
