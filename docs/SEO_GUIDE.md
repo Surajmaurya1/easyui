@@ -61,7 +61,7 @@ export default meta;
 Running `npm run component:sync` performs:
 1. Discovery of all component metadata.
 2. Generation of `registry.json` (shadcn-compatible).
-3. Generation of `src/components/registry/components-data.ts`.
+3. Generation of the lightweight catalog index and per-component metadata modules.
 4. Automated generation and synchronization of `public/sitemap.xml`.
 
 ---
@@ -164,4 +164,4 @@ The build command automatically executes the full chain:
 component discovery ➔ metadata validation ➔ registry generation ➔ sitemap synchronization ➔ SEO audit guard ➔ TypeScript compilation ➔ Vite bundle
 ```
 
-A developer never needs to manually edit `sitemap.xml`, `registry.json`, `components-data.ts`, canonical URLs, JSON-LD schemas, or SEO audit scripts.
+A developer never needs to manually edit `sitemap.xml`, `registry.json`, generated catalog/detail data, canonical URLs, JSON-LD schemas, or SEO audit scripts.

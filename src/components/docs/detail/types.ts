@@ -2,8 +2,7 @@ export type MainTab = 'preview' | 'usage' | 'code' | 'props' | 'accessibility';
 export type PkgManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
 
 export interface ComponentDetailPageProps {
-  /** The component's slug/id — the full EasyComponentMeta is resolved internally
-   *  from EASY_COMPONENTS so the initial bundle does not need to carry it. */
+  /** The component slug/id — only that component's detail metadata is loaded. */
   componentId: string;
   onSelectComponent: (id: string) => void;
   onNavigateHome: () => void;
@@ -12,7 +11,7 @@ export interface ComponentDetailPageProps {
 }
 
 import type { Dispatch, RefObject, SetStateAction } from 'react';
-import type { EasyComponentMeta } from '../../../types/component';
+import type { ComponentCatalogIndex, EasyComponentMeta } from '../../../types/component';
 import type { InlineDemoComponents } from './demo-types';
 
 export interface DetailPartProps {
@@ -34,7 +33,7 @@ export interface DetailPartProps {
   setPreviewMenuOpen: Dispatch<SetStateAction<boolean>>;
   previewMenuRef: RefObject<HTMLDivElement | null>;
   theme: string;
-  relatedComponents: EasyComponentMeta[];
+  relatedComponents: ComponentCatalogIndex[];
   handleCopy: (text: string, label: string) => Promise<void>;
   getInstallDepCommand: () => string;
   inlineDemos: InlineDemoComponents;

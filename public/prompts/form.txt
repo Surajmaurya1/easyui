@@ -1,0 +1,90 @@
+## Task
+
+Install and integrate the EasyUI Form component into my project.
+
+A modular, composable form system with accessible inputs, textareas, custom selects, checkboxes, radio groups, switches, and animated validation messages.
+
+Category: Forms.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/form
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Input, Button } from "@/components/ui/form";
+import { useState } from "react";
+
+export function Demo() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.includes("@")) {
+      setError("Please enter a valid email address.");
+    } else {
+      setError("");
+    }
+  };
+
+  return (
+    <Form onSubmit={handleSubmit} className="max-w-sm">
+      <FormItem>
+        <FormLabel required>Email Address</FormLabel>
+        <FormControl>
+          <Input
+            type="email"
+            placeholder="you@company.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={!!error}
+          />
+        </FormControl>
+        <FormDescription>We will never share your email.</FormDescription>
+        <FormMessage error={error} />
+      </FormItem>
+      <Button type="submit" variant="primary" fullWidth>
+        Submit
+      </Button>
+    </Form>
+  );
+}
+```
+
+Declared props:
+- `onSubmit` ((e: FormEvent) => void); default: undefined — Form submission handler
+- `error` (string | boolean); default: undefined — Validation error text or boolean trigger
+- `showPasswordToggle` (boolean); default: false — Enables eye icon toggle for password inputs
+- `required` (boolean); default: false — Displays red asterisk and enforces requirement
+- `leftIcon` (React.ReactNode); default: undefined — Leading icon inside input fields
+- `rightIcon` (React.ReactNode); default: undefined — Trailing icon inside input fields
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/form.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

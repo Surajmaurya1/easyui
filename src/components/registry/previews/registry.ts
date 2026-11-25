@@ -461,6 +461,12 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/book-call-button'),
     metadata: { type: 'interactive' },
   },
+  'bookshelf': {
+    id: 'bookshelf',
+    componentId: 'bookshelf',
+    load: () => import('./items/bookshelf'),
+    metadata: { type: 'interactive', description: 'Interactive 3D bookshelf preview' },
+  },
   'gooey-menu': {
     id: 'gooey-menu',
     componentId: 'gooey-menu',

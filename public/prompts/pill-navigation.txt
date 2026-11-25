@@ -1,0 +1,71 @@
+## Task
+
+Install and integrate the EasyUI Pill Navigation component into my project.
+
+A restrained segmented navigation control with shared pill layout morphing and nested submenu dropdown support.
+
+Category: Navigation.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/pill-navigation
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { PillNavigation } from "@/components/ui/pill-navigation";
+
+export function Demo() {
+  return (
+    <PillNavigation
+      items={[
+        { id: 'overview', label: 'Overview' },
+        {
+          id: 'motion',
+          label: 'Motion',
+          children: [
+            { id: 'springs', label: 'Spring Physics' },
+            { id: 'caustics', label: 'Liquid Caustics' },
+          ],
+        },
+        { id: 'code', label: 'Code' },
+      ]}
+      onChange={(mainId, subId) => console.log(mainId, subId)}
+    />
+  );
+}
+```
+
+Declared props:
+- `items` (PillNavigationItem[]); default: demo items — Navigation items with optional submenu children
+- `defaultValue` (string); default: first item id — Initial selected item id
+- `defaultSubValue` (string); default: undefined — Initial selected submenu item id
+- `onChange` ((id: string, subId?: string) => void); default: undefined — Selection callback
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/pill-navigation.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

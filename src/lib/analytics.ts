@@ -159,6 +159,8 @@ export function useAnalyticsTracker(state?: {
       pageTitle = 'Sponsor EasyUI — EasyUI';
     } else if (state?.activeView === 'sponsor-success') {
       pageTitle = 'Thanks for sponsoring EasyUI — EasyUI';
+    } else if (state?.activeView === 'skill') {
+      pageTitle = 'Anti-Slop UI Skill — EasyUI';
     }
 
     trackPageView(computedPath, pageTitle);

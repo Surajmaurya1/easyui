@@ -1,0 +1,71 @@
+## Task
+
+Install and integrate the EasyUI Airport Matrix Clock component into my project.
+
+A live world clock that renders local times and city names as crisp dot-matrix characters with restrained, character-level rolling transitions.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/airport-matrix-clock
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { AirportMatrixClock } from "@/components/ui/airport-matrix-clock";
+
+export function WorldClocks() {
+  return (
+    <AirportMatrixClock
+      cities={["los-angeles", "london", "tokyo"]}
+      format="24h"
+    />
+  );
+}
+
+// India: new-delhi, mumbai, bengaluru, hyderabad, chennai, kolkata, lucknow,
+// ahmedabad, pune, jaipur, varanasi. United States: new-york, los-angeles,
+// san-francisco, chicago, houston, miami, seattle, boston. United Kingdom:
+// london, manchester, birmingham, edinburgh, glasgow. UAE: dubai, abu-dhabi,
+// sharjah. Japan: tokyo, osaka, kyoto, nagoya, yokohama.
+<AirportMatrixClock cities={["new-delhi", "mumbai", "tokyo"]} format="12h" showSeconds showCountry showControls />
+```
+
+Declared props:
+- `cities` (AirportMatrixCityId[]); default: ['los-angeles', 'london', 'tokyo'] — Initial or controlled city IDs; supports one to five cities.
+- `format` ('12h' | '24h'); default: '24h' — Local time display format.
+- `showSeconds` (boolean); default: false — Include seconds in each displayed time.
+- `updateInterval` (number); default: 1000 — Shared clock refresh interval in milliseconds.
+- `showCountry` (boolean); default: false — Show the country name under each city.
+- `showControls` (boolean); default: true when cities is omitted — Show country and city selectors plus add and remove controls.
+- `onCitiesChange` ((cities: AirportMatrixCityId[]) => void); default: undefined — Receive city selection changes when using a controlled cities prop.
+- `className` (string); default: '' — Additional classes for the board container.
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/airport-matrix-clock.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

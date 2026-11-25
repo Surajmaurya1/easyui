@@ -1,0 +1,69 @@
+## Task
+
+Install and integrate the EasyUI Not Found component into my project.
+
+A minimal, production-ready 404 / route error component featuring floating spring-physics proximity displacement on individual glyphs, clear typography hierarchy, and accessible recovery actions.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/not-found
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { NotFound } from "@/components/ui/not-found";
+
+export default function NotFoundPage() {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-6 bg-[#111113]">
+      <NotFound
+        title="This page took a wrong turn."
+        description="The requested page doesn't exist or may have moved."
+        actionLabel="Go back home"
+        onAction={() => window.location.href = "/"}
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `errorCode` (string); default: '404' — Main error code glyphs rendered as physical interactive objects
+- `badgeLabel` (string); default: undefined — Optional status tag displayed above the glyphs
+- `title` (string); default: 'This page took a wrong turn.' — Primary heading title
+- `description` (string); default: 'The requested page doesn\'t exist or may have moved.' — Descriptive secondary body copy
+- `actionLabel` (string); default: 'Go back home' — Label for the primary recovery action button
+- `onAction` (() => void); default: undefined — Callback when primary action button is clicked
+- `secondaryActionLabel` (string); default: undefined — Optional label for the secondary action button
+- `onSecondaryAction` (() => void); default: undefined — Callback when secondary action button is clicked
+- `className` (string); default: undefined — Optional custom container CSS classes
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/not-found.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

@@ -12,9 +12,11 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const UI_DIR = path.join(ROOT_DIR, 'src', 'components', 'ui');
 const REGISTRY_PATH = path.join(ROOT_DIR, 'registry.json');
 const PUBLIC_REGISTRY_PATH = path.join(ROOT_DIR, 'public', 'registry.json');
-const COMPONENTS_DATA_PATH = path.join(ROOT_DIR, 'src', 'components', 'registry', 'components-data.ts');
 const CATALOG_INDEX_PATH = path.join(ROOT_DIR, 'src', 'components', 'registry', 'catalog-index.ts');
+const COMPONENT_DETAILS_DIR = path.join(ROOT_DIR, 'src', 'components', 'registry', 'details');
+const COMPONENT_DETAIL_LOADERS_PATH = path.join(ROOT_DIR, 'src', 'components', 'registry', 'component-details.ts');
 const SOURCE_DIR = path.join(ROOT_DIR, 'public', 'source');
+const PROMPTS_DIR = path.join(ROOT_DIR, 'public', 'prompts');
 const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
 
 const REPO_SLUG = 'Surajmaurya1/easyui';
@@ -355,11 +357,13 @@ function generateRegistryJson(components: DiscoveredComponent[]): void {
   console.log(`✓ Generated ${normalizeRelativePath(path.relative(ROOT_DIR, REGISTRY_PATH))} (${items.length} items)`);
 }
 
-function generateComponentsData(components: DiscoveredComponent[]): void {
+function generateComponentDetails(components: DiscoveredComponent[]): void {
+  fs.mkdirSync(COMPONENT_DETAILS_DIR, { recursive: true });
   // Ensure public/source directory exists
   if (!fs.existsSync(SOURCE_DIR)) {
     fs.mkdirSync(SOURCE_DIR, { recursive: true });
   }
+  fs.mkdirSync(PROMPTS_DIR, { recursive: true });
 
   // Write separate source code JSON files for on-demand lazy loading
   for (const comp of components) {
@@ -373,7 +377,8 @@ function generateComponentsData(components: DiscoveredComponent[]): void {
   }
   console.log(`✓ Generated ${normalizeRelativePath(path.relative(ROOT_DIR, SOURCE_DIR))}/ (${components.length} source files)`);
 
-  const componentCatalogEntries = components.map((comp) => {
+  const detailLoaders: string[] = [];
+  components.forEach((comp) => {
     const cliCommand = `npx shadcn@latest add ${REPO_SLUG}/${comp.slug}`;
     const category = comp.meta.category || 'Motion';
     const badges = comp.meta.badges || [category];
@@ -397,6 +402,7 @@ function generateComponentsData(components: DiscoveredComponent[]): void {
       sourceCode: [comp.sourceCode, ...comp.additionalFiles.map((file) => fs.readFileSync(file, 'utf-8').replace(/\r\n/g, '\n'))].join('\n'),
       meta: comp.meta,
     };
+    fs.writeFileSync(path.join(PROMPTS_DIR, `${comp.slug}.txt`), generatePrompt(promptData), 'utf-8');
 
     const entry: Record<string, any> = {
       id: comp.slug,
@@ -406,7 +412,6 @@ function generateComponentsData(components: DiscoveredComponent[]): void {
       category,
       badges,
       cliCommand,
-      installPrompt: generatePrompt(promptData),
       installPromptHash: promptInputHash(promptData),
       features,
       props,
@@ -422,19 +427,66 @@ function generateComponentsData(components: DiscoveredComponent[]): void {
       entry.featured = true;
     }
 
-    return entry;
+    const detailPath = path.join(COMPONENT_DETAILS_DIR, `${comp.slug}.ts`);
+    const detailContent = `// AUTO-GENERATED — DO NOT EDIT MANUALLY.\n// Run "npm run component:sync" to regenerate this file.\n\nimport type { EasyComponentMeta } from '../../../types/component';\n\nconst component: EasyComponentMeta = ${JSON.stringify(entry, null, 2)};\n\nexport default component;\n`;
+    fs.writeFileSync(detailPath, detailContent, 'utf-8');
+    detailLoaders.push(`  ${JSON.stringify(comp.slug)}: () => import('./details/${comp.slug}'),`);
   });
 
-  const content = `// AUTO-GENERATED — DO NOT EDIT MANUALLY.
+  const currentDetailFiles = new Set(components.map((comp) => `${comp.slug}.ts`));
+  for (const fileName of fs.readdirSync(COMPONENT_DETAILS_DIR)) {
+    if (fileName.endsWith('.ts') && !currentDetailFiles.has(fileName)) {
+      fs.rmSync(path.join(COMPONENT_DETAILS_DIR, fileName));
+    }
+  }
+  const currentPromptFiles = new Set(components.map((comp) => `${comp.slug}.txt`));
+  for (const fileName of fs.readdirSync(PROMPTS_DIR)) {
+    if (fileName.endsWith('.txt') && !currentPromptFiles.has(fileName)) {
+      fs.rmSync(path.join(PROMPTS_DIR, fileName));
+    }
+  }
+  console.log(`✓ Generated ${normalizeRelativePath(path.relative(ROOT_DIR, PROMPTS_DIR))}/ (${components.length} prompt files)`);
+
+  const loaderContent = `// AUTO-GENERATED — DO NOT EDIT MANUALLY.
 // Run "npm run component:sync" to regenerate this file.
 
+import { use } from 'react';
 import type { EasyComponentMeta } from '../../types/component';
 
-export const EASY_COMPONENTS: EasyComponentMeta[] = ${JSON.stringify(componentCatalogEntries, null, 2)};
-`;
+type ComponentDetailModule = { default: EasyComponentMeta };
+type ComponentDetailLoader = () => Promise<ComponentDetailModule>;
 
-  fs.writeFileSync(COMPONENTS_DATA_PATH, content, 'utf-8');
-  console.log(`✓ Generated ${normalizeRelativePath(path.relative(ROOT_DIR, COMPONENTS_DATA_PATH))} (${components.length} components)`);
+const componentDetailLoaders: Record<string, ComponentDetailLoader> = {
+${detailLoaders.join('\n')}
+};
+
+const componentDetailCache = new Map<string, Promise<EasyComponentMeta | undefined>>();
+const resolvedComponentDetails = new Map<string, EasyComponentMeta>();
+
+export function preloadComponentMeta(id: string): Promise<EasyComponentMeta | undefined> {
+  const loader = componentDetailLoaders[id];
+  if (!loader) return Promise.resolve(undefined);
+
+  let detailPromise = componentDetailCache.get(id);
+  if (!detailPromise) {
+    detailPromise = loader().then((module) => {
+      resolvedComponentDetails.set(id, module.default);
+      return module.default;
+    });
+    componentDetailCache.set(id, detailPromise);
+  }
+  return detailPromise;
+}
+
+export function useComponentMeta(id: string): EasyComponentMeta | undefined {
+  const resolvedDetail = resolvedComponentDetails.get(id);
+  if (resolvedDetail) return resolvedDetail;
+  return use(preloadComponentMeta(id));
+}
+`;
+  fs.writeFileSync(COMPONENT_DETAIL_LOADERS_PATH, loaderContent, 'utf-8');
+  console.log(`✓ Generated ${normalizeRelativePath(path.relative(ROOT_DIR, COMPONENT_DETAILS_DIR))}/ (${components.length} detail modules)`);
+  console.log(`✓ Generated ${normalizeRelativePath(path.relative(ROOT_DIR, COMPONENT_DETAIL_LOADERS_PATH))}`);
 }
 
 /**
@@ -442,9 +494,9 @@ export const EASY_COMPONENTS: EasyComponentMeta[] = ${JSON.stringify(componentCa
  * the initial app-shell bundle: id, name, tagline, description, category,
  * badges, cliCommand, createdAt, and featured.
  *
- * Heavy fields (usageCode, props, accessibility, features, files, sourceCode)
+ * Heavy fields (usageCode, props, accessibility, features, files)
  * are deliberately excluded so that this file stays small and Vite does not
- * pull the full 386 KB components-data.ts into the entry chunk.
+ * pull component detail data into the entry chunk.
  */
 function generateCatalogIndex(components: DiscoveredComponent[]): void {
   const entries = components.map((comp) => {
@@ -475,7 +527,7 @@ function generateCatalogIndex(components: DiscoveredComponent[]): void {
   const content = `// AUTO-GENERATED — DO NOT EDIT MANUALLY.
 // Run "npm run component:sync" to regenerate this file.
 // This is a LIGHTWEIGHT index containing only initial-bundle fields.
-// For the full catalog (usageCode, props, etc.), see components-data.ts.
+// Full detail metadata is generated into one lazily loaded module per component.
 
 import type { ComponentCatalogIndex } from '../../types/component';
 
@@ -498,7 +550,7 @@ async function main() {
     console.log('');
 
     generateRegistryJson(components);
-    generateComponentsData(components);
+    generateComponentDetails(components);
     generateCatalogIndex(components);
 
     // Automatically synchronize sitemap.xml with newly discovered components

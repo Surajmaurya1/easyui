@@ -1,0 +1,69 @@
+## Task
+
+Install and integrate the EasyUI Combobox component into my project.
+
+A searchable select where one highlight glides between options as you move (keyboard or mouse), the match underlines as you type, and the check pops in on selection.
+
+Category: Forms.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/combobox
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { Combobox, type ComboboxOption } from "@/components/ui/combobox";
+
+const frameworks: ComboboxOption[] = [
+  { value: "next", label: "Next.js", description: "React framework" },
+  { value: "remix", label: "Remix", description: "Web standards" },
+  { value: "astro", label: "Astro", description: "Content sites", keywords: ["islands"] },
+  { value: "vite", label: "Vite", disabled: true },
+];
+
+const [fw, setFw] = React.useState<string | null>("next");
+
+<Combobox options={frameworks} value={fw} onValueChange={setFw} placeholder="Framework" />
+```
+
+Declared props:
+- `options` (ComboboxOption[]); default: undefined — Options with value, label, description, icon, keywords, disabled
+- `value` (string | null); default: undefined — Controlled selected value
+- `defaultValue` (string | null); default: null — Initial value (uncontrolled)
+- `onValueChange` ((value: string | null) => void); default: undefined — Selection change callback
+- `placeholder` (string); default: 'Select…' — Trigger placeholder
+- `searchPlaceholder` (string); default: 'Search…' — Search input placeholder
+- `emptyText` (string); default: 'No results.' — Empty state message
+- `align` ('start' | 'end'); default: 'start' — Popover alignment
+- `disabled` (boolean); default: false — Disables the trigger
+- `className` (string); default: undefined — Additional class for the wrapper (set width, e.g. w-72)
+- `aria-label` (string); default: placeholder — Accessible name for the combobox
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/combobox.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

@@ -13,7 +13,7 @@ export interface NavbarProps {
   onNavigateDocs: () => void;
   onNavigateHome?: () => void;
   onNavigateSponsors?: () => void;
-  activeView?: 'showcase' | 'components' | 'docs' | 'component-detail' | 'sponsors' | 'sponsor-success';
+  activeView?: 'showcase' | 'components' | 'docs' | 'component-detail' | 'sponsors' | 'sponsor-success' | 'skill';
 }
 
 export const Navbar: React.FC<NavbarProps> = ({

@@ -1,0 +1,73 @@
+## Task
+
+Install and integrate the EasyUI Undo Toast component into my project.
+
+An advanced undo notification toast featuring an interactive progress countdown, pause-on-hover mechanics, action reversal animation, and versatile position anchoring.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/undo-toast
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { UndoToast } from "@/components/ui/undo-toast";
+
+export function Demo() {
+  const [show, setShow] = useState(true);
+
+  return (
+    <UndoToast
+      open={show}
+      title="File deleted"
+      description="Item moved to trash"
+      duration={5000}
+      onUndo={() => console.log('Action reversed')}
+      onDismiss={() => setShow(false)}
+    />
+  );
+}
+```
+
+Declared props:
+- `open` (boolean); default: true — Visibility state of the undo toast
+- `title` (string); default: 'Project archived' — Primary notification message title
+- `description` (string); default: 'Changes will be permanent in a few seconds' — Optional descriptive subtitle
+- `undoLabel` (string); default: 'Undo' — Label for undo action trigger
+- `restoredMessage` (string); default: 'Restored successfully' — Title displayed when action has been reversed
+- `duration` (number); default: 5000 — Duration in milliseconds before auto-dismissal
+- `variant` ('default' | 'success' | 'warning' | 'error' | 'info'); default: 'default' — Semantic visual tone
+- `position` ('top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'); default: 'bottom-center' — Screen placement
+- `onUndo` (() => void); default: undefined — Callback fired when user clicks Undo
+- `onDismiss` (() => void); default: undefined — Callback fired when toast closes or expires
+- `showProgress` (boolean); default: true — Whether to show the countdown bar
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/undo-toast.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

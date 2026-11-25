@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { EASY_COMPONENTS } from '../../registry/components-data';
+import { useComponentMeta } from '../../registry/component-details';
 import { useDetailUiState, useSidebarComponents } from './hooks';
 import { INLINE_DEMO_COMPONENTS } from './inline-demo-registry';
 import { DetailHeader, DesktopSidebar, MobileSidebarDrawer } from './parts/navigation';
@@ -26,9 +26,9 @@ export const ComponentDetailContent: React.FC<ComponentDetailPageProps> = ({
   onNavigateComponents,
   onNavigateDocs,
 }) => {
-  // Resolve the full component metadata from the catalog — EASY_COMPONENTS is already
-  // in this chunk, so this lookup adds no extra bundle cost.
-  const component = EASY_COMPONENTS.find((c) => c.id === componentId);
+  // Suspend until this route's generated detail module is loaded. Other
+  // components' documentation stays out of the current page bundle.
+  const component = useComponentMeta(componentId);
 
   const [activeTab, setActiveTab] = useState<MainTab>('preview');
   const { sourceCode: loadedSourceCode } = useComponentSource(component?.id || '', activeTab === 'code');

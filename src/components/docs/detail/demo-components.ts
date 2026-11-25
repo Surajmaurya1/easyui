@@ -92,6 +92,7 @@ export const DEMO_COMPONENTS = {
   CircularOrbit: lazyNamed(() => import('../../ui/CircularOrbit'), 'CircularOrbit'),
   ProfileCard: lazyNamed(() => import('../../ui/ProfileCard'), 'ProfileCard'),
   BookCallButton: lazyNamed(() => import('../../ui/BookCallButton'), 'BookCallButton'),
+  Bookshelf: lazyNamed(() => import('../../ui/Bookshelf'), 'Bookshelf'),
   GooeyMenu: lazyNamed(() => import('../../ui/GooeyMenu'), 'GooeyMenu'),
   MorphingShapeLoader: lazyNamed(() => import('../../ui/MorphingShapeLoader'), 'MorphingShapeLoader'),
   LiquidToggle: lazyNamed(() => import('../../ui/LiquidToggle'), 'LiquidToggle'),

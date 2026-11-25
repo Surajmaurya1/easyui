@@ -9,7 +9,9 @@ Component Source (.tsx) + Component Metadata (.meta.ts)
                           ↓
   ┌─────────────────────────────────────────────────────────┐
   │ • Root registry.json (official shadcn schema)           │
-  │ • src/components/registry/components-data.ts (catalog)  │
+  │ • src/components/registry/catalog-index.ts (small index)│
+  │ • src/components/registry/details/<slug>.ts (lazy data) │
+  │ • public/prompts/<slug>.txt (on-demand install prompts) │
   │ • CLI command generation (Surajmaurya1/easyui/<slug>)   │
   │ • Dependency & local utility auto-detection             │
   │ • Raw source extraction directly from source files      │
@@ -84,7 +86,9 @@ easyui/
 │   │   ├── icons/                         # Brand icons (GithubIcon, etc.)
 │   │   ├── layout/                        # Navbar, Footer, Container
 │   │   ├── registry/
-│   │   │   └── components-data.ts         # [AUTO-GENERATED] Website component catalog
+│   │   │   ├── catalog-index.ts            # [AUTO-GENERATED] Lightweight app catalog
+│   │   │   ├── component-details.ts        # [AUTO-GENERATED] Lazy detail loaders
+│   │   │   └── details/<slug>.ts           # [AUTO-GENERATED] Per-component metadata
 │   │   ├── sections/                      # Hero, Showcases, Directory, Philosophy
 │   │   └── ui/                            # Component source files + metadata
 │   ├── lib/

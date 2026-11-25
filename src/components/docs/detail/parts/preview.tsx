@@ -12,10 +12,13 @@ export const PreviewSection: React.FC<DetailPartProps> = (props) => {
   const [promptStatus, setPromptStatus] = React.useState<'idle' | 'copied' | 'error'>('idle');
   const [copyingPrompt, setCopyingPrompt] = React.useState(false);
   const handleCopyPrompt = async () => {
-    const prompt = component.installPrompt;
-    if (copyingPrompt || !prompt?.trim()) return;
+    if (copyingPrompt || !component.installPromptHash) return;
     setCopyingPrompt(true);
     try {
+      const response = await fetch(`/prompts/${encodeURIComponent(component.id)}.txt`);
+      if (!response.ok) throw new Error(`Prompt request failed (${response.status})`);
+      const prompt = await response.text();
+      if (!prompt.trim()) throw new Error('Prompt is empty');
       let copied = false;
       try {
         if (navigator.clipboard?.writeText) {
@@ -52,10 +55,10 @@ activeTab === 'preview' && (
                       <Menu.Root>
                         <div className="relative inline-flex items-center">
                         <div className="inline-flex items-center rounded-lg bg-white dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.1] shadow-2xs text-xs font-sans text-text-secondary overflow-hidden">
-                          {component.installPrompt && (
+                          {component.installPromptHash && (
                             <button type="button" onClick={(event) => { event.stopPropagation(); void handleCopyPrompt(); }} disabled={copyingPrompt} className="px-2 py-1 sm:pl-2.5 sm:pr-2 flex items-center gap-1.5 hover:text-text-primary hover:bg-black/[0.03] dark:hover:bg-white/[0.04] rounded-l-lg transition-colors disabled:opacity-50" aria-label="Copy install prompt">
                               {promptStatus === 'copied' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5 text-text-muted" />}
-                              <span className="text-xs font-medium">{promptStatus === 'copied' ? 'Copied!' : promptStatus === 'error' ? 'Copy failed' : 'Copy Prompt'}</span>
+                              <span className="text-xs font-medium">{copyingPrompt ? 'Loading…' : promptStatus === 'copied' ? 'Copied!' : promptStatus === 'error' ? 'Copy failed' : 'Copy Prompt'}</span>
                             </button>
                           )}
                           {/* Copy CLI action remains available in the menu */}

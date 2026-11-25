@@ -1,0 +1,74 @@
+## Task
+
+Install and integrate the EasyUI VelocityToast component into my project.
+
+A toast that enters with velocity and settles, with a progress indicator that responds naturally — pauses on hover, resumes with no jump, and eases slightly in the final 10% so dismissal feels intentional.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/velocity-toast
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { useState } from "react";
+import { VelocityToast } from "@/components/ui/velocity-toast";
+import { PressButton } from "@/components/ui/press-button";
+
+export function Demo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <PressButton onClick={() => setOpen(true)}>Show toast</PressButton>
+      <VelocityToast
+        open={open}
+        onDismiss={() => setOpen(false)}
+        title="File uploaded"
+        description="easyui-2026-09.zip is ready."
+        variant="success"
+        position="bottom-right"
+      />
+    </>
+  );
+}
+```
+
+Declared props:
+- `open` (boolean); default: undefined — Whether the toast is visible
+- `onDismiss` (() => void); default: undefined — Called when toast is dismissed (auto or manual)
+- `title` (string); default: undefined — Toast title
+- `description` (string); default: undefined — Secondary description
+- `duration` (number); default: 4000 — Auto-dismiss duration in ms
+- `variant` ('default' | 'success' | 'warning' | 'error' | 'info'); default: 'default' — Visual tone
+- `position` (VelocityToastPosition); default: 'bottom-center' — Screen placement
+- `showProgress` (boolean); default: true — Show countdown progress bar
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/velocity-toast.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

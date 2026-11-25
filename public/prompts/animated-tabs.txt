@@ -1,0 +1,59 @@
+## Task
+
+Install and integrate the EasyUI Animated Tabs component into my project.
+
+A tabbed switcher with physical pill indicator sliding smoothly between active items with content cross-fades.
+
+Category: Navigation.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/animated-tabs
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { AnimatedTabs } from "@/components/ui/animated-tabs";
+
+export function Demo() {
+  const tabs = [
+    { id: 'overview', label: 'Overview', content: <div>Metrics Overview</div> },
+    { id: 'analytics', label: 'Analytics', content: <div>Traffic Charts</div> },
+    { id: 'settings', label: 'Settings', content: <div>Preferences</div> },
+  ];
+  return <AnimatedTabs tabs={tabs} defaultTab="overview" />;
+}
+```
+
+Declared props:
+- `tabs` (TabItem[]); default: [] — Array of tabs with id, label, icon, content
+- `defaultTab` (string); default: tabs[0].id — Initial active tab ID
+- `onChange` ((id: string) => void); default: undefined — Tab change callback
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/animated-tabs.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

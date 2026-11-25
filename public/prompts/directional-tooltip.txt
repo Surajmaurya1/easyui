@@ -1,0 +1,68 @@
+## Task
+
+Install and integrate the EasyUI DirectionalTooltip component into my project.
+
+A tooltip that appears from the direction it originates — it starts a small distance outside the trigger in its preferred direction and springs inward, so it feels like it materializes from the trigger.
+
+Category: Overlays.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/directional-tooltip
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { DirectionalTooltip } from "@/components/ui/directional-tooltip";
+import { PressButton } from "@/components/ui/press-button";
+
+export function Demo() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      <DirectionalTooltip content="Save your changes" side="top">
+        <PressButton>Save</PressButton>
+      </DirectionalTooltip>
+      <DirectionalTooltip content="Open command palette ⌘K" side="bottom" align="end">
+        <PressButton variant="secondary">Search</PressButton>
+      </DirectionalTooltip>
+    </div>
+  );
+}
+```
+
+Declared props:
+- `content` (React.ReactNode); default: undefined — Tooltip body content
+- `side` ('top' | 'right' | 'bottom' | 'left'); default: 'top' — Preferred side for the tooltip
+- `align` ('start' | 'center' | 'end'); default: 'center' — Alignment along the chosen side
+- `delayDuration` (number); default: 150 — Delay before showing, in ms
+- `showArrow` (boolean); default: true — Show the arrow indicator
+- `offset` (number); default: 8 — Spacing from the trigger in px
+- `forceOpen` (boolean); default: false — Force the tooltip open (for previews)
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/directional-tooltip.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

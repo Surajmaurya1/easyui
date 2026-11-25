@@ -358,6 +358,22 @@
       ]
     },
     {
+      "name": "bookshelf",
+      "type": "registry:ui",
+      "title": "Bookshelf",
+      "description": "An interactive 3D bookshelf with animated book covers, keyboard navigation, and expandable reading details.",
+      "dependencies": [
+        "framer-motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Bookshelf.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/bookshelf.tsx"
+        }
+      ]
+    },
+    {
       "name": "branching-submenu",
       "type": "registry:ui",
       "title": "Branching Submenu",

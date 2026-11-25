@@ -1,0 +1,65 @@
+## Task
+
+Install and integrate the EasyUI OTP Input component into my project.
+
+An accessible one-time-passcode input made of auto-advancing digit boxes, each with a spring-driven pop animation on entry, built with Framer Motion and Tailwind CSS.
+
+Category: Forms.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/otp-input
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { OTPInput } from "@/components/ui/otp-input";
+
+export function Demo() {
+  return (
+    <OTPInput
+      length={6}
+      autoFocus
+      onComplete={(code) => console.log("Submitted code:", code)}
+    />
+  );
+}
+```
+
+Declared props:
+- `length` (number); default: 6 — Number of digit boxes to render
+- `value` (string); default: undefined — Controlled value; omit to let the component manage its own state
+- `onChange` ((value: string) => void); default: undefined — Called with the joined code whenever any digit changes
+- `onComplete` ((value: string) => void); default: undefined — Called once with the full code when every box is filled
+- `autoFocus` (boolean); default: false — Focuses the first box on mount
+- `disabled` (boolean); default: false — Disables all digit boxes
+- `className` (string); default: undefined — Classes applied to the wrapping group element
+- `boxClassName` (string); default: undefined — Classes applied to each individual digit box
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/otp-input.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

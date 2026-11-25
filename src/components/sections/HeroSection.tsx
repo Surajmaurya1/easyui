@@ -4,14 +4,36 @@ import { Container } from '../layout/Container';
 
 export interface HeroSectionProps {
   onExplore: () => void;
+  onNavigateSkill: () => void;
   onSelectComponent?: (id: string) => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onExplore }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onNavigateSkill }) => {
   return (
     <section className="relative pt-14 sm:pt-16 lg:pt-20 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
       <Container size="lg">
         <div className="relative flex flex-col items-center text-center max-w-3xl lg:max-w-5xl mx-auto">
+          <motion.a
+            href="/skill"
+            onClick={(event) => {
+              if (
+                !event.ctrlKey &&
+                !event.metaKey &&
+                !event.shiftKey &&
+                event.button === 0
+              ) {
+                event.preventDefault();
+                onNavigateSkill();
+              }
+            }}
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-4 inline-flex items-center rounded-full border border-border-subtle bg-surface px-3.5 py-1.5 text-[12px] font-medium text-text-secondary transition-colors hover:text-text-primary focus-ring"
+          >
+            Try the Anti-Slop UI skill
+          </motion.a>
+
           {/* Primary product description */}
           <motion.h1
             initial={false}

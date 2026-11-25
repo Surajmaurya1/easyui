@@ -1,0 +1,69 @@
+## Task
+
+Install and integrate the EasyUI Calendar component into my project.
+
+A dependency-free calendar with a selected-day pill that glides from date to date, range support with a live hover preview band, and months that slide in the direction you navigate.
+
+Category: Forms.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/calendar
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { Calendar, type DateRange } from "@/components/ui/calendar";
+
+// single
+const [date, setDate] = React.useState<Date | null>(null);
+<Calendar value={date} onChange={setDate} />
+
+// range
+const [range, setRange] = React.useState<DateRange>({ from: null, to: null });
+<Calendar mode="range" value={range} onChange={setRange} />
+
+// limits
+<Calendar minDate={new Date()} isDateDisabled={(d) => d.getDay() === 0} weekStartsOn={1} />
+```
+
+Declared props:
+- `mode` ('single' | 'range'); default: 'single' — Selection mode
+- `value` (Date | null | DateRange); default: undefined — Controlled selected date or range
+- `defaultValue` (Date | null | DateRange); default: null — Initial selection (uncontrolled)
+- `onChange` ((date: Date | null) => void | (range: DateRange) => void); default: undefined — Selection change callback
+- `defaultMonth` (Date); default: undefined — Month shown initially
+- `minDate` (Date); default: undefined — Earliest selectable date
+- `maxDate` (Date); default: undefined — Latest selectable date
+- `isDateDisabled` ((date: Date) => boolean); default: undefined — Predicate to disable specific dates
+- `weekStartsOn` (0 | 1); default: 0 — First day of the week (0 = Sunday, 1 = Monday)
+- `locale` (string); default: undefined — BCP 47 locale for formatting
+- `className` (string); default: undefined — Additional class for the root
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/calendar.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

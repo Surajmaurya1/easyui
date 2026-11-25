@@ -1,0 +1,78 @@
+## Task
+
+Install and integrate the EasyUI UnfoldAccordion component into my project.
+
+An accordion whose content unfolds with the chevron and spacing moving together. The chevron rotates 180° while the content height expands and the inner content slides up to close the gap, producing a single, fluid motion.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/unfold-accordion
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { UnfoldAccordion } from "@/components/ui/unfold-accordion";
+
+export function Demo() {
+  return (
+    <UnfoldAccordion
+      defaultOpen={["design"]}
+      items={[
+        {
+          id: "design",
+          title: "Design tokens",
+          subtitle: "Foundations",
+          content: "A small set of variables for color, type, and spacing. Each token is named for its role, not its value, so themes can be swapped without rewriting components.",
+        },
+        {
+          id: "motion",
+          title: "Motion language",
+          subtitle: "Spring physics",
+          content: "Every transition is a spring with explicit mass, stiffness, and damping. Linear easing is reserved for color and opacity only.",
+        },
+        {
+          id: "shipping",
+          title: "Shipping workflow",
+          subtitle: "From sync to deploy",
+          content: "Run component:sync to regenerate the registry, then push. The CI workflow re-validates and re-syncs on every PR.",
+        },
+      ]}
+    />
+  );
+}
+```
+
+Declared props:
+- `items` (UnfoldAccordionItem[]); default: [] — Array of accordion items
+- `allowMultiple` (boolean); default: false — Allow multiple items open at once
+- `defaultOpen` (string[]); default: [] — Ids of items open by default
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/unfold-accordion.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

@@ -1,0 +1,93 @@
+## Task
+
+Install and integrate the EasyUI Glitch Text component into my project.
+
+A multi-modal cybernetic glitch typography component featuring 5 distinct animation variants (RGB split chromatic aberration, cyberpunk clip-slicing, analog VHS tracking loss, matrix rune scramble decode, and electrical voltage surge).
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/glitch-text
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { GlitchText } from "@/components/ui/glitch-text";
+
+export function Demo() {
+  return (
+    <div className="flex flex-col items-center gap-6 p-8">
+      {/* 1. RGB Split (Chromatic Aberration) */}
+      <GlitchText
+        as="h2"
+        text="CHROMATIC SPLIT"
+        variant="rgb-split"
+        color1="#00f0ff"
+        color2="#ff0055"
+        className="text-4xl font-black tracking-tight"
+      />
+
+      {/* 2. Cyberpunk Slicing */}
+      <GlitchText
+        as="h2"
+        text="CYBERPUNK SLICE"
+        variant="slice"
+        color1="#22c55e"
+        color2="#a855f7"
+        className="text-4xl font-black tracking-tight"
+      />
+
+      {/* 3. Matrix Scramble Decode on Hover */}
+      <GlitchText
+        as="span"
+        text="SYSTEM BREACH DETECTED"
+        variant="scramble"
+        trigger="hover"
+        color1="#10b981"
+        className="text-lg font-mono text-emerald-400 cursor-pointer"
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `text` (string) — The text string to animate with the cybernetic glitch effects
+- `variant` ('rgb-split' | 'slice' | 'vhs' | 'scramble' | 'pulse'); default: 'rgb-split' — Visual animation mode: chromatic aberration, horizontal slicing, VHS jitter, matrix decode, or voltage pulse
+- `trigger` ('continuous' | 'hover' | 'click'); default: 'continuous' — Interaction trigger mode governing when the glitch animation activates
+- `color1` (string); default: '#00e571' — Primary chromatic aberration color (alias: greenColor)
+- `color2` (string); default: '#8b00ff' — Secondary chromatic aberration color (alias: purpleColor)
+- `intensity` ('low' | 'medium' | 'high'); default: 'medium' — Glitch magnitude scaling multiplier for displacement, skew, and jitter
+- `duration` (number); default: 0.5 — Duration in seconds of an active glitch burst cycle
+- `repeatDelay` (number); default: 2.5 — Rest interval in seconds between continuous glitch bursts
+- `as` (keyof JSX.IntrinsicElements); default: 'span' — HTML tag to render as (e.g. 'h1', 'h2', 'span', 'p', 'div')
+- `className` (string) — Additional CSS classes for font size, weight, color, and positioning
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/glitch-text.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

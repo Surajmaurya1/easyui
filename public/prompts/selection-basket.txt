@@ -1,0 +1,68 @@
+## Task
+
+Install and integrate the EasyUI Selection Basket component into my project.
+
+A floating bulk-action toolbar that smoothly rises from the bottom of the screen when multiple dataset items are selected, supporting batch operations, horizontal scrolling, and clear triggers.
+
+Category: Overlays.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/selection-basket
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { SelectionBasket } from "@/components/ui/selection-basket";
+
+export function Demo() {
+  const [selected, setSelected] = useState<string[]>(['item-1', 'item-2']);
+
+  return (
+    <SelectionBasket
+      selectedCount={selected.length}
+      totalCount={10}
+      onClearSelection={() => setSelected([])}
+      actions={[
+        { id: 'export', label: 'Export', onClick: () => console.log('Exporting') },
+        { id: 'delete', label: 'Delete', variant: 'danger', onClick: () => console.log('Deleting') }
+      ]}
+    />
+  );
+}
+```
+
+Declared props:
+- `selectedCount` (number); default: 0 — Current number of selected items
+- `totalCount` (number); default: undefined — Total item universe count
+- `actions` (SelectionActionItem[]); default: [...] — List of bulk action definitions
+- `onClearSelection` (() => void); default: undefined — Callback fired when user clears selection
+- `onSelectAll` (() => void); default: undefined — Callback fired when user selects all
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/selection-basket.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

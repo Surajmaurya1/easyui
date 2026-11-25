@@ -1,0 +1,72 @@
+## Task
+
+Install and integrate the EasyUI Drag to Confirm component into my project.
+
+A minimalist physical drag-to-confirm slider for high-stakes and destructive actions, equipped with progressive track fill physics, spring snapback resistance, full light/dark theme adaptation, and accessible keyboard controls.
+
+Category: Buttons.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/drag-to-confirm
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { DragToConfirm } from "@/components/ui/drag-to-confirm";
+
+export function Demo() {
+  return (
+    <DragToConfirm
+      actionType="delete"
+      size="md"
+      label="Slide to delete database →"
+      confirmedLabel="Database Deleted ✓"
+      onConfirm={() => console.log('Destroy action confirmed')}
+    />
+  );
+}
+```
+
+Declared props:
+- `label` (string); default: 'Slide to confirm' — Action instruction text rendered along track
+- `confirmedLabel` (string); default: 'Confirmed ✓' — Text shown when slider locks into completion
+- `actionType` ('delete' | 'archive' | 'confirm' | 'submit' | 'unlock' | 'continue'); default: 'confirm' — Action preset style and icon archetype
+- `variant` ('default' | 'danger' | 'warning' | 'info' | 'success'); default: undefined — Visual tone variant override
+- `size` ('sm' | 'md' | 'lg'); default: 'md' — Slider dimension profile (sm: 40px, md: 48px, lg: 54px)
+- `icon` (React.ReactNode); default: undefined — Custom idle state icon rendered inside thumb
+- `confirmedIcon` (React.ReactNode); default: undefined — Custom confirmed state icon rendered inside thumb
+- `isConfirmed` (boolean); default: undefined — Controlled confirmation state
+- `onConfirm` (() => void); default: undefined — Callback triggered upon successful confirmation completion
+- `onReset` (() => void); default: undefined — Callback triggered upon slider reset
+- `autoResetDelay` (number); default: 2500 — Milliseconds before resetting back to start (0 to disable)
+- `haptic` (boolean); default: true — Triggers subtle vibration feedback upon confirmation
+- `disabled` (boolean); default: false — Disables slider gesture and interaction
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/drag-to-confirm.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

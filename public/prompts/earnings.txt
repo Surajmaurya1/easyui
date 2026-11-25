@@ -1,0 +1,98 @@
+## Task
+
+Install and integrate the EasyUI Earnings component into my project.
+
+An earnings summary card that counts up the total, plots a scrubable trend line, and breaks income down by source with a hoverable split bar and a 7D / 30D / 12M period switcher. Light and dark themes, fully responsive.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/earnings
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { Earnings, type EarningsPeriod } from "@/components/ui/earnings";
+
+const periods: EarningsPeriod[] = [
+  {
+    id: "30d",
+    label: "30D",
+    comparison: "vs previous 30 days",
+    previous: 9800,
+    trend: [240, 310, 280, 390, 420, 380, 510],
+    trendLabels: ["Oct 1", "Oct 6", "Oct 11", "Oct 16", "Oct 21", "Oct 26", "Oct 31"],
+    sources: [
+      { id: "sponsors", label: "Sponsors", amount: 4200, change: 8.2 },
+      { id: "pro", label: "Pro licenses", amount: 3100, change: 14.6 },
+      { id: "affiliate", label: "Affiliate", amount: 1250, change: -3.1 },
+    ],
+  },
+];
+
+export function Demo() {
+  return (
+    <div className="w-full max-w-[520px]">
+      <Earnings
+        periods={periods}
+        payout={{ date: "Nov 5", amount: 1240 }}
+        onPeriodChange={(id) => console.log(id)}
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `periods` (EarningsPeriod[]) — Period datasets, each with its trend, optional previous total, and income sources
+- `defaultPeriod` (string); default: second period when 3+ exist — ID of the period shown first
+- `onPeriodChange` ((id: string) => void); default: undefined — Called when the active period changes
+- `title` (string); default: 'Earnings' — Card heading and default readout label
+- `currency` (string); default: 'USD' — ISO currency code passed to Intl.NumberFormat
+- `locale` (string); default: 'en-US' — Locale used for currency formatting
+- `payout` ({ label?: string; date: string; amount?: number }); default: undefined — Optional footer line for the next payout
+- `animated` (boolean); default: true — Counts numbers up and animates the chart on mount; reduced motion always wins
+- `className` (string); default: '' — Additional CSS classes for the card root
+- `EarningsPeriod.id` (string) — Unique period identifier used by the switcher
+- `EarningsPeriod.label` (string) — Segmented-control label such as "30D"
+- `EarningsPeriod.comparison` (string) — Caption under the delta, e.g. "vs previous 30 days"
+- `EarningsPeriod.total` (number) — Headline total; defaults to the sum of the sources
+- `EarningsPeriod.previous` (number) — Previous-period total used to compute the delta
+- `EarningsPeriod.trend` (number[]) — Earnings per point, ordered oldest to newest
+- `EarningsPeriod.trendLabels` (string[]) — Names for each trend point, shown while scrubbing
+- `EarningsPeriod.sources` (EarningsSource[]) — Income sources with amount, optional change, color, and icon
+- `EarningsSource.id` (string) — Unique source identifier
+- `EarningsSource.label` (string) — Source name used in the list and readout
+- `EarningsSource.amount` (number) — Amount earned from this source in the period
+- `EarningsSource.change` (number) — Percent change versus the previous period
+- `EarningsSource.color` (string) — Any CSS color; defaults to a palette entry
+- `EarningsSource.icon` (ReactNode) — Optional icon; defaults to a colored initial
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/earnings.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

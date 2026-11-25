@@ -1,0 +1,89 @@
+## Task
+
+Install and integrate the EasyUI Gooey Menu component into my project.
+
+A tactile liquid dropdown menu with organic SVG metaball fusion filter and spring-driven extrusion animation.
+
+Category: Navigation.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/gooey-menu
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { GooeyMenu } from "@/components/ui/gooey-menu";
+
+export function Demo() {
+  return (
+    <GooeyMenu
+      options={["Dashboard", "Analytics", "Settings", "Billing", "Logout"]}
+      onSelect={(opt) => console.log("Selected:", opt)}
+    />
+  );
+}
+
+export function ProfileMenu() {
+  return (
+    <GooeyMenu
+      width={232}
+      options={["Profile", "Settings", "Privacy and Security", "Notifications", "Log out"]}
+      optionClassName={(option) => option === "Log out" ? "text-red-400 hover:text-red-300" : undefined}
+      triggerLabel="Open profile menu"
+      triggerStyle={{ width: 44, height: 44, borderRadius: "50%", padding: 0 }}
+      trigger={
+        <span aria-hidden="true" className="flex h-full w-full items-center justify-center rounded-full bg-black text-sm font-medium text-white">
+          SM
+        </span>
+      }
+      onSelect={(option) => console.log("Profile action:", option)}
+    />
+  );
+}
+```
+
+Declared props:
+- `options` (string[]); default: ['Home', 'About', 'Projects', 'Contact', 'Book a call', 'Follow us'] — Array of option labels
+- `value` (string); default: undefined — Controlled active selected option
+- `defaultValue` (string); default: options[0] — Default selected option if uncontrolled
+- `open` (boolean); default: undefined — Controlled open dropdown state
+- `defaultOpen` (boolean); default: false — Initial open dropdown state if uncontrolled
+- `onOpenChange` ((open: boolean) => void); default: undefined — Callback fired when open state changes
+- `onSelect` ((option: string, index: number) => void); default: undefined — Callback fired on option selection
+- `width` (number); default: 306 — Pixel width of the dropdown panel and default pill; custom triggers keep their own size
+- `trigger` (ReactNode); default: undefined — Optional non-interactive content inside the trigger button, such as an avatar. Do not pass a nested button or link.
+- `triggerLabel` (string); default: "Toggle menu" for custom triggers — Accessible name for the trigger and its options
+- `triggerClassName` (string); default: undefined — Classes for the trigger button, including dimensions and border radius
+- `triggerStyle` (CSSProperties); default: undefined — Inline trigger styles; size and corner radii are measured automatically
+- `align` ("start" | "center" | "end"); default: "start" — Logical alignment of the panel relative to the trigger. Start and end follow the inherited text direction.
+- `optionClassName` (string | ((option: string, index: number) => string | undefined)); default: undefined — Additional classes for all options or individual actions, such as a red logout option
+- `className` (string); default: undefined — Custom CSS class overrides
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/gooey-menu.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

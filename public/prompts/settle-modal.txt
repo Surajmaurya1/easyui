@@ -1,0 +1,83 @@
+## Task
+
+Install and integrate the EasyUI SettleModal component into my project.
+
+A modal whose content has a tiny scale/settle instead of a generic fade. The panel scales 0.94 -> 1.02 -> 1.0 with a small y travel, then the inner content layers its own gentle settle on top.
+
+Category: Overlays.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/settle-modal
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { useState } from "react";
+import { SettleModal } from "@/components/ui/settle-modal";
+import { PressButton } from "@/components/ui/press-button";
+
+export function Demo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <PressButton onClick={() => setOpen(true)}>Open modal</PressButton>
+      <SettleModal
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Confirm archive"
+        description="Archived projects can be restored within 30 days."
+        footer={
+          <>
+            <PressButton variant="ghost" onClick={() => setOpen(false)}>Cancel</PressButton>
+            <PressButton variant="primary" onClick={() => setOpen(false)}>Archive</PressButton>
+          </>
+        }
+      >
+        <p className="text-sm text-[#A1A1A1] leading-relaxed">
+          This project and its 14 components will be moved to the archive.
+        </p>
+      </SettleModal>
+    </>
+  );
+}
+```
+
+Declared props:
+- `open` (boolean); default: undefined — Whether the modal is open
+- `onClose` (() => void); default: undefined — Called when the modal should close
+- `title` (React.ReactNode); default: undefined — Optional title rendered at the top
+- `description` (React.ReactNode); default: undefined — Optional secondary description below the title
+- `children` (React.ReactNode); default: undefined — Main content area
+- `footer` (React.ReactNode); default: undefined — Footer area, typically action buttons
+- `hideCloseButton` (boolean); default: false — Hide the close (X) button
+- `closeOnBackdrop` (boolean); default: true — Click on backdrop closes the modal
+- `size` ('sm' | 'md' | 'lg'); default: 'md' — Maximum width preset
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/settle-modal.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

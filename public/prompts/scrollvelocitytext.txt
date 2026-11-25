@@ -1,0 +1,79 @@
+## Task
+
+Install and integrate the EasyUI Scroll Velocity Text component into my project.
+
+A direction-aware kinetic typography component that smoothly expands letter-spacing and scale on downward scroll, and winds back on upward scroll, with zero per-frame React re-renders.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/scrollvelocitytext
+
+No additional package dependencies were detected by the registry sync.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { ScrollVelocityText } from "@/components/ui/scrollvelocitytext";
+
+export function Demo() {
+  return (
+    <div className="min-h-[140vh] flex flex-col items-center justify-center p-8">
+      <p className="text-xs font-mono uppercase tracking-widest text-text-muted mb-4">
+        Scroll down to expand · Scroll up to wind back
+      </p>
+      <ScrollVelocityText
+        as="h1"
+        text="BUILD SOMETHING GREAT"
+        intensity={1.2}
+        expandDistance={450}
+        minLetterSpacing={0.05}
+        maxLetterSpacing={0.8}
+        maxScale={1.5}
+        className="text-4xl sm:text-6xl font-black tracking-tight text-text-primary uppercase select-none text-center"
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `text` (string) — The text string to render as a single accessible text node
+- `as` (keyof JSX.IntrinsicElements); default: 'span' — HTML tag to render as (e.g. "h1", "h2", "span", "p", "div")
+- `expandDistance` (number); default: 500 — Net scroll distance in pixels needed to progress from resting size to fully expanded and faded out
+- `intensity` (number); default: 1 — Multiplier on how much each scrolled pixel contributes to expansion progress
+- `minLetterSpacing` (number); default: 0 — Letter-spacing in em units at rest (zero scroll progress)
+- `maxLetterSpacing` (number); default: 1 — Letter-spacing in em units at full scroll expansion
+- `maxScale` (number); default: 1.6 — Scale multiplier at full scroll expansion (1 = no scale change)
+- `fadeStart` (number); default: 0.4 — Progress fraction (0–1) at which the text begins fading out (>= 1 disables fading)
+- `smoothingMs` (number); default: 400 — Duration in milliseconds of the CSS easing transition between scroll updates
+- `transformOrigin` (string); default: 'center center' — CSS transform origin for expansion and scaling (e.g. "left center" for left-aligned headlines)
+- `scrollContainerRef` (RefObject<HTMLElement | null>) — Optional ref to a custom scrollable container instead of the window viewport
+- `className` (string) — Additional CSS classes for font size, weight, color, and positioning
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/scrollvelocitytext.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

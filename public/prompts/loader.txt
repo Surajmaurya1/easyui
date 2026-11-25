@@ -1,0 +1,64 @@
+## Task
+
+Install and integrate the EasyUI Loader component into my project.
+
+A minimal, purpose-driven loading indicator with 4 calm, non-anxious motion variants.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/loader
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { Loader } from "@/components/ui/loader";
+
+export function Demo() {
+  return (
+    <div className="flex items-center gap-6 p-8 bg-[#0A0A0A] rounded-2xl border border-[#222222]">
+      <Loader variant="arc" size={32} />
+      <Loader variant="dots" size={28} />
+      <Loader variant="line" size={36} />
+      <Loader variant="rings" size={32} />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `size` (number); default: 32 — Diameter or width scale in pixels
+- `variant` ('arc' | 'dots' | 'line' | 'rings'); default: 'arc' — Visual animation mode
+- `label` (string); default: 'Loading...' — Accessible screen reader text label
+- `reduceMotion` (boolean); default: false — Disables high-velocity continuous spins
+- `color` (string); default: 'currentColor' — CSS color string for indicator strokes
+- `className` (string); default: undefined — Additional CSS class names
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/loader.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

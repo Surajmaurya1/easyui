@@ -1,0 +1,75 @@
+## Task
+
+Install and integrate the EasyUI Car Smoke Page Transition component into my project.
+
+A cinematic page transition where a speeding car crosses the screen, leaving a smoke trail before transitioning to the next page.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/car-smoke-page-transition
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { CarSmokePageTransition } from "@/components/ui/car-smoke-page-transition";
+
+export function Demo() {
+  return (
+    <CarSmokePageTransition
+      onTransitionComplete={() => {
+        // Navigate to new page after animation completes
+        window.location.href = "/about";
+      }}
+    >
+      <button className="bg-[#FAFAFA] text-[#050505] hover:bg-white px-4 py-2 rounded-md font-medium transition-colors">
+        Start Journey
+      </button>
+    </CarSmokePageTransition>
+  );
+}
+```
+
+Declared props:
+- `direction` ('left-to-right' | 'right-to-left'); default: 'left-to-right' — Direction of car travel
+- `carDuration` (number); default: 700 — Duration of car crossing animation in milliseconds
+- `carDelay` (number); default: 0 — Delay before car starts moving in milliseconds
+- `carSize` ('sm' | 'md' | 'lg'); default: 'md' — Size of the car (affects scale)
+- `smokeDensity` ('off' | 'low' | 'medium' | 'high'); default: 'medium' — Density of smoke particles emitted
+- `smokeLifetime` (number); default: 1200 — Lifetime of smoke particles in milliseconds
+- `showSpeedLines` (boolean); default: true — Whether to show speed lines effect behind the car
+- `pageTransitionDelay` (number); default: 550 — Delay before page transition overlay starts in milliseconds
+- `pageTransitionDuration` (number); default: 350 — Duration of page transition overlay fade in milliseconds
+- `resetDelay` (number); default: 300 — Delay before resetting to idle after transition completes in milliseconds
+- `onTransitionComplete` (() => void); default: undefined — Callback fired when transition completes (call navigate() here)
+- `children` (ReactNode); default: undefined — The trigger element (typically a Button)
+- `className` (string); default: undefined — Additional Tailwind classes merged into the root
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/car-smoke-page-transition.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

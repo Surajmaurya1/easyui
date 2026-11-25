@@ -1,0 +1,101 @@
+## Task
+
+Install and integrate the EasyUI Data Table component into my project.
+
+A sortable, searchable data table with sticky headers, row selection and range selection, animated bulk actions, paging, responsive stacked cards, and ready-made sparkline and delta cells.
+
+Category: Forms.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/data-table
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { DataTable, Sparkline, DeltaPill, type DataTableColumn } from "@/components/ui/data-table";
+
+interface Product {
+  id: number;
+  name: string;
+  revenue: number;
+  trend: number[];
+  change: number;
+}
+
+const columns: DataTableColumn<Product>[] = [
+  { key: "name", header: "Product", primary: true },
+  {
+    key: "revenue",
+    header: "Revenue",
+    align: "right",
+    cell: (row) => <span className="tabular-nums">${row.revenue.toLocaleString()}</span>,
+  },
+  { key: "trend", header: "Trend", sortable: false, cell: (row) => <Sparkline data={row.trend} /> },
+  { key: "change", header: "Change", align: "right", cell: (row) => <DeltaPill value={row.change} /> },
+];
+
+export function Demo() {
+  return (
+    <DataTable
+      rows={rows}
+      columns={columns}
+      getRowLabel={(row) => row.name}
+      defaultSort={{ key: "revenue", dir: "desc" }}
+      bulkActions={(ids) => <button type="button">Export {ids.length}</button>}
+    />
+  );
+}
+```
+
+Declared props:
+- `rows` (T[]); default: required — Rows to render. Each row must include a stable id
+- `columns` (DataTableColumn<T>[]); default: required — Column definitions with headers, accessors, custom cells, alignment, widths, and mobile behavior
+- `getRowLabel` ((row: T) => string); default: String(row.id) — Readable row name used by checkbox labels and screen readers
+- `selectable` (boolean); default: true — Enables row selection, select-all, and the bulk-action bar
+- `searchable` (boolean); default: true — Shows the search field that filters rows
+- `searchPlaceholder` (string); default: 'Search…' — Placeholder text for the search field
+- `searchText` ((row: T) => string); default: undefined — Extra text to match when searching beyond the column accessors
+- `defaultSort` (SortState); default: null — Initial sort used when the sort prop is not controlled
+- `sort` (SortState); default: undefined — Controlled sort state
+- `onSortChange` ((sort: SortState) => void); default: undefined — Callback fired whenever the sort changes
+- `selected` (Id[]); default: undefined — Controlled selection state
+- `onSelectionChange` ((ids: Id[]) => void); default: undefined — Callback fired whenever the selection changes
+- `bulkActions` ((selectedIds: Id[]) => ReactNode); default: undefined — Buttons rendered in the bar while rows are selected
+- `toolbar` (ReactNode); default: undefined — Extra controls rendered on the right side of the toolbar
+- `pageSize` (number); default: 20 — Rows shown initially and revealed per "Show more" click. Infinity shows all rows
+- `maxHeight` (number); default: 520 — Table scroll height in pixels before the header sticks
+- `density` ('comfortable' | 'compact'); default: 'comfortable' — Row padding and minimum height
+- `cardBreakpoint` (number); default: 640 — Width below which rows render as stacked cards
+- `onRowClick` ((row: T) => void); default: undefined — Makes rows interactive and keyboard-activatable
+- `emptyState` (ReactNode); default: undefined — Custom content shown when no rows match
+- `ariaLabel` (string); default: 'Data table' — Accessible name for the table region
+- `className` (string); default: undefined — Custom Tailwind class names for the outer wrapper
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/data-table.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

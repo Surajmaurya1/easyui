@@ -1,0 +1,80 @@
+## Task
+
+Install and integrate the EasyUI Dynamic Island component into my project.
+
+A physical morphing island component that smoothly transitions between a compact indicator, interactive summary, profile card, and social dock with spring physics.
+
+Category: Navigation.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/dynamic-island
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { DynamicIsland } from "@/components/ui/dynamic-island";
+
+export function Demo() {
+  return (
+    <DynamicIsland
+      name="Suraj Maurya"
+      role="Frontend Developer"
+      description="Building thoughtful interfaces with React and Next.js."
+      statusText="Available for hire"
+      socials={{
+        github: "https://github.com/Surajmaurya1",
+        x: "https://x.com",
+        linkedin: "https://linkedin.com",
+        instagram: "https://instagram.com",
+        email: "mailto:suraj@example.com",
+      }}
+    />
+  );
+}
+```
+
+Declared props:
+- `avatar` (string); default: undefined — URL of user avatar image
+- `avatarAlt` (string); default: undefined — Alt text for the avatar image
+- `name` (string); default: 'Suraj Maurya' — Display name in expanded and profile views
+- `role` (string); default: 'Frontend Developer' — Subtitle or profession title
+- `description` (string); default: 'Building thoughtful interfaces...' — Bio or description text rendered in profile view
+- `greeting` (string); default: 'Hello, I am [name]' — Custom message displayed in expanded state
+- `statusText` (string); default: 'Available for work' — Optional availability chip displayed beside name
+- `metadata` (DynamicIslandMetadataItem[]); default: undefined — Key-value badges rendered in profile card
+- `socials` (DynamicIslandSocials); default: 5 default links — Social links as an array of items or platform key-value object
+- `state` ('collapsed' | 'expanded' | 'profile' | 'share'); default: undefined — Controlled state value
+- `defaultState` ('collapsed' | 'expanded' | 'profile' | 'share'); default: 'collapsed' — Initial uncontrolled state
+- `onStateChange` ((state: DynamicIslandState) => void); default: undefined — Callback invoked whenever state changes
+- `profileContent` (ReactNode); default: undefined — Custom ReactNode replacing default profile body
+- `shareContent` (ReactNode); default: undefined — Custom ReactNode replacing default share dock
+- `className` (string); default: undefined — Optional additional styling applied to the island container
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/dynamic-island.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

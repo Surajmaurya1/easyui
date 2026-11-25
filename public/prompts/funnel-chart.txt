@@ -1,0 +1,68 @@
+## Task
+
+Install and integrate the EasyUI Funnel Chart component into my project.
+
+A conversion funnel with per-stage widths, curved drop-off bridges, and a loss chip between every stage. An optional summary line reports overall conversion and the single biggest drop-off, all in hand-written SVG.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/funnel-chart
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { FunnelChart } from "@/components/ui/funnel-chart";
+
+const stages = [
+  { label: "Visited site", value: 48200 },
+  { label: "Signed up", value: 15840 },
+  { label: "Created project", value: 9120 },
+  { label: "Started paid plan", value: 1380 },
+];
+
+export function Demo() {
+  return (
+    <div className="w-full max-w-lg rounded-2xl bg-white p-5 dark:bg-neutral-950">
+      <FunnelChart stages={stages} />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `stages` (FunnelStage[]) — Ordered stages with a label, value, and optional color
+- `formatValue` ((n: number) => string); default: Intl.NumberFormat — Formats stage values in the chart, tooltip, and data table
+- `showSummary` (boolean); default: true — Shows overall conversion and the biggest drop-off above the funnel
+- `animated` (boolean); default: true — Enables bridge, bar, and chip entrance animations
+- `ariaLabel` (string); default: auto-generated — Accessible chart description and data table caption
+- `className` (string); default: "" — Additional CSS classes for the funnel wrapper
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/funnel-chart.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

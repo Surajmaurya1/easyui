@@ -1,0 +1,75 @@
+## Task
+
+Install and integrate the EasyUI Live Line Chart component into my project.
+
+A real-time line chart that scrolls right-to-left, with a large current-value readout, a live delta, and a pause control. Hover or touch the chart to freeze the stream and scrub it with a crosshair tooltip.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/live-line-chart
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { LiveLineChart } from "@/components/ui/live-line-chart";
+
+export function Demo() {
+  return (
+    <div className="w-full max-w-2xl rounded-2xl bg-white p-5 dark:bg-neutral-950">
+      <LiveLineChart
+        initial={[1240, 1280, 1235, 1310, 1290]}
+        unit="req/s"
+        height={220}
+        source={(push) => {
+          const id = setInterval(() => push(1200 + Math.random() * 300), 1000);
+          return () => clearInterval(id);
+        }}
+      />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `source` ((push) => void | (() => void)) — Data feed subscription; call push(value) for each new reading and return a cleanup
+- `initial` (number[]) — Known values, oldest to newest, spaced intervalMs apart and ending now
+- `intervalMs` (number); default: 1000 — Approximate arrival interval and the smoothing delay
+- `windowSeconds` (number); default: 60 — Seconds visible in the scrolling window
+- `height` (number); default: 220 — Chart height in pixels
+- `color` (string); default: CHART_COLORS[0] — Line stroke and area gradient color
+- `unit` (string); default: "" — Unit shown beside the readout and tooltip values
+- `formatValue` ((n: number) => string); default: Intl.NumberFormat — Formats the current value, tooltip, and aria text
+- `domain` ([number, number]) — Fixed y-range instead of auto-scaling to the visible window
+- `showReadout` (boolean); default: true — Shows the large current value, delta, and pause button
+- `ariaLabel` (string); default: auto-generated — Accessible description for the chart image role
+- `className` (string); default: "" — Additional CSS classes for the chart wrapper
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/live-line-chart.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

@@ -1,0 +1,68 @@
+## Task
+
+Install and integrate the EasyUI Cursor Follower component into my project.
+
+A smooth spring-based cursor follower with customizable physics, velocity scaling, and custom child icons or badges.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/cursor-follower
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { CursorFollower } from "@/components/ui/cursor-follower";
+import { ArrowUpRight } from "lucide-react";
+
+export function Demo() {
+  return (
+    <CursorFollower size={44}>
+      <div className="flex h-full w-full items-center justify-center rounded-full bg-white text-black shadow-lg">
+        <ArrowUpRight className="h-4 w-4" />
+      </div>
+    </CursorFollower>
+  );
+}
+```
+
+Declared props:
+- `children` (React.ReactNode); default: undefined — Custom icon, text badge, or React element displayed inside the cursor follower.
+- `size` (number); default: 40 — Width and height of the cursor follower in pixels.
+- `offsetX` (number); default: 0 — Horizontal offset from the cursor coordinates.
+- `offsetY` (number); default: 0 — Vertical offset from the cursor coordinates.
+- `stiffness` (number); default: 450 — Spring stiffness controlling how rapidly the follower catches up to the cursor.
+- `damping` (number); default: 32 — Spring damping controlling the smoothness and friction of deceleration.
+- `mass` (number); default: 0.5 — Spring mass controlling inertia and physical weight.
+- `scaleOnMove` (boolean); default: true — Scales the cursor follower slightly while the pointer is in active motion.
+- `hideOnLeave` (boolean); default: true — Hides the cursor follower when the pointer leaves the browser window or viewport.
+- `className` (string); default: undefined — Optional custom Tailwind CSS utility classes.
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/cursor-follower.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

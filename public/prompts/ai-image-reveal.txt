@@ -1,0 +1,73 @@
+## Task
+
+Install and integrate the EasyUI AI Image Reveal component into my project.
+
+A particle cloud gathers into a finished image, then resolves from a noisy mosaic into a sharp result.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/ai-image-reveal
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { AIImageReveal } from "@/components/ui/AIImageReveal";
+
+const imageUrl = "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=85";
+
+export function Demo() {
+  return (
+    <AIImageReveal
+      src={imageUrl}
+      alt="Mountain lake at sunset"
+      prompt="A quiet lake beneath the mountains"
+      aspectRatio={4 / 3}
+    />
+  );
+}
+```
+
+Declared props:
+- `src` (string | null); default: undefined — Public image URL to reveal; omit while generating.
+- `alt` (string) — Alternative text for the finished image.
+- `generating` (boolean); default: derived from src — Force the generating state while an image URL is present.
+- `aspectRatio` (number); default: 1 — Width divided by height of the image frame.
+- `prompt` (string) — Optional caption displayed below the image.
+- `generatingLabel` (string); default: Generating… — Status pill label while waiting or gathering.
+- `colors` (string[]) — Optional particle palette as hex colors.
+- `density` (number); default: 1 — Particle density multiplier from 0.4 to 2.
+- `duration` (number); default: 3.2 — Reveal duration in seconds.
+- `crossOrigin` ("anonymous" | "use-credentials" | ""); default: "anonymous" — Cross-origin mode used when loading the image.
+- `onReveal` (() => void) — Called after the image reveal completes.
+- `onImageError` (() => void) — Called if the image URL cannot be loaded.
+- `ref` (AIImageRevealHandle) — Exposes replay() to play the reveal again.
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/ai-image-reveal.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

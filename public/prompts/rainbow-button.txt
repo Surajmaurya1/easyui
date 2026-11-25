@@ -1,0 +1,72 @@
+## Task
+
+Install and integrate the EasyUI Rainbow Button component into my project.
+
+A vibrant button featuring an animated chromatic rainbow gradient border, dynamic 3D surface reflections, and an ambient blurred rainbow underglow.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/rainbow-button
+
+No additional package dependencies were detected by the registry sync.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { RainbowButton } from "@/components/ui/rainbow-button";
+
+export function RainbowButtonDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-4 p-8">
+      <RainbowButton>
+        Get Unlimited Access
+      </RainbowButton>
+
+      <RainbowButton variant="outline" size="sm">
+        Explore Features
+      </RainbowButton>
+    </div>
+  );
+}
+```
+
+Declared props:
+- `variant` ('default' | 'outline'); default: 'default' — Visual presentation style of the button surface
+- `size` ('default' | 'sm' | 'lg' | 'icon'); default: 'default' — Button dimension scale and padding
+- `asChild` (boolean); default: false — Render as child component (e.g. Next.js Link or a tag) passing through props and styles
+- `glow` (boolean); default: true — Whether to show the ambient blurred rainbow glow drop-shadow beneath the button
+- `speed` (number); default: 3 — Rainbow animation cycle duration in seconds
+- `color1` (string); default: 'hsl(0 100% 63%)' — First chromatic gradient stop (red/pink)
+- `color2` (string); default: 'hsl(270 100% 63%)' — Second chromatic gradient stop (purple)
+- `color3` (string); default: 'hsl(210 100% 63%)' — Third chromatic gradient stop (blue)
+- `color4` (string); default: 'hsl(195 100% 63%)' — Fourth chromatic gradient stop (cyan)
+- `color5` (string); default: 'hsl(90 100% 63%)' — Fifth chromatic gradient stop (green)
+- `className` (string) — Additional CSS classes
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/rainbow-button.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

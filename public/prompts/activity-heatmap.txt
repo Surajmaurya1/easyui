@@ -1,0 +1,75 @@
+## Task
+
+Install and integrate the EasyUI Activity Heatmap component into my project.
+
+A GitHub-style contribution calendar and weekday-by-hour activity grid with automatic column fitting, quarterly color levels, hover tooltips, and keyboard navigation.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/activity-heatmap
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { ActivityHeatmap } from "@/components/ui/activity-heatmap";
+
+const data = [
+  { date: "2026-10-18", value: 3 },
+  { date: "2026-10-19", value: 9 },
+  { date: "2026-10-20", value: 5 },
+  { date: "2026-10-21", value: 12 },
+];
+
+export function Demo() {
+  return (
+    <div className="w-full max-w-3xl rounded-2xl bg-white p-5 dark:bg-neutral-950">
+      <ActivityHeatmap data={data} weekStart={1} unit="contributions" />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `mode` ("calendar" | "hours"); default: "calendar" — One cell per day or a weekday-by-hour grid
+- `data` (HeatDay[]) — Calendar data as { date: "YYYY-MM-DD" | Date, value: number } entries
+- `matrix` (number[][]) — Hours-mode matrix with 7 rows (weekdays) and 24 columns (hours)
+- `rowLabels` (string[]); default: ["Mon", … , "Sun"] — Row names used in hours mode
+- `weeks` (number); default: 53 — Maximum number of weeks to show in calendar mode
+- `endDate` (string | Date) — Last day displayed; defaults to the latest date in the data
+- `weekStart` (0 | 1); default: 0 — First day of the week: 0 for Sunday, 1 for Monday
+- `color` (string); default: "#34d399" — Base color mixed into the activity levels
+- `unit` (string); default: "contributions" — Plural noun used in the summary and tooltip
+- `minCell` (number); default: 11 — Smallest cell size before calendar columns are dropped
+- `animated` (boolean); default: true — Enables the staggered cell entrance animation
+- `ariaLabel` (string); default: auto-generated — Accessible description for the heatmap image role
+- `className` (string); default: "" — Additional CSS classes for the heatmap wrapper
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/activity-heatmap.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

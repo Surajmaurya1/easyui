@@ -24,5 +24,6 @@
 /components/*/ /components/:splat 301
 /docs/ /docs 301
 /docs/*/ /docs/:splat 301
+/skill/ /skill 301
 /sponsors/ /sponsors 301
 /sponsor/success/ /sponsor/success 301

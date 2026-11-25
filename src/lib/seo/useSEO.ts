@@ -4,6 +4,7 @@ import {
   getCanonicalUrl,
   getComponentSEO,
   getDocTopicSEO,
+  getSkillPageSEO,
   getSponsorSuccessSEO,
   getSponsorsPageSEO,
   type PageSEOMeta,
@@ -17,6 +18,7 @@ import {
 } from './structured-data';
 import { updatePageMetadata } from './metadata';
 import type { ComponentCatalogIndex } from '../../types/component';
+import { CATALOG_INDEX } from '../../components/registry/catalog-index';
 
 interface UseSEOProps {
   activeView:
@@ -27,7 +29,8 @@ interface UseSEOProps {
     | 'component-not-found'
     | 'route-not-found'
     | 'sponsors'
-    | 'sponsor-success';
+    | 'sponsor-success'
+    | 'skill';
   componentPage?: number;
   activeDocTopic?: string;
   selectedModalComponent?: ComponentCatalogIndex | null;
@@ -69,6 +72,11 @@ export function useSEO({
 
     if (activeView === 'sponsor-success') {
       updatePageMetadata(getSponsorSuccessSEO());
+      return;
+    }
+
+    if (activeView === 'skill') {
+      updatePageMetadata(getSkillPageSEO());
       return;
     }
 
@@ -115,35 +123,6 @@ export function useSEO({
         : getCanonicalUrl(componentPage > 1 ? `components/page/${componentPage}` : 'components');
       const description = SEO_CONFIG.componentsDescription;
 
-      // Lazily import the full catalog only when generating the components-page
-      // catalog schema. This keeps the initial app-shell bundle free of
-      // the 386 KB components-data.ts module.
-      import('../../components/registry/components-data').then(({ EASY_COMPONENTS }) => {
-        const structuredData = generateComponentCatalogSchema(EASY_COMPONENTS, componentPage);
-
-        updatePageMetadata({
-          title: pageTitle,
-          description,
-          canonical,
-          ogTitle: pageTitle,
-          ogDescription: description,
-          ogType: 'website',
-          keywords: [
-            'React components list',
-            'Tailwind UI components',
-            'Framer motion buttons cards modals',
-            'UI library catalog',
-            ...SEO_CONFIG.keywords,
-          ],
-          breadcrumbs: [
-            { name: 'EasyUI', item: SEO_CONFIG.siteUrl },
-            { name: 'Components', item: canonical },
-          ],
-          structuredData,
-        });
-      });
-
-      // Apply non-schema metadata immediately (without waiting for the dynamic import)
       updatePageMetadata({
         title: pageTitle,
         description,
@@ -162,6 +141,7 @@ export function useSEO({
           { name: 'EasyUI', item: SEO_CONFIG.siteUrl },
           { name: 'Components', item: canonical },
         ],
+        structuredData: generateComponentCatalogSchema(CATALOG_INDEX, componentPage),
       });
       return;
     }

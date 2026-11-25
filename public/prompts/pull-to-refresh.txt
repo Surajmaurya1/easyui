@@ -1,0 +1,67 @@
+## Task
+
+Install and integrate the EasyUI Pull to Refresh component into my project.
+
+A physical pull-to-refresh component and container featuring realistic elastic resistance curves, smooth cubic bezier line chart visualization with interactive point scrubbing, high/low metrics, and seamless light & dark mode compatibility.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/pull-to-refresh
+
+Dependencies (install only those missing): framer-motion, lucide-react.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { PullToRefresh, FinancialStatsCard } from "@/components/ui/pull-to-refresh";
+
+export function Demo() {
+  return (
+    <PullToRefresh
+      onRefresh={async () => {
+        await new Promise((res) => setTimeout(res, 1200));
+      }}
+    >
+      <FinancialStatsCard showMetrics showActions />
+    </PullToRefresh>
+  );
+}
+```
+
+Declared props:
+- `onRefresh` (() => Promise<void> | void); default: undefined — Async or sync callback executed when released beyond threshold
+- `threshold` (number); default: 68 — Downward travel distance in pixels required to trigger refresh
+- `maxPull` (number); default: 110 — Maximum drag distance limit
+- `resistance` (number); default: 0.45 — Elastic resistance multiplier
+- `refreshingHoldOffset` (number); default: 48 — Vertical offset to hold content at while refresh resolves
+- `disabled` (boolean); default: false — Disables gesture interaction
+- `showDefaultIndicator` (boolean); default: true — Show the built-in minimal circular progress indicator
+- `children` (React.ReactNode); default: <FinancialStatsCard /> — Custom child content to be pulled
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/pull-to-refresh.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

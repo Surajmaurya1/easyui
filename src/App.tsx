@@ -19,11 +19,12 @@ export const DocsPage = lazyWithPreload(() => import('./components/docs/DocsPage
 export const AllComponentsPage = lazyWithPreload(() => import('./components/sections/AllComponentsPage'), 'AllComponentsPage');
 export const SponsorsPage = lazyWithPreload(() => import('./components/sponsors/SponsorsPage'), 'SponsorsPage');
 export const SponsorSuccessPage = lazyWithPreload(() => import('./components/sponsors/SponsorSuccessPage'), 'SponsorSuccessPage');
+export const SkillPage = lazyWithPreload(() => import('./components/skills/SkillPage'), 'SkillPage');
 export const SpotlightSearch = lazyWithPreload(() => import('./components/ui/SpotlightSearch'), 'SpotlightSearch');
 export const HeroSection = HeroSectionComponent;
 
-// Fast Map lookup for routing — uses the lightweight catalog index (catalog-index.ts)
-// so the full 386 KB components-data.ts is NOT included in the initial entry bundle.
+// Fast route lookup uses the lightweight catalog index. Component detail metadata
+// loads separately, on demand, for the selected component only.
 const COMPONENT_MAP = new Map<string, ComponentCatalogIndex>(
   CATALOG_INDEX.map((c) => [c.id, c])
 );
@@ -37,7 +38,8 @@ export interface RouteState {
     | 'component-not-found'
     | 'route-not-found'
     | 'sponsors'
-    | 'sponsor-success';
+    | 'sponsor-success'
+    | 'skill';
   selectedComponent: ComponentCatalogIndex | null;
   invalidComponentSlug: string | null;
   invalidRoutePath: string | null;
@@ -198,6 +200,17 @@ export function parseRouteFromUrl(pathname?: string, search?: string): RouteStat
     };
   }
 
+  if (cleanPath === 'skill') {
+    return {
+      activeView: 'skill',
+      selectedComponent: null,
+      invalidComponentSlug: null,
+      invalidRoutePath: null,
+      activeDocTopic: 'introduction',
+      componentPage: 1,
+    };
+  }
+
   // 5. Default: showcase / homepage (/); every other path is invalid.
   if (cleanPath !== '') {
     return {
@@ -332,6 +345,11 @@ export function App({ initialPath }: AppProps = {}) {
     scrollToTop();
   }, [navigate]);
 
+  const handleNavigateSkill = useCallback(() => {
+    navigate('/skill');
+    scrollToTop();
+  }, [navigate]);
+
   const handleNavigateDocs = useCallback(
     (topicId?: string) => {
       const topic = topicId || 'introduction';
@@ -406,6 +424,7 @@ export function App({ initialPath }: AppProps = {}) {
           {/* Hero */}
           <HeroSection
             onExplore={handleNavigateComponents}
+            onNavigateSkill={handleNavigateSkill}
             onSelectComponent={handleSelectComponentById}
           />
           <SponsoredBy onNavigateSponsors={handleNavigateSponsors} />
@@ -500,6 +519,8 @@ export function App({ initialPath }: AppProps = {}) {
             <SponsorsPage />
           ) : activeView === 'sponsor-success' ? (
             <SponsorSuccessPage onNavigateHome={handleNavigateHome} />
+          ) : activeView === 'skill' ? (
+            <SkillPage />
           ) : activeView === 'components' ? (
             <AllComponentsPage
               currentPage={componentPage}
@@ -518,6 +539,7 @@ export function App({ initialPath }: AppProps = {}) {
         onNavigateComponents={handleNavigateComponents}
         onNavigateDocs={() => handleNavigateDocs('introduction')}
         onNavigateSponsors={handleNavigateSponsors}
+        onNavigateSkill={handleNavigateSkill}
       />
 
       {/* Global Spotlight Search (⌘K) */}

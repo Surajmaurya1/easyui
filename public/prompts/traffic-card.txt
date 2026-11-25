@@ -1,0 +1,98 @@
+## Task
+
+Install and integrate the EasyUI Traffic Card component into my project.
+
+A compact traffic block with a count-up visit total, a Day / Week switcher, and a stacked column chart where every channel is its own rounded capsule. Built with hand-written SVG, light and dark themes, and full keyboard support.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/traffic-card
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { TrafficCard } from "@/components/ui/traffic-card";
+
+const channels = [
+  { id: "direct", label: "Direct" },
+  { id: "referral", label: "Referral" },
+  { id: "social", label: "Social" },
+  { id: "search", label: "Search" },
+  { id: "paid", label: "Paid" },
+];
+
+const ranges = [
+  {
+    id: "day",
+    label: "Day",
+    caption: "Last 22 days",
+    points: [
+      { label: "Oct 27", values: { direct: 210, referral: 340, social: 402, search: 268, paid: 246 } },
+      { label: "Oct 28", values: { direct: 246, referral: 372, social: 438, search: 301, paid: 289 } },
+      // …one point per column
+    ],
+  },
+  {
+    id: "week",
+    label: "Week",
+    caption: "Last 22 weeks",
+    points: [
+      { label: "Jun 22", values: { direct: 812, referral: 1290, social: 1520, search: 1040, paid: 960 } },
+      // …one point per column
+    ],
+  },
+];
+
+export function Demo() {
+  return (
+    <div className="w-full max-w-[380px]">
+      <TrafficCard channels={channels} ranges={ranges} />
+    </div>
+  );
+}
+```
+
+Declared props:
+- `ranges` (TrafficRange[]) — Switchable ranges, each with its own points, caption, and optional total
+- `channels` (TrafficChannel[]) — Channel definitions rendered bottom-to-top in every stacked column
+- `defaultRange` (string); default: first range — Range id selected on first render
+- `onRangeChange` ((id: string) => void) — Called when the visitor switches the Day / Week control
+- `title` (string); default: "Traffic" — Heading shown at the top of the card
+- `unit` (string); default: "visits" — Noun displayed beside the headline number
+- `format` ((n: number) => string); default: rounded Intl.NumberFormat — Formats the headline, tooltip values, and screen-reader table
+- `height` (number); default: 132 — Chart height in pixels
+- `animated` (boolean); default: true — Count-up and column entrance animations (disabled for reduced motion)
+- `className` (string); default: "" — Additional CSS classes for the card
+- `TrafficRange.points` (TrafficPoint[]) — One column per entry, ordered oldest to newest
+- `TrafficPoint.values` (Record<string, number>) — Channel id → visits for that interval
+- `TrafficChannel.color` (string) — Optional CSS color; defaults to the built-in traffic palette
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/traffic-card.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

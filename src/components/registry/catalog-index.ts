@@ -1,7 +1,7 @@
 // AUTO-GENERATED — DO NOT EDIT MANUALLY.
 // Run "npm run component:sync" to regenerate this file.
 // This is a LIGHTWEIGHT index containing only initial-bundle fields.
-// For the full catalog (usageCode, props, etc.), see components-data.ts.
+// Full detail metadata is generated into one lazily loaded module per component.
 
 import type { ComponentCatalogIndex } from '../../types/component';
 
@@ -240,6 +240,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     ],
     "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/book-call-button",
     "createdAt": "2026-08-31"
+  },
+  {
+    "id": "bookshelf",
+    "name": "Bookshelf",
+    "tagline": "A shelf of interactive 3D books",
+    "description": "An interactive 3D bookshelf with animated book covers, keyboard navigation, and expandable reading details.",
+    "category": "Motion",
+    "badges": [
+      "3D",
+      "Interactive",
+      "Reduced Motion",
+      "Responsive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/bookshelf",
+    "createdAt": "2026-11-25"
   },
   {
     "id": "branching-submenu",

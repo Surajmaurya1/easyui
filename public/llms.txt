@@ -12,7 +12,7 @@
 
 ## Components Directory
 
-- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 138 animated React components.
+- [All Components Catalog](https://easyui.site/components): Browse the full catalog of 139 animated React components.
 
 ### Component Index
 
@@ -32,6 +32,7 @@
 - [Bar Chart](https://easyui.site/components/bar-chart): A hand-written, dependency-free SVG bar chart with grouped and stacked layouts, morphing bar transitions, interactive legend toggles, and accessible hover and keyboard tooltips.
 - [Batch Gesture Tray](https://easyui.site/components/batch-gesture-tray): A touch-ready contextual tray that slides into view upon item selection, presenting bulk actions and real-time count telemetry.
 - [Book Call Button](https://easyui.site/components/book-call-button): A premium "Book a call" pill with a green expanding capsule. At rest, a 36% accent capsule holds a dotted arrow + label; on hover, the capsule fills the pill, the label slides out, and a phone icon with ringing lines fades in centered.
+- [Bookshelf](https://easyui.site/components/bookshelf): An interactive 3D bookshelf with animated book covers, keyboard navigation, and expandable reading details.
 - [Branching Submenu](https://easyui.site/components/branching-submenu): A spatial submenu that connects parent options to child actions with staged branch motion.
 - [Breadcrumb](https://easyui.site/components/breadcrumb): A navigation trail with a gliding hover pill, smooth expansion for collapsed trails with automatic focus transfer, and light/dark theme adaptation.
 - [Button](https://easyui.site/components/button): A versatile, production-ready button system with 8 visual variants, 4 sizes, loading spinner states, icon slots, and spring tap feedback.

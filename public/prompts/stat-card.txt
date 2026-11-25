@@ -1,0 +1,87 @@
+## Task
+
+Install and integrate the EasyUI Stat Card component into my project.
+
+A KPI tile with a count-up headline number, a direction-aware delta pill, and a scrubable sparkline. Pair several with StatGrid for a responsive metrics row that works from phones to wide dashboards.
+
+Category: Feedback.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/stat-card
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+import { StatCard, StatGrid } from "@/components/ui/stat-card";
+
+const revenue = [41200, 42100, 41800, 43600, 44200, 45800, 47100];
+
+export function Demo() {
+  return (
+    <StatGrid>
+      <StatCard
+        label="Revenue"
+        value={revenue[revenue.length - 1]}
+        previous={revenue[0]}
+        trend={revenue}
+        period="Last 7 days"
+      />
+      <StatCard
+        label="Churn"
+        value={2.4}
+        previous={2.9}
+        trend={[2.9, 2.8, 2.7, 2.6, 2.5, 2.4]}
+        goodWhen="down"
+        format={(n) => `${n.toFixed(1)}%`}
+        period="Last 6 weeks"
+        color="#ff6b8b"
+      />
+    </StatGrid>
+  );
+}
+```
+
+Declared props:
+- `label` (string) — Metric name shown above the headline number
+- `value` (number) — Headline number; usually the latest point of trend
+- `trend` (number[]) — Sparkline points ordered oldest to newest
+- `trendLabels` (string[]) — Names for each trend point, shown while scrubbing
+- `previous` (number) — Previous-period value used to compute the delta pill
+- `delta` (number) — Explicit delta percentage, overriding the computed value
+- `goodWhen` ("up" | "down"); default: "up" — Which direction counts as positive news
+- `period` (string); default: "vs previous period" — Caption under the number when not scrubbing
+- `format` ((n: number) => string); default: Intl.NumberFormat — Formats the headline, labels, and aria text
+- `color` (string); default: CHART_COLORS[0] — Sparkline stroke and gradient color
+- `animated` (boolean); default: true — Counts up on mount and animates the line (disabled for reduced motion)
+- `className` (string); default: "" — Additional CSS classes for the card
+- `StatGrid.children` (ReactNode) — StatCard tiles to arrange responsively
+- `StatGrid.className` (string); default: "" — Additional CSS classes for the grid
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/stat-card.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.

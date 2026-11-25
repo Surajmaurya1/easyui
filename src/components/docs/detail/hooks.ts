@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from 'react';
 import { useTheme } from '../../../lib/theme/useTheme';
-import { EASY_COMPONENTS } from '../../registry/components-data';
-import type { EasyComponentMeta } from '../../../types/component';
+import { CATALOG_INDEX } from '../../registry/catalog-index';
+import type { ComponentCatalogIndex, EasyComponentMeta } from '../../../types/component';
 import type { MainTab, PkgManager } from './types';
 
 export function useDetailUiState(
@@ -61,8 +61,8 @@ export function useDetailUiState(
 
 export function useSidebarComponents(sidebarFilter: string, component: EasyComponentMeta | undefined) {
   // Filtered components list for the sidebar
-  const filteredComponents = useMemo(() => {
-    return EASY_COMPONENTS.filter(
+  const filteredComponents = useMemo<ComponentCatalogIndex[]>(() => {
+    return CATALOG_INDEX.filter(
       (i) =>
         !sidebarFilter ||
         i.name.toLowerCase().includes(sidebarFilter.toLowerCase()) ||
@@ -71,9 +71,9 @@ export function useSidebarComponents(sidebarFilter: string, component: EasyCompo
   }, [sidebarFilter]);
 
   // Related components from same or other categories
-  const relatedComponents = useMemo(() => {
+  const relatedComponents = useMemo<ComponentCatalogIndex[]>(() => {
     if (!component) return [];
-    return EASY_COMPONENTS.filter(
+    return CATALOG_INDEX.filter(
       (c) => c.id !== component.id && c.category === component.category
     ).slice(0, 3);
   }, [component]);

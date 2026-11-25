@@ -1,0 +1,64 @@
+## Task
+
+Install and integrate the EasyUI Morphing Icon component into my project.
+
+An animated micro-interaction wrapper that smoothly morphs between two icon states with coordinated rotation, scale, and cross-fade transitions.
+
+Category: Motion.
+
+## Before you change anything
+
+Inspect the framework and version, package manager, TypeScript configuration, styling setup and Tailwind version, UI conventions, animation libraries, path aliases, and existing providers. Reuse what exists. Do not assume a fresh project or overwrite configuration.
+
+## Compatibility check
+
+Compare the project with requirements declared by the component. The available metadata does not declare framework, React, Tailwind, or animation-library version requirements; inspect the source and docs. If incompatible, stop and explain before risky changes. Never silently make major upgrades.
+
+## Install
+
+npx shadcn@latest add Surajmaurya1/easyui/morphing-icon
+
+Dependencies (install only those missing): framer-motion.
+
+## Usage
+
+Import path and example from component metadata:
+
+```tsx
+<button
+  onClick={() => setIsBookmarked((prev) => !prev)}
+  className="p-2 rounded-xl bg-surface-raised border border-border hover:bg-surface-hover transition-colors"
+  aria-label={isBookmarked ? "Remove bookmark" : "Save bookmark"}
+>
+  <MorphingIcon
+    active={isBookmarked}
+    from={<Bookmark className="w-5 h-5 text-text-secondary" />}
+    to={<BookmarkCheck className="w-5 h-5 text-emerald-400" />}
+    size={20}
+  />
+</button>
+```
+
+Declared props:
+- `from` (React.ReactNode); default: undefined — Default icon element shown when inactive
+- `to` (React.ReactNode); default: undefined — Target icon element shown when active
+- `active` (boolean); default: false — Whether the target icon state is currently active
+- `duration` (number); default: 0.3 — Duration of the morph transition in seconds
+- `size` (number); default: 20 — Width and height of the icon container in pixels
+- `className` (string); default: undefined — Optional CSS class for styling the container
+
+## Unverified items
+
+Required setup, peer/optional dependencies, registry dependencies, customization hooks, variants, theme tokens, and limitations are not fully declared in the available metadata. Read the component source and docs to resolve only what applies. Source: https://easyui.site/r/morphing-icon.json
+
+## Rules for you (the agent)
+
+Keep the diff minimal, follow the project code style, avoid unrelated refactors, and do not claim success without running checks.
+
+## Verify
+
+Run the project typecheck, lint, and build commands. Confirm imports resolve, the component renders, and key interactions work. Fix errors.
+
+## Report
+
+Report files created or modified, dependencies installed, configuration changes, commands run and results, and remaining manual steps.
