@@ -19,6 +19,7 @@ export const DEMO_ROUTE_MODULES = {
   'bar-chart': { aliases: [], load: () => import('./demos/items/bar-chart.demo') },
   'batch-gesture-tray': { aliases: [], load: () => import('./demos/items/batch-gesture-tray.demo') },
   'book-call-button': { aliases: [], load: () => import('./demos/items/book-call-button.demo') },
+  'bookshelf': { aliases: [], load: () => import('./demos/items/bookshelf.demo') },
   'branching-submenu': { aliases: [], load: () => import('./demos/items/branching-submenu.demo') },
   'breadcrumb': { aliases: [], load: () => import('./demos/items/breadcrumb.demo') },
   'button': { aliases: [], load: () => import('./demos/items/button.demo') },

@@ -24,6 +24,7 @@ const componentDetailLoaders: Record<string, ComponentDetailLoader> = {
   "bar-chart": () => import('./details/bar-chart'),
   "batch-gesture-tray": () => import('./details/batch-gesture-tray'),
   "book-call-button": () => import('./details/book-call-button'),
+  "bookshelf": () => import('./details/bookshelf'),
   "branching-submenu": () => import('./details/branching-submenu'),
   "breadcrumb": () => import('./details/breadcrumb'),
   "button": () => import('./details/button'),

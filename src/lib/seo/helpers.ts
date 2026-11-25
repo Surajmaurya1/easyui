@@ -140,6 +140,38 @@ export function getSponsorsPageSEO(): PageSEOMeta {
 }
 
 /**
+ * Generates metadata for the Anti-Slop UI skill page.
+ */
+export function getSkillPageSEO(): PageSEOMeta {
+  const title = 'Anti-Slop UI — A Design Skill for AI Coding Agents | EasyUI';
+  const description =
+    'A design skill for AI coding agents that helps build interfaces with intention, consistency, and personality. Install Anti-Slop UI with the Skills CLI.';
+  const canonical = getCanonicalUrl('skill');
+
+  return {
+    title,
+    description,
+    canonical,
+    ogTitle: title,
+    ogDescription: description,
+    ogType: 'website',
+    keywords: [
+      'Anti-Slop UI',
+      'AI coding agent skill',
+      'design skill',
+      'Claude Code skill',
+      'Codex skill',
+      'Cursor skill',
+      ...SEO_CONFIG.keywords,
+    ],
+    breadcrumbs: [
+      { name: 'EasyUI', item: SEO_CONFIG.siteUrl },
+      { name: 'Anti-Slop UI', item: canonical },
+    ],
+  };
+}
+
+/**
  * Generates metadata for the Dodo redirect target. This page is deliberately
  * excluded from search results.
  */

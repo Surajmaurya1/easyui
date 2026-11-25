@@ -43,6 +43,12 @@ export function generateSitemap(): void {
       priority: '0.85',
     },
     {
+      loc: `${SITE_URL}/skill`,
+      lastmod: today,
+      changefreq: 'monthly',
+      priority: '0.80',
+    },
+    {
       loc: `${SITE_URL}/sponsors`,
       lastmod: today,
       changefreq: 'monthly',

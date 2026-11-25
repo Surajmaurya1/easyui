@@ -15,6 +15,7 @@ import {
   ComponentDetailPage,
   SponsorsPage,
   SponsorSuccessPage,
+  SkillPage,
 } from '../src/App';
 import { preloadComponentDemo } from '../src/components/docs/ComponentDetailPage';
 import { CATALOG_INDEX } from '../src/components/registry/catalog-index';
@@ -25,6 +26,7 @@ import {
   getCanonicalUrl,
   getComponentSEO,
   getDocTopicSEO,
+  getSkillPageSEO,
   getSponsorSuccessSEO,
   getSponsorsPageSEO,
 } from '../src/lib/seo/helpers';
@@ -185,6 +187,7 @@ export async function prerenderAllRoutes(): Promise<void> {
     ComponentDetailPage.preload(),
     SponsorsPage.preload(),
     SponsorSuccessPage.preload(),
+    SkillPage.preload(),
     ...CATALOG_INDEX.map((comp) => preloadComponentDemo(comp.id)),
     componentDetailsPromise,
   ]);
@@ -282,6 +285,17 @@ export async function prerenderAllRoutes(): Promise<void> {
       element: makePrerenderElement('/sponsors'),
     });
 
+    const skillSEO = getSkillPageSEO();
+    routes.push({
+      path: '/skill',
+      outputPath: path.join(DIST_DIR, 'skill', 'index.html'),
+      title: skillSEO.title,
+      description: skillSEO.description,
+      canonical: skillSEO.canonical,
+      keywords: skillSEO.keywords,
+      element: makePrerenderElement('/skill'),
+    });
+
     const sponsorSuccessSEO = getSponsorSuccessSEO();
     routes.push({
       path: '/sponsor/success',
@@ -364,6 +378,7 @@ export async function prerenderAllRoutes(): Promise<void> {
   console.log(`  - 1 Homepage (/)`);
   console.log(`  - ${totalComponentPages} Components catalog pages (/components[/page/*])`);
   console.log(`  - ${docTopicIds.length} Documentation topics (/docs/*)`);
+  console.log(`  - 1 Anti-Slop UI skill page (/skill)`);
   console.log(`  - 1 Sponsors page (/sponsors)`);
   console.log(`  - 1 Sponsor success page (/sponsor/success, noindex)`);
   console.log(`  - ${componentDetails.length} Component detail pages (/components/*)`);

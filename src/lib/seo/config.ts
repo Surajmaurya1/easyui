@@ -55,6 +55,7 @@ export const SEO_CONFIG = {
     docsSEO: '/docs/seo',
     sponsors: '/sponsors',
     sponsorSuccess: '/sponsor/success',
+    skill: '/skill',
   }
 } as const;
 

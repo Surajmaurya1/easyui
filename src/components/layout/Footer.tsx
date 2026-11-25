@@ -8,6 +8,7 @@ export interface FooterProps {
   onNavigateComponents?: () => void;
   onNavigateDocs?: () => void;
   onNavigateSponsors?: () => void;
+  onNavigateSkill?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -15,6 +16,7 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigateComponents,
   onNavigateDocs,
   onNavigateSponsors,
+  onNavigateSkill,
 }) => {
   const handleInternalNavigation =
     (callback?: () => void) =>
@@ -144,6 +146,7 @@ export const Footer: React.FC<FooterProps> = ({
               >
                 <a href="/components" onClick={handleInternalNavigation(onNavigateComponents)} className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">Components</a>
                 <a href="/docs/introduction" onClick={handleInternalNavigation(onNavigateDocs)} className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">Docs</a>
+                <a href="/skill" onClick={handleInternalNavigation(onNavigateSkill)} className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">Skill</a>
                 <a href="/sponsors" onClick={handleInternalNavigation(onNavigateSponsors)} className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">Sponsors</a>
                 <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">GitHub</a>
                 <a href="/llms.txt" className="whitespace-nowrap rounded text-text-secondary transition-colors hover:text-text-primary focus-ring">LLMs</a>

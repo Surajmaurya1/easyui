@@ -4,6 +4,7 @@ import {
   getCanonicalUrl,
   getComponentSEO,
   getDocTopicSEO,
+  getSkillPageSEO,
   getSponsorSuccessSEO,
   getSponsorsPageSEO,
   type PageSEOMeta,
@@ -28,7 +29,8 @@ interface UseSEOProps {
     | 'component-not-found'
     | 'route-not-found'
     | 'sponsors'
-    | 'sponsor-success';
+    | 'sponsor-success'
+    | 'skill';
   componentPage?: number;
   activeDocTopic?: string;
   selectedModalComponent?: ComponentCatalogIndex | null;
@@ -70,6 +72,11 @@ export function useSEO({
 
     if (activeView === 'sponsor-success') {
       updatePageMetadata(getSponsorSuccessSEO());
+      return;
+    }
+
+    if (activeView === 'skill') {
+      updatePageMetadata(getSkillPageSEO());
       return;
     }
 
