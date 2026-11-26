@@ -860,6 +860,12 @@ export const PREVIEW_REGISTRY: Record<string, ComponentPreviewDefinition> = {
     load: () => import('./items/wave-transition'),
     metadata: { type: 'static', description: 'Minimal Wave Transition catalog preview' },
   },
+  'butterfly': {
+    id: 'butterfly',
+    componentId: 'butterfly',
+    load: () => import('./items/butterfly'),
+    metadata: { type: 'interactive', description: 'Split line-art and ASCII butterfly preview' },
+  },
 };
 
 // Fast lookup map supporting both primary slugs and aliases

@@ -286,6 +286,21 @@ export const CATALOG_INDEX: ComponentCatalogIndex[] = [
     "createdAt": "2026-10-11"
   },
   {
+    "id": "butterfly",
+    "name": "Butterfly",
+    "tagline": "Half line-art, half live ASCII butterfly with natural wing physics",
+    "description": "A split-medium butterfly with fine SVG line-art wings on one side and live frame-rasterized ASCII character wings on the other, driven by a natural flap, glide, and perch flight cycle.",
+    "category": "Motion",
+    "badges": [
+      "SVG",
+      "ASCII",
+      "Reduced Motion",
+      "Interactive"
+    ],
+    "cliCommand": "npx shadcn@latest add Surajmaurya1/easyui/butterfly",
+    "createdAt": "2026-11-26"
+  },
+  {
     "id": "button",
     "name": "Button",
     "tagline": "Multi-variant button system with tactile physics",

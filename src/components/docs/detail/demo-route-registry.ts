@@ -22,6 +22,7 @@ export const DEMO_ROUTE_MODULES = {
   'bookshelf': { aliases: [], load: () => import('./demos/items/bookshelf.demo') },
   'branching-submenu': { aliases: [], load: () => import('./demos/items/branching-submenu.demo') },
   'breadcrumb': { aliases: [], load: () => import('./demos/items/breadcrumb.demo') },
+  'butterfly': { aliases: [], load: () => import('./demos/items/butterfly.demo') },
   'button': { aliases: [], load: () => import('./demos/items/button.demo') },
   'calendar': { aliases: [], load: () => import('./demos/items/calendar.demo') },
   'car-smoke-page-transition': { aliases: [], load: () => import('./demos/items/car-smoke-page-transition.demo') },
