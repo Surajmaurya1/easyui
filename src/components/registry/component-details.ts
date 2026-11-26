@@ -27,6 +27,7 @@ const componentDetailLoaders: Record<string, ComponentDetailLoader> = {
   "bookshelf": () => import('./details/bookshelf'),
   "branching-submenu": () => import('./details/branching-submenu'),
   "breadcrumb": () => import('./details/breadcrumb'),
+  "butterfly": () => import('./details/butterfly'),
   "button": () => import('./details/button'),
   "calendar": () => import('./details/calendar'),
   "car-smoke-page-transition": () => import('./details/car-smoke-page-transition'),

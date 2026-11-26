@@ -423,6 +423,19 @@
       ]
     },
     {
+      "name": "butterfly",
+      "type": "registry:ui",
+      "title": "Butterfly",
+      "description": "A split-medium butterfly with fine SVG line-art wings on one side and live frame-rasterized ASCII character wings on the other, driven by a natural flap, glide, and perch flight cycle.",
+      "files": [
+        {
+          "path": "src/components/ui/Butterfly.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/butterfly.tsx"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
